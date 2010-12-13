@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns:util="http://www.springframework.org/schema/util"
+		xmlns:context="http://www.springframework.org/schema/context" 
+		xsi:schemaLocation="http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+							http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+							http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<context:property-placeholder location="WEB-INF/config.properties"/>
+
+	<import resource="classpath:com/gemalto/gus/applicationContext.xml" />
+	<import resource="classpath:com/gemalto/gus/contactdirectory/applicationContext.xml" />
+	<import resource="classpath:com/gemalto/contactdirectory/web/applicationContext.xml" />
+	<import resource="classpath:com/gemalto/contactdirectory/domain/service/applicationContext.xml" />
+<!--	<import resource="classpath:com/gemalto/contactdirectory/domain/service/applicationContext2G.xml" />-->
+
+
+	<bean id="wicketApplication" class="com.gemalto.contactdirectory.web.PhonebookApplication">
+		<property name="authorizationStrategy" ref="authorizationStrategy" />
+		<property name="menuClass" value="com.gemalto.contactdirectory.web.panels.MenuPanel" />
+		<property name="webAppAuthenticationManager" ref="authenticationManager" />
+		<property name="msisdnSpecification" ref="msisdnSpecification" />
+		<property name="navigationResolver" ref="navigationResolver" />		
+		<property name="applicationId" value="1" />
+		<property name="propertyMap" ref="propertyMap" />
+		<property name="serviceLocator" ref="serviceLocator" />
+		<property name="defaultDecorator" ref="fullDecorator"/>
+		<property name="pageDecorators" ref="mapDecorator" />
+	</bean>
+	
+	<util:map id="mapDecorator">
+		<entry key="com.gemalto.contactdirectory.web.pages.AccessDenied" value-ref="onlyFooterDecorator" />
+		<entry key="com.gemalto.contactdirectory.web.pages.Restore" value-ref="menulessDecorator" />
+		<entry key="com.gemalto.contactdirectory.web.pages.Synchronize" value-ref="menulessDecorator" />
+		<entry key="com.gemalto.contactdirectory.web.pages.SignupSuccess" value-ref="onlyFooterDecorator" />
+		<entry key="com.gemalto.contactdirectory.web.pages.PasswordRecoverySuccess" value-ref="onlyFooterDecorator" />
+		<entry key="com.gemalto.gus.web.pages.Signup" value-ref="onlyFooterDecorator" />
+		<entry key="com.gemalto.gus.web.pages.PasswordRecovery" value-ref="onlyFooterDecorator" />
+	</util:map>
+	
+	<bean id="fullDecorator" class="com.gemalto.contactdirectory.web.decorate.FullDecorateSpecification" />
+	<bean id="onlyFooterDecorator" class="com.gemalto.contactdirectory.web.decorate.OnlyFooterSpecification" />
+	<bean id="menulessDecorator" class="com.gemalto.contactdirectory.web.decorate.MenulessSpecification" />	
+	
+	<bean id="serviceLocator" class="com.gemalto.webcare.common.web.ServiceLocator">
+		<property name="serviceMap">
+			<util:map>
+				<entry key="ContactDirectoryServiceProvider" value-ref="simpleDirectoryServiceProvider" />
+				<entry key="ApplicationService" value-ref="gusContactDirectoryService" />
+				<entry key="UserService" value-ref="userService" />
+				<entry key="ContactFileParser" value-ref="contactFileParser" />
+			</util:map>
+		</property>
+	</bean>
+	
+	<bean id="simpleDirectoryServiceProvider" class="com.gemalto.contactdirectory.web.panels.SimpleContactDirectoryServiceProvider">
+    	<constructor-arg ref="gusContactDirectoryService" />
+	</bean>
+
+	<bean id="contactFileParser" class="com.gemalto.contactdirectory.web.util.ContactCsvParser" >
+		<property name="msisdnSpecification" ref="msisdnSpecification" />
+		<property name="propertyResolver" ref="propertyMap" />
+	</bean>
+
+	<bean id="propertyMap" class="com.gemalto.webcare.common.web.PropertyMap"/>
+		
+	<bean id="navigationResolver" class="com.gemalto.webcare.common.web.NavigationResolver">
+		<constructor-arg index="0" value="com.gemalto.contactdirectory.web.pages.login.LoginSelfCare" />
+		<constructor-arg index="1" value="com.gemalto.contactdirectory.web.pages.Error" />
+		<constructor-arg index="2" ref="navigationResolverConfiguration" />
+	</bean>
+	
+	<bean id="navigationResolverConfiguration" class="com.gemalto.contactdirectory.web.NavigationResolverConfiguration"/>
+	
+	<bean id="authorizationStrategy" class="com.gemalto.webcare.common.web.security.WebAppAuthorizationStrategy">
+		<property name="authorizations">
+			<util:set>
+				<ref bean="ROLE_SELF_CARE" />
+			</util:set>
+		</property>
+	</bean>
+
+	<bean id="ROLE_SELF_CARE" class="com.gemalto.webcare.common.web.security.AuthorizationItem">
+		<property name="role" value="ROLE_SELF_CARE" />
+		<property name="pages">
+			<util:set>
+				<value>com.gemalto.gus.web.pages.ChangePassword</value>
+				<value>com.gemalto.gus.web.pages.ChangePasswordSuccess</value>
+				<value>com.gemalto.contactdirectory.web.pages.Backup</value>
+				<value>com.gemalto.contactdirectory.web.pages.BackupConfirmation</value>
+				<value>com.gemalto.contactdirectory.web.pages.BackupSuccess</value>
+				<value>com.gemalto.contactdirectory.web.pages.Error</value>
+				<value>com.gemalto.contactdirectory.web.pages.BigIcons</value>
+				<value>com.gemalto.contactdirectory.web.pages.ManageContacts</value>
+				<value>com.gemalto.contactdirectory.web.pages.Restore</value>
+				<value>com.gemalto.contactdirectory.web.pages.RestoreConfirmation</value>
+				<value>com.gemalto.contactdirectory.web.pages.RestoreSuccess</value>
+				<value>com.gemalto.contactdirectory.web.pages.Synchronize</value>
+				<value>com.gemalto.contactdirectory.web.pages.SynchronizeConfirmation</value>
+				<value>com.gemalto.contactdirectory.web.pages.SynchronizeSuccess</value>
+			</util:set>
+		</property>
+	</bean>
+	
+	<bean id="messageForChangePassword" class="java.lang.String">
+	    <constructor-arg><value>Tu clave de acceso para ingresar a “Respaldo de Contactos” desde Web es:</value></constructor-arg>
+	</bean>
+	
+	<!-- ************************ -->
+	<!--          UPB             -->
+	<!-- ************************ -->	
+	<util:properties id="webServicesConfig">
+		<prop key="mappingEndpointURL">${upb.mapping.url}</prop>
+		<prop key="simcardEndpointURL">${upb.simcard.url}</prop>
+		<prop key="phoneBookEndpointURL">${upb.phonebook.url}</prop>
+		<prop key="invokerEndpointURL">${upb.invoker.url}</prop>
+		<prop key="invocationLookupEndpointURL">${upb.invocation.lookup.url}</prop>
+		<prop key="invocationHistoryLookupEndpointURL">${upb.invocation.history.lookup.url}</prop>
+		<prop key="globalProvisioningServiceEndPoint">${upb.global.provisioning.url}</prop>
+	</util:properties>
+		
+	<!-- ************************ -->
+	<!--          OTA	          -->	
+	<!-- ************************ -->	
+	<util:properties id="otaConfig">
+		<prop key="OTA_USER">${ota.user}</prop>
+		<prop key="OTA_PASSWORD">${ota.password}</prop>
+		<prop key="CHANNEL_ID">${ota.channel}</prop>
+		<prop key="PRODUCT">${ota.product}</prop>
+		<prop key="V_BR0KER_ADDRESS">${ota.address}</prop>
+		<prop key="V_BROKER_PORT">${ota.port}</prop>
+	</util:properties>
+	
+	<!-- ************************ -->
+	<!--         DATABASE         -->	
+	<!-- ************************ -->		
+	<bean id="dataSourceGus" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="jdbcUrl" value="${db.url}" />
+		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="user" value="${db.username}" />
+		<property name="password" value="${db.password}" />
+		<property name="minPoolSize" value="${db.min.pool.size}" />
+		<property name="maxPoolSize" value="${db.max.pool.size}" />
+		<property name="maxStatements" value="100" />
+		<property name="idleConnectionTestPeriod" value="60" />
+	</bean>
+	
+	
+	<!-- ************************ -->
+	<!--         SECURITY         -->	
+	<!-- ************************ -->		
+	<import resource="classpath:com/gemalto/contactdirectory/security/authenticationContext.xml" />
+
+	<!-- Proxy to a set of filters that enforce authentication and authorization. -->
+	<bean id="filterChainProxy" class="org.acegisecurity.util.FilterChainProxy">
+		<property name="filterInvocationDefinitionSource">
+			<value>
+				CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON 
+				PATTERN_TYPE_APACHE_ANT 
+				/**=httpSessionContextIntegrationFilter
+			</value>
+		</property>
+	</bean>
+
+	<!-- Maintains security context between requests (using the session). -->
+	<bean id="httpSessionContextIntegrationFilter" class="org.acegisecurity.context.HttpSessionContextIntegrationFilter">
+		<property name="forceEagerSessionCreation" value="true" />
+	</bean>
+
+	<!-- Users cache for Acegi (Ehcache). -->
+	<bean id="userCache" class="org.acegisecurity.providers.dao.cache.EhCacheBasedUserCache">
+		<property name="cache">
+			<bean class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+				<property name="cacheManager" ref="cacheManager" />
+				<property name="cacheName" value="AbstractGusAplication.USER_CACHE" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" />		
+	
+</beans>

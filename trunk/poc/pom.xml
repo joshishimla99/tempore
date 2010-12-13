@@ -1,0 +1,152 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<!-- <parent>
+		<groupId>com.gemalto.uxp</groupId>
+		<artifactId>uxp.maven.scm</artifactId>
+		<version>0.0.6</version>
+	</parent> -->
+	
+	<groupId>com.gemalto.contactdirectory</groupId>
+	<artifactId>cd-sc-movistar-mexico</artifactId>
+	<version>1.3-SNAPSHOT</version>
+	<packaging>war</packaging>
+    <name>CD Self Care Movistar Mexico</name>
+	
+	<properties> 	
+		<spring.version>2.5.6</spring.version>
+ 	</properties>	
+    
+    <!-- <scm>
+    	<connection>scm:svn:https://10.105.80.40/subversion/repoAr/contactdirectory/webapps/movistar_mexico/selfcare</connection>
+    	<developerConnection>scm:svn:https://10.105.80.40/subversion/repoAr/contactdirectory/webapps/movistar_mexico/selfcare</developerConnection>
+    	<url>scm:svn:https://10.105.80.40/subversion/repoAr/contactdirectory/webapps/movistar_mexico/selfcare</url>
+	</scm> -->
+    
+    <dependencies>
+ 		<!--              -->
+		<!--   GEMALTO    -->
+		<!--              -->
+		<!-- <dependency>
+			<groupId>com.gemalto.contactdirectory</groupId>
+			<artifactId>contactdirectory-pages</artifactId>
+			<version>1.0</version>
+		</dependency> -->
+		<dependency>
+			<groupId>com.gemalto.gus</groupId>
+			<artifactId>gus-contact-directory</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gemalto.gus</groupId>
+			<artifactId>gus-pages</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<!-- <dependency>
+			<groupId>com.gemalto.gus</groupId>
+			<artifactId>gemalto-unified-service</artifactId>
+			<version>1.0</version>
+		</dependency>
+    	<dependency>
+			<groupId>com.gemalto.contactdirectory</groupId>
+			<artifactId>contactdirectory-pb40-2G</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gemalto.ota</groupId>
+			<artifactId>ota40</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gemplus.gsg3</groupId>
+			<artifactId>gsg3-soapclient</artifactId>			
+			<version>4.0-patch13</version>	
+		</dependency>		
+		<dependency>
+			<groupId>com.gemplus.gsg3</groupId>
+			<artifactId>vox-soapclient</artifactId>			
+			<version>4.0</version>		
+		</dependency> -->		
+		<!--              -->
+		<!--   SPRING     -->
+		<!--              -->    
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>xerces</groupId>
+			<artifactId>xercesImpl</artifactId>
+			<version>2.8.1</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+			<version>1.3.0</version>
+		</dependency>	
+		<dependency>
+			<artifactId>slf4j-log4j12</artifactId>
+    		<groupId>org.slf4j</groupId>
+    		<version>1.4.2</version>
+			<exclusions>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
+		</dependency>
+		<!--              -->
+		<!--     RUNTIME  -->
+		<!--              -->		
+		<dependency>
+			<groupId>com.gemalto</groupId>
+			<artifactId>ota40container</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+		</dependency>
+    </dependencies>
+	<build>
+		<finalName>cd-sc-movistar-mexico</finalName>
+	</build>
+</project>
