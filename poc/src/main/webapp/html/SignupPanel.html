@@ -1,0 +1,57 @@
+<html xmlns:wicket>
+<body>
+<wicket:panel>
+
+<!-- InstanceBeginEditable name="cuerpo" -->
+	<!-- abro loginform -->
+	
+	<table width="100%" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="1%">
+				<img src="images/img_signup.jpg" width="310" height="398" /> 
+			</td>
+			<td valign="top">
+				<div class="signupform">
+					<h1>Reg&iacute;strate ahora</h1>
+                        <p>Ingresa tus datos, no olvides introducir tu n&uacute;mero
+                            de celular.
+                            En breve recibir&aacute;s un SMS con tu clave.</p>
+                        <form wicket:id="signupForm">
+                            <fieldset>
+                            <div class="formline">
+                                <label>Nombre</label>
+                                <input wicket:id="name" type="text" size="30"  />
+                            </div>
+                                <div class="formline">
+                                <label>Apellido</label>
+                                <input wicket:id="lastName" type="text" size="30" />
+                            </div>
+                                <div class="formline">
+                                <label>Pregunta secreta</label>
+                                <input wicket:id="question" type="text" size="30" />
+                            </div>
+                                <div class="formline">
+                                <label>Respuesta</label>
+                                <input wicket:id="response" type="text" size="30"/>
+                            	</div>
+                                <div class="formline">
+                                <label>N&uacute;mero Movistar</label>
+                                <input wicket:id="msisdn" type="text" size="30" />
+                                </div>
+                                <div class="boton" style="padding:10px 10px 0px 200px;">
+                              <input wicket:id="cancel" type="button" value="Cancelar" />
+                                <input wicket:id="next" type="button" value="Siguiente" />     
+                            </div>
+                            </fieldset>                            
+                        </form>
+						<div wicket:id="feedback" class="feedbackPanelERROR">[feedback]</div>
+                    </div>				
+				</td>
+            </tr>
+        </table>
+       
+		<!-- cierro loginform -->
+ 
+</wicket:panel>
+</body>
+</html>

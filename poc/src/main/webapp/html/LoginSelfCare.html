@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:wicket="http://wicket.sourceforge.net/" 
+	xml:lang="en" lang="en">
+
+<head>
+	<title>Movistar - Ingresar</title>
+	<link href="symchronize_movistar_classes.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="nobg">
+	<div class="container white">
+		<div class="header"> </div>		
+		<!-- abro content -->
+		<div class="content">
+
+		<!-- abro loginbig -->
+		<div class="loginbig">
+			<table width="940" border="0" align="left" cellpadding="0" cellspacing="0" bgcolor="#FAFAFA" id="login">
+				<tr>
+					<td width="1%"><span class="panelimg"><img src="images/img_login.jpg" width="690" height="310" /></span></td>
+					<td valign="top">
+						<div class="loginform">
+							<h1>Ingresar</h1>
+							<form wicket:id="loginform">
+								<fieldset>
+									<div class="formline">
+										<label>N&uacute;mero Movistar</label>
+										<input wicket:id="username" type="text" size="30" />
+									</div>
+									<div class="formline">
+										<label>Contrase&ntilde;a</label>
+										<input wicket:id="password" type="password" size="30" />
+									</div>
+									<div class="boton" style="padding:10px 10px 0px 135px;">
+										<input type="submit" value="Ingresar" />
+									</div>
+									<br />
+									<div class="formline">
+										<label>
+											<a wicket:id="passwordRecovery">Recuperar contrase&ntilde;a</a>
+										</label>
+									</div>
+									<br />
+								</fieldset>
+								<!-- abro feedbackPanelERROR -->
+								<div class="feedbackPanelERROR">
+									<span wicket:id="feedback">[[feedback]]</span>
+								</div>
+								<!-- cierro feedbackPanelERROR -->
+							</form>
+						</div>
+					</td>
+                </tr>
+                <tr>
+                    <td width="1%">
+                    	<div class="loginbanda">
+							<h1></h1>
+							<p></p>
+						</div>
+					</td>
+					<td valign="top">
+						<div class="signup">
+							<h1>Reg&iacute;strate</h1>
+							<p>Si no tienes una cuenta, reg&iacute;strate ahora</p>
+							<form wicket:id="signupForm">
+								<div class="boton" style="padding:8px 10px 0px 130px;">
+									<input type="submit" value="Registrar" />
+								</div>
+							</form>
+						</div>
+					</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td valign="top">&nbsp;</td>
+                </tr>
+            </table>
+		</div>
+		<!-- cierre loginbig -->
+		<p>&nbsp;			            </p>
+		
+	</div>
+	<!-- cierro content -->
+	
+	</div>
+	<!-- cierro container -->
+	
+	<script type="text/javascript">
+		document.getElementById('username').focus();
+	</script>
+</body>
+</html>

@@ -1,0 +1,1192 @@
+body	{
+	width:980px;
+/*	overflow:hidden;*/
+	margin: 0 auto;
+	background-color:#014f9A;
+	font-family:Arial, Helvetica, sans-serif;
+	}
+
+img	{
+	border:0px;
+	}
+
+form	{
+	padding:0px;
+	margin:0px;
+	}
+
+p	{
+	margin: 0px;
+	padding:5px 0px 5px 0px;
+	}
+
+.container	{
+	background-image: url(images/bg_movistar_new.jpg);
+	background-repeat:repeat-y;
+	background-color:#FFFFFF;
+	}	
+
+.container.white, .footer.white	{
+	background-color:#FFFFFF;
+	background-image:none;
+	}
+
+.content	{
+	padding: 10px 20px 5px 20px;
+/*	background-image:url(images/bg_logo_gemalto.jpg);*/
+	background-position:right;
+	background-repeat:repeat-y;
+	height:400px;
+/*	overflow:hidden;*/
+	}
+	
+.content.white	{
+	padding: 10px 20px 5px 20px;
+	width:100%;
+	height:400px;
+	}		
+	
+.header, .footer	{
+	padding:0px;
+	text-align:center;
+	}
+
+/* 20071002 */
+.header	{
+	padding-top:7px;
+	background-image:url(images/bg_header.jpg);
+	background-position:center;
+	background-repeat:no-repeat;
+	height:52px;
+	}
+/* 20071002 */
+
+.header img	{
+	margin:0px;
+	padding:0px;
+	padding-top:5px;
+	}
+
+.numerotel	{
+	text-align:right;
+	color:#FFFFFF;
+	font-size:15px;
+	font-weight:bold;
+	padding:8px 20px 0px 0px;
+	}
+
+.menunew	{
+	margin: 5px 12px 0px 12px;
+/*	margin: 5px 35px 0px 25px;*/
+	height:35px;
+	background-image:url(images/bg_menu.jpg);
+	background-repeat:repeat-x;
+	width: 956px;
+/*	width: 910px;*/
+	}
+	
+.menunew img	{
+	border:0px;
+	vertical-align:middle;
+	padding-right:3px;
+	}
+
+.menunew a, .menunew a:visited, .menunew a:active	{
+	text-decoration:none;
+	}
+	
+.menunew a	{
+	font-size:12px;
+	color:#7B5F4A;
+	font-weight:bold;
+/*	padding-right:20px; para que entre el nuevo boton en el menu */
+	padding-right:0px;
+	}
+	
+.menunew em {
+	font-size:12px;
+	font-weight:bold;
+	padding-right:0px;
+	font-style: normal;
+	}
+	
+.menunew a:hover	{
+	text-decoration:underline;
+	}
+	
+.menunew a:active	{
+	color:#00005A;
+	}
+	
+.login	{
+	float:right;
+	}
+	
+/* 20071010 */	
+.login a	{
+	color: #004E99;
+	padding-right:12px;
+	}
+	
+.menunew .login a:hover	{
+	color: #009AD9;
+	}
+
+/* 20071010 */	
+
+.spacer	{
+	height: 34px;
+	display: block;
+	background-image: url(images/bg_gradiente_naranja.jpg);
+	background-position:center;
+	background-repeat:no-repeat;
+	clear:both;
+	}
+
+.spacergris	{
+	height: 30px;
+	display: block;
+	background-image: url(images/bg_gradiente_gris.jpg);
+	clear:both;
+	}
+
+.spacerblank	{
+	height: 30px;
+	display: block;
+	clear:both;
+	}
+
+	
+
+.fondo	{	
+background-image: url(images/bg_logo_gemalto.jpg);
+}
+
+.areaetiqueta	{
+/*	width: 430px;
+	background-image:url(images/bg_etiqueta.jpg);
+	background-repeat:repeat-y;
+	background-position:right;
+	float:left;*/
+	/*height:85px;*/
+	background-image:url(images/bg_h1_movistar.gif);
+	background-repeat:no-repeat;
+	background-position:right bottom;
+	}
+	
+.areaetiqueta.custom	{
+	background-image:url(images/bg_h1_movistar2.gif);
+	}	
+
+.areaetiqueta img	{
+	float:left;
+	}
+
+.areaetiqueta h1, .areaetiqueta h2	{
+	margin: 0px;
+	}
+	
+.areaetiqueta h1	{
+	margin: 0px 0px 0px 220px;
+	padding: 5px 0px 13px 0px;
+/*	width:350px;*/
+	width:550px;
+	font-size:24px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	color: #009AD9;
+	display:block;
+	line-height:97%;
+	height:50px;
+	}
+	
+.areaetiqueta h1.thin	{
+	height:30px;
+	}
+	
+.areaetiqueta h2	{
+	padding: 0px 0px 0px 420px;
+	font-size:24px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+/*	color: #FF6500;*/
+	color: #7CC242;
+	}	
+	
+.areadesc	{
+	float:right;
+	width:540px;
+	}
+	
+.areadesc p	{
+	font-size: 13px;
+	line-height:140%;
+	font-weight:bold;
+	color:#999999;
+	width:375px;
+	padding-top:0px;
+	}
+
+.agenda	{
+	width:575px;
+	height:33px;
+	background-image: url(images/tabla/bg_header.jpg);
+	margin:0px;
+	padding:0px;
+	}
+	
+.letters	{
+	font-size:11px;
+	color:#FFFFFF;
+	font-weight:bold;
+	padding-left:20px;
+	padding-top:7px;
+	}
+
+.letters	{
+	width:370px;
+	}
+	
+.contactsearch	{
+	float:right;
+/*	width:150px;*/
+	font-size:11px;
+	color:#FFFFFF;
+	font-weight:bold;
+	overflow:hidden;
+	padding:0px 10px 0px 0px;
+	}
+	
+/*.contactsearch label	{
+	float:left;
+	}*/
+	
+.contactsearch form input	{
+	height:13px;
+	width:100px;
+	color:#0033CC;
+	}
+	
+.letters a	{
+	color:#FFFFFF;
+	text-decoration:none;
+	}
+
+.letters a:hover	{
+	color:#FFFFFF;
+	text-decoration:underline;
+	}
+	
+/*.contactsearch	{
+	width:130px;
+	}*/
+
+.homepage	{
+	width:650px;
+	padding:20px;
+	text-align:center;
+	padding-left:150px;
+	}
+	
+.homepage a.botonrestore, .homepage a.botonsync, .homepage a.botonmanage	{
+	width: 200px;
+	height: 250px;
+	display:block;
+	float:left;
+	margin: 5px;
+	}
+
+.homepage a.botonbackup:hover, .homepage a.botonrestore:hover, .homepage a.botonsync:hover, .homepage a.botonmanage:hover	{
+	background-position: 0px -250px;
+	}	
+
+.homepage a.botonrestore	{
+	background-image: url(images/buttons/button_home_restore.jpg);
+	}
+
+.homepage a.botonsync	{
+	background-image: url(images/buttons/button_home_synchronize.jpg);
+	}
+
+.homepage a.botonmanage	{
+	background-image: url(images/buttons/button_home_manage-contacts.jpg);
+	}
+	
+.homepagetiny	{
+	width:650px;
+	padding:20px;
+	text-align:center;
+	padding-left:150px;
+	}
+
+.homepagetiny a.botonrestore, .homepagetiny a.botonsync	{
+	width: 300px;
+	height: 250px;
+	display:block;
+	float:left;
+	margin: 5px;
+	}
+
+.homepagetiny a.botonrestore:hover, .homepagetiny a.botonsync:hover, .homepagetiny a.botonmanage:hover	{
+	background-position: 0px -250px;
+	}	
+
+.homepagetiny a.botonrestore	{
+	background-image: url(images/buttons/button_home_restore_small.jpg);
+	}
+
+.homepagetiny a.botonsync	{
+	background-image: url(images/buttons/button_home_synchronize_small.jpg);
+	}
+
+.contactos, .generico	{
+	padding-left:210px;
+	}
+
+.generico	{
+	background-color: #F2F2F2;
+	margin:0px 8px 0px 70px;
+	padding:10px 10px 0px 10px; /*fix para el margen de ie6*/
+	background-image:url(images/bg_restore.gif);
+	background-repeat:repeat-y;
+	background-position:right;
+	}
+	
+.generico p, .generico ul, .generico li	{
+/*	width:450px;*/
+	width:600px;
+	font-size:12px;
+	}
+
+.generico p.intro	{
+	margin:0px 0px 5px 0px;
+	padding:0px;
+}
+
+.generico ul	{
+	padding:0px 0px 10px 0px;
+}
+
+.generico ul, .generico li	{
+	list-style-type:none;
+	margin:0px;
+	}
+
+.generico li	{
+	padding-top:6px;
+	}
+
+.generico p.progress	{
+	font-size:14px;
+	font-weight:bold;
+	font-variant:small-caps;
+	padding-bottom:0px;
+	margin-bottom:0px;
+	}
+
+.generico li span	{
+	color:#009AD9;
+	font-weight:bold;
+	text-transform:uppercase;
+	}
+
+form.confirmacion	{
+	width:450px;
+	text-align:left;
+/*	padding-bottom:10px;
+	padding-bottom:5px;*/
+	height:42px;
+	background-color:#F2F2F2;
+	}
+	
+form.confirmacion div.formline	{
+	font-size:12px;
+	font-weight:bold;
+	padding-top:5px;
+	}
+	
+form.confirmacion label	{
+	width:180px; /* cambio a 180px para campo mas ancho */
+	display:block;
+	float:left;
+	text-align:right;
+	padding-right:10px;
+	}
+
+.formline2	{
+	padding-top:20px;
+	}
+
+.formline2	label	{
+	display:block;
+	width:120px;
+	text-align:right;
+	float:left;
+	font-weight:bold;
+	padding:5px 5px 0px 0px;
+	font-size:13px;
+	}
+	
+.buttons	{
+	padding-left:90px;
+	}
+	
+.generico h3	{
+	text-transform:uppercase;
+	font-size:15px;
+/*	color:#FF6600;*/
+	color:#009AD9;
+	margin: 0px;
+	padding: 0px 0px 5px 0px;
+	}
+	
+.generico h3.success	{
+	color:#009900;
+	}
+	
+.contactos th	{
+	background-color:#004E99;
+	color:#FFFFFF;
+	text-align:left;
+	}
+
+.contactos table	{
+	background-image:url(images/tabla/bg_tr.jpg);
+	}	
+
+.contactos tr	{
+	font-size:12px;
+	font-weight:bold;
+	height:22px;
+	}
+	
+.contactos table.tiny	{
+	background-image:url(images/tabla/bg_tr_import.jpg);
+	}
+	
+.contactos tr input	{
+	color:#FF6600;
+	margin:0px;
+	padding:0px;
+/*	float:left;*/
+	display:inline;
+	}
+	
+.contactos tr td	{
+	padding-left:5px;
+	}
+
+.contactos form.form1	{
+	width:575px;
+	margin: 0px;
+	padding:0px;
+	}
+	
+.contactos p	{
+	margin:0px;
+	padding:0px;
+	font-size:11px;
+	font-weight:bold;
+/*	position:relative;
+	top:-20px;
+	left:200px;*/ /*para q el div de error se muestre correctamente */
+	}
+
+.pages	{
+	width: 575px;
+	height:20px;
+	overflow:hidden;
+	}
+
+.actions	{
+	width: 575px;
+	height:55px;
+	display:block;
+	}
+	
+
+.pages	{
+	background-color:#004E99;
+	color:#FFFFFF;
+	}
+
+.pages a, .pages a:visited, .count	{
+	color:#FFFFFF;
+	font-weight:bold;
+	font-size:12px;
+	text-decoration:none;
+	}
+	
+.pages a:hover	{
+	text-decoration:underline;
+	}
+	
+.pages a:active	{
+	color:#FFCC00;
+	}
+
+.actions	{
+	background-color:#999999;
+	}
+
+.contactactions.recycle	{
+	height:40px;
+	}	
+	
+.contactactions	{
+	width:300px;
+	padding:5px;
+	height:40px;
+/*	min-height:35px;*/
+	float:left;
+	background-color:#999999;
+	}
+	
+
+.contactactions h3	{
+	margin:0px;
+	padding:0px;
+	color:#FFFFFF;
+	font-size:15px;
+	display: compact;
+	}
+
+.contactactions h4	{
+	margin:0px;
+	padding:0px;
+	color:#CADB38;
+	font-size:12px;
+	display: compact;
+	}
+	
+.contactactions a	{
+	font-size:11px;
+	text-transform:uppercase;
+	color:#FFFFFF;
+	text-decoration:none;
+	font-weight:bold;
+	display:compact;
+	}
+
+.contactactions img	{
+	vertical-align:middle;
+	padding-right:3px;
+	}
+
+.count	{
+	float:right;
+	position:relative;
+	top:-18px;
+	overflow:hidden;
+	}
+
+/*.footer	{
+	width:1024px;
+	margin: 0 auto;
+	background-color:#9B8B7A;
+	background-image:url(images/bg_body.jpg);
+	background-image: url(images/bg_footer_movistar.jpg);
+	background-repeat:repeat-y;
+	background-position:center;
+	font-family:Arial, Helvetica, sans-serif;
+	}*/
+
+.footer		{
+	margin: 0 auto;
+	font-family:Arial, Helvetica, sans-serif;
+	background-color:#FFFFFF;
+	text-align:center;
+	}
+
+
+/*.footer	{
+	width:960px;
+	clear:both;
+	background-color:#7B5F4A;
+	background-color:#FFFFFF;
+	display:block;
+	margin:5px 35px 5px 35px;
+	text-align:center;
+	}*/
+
+.footer a	{
+	color: #99CC00;
+	text-decoration:none;
+	}
+	
+.footer p	{
+	color:#009AD9;
+	font-size:11px;
+	font-weight:bold;
+	margin: 0px;
+	padding:0px 0px 5px 0px;
+	clear:both;
+	}
+
+/*.footer img	{
+	padding:0px 23px 0px 23px;
+	}*/
+	
+.fleft	{
+	float:left;
+	}
+
+.fleftbullet	{
+	float:left;
+	padding-right:5px;
+	}
+	
+.fright	{
+	float:right;
+	}
+	
+.contactsearch form input.buttongo	{
+	width:22px;
+	height:19px;
+	}
+	
+.absmiddle	{
+	vertical-align:middle;
+	}
+	
+.recycler	{
+	float:right;
+	display:block;
+	margin-right:5px;
+	}
+	
+.sidebar	{
+	width:200px;
+	height:330px;
+	display:block;
+	background-color:#99FF00;
+	float:left;
+/*	margin:20px 0px 0px 3px;*/
+	background-image: url(images/bg_sidebar.jpg);
+	}
+	
+.sidebar.users	{
+	background-image:url(images/bg_sidebar_users.jpg);
+	}
+	
+.sidebar p	{
+	font-size:12px;
+	color:#FFFFFF;
+	text-align:center;
+	font-weight:bold;
+	}
+
+.sidebar *	{
+	padding: 5px 5px 0px 5px;
+	margin:0px;
+	}
+	
+.sidebar strong, .sidebar li	{
+	padding:0px;
+	}
+
+.sidebar h1	{
+	font-size:17px;
+	}
+	
+.sidebar p.sync	{
+	font-size:11px;
+	color:#333333;
+	text-align:left;
+	}
+	
+.sidebar h2	{
+	font-size:12px;
+	text-transform:uppercase;
+	padding-top:25px;
+	color:#FFFFFF;
+	}
+
+.sidebar h3	{
+	font-size:15px;
+	color:#333333;
+	}
+	
+.sidebar ul	{
+	list-style-type:none;
+	padding:10px 0px 0px 0px;
+	}
+	
+.sidebar a	{
+	font-size:11px;
+	text-transform:uppercase;
+	color:#FFFFFF;
+	text-decoration:none;
+	font-weight:bold;
+	display:compact;
+	}
+	
+.sidebar li	{
+	margin-top:-2px;
+	}
+	
+.sidebar li img	{
+	vertical-align:middle;
+	}
+	
+.loginbig	{
+/*	width:100%;
+	background-color:#F2F2F2;*/
+	background-image:url(images/bg_login_gris.jpg);
+	background-repeat:repeat-x;
+	height:400px;
+	overflow:hidden;
+	}
+	
+.panelimg	{
+	width:690px;
+	display:block;
+/*	height:400px;*/
+/*	float:left;*/
+	}
+
+.loginbanda	{
+	background-image:url(images/bg_banda_login.jpg);
+	background-position:bottom;
+	background-repeat: no-repeat;
+	height:88px;
+	}
+	
+.loginbanda, .loginbanda *	{
+	padding:0px;
+	margin:0px;
+	}
+	
+.loginbanda h1	{
+	padding:5px 110px 5px 110px;
+	}
+
+
+.loginbanda h1 	{
+	font-size:18px;
+	color:#CADB38;
+	}
+
+.loginbanda p	{
+	color:#FFFFFF;
+	font-size:11px;
+	padding:0px 110px 5px 110px;
+	}
+	
+.loginform	{
+	width:230px;
+	padding-left:20px;
+	padding-top:10px;
+	}
+	
+form fieldset	{
+	padding:0px;
+	margin:0px;
+	border:0px;
+	}
+	
+.loginform label	{
+	font-size:12px;
+	font-weight:bold;
+	}
+	
+.loginform h1, .signup h1	{
+	color:#009AD9;
+	font-size:15px;
+	padding:0px;
+	margin:0px;
+	}
+
+.signupbig	{
+	/*width:32%;
+	background-color:#F2F2F2;
+	height:400px;
+	overflow:hidden;*/
+}
+	
+.signup	{
+	width:230px;
+	padding-left:20px;
+	padding-top:10px;
+	background-image:url(images/bg_gradiente_gris.jpg);
+	background-position:top;
+	background-repeat:no-repeat;
+	}
+
+.signup p	{
+	font-size:11px;
+	width:210px;
+	margin:0px;
+	padding:0px;
+	}
+
+.signupform	{
+	width:500px;
+	/*float:right;*/
+	padding:10px 30px 0px 40px;
+/*	position:relative;
+	left:40px;
+	padding-left:40px;
+	right:50px;
+	/*top:-380px;*/
+	}
+	
+.signupform	label	{
+	width:150px;
+	text-align:right;
+	display:block;
+	float:left;
+	padding:5px 5px 0px 0px;
+	font-weight:bold;
+	}
+	
+.signupform	{
+	font-size:12px;
+	}
+	
+.signupform h1	{
+	color:#009AD9;
+	font-size:20px;
+	padding:0px;
+	margin:0px;
+	}
+
+.signupform form span	{
+	font-size:9px;
+	font-style:italic;
+	}
+	
+.signupform form div.formline	{
+	padding-top:5px;
+	}
+	
+.signupform form div.formlineblock	{
+	padding-top:5px;
+	width:400px;
+	}
+
+.signupform form div.formlineblock *	{
+	padding-top:5px;
+	}
+	
+.formlineblock p	{
+	padding-bottom:0px;
+	margin-bottom:0px;
+	}
+
+.disclaimer	{
+	width:350px;
+	padding-left:150px;
+	}
+	
+.textodestacado	a {
+	font-size:13px;
+	font-weight: bold;
+	color:#009AD9;
+	}
+	
+/* POPUPS */
+
+.popupcontainer *	{
+	font-family:Arial, Helvetica, sans-serif;
+	padding:0px;
+	margin:0px;
+	}
+
+.popupcontainer	{
+	width:400px;
+	height:250px;
+	overflow:hidden;
+	padding:0px;
+	margin:0px;
+	background-color:#FAFAFA;
+	}
+	
+.popupcontainer.alto	{
+	height:400px;
+	}
+	
+.popupbody	{
+	padding:5px;
+	height:200px;
+	}
+
+.popupcontainer.alto .popupbody	{
+	height:400px;
+	}
+
+.popupcontainer.alto .popupbody	{
+	height:400px;
+	}
+
+.popupbody p	{
+	font-size:12px;
+	padding:5px 0px 0px 20px;
+	}
+	
+.popuptitle	{
+	background-image:url(images/popup/bg_popup_h1.gif);
+	background-repeat:no-repeat;
+	height:45px;
+	}
+
+.popuptitle h1	{
+	font-size:18px;
+	font-weight:bold;
+	color:#FFFFFF;
+	padding: 15px 0px 0px 20px;
+	display:block;
+	}
+	
+.popupcontainer h2	{
+	font-size:16px;
+	padding: 5px 0px 10px 20px;
+	display:block;
+	}
+	
+.popupcontainer h2 span	{
+	color:#FFFFFF;
+	}
+	
+.popupbody	{
+	background-image:url(images/popup/bg_popup_body.gif);
+	background-repeat:no-repeat;
+	}
+	
+.popupbody.edit	{
+	background-image:url(images/popup/bg_popup_body_edit.gif);
+	}
+
+.popupbody.delete	{
+	background-image:url(images/popup/bg_popup_body_deletes.gif);
+	}
+
+.popupbody.add	{
+	background-image:url(images/popup/bg_popup_body_add.gif);
+	}
+	
+.popupcontainer.tall .popupbody.add	{
+	background-image:url(images/popup/bg_popup_body_add_user.gif);
+	}
+
+.popupcontainer.tall .popupbody.edit	{
+	background-image: url(images/popup/bg_popup_body_modify_user.gif);
+	}
+
+.popupcontainer.tall .popupbody.delete	{
+	background-image: url(images/popup/bg_popup_body_deletes.gif);
+	}
+
+.close	{
+	vertical-align:baseline;
+	float:right;
+	margin: 7px 7px 0px 0px;
+	}
+
+.popupcontainer form	{
+	padding: 15px 0px 10px 0px;
+	font-size:13px;
+	}
+	
+.popupcontainer .formline	{
+	padding:5px 0px 0px 0px;
+	}
+	
+.popupcontainer .formline label	{
+	width:130px;
+	display:block;
+	float:left;
+	padding-left:20px;
+/*	text-align:right;*/
+	font-weight:bold;
+	padding-right:5px;
+	}
+
+.popupcontainer .formline label.wide	{
+	width:150px;
+	}
+	
+.popupcontainer .formbuttons	{
+	display:block;
+	padding:10px 0px 0px 50px;
+	}
+
+.popupcontainer .contacts	{
+	overflow: auto;
+	height:80px;
+	width:300px;
+	overflow:scroll;
+	overflow-x: hidden; 
+	background-color:#F2F2F2;
+	font-weight:bold;
+	color:#00005A;
+	}
+	
+.popupcontainer .contacts.wide	{
+	width:380px;
+	height: 200px;
+	}
+
+.popupcontainer .contacts ul.nombres, .popupcontainer .contacts ul.telefonos	{
+	list-style-type:none;
+	margin: 0px;
+	padding:0px;
+	width:170px;
+	}
+
+.popupcontainer .contacts ul.nombres	{
+	float:left;
+	}
+	
+.popupcontainer .contacts ul.telefonos	{
+	float:right;
+	padding:0px 20px 0px 0px;
+	}
+
+
+.popupcontainer .contacts ul li	{
+	padding-left:20px;
+	}
+	
+.popupcontainer p.confirmation	{
+	color: #FFFFFF;
+	text-align:center;
+	padding-top:10px;
+	font-weight:bold;
+	font-size:15px;
+	color:#FF0000;
+	}
+	
+.textright	{
+	text-align:right;
+	}
+	
+.formline input	{
+	height:14px;
+	}
+	
+.feedbackPanelERROR	*, div.generico div.feedbackPanelERROR *	{
+/*	color:#009AD9; celeste movistar */
+	color:#FF0000;
+	margin:3px 0px 3px 10px;
+	padding:0px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	}
+	
+div.feedbackPanelERROR, div.generico div.feedbackPanelERROR	{
+	margin: 10px 0px 0px 0px;
+	padding:3px;
+	}
+
+div.feedbackPanelERROR	ul	{
+	list-style-type:none;
+	}
+
+div.transaction div.feedbackPanelERROR	{
+	display: inline;
+	margin-top:-10px;
+	font-size:11px;
+	vertical-align:middle;
+	}
+
+div.transaction div.feedbackPanelERROR span	{
+	margin: 0px;
+	padding:0px 10px 0px 20px;
+	}
+
+li.feedbackPanelERROR	{
+	margin-left:0px;
+	padding-left:0px;
+	}
+
+.transaction	{
+	margin-top:-5px;
+	}
+
+.transaction form	{
+	width:920px;
+	float:right;
+	font-size:11px;
+	}
+
+.transaction form input	{
+/*	height:14px;*/
+	color:#00FFCC;
+	font-size:11px;
+	}
+
+.transaction form select	{
+	font-size:11px;
+	}
+
+.transaction form .campo	{
+	float:left;
+	display:block;
+	padding:0px 6px 2px 6px;
+	}
+
+.transaction table table	{
+	font-size:11px;
+	background-color:#FFFFFF;
+	border:1px solid #CCCCCC;
+	}
+	
+.transaction table table th	{
+	background-color:#004E99;azul;
+	text-transform:uppercase;
+	text-align:left;
+	color:#FFFFFF;
+	padding:0px 2px 2px 3px;
+	}
+	
+.transaction table table td	{
+	padding:0px 2px 2px 3px;
+	background-image:url(images/tabla/bg_tr_transaction.jpg)
+	}
+	
+.transaction label	{
+	font-weight:bold;
+	text-transform:uppercase;
+	color:#009AD9;
+	padding:0px 5px 0px 0px;
+	}
+
+.paginador	{
+	width:920px;
+	display:block;
+	background-color:#009AD9;
+	float:right;
+/*	float:left;*/
+	color:#FFFFFF;
+	font-size:11px;
+	font-weight:bold;
+/*	text-align:center;*/
+	text-align:center;
+	height:15px;
+	margin: 0 auto;
+	}
+	
+.paginador a	{
+	color:#FFFFFF;
+	text-decoration:none;
+	margin:2px 0px 2px 0px;
+	}
+	
+.paginador a:hover	{
+	text-decoration:underline;
+	}
+	
+.paginador img	{
+	vertical-align:middle;
+	}
+	
+.buttonpadded	{
+	padding-right:5px;
+	}
+	
+.buttonvolver	{
+	padding:5px 5px 0px 0px;
+	float:right;
+	}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+	<bean id="authenticationManager" class="com.gemalto.webcare.common.web.security.WebAppAcegiAuthenticationManager">
+		<property name="applicationService" ref="gusContactDirectoryService" />
+		<property name="providers" ref="providers" />
+	</bean>
+
+	<util:list id="providers">
+		<ref bean="gusProvider"/>
+	</util:list>
+
+	<bean id="gusProvider" class="com.gemalto.gus.web.security.provider.GusProvider">
+		<property name="userService" ref="userService" />
+		<property name="encoder" ref="passwordEncoder" />
+		<property name="securityUserFactory" ref="securityUserFactory" />
+	</bean>
+		
+	<bean id="securityUserFactory" class="com.gemalto.gus.web.security.provider.SecurityUserFactory" />
+
+	<bean id="msisdnSpecification" class="com.gemalto.webcare.common.model.RegularExpressionMsisdnSpecification">
+		<property name="regularExpression" value="^[\+]?[dep#*\d]*$" />
+	</bean>
+	
+	<bean id="passwordSpecification" class="com.gemalto.gus.domain.model.SimplePasswordSpecification">
+		<property name="minLength" value="8" />
+	</bean>
+
+</beans>
