@@ -18,7 +18,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> {
 	public GenericHibernateDAO() {
 		this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}
-
+	
 	/**
 	 * Obtiene la sesion activa
 	 * @return
@@ -59,12 +59,12 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<T> findByExample(T exampleInstance, String[] excludeProperty) {
+	public List<T> findByExample(T exampleInstance) {
 		Criteria crit = getSession().createCriteria(getPersistentClass());
 		Example example = Example.create(exampleInstance);
-		for (String exclude : excludeProperty) {
-			example.excludeProperty(exclude);
-		}
+//		for (String exclude : excludeProperty) {
+//			example.excludeProperty(exclude);
+//		}
 		crit.add(example);
 		return crit.list();
 	}

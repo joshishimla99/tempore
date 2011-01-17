@@ -8,9 +8,8 @@
 		<property name="connection.url">jdbc:mysql://localhost/tempore</property>
 		<property name="connection.username">root</property>
 		<property name="connection.password" />
-
-		<!-- roperty name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property -->
-		<!-- JDBC connection pool (use the built-in) -->
+		<!-- roperty name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property 
+			JDBC connection pool (use the built-in) -->
 		<property name="connection.pool_size">1</property>
 		<!-- SQL dialect -->
 		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
@@ -19,10 +18,15 @@
 		<!-- Disable the second-level cache -->
 		<property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
 		<!-- Echo all executed SQL to stdout -->
-		<property name="show_sql">true</property>
+		<property name="show_sql">true</property>		
 		<!-- Drop and re-create the database schema on startup -->
 		<property name="hbm2ddl.auto">update</property>
-
+		
+		
 		<mapping class="fi.uba.tempore.poc.entities.TaskState" />
+		<mapping class="fi.uba.tempore.poc.entities.TaskType" />
+		<mapping class="fi.uba.tempore.poc.entities.Task" />
+		<mapping class="fi.uba.tempore.poc.entities.Project" />
+		<mapping class="fi.uba.tempore.poc.entities.ProjectState" />	
 	</session-factory>
 </hibernate-configuration>
