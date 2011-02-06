@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" output="test-classes" path="test"/>
+	<classpathentry exported="true" kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
+	<classpathentry exported="true" kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="E:/jarTempore/spring4gwt-0.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Documents and Settings/lrinaudo.GEMALTO/.m2/repository/org/aspectj/aspectjrt/1.5.4/aspectjrt-1.5.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Documents and Settings/lrinaudo.GEMALTO/.m2/repository/log4j/log4j/1.2.14/log4j-1.2.14.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Documents and Settings/lrinaudo.GEMALTO/.m2/repository/org/springframework/spring-context/2.5.6/spring-context-2.5.6.jar"/>
+	<classpathentry kind="output" path="war/WEB-INF/classes"/>
+</classpath>
