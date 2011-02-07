@@ -39,4 +39,14 @@ public class FieldVerifier {
 		}
 		return name.length() > 3;
 	}
+	
+	public static boolean isValidPassword(String password){
+		if (password == null){
+			return false;
+		}
+		if (password.length() < 4){
+			return false;
+		}
+		return true;
+	}
 }

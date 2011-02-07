@@ -6,5 +6,5 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 * The async counterpart of GreetingService.
 */
 public interface GreetingServiceAsync {
- void greet(String input, AsyncCallback callback);
+ void greet(String input, String input2, AsyncCallback callback);
 }

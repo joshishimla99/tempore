@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.gs.spring4.gwt.ex.shared.FieldVerifier;
 
 /**
  * Entry point classes define onModuleLoad().
@@ -32,9 +33,8 @@ public class Spring4gwtEx implements EntryPoint {
  /**
   * Create a remote service proxy to talk to the server-side Greeting service.
   */
- private final GreetingServiceAsync greetingService = GWT
-   .create(GreetingService.class);
-
+ private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
+ 
  /**
   * This is the entry point method.
   */
@@ -42,6 +42,8 @@ public class Spring4gwtEx implements EntryPoint {
   final Button sendButton = new Button("Send");
   final TextBox nameField = new TextBox();
   nameField.setText("GWT User");
+  final TextBox passwordField = new TextBox();
+  passwordField.setText("Password");
 
   // We can add style names to widgets
   sendButton.addStyleName("sendButton");
@@ -49,6 +51,7 @@ public class Spring4gwtEx implements EntryPoint {
   // Add the nameField and sendButton to the RootPanel
   // Use RootPanel.get() to get the entire body element
   RootPanel.get("nameFieldContainer").add(nameField);
+  RootPanel.get("passwordFieldContainer").add(passwordField);
   RootPanel.get("sendButtonContainer").add(sendButton);
 
   // Focus the cursor on the name field when the app loads
@@ -93,27 +96,41 @@ public class Spring4gwtEx implements EntryPoint {
     * Fired when the user clicks on the sendButton.
     */
    public void onClick(ClickEvent event) {
-    sendNameToServer();
+	   if (validInformation()){
+		   sendInformationToServer();   
+	   }
    }
 
-   /**
+   private boolean validInformation() {
+	   if (FieldVerifier.isValidName(nameField.getText())){
+		   if (FieldVerifier.isValidPassword(passwordField.getText())){
+			   return true;
+		   }
+	   }
+	   return false;
+   }
+
+/**
     * Fired when the user types in the nameField.
     */
    public void onKeyUp(KeyUpEvent event) {
-    if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-     sendNameToServer();
-    }
+	   if (validInformation()){
+		   if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+			     sendInformationToServer();
+			   }
+	   }
+	   
    }
 
    /**
     * Send the name from the nameField to the server and wait for a response.
     */
-   private void sendNameToServer() {
+   private void sendInformationToServer() {
     sendButton.setEnabled(false);
     String textToServer = nameField.getText();
     textToServerLabel.setText(textToServer);
     serverResponseLabel.setText("");
-    greetingService.greet(textToServer,
+    greetingService.greet(textToServer, passwordField.getText(),
       new AsyncCallback() {
        public void onFailure(Throwable caught) {
         // Show the RPC error message to the user

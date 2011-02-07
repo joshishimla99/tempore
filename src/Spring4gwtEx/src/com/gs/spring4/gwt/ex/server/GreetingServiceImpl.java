@@ -9,10 +9,9 @@ import com.gs.spring4.gwt.ex.client.GreetingService;
 */
 @SuppressWarnings("serial")
 @Service("greetingService")
-public class GreetingServiceImpl implements
-  GreetingService {
+public class GreetingServiceImpl implements  GreetingService {
 
- public String greet(String input) {
-  return "Hello from the server, " + input + "!";
+ public String greet(String input, String password) {
+  return "Hello from the server, " + input + "!\n Tu clave es: " + password;
  }
 }
