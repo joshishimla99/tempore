@@ -2,36 +2,19 @@ package ar.fi.uba.tempore.hibernate.dao;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
-import org.hibernate.Transaction;
-import org.hibernate.classic.Session;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
-import ar.fi.uba.tempore.hibernate.util.HibernateUtil;
+import ar.fi.uba.tempore.hibernate.TestDAO;
+
 import fi.uba.tempore.poc.entities.Project;
 import fi.uba.tempore.poc.entities.Task;
 import fi.uba.tempore.poc.entities.TaskState;
 import fi.uba.tempore.poc.entities.TaskType;
 
-public class TestTaskDAO {
+public class TestTaskDAO extends TestDAO{
 
 	private TaskDAO tDAO = new TaskDAO();
 	private Task t = null;
-	private final Logger log = Logger.getLogger(TestTaskStateDAO.class);
-	private Transaction transaction;
-
-	@Before
-	public void setUp() throws Exception {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		transaction = session.beginTransaction();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		transaction.commit();
-	}
 
 	@Test
 	public void testMakePersistent() {
