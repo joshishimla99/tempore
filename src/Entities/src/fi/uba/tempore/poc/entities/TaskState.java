@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "TaskState")
+@Table(name = "TASKSTATE")
 public class TaskState implements Serializable {
 
 	private static final long serialVersionUID = -3276890544827576344L;

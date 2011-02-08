@@ -10,13 +10,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
 
 @Entity
-@Table(name = "Task")
+@Table(name = "TASK")
 public class Task implements Serializable {
 
 	private static final long serialVersionUID = 7342154066758593998L;
