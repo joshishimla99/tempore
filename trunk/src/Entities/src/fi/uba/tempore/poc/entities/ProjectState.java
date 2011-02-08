@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="ProjectState")
+@Table(name="PROJECTSTATE")
 public class ProjectState implements Serializable {
 
 	private static final long serialVersionUID = -2131674786645618550L;

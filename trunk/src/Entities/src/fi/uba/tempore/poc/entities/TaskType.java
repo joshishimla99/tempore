@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table (name="TaskType")
+@Table (name="TASKTYPE")
 public class TaskType implements Serializable{
 
 	private static final long serialVersionUID = 8662307458239436560L;

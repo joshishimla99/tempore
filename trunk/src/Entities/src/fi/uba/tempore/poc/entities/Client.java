@@ -8,6 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -23,7 +25,7 @@ public class Client implements Serializable {
 	private String name;
 	
 	private List<Project> projectList = new ArrayList<Project>();
-	
+	private List<Contact> contactList = new ArrayList<Contact>();
 	
 	@Id
 	@GeneratedValue
@@ -58,6 +60,22 @@ public class Client implements Serializable {
 	}
 	public void addProject(Project project) {
 		this.getProjectList().add(project);
+	}
+
+	@ManyToMany(
+			targetEntity=Contact.class
+	)
+	@JoinTable(
+			name="CLIENTCONTACT",
+			joinColumns=@JoinColumn(name="clientId"),
+			inverseJoinColumns=@JoinColumn(name="contactId")
+			)
+	@LazyCollection(LazyCollectionOption.TRUE)
+	public List<Contact> getContactList() {
+		return contactList;
+	}	
+	public void setContactList(List<Contact> contactList) {
+		this.contactList = contactList;
 	}
 	
 }
