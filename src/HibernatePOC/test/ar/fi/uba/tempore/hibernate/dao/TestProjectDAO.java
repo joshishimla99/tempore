@@ -1,43 +1,22 @@
 package ar.fi.uba.tempore.hibernate.dao;
 
-import static org.junit.Assert.fail;
-
-import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-import org.hibernate.Transaction;
-import org.hibernate.classic.Session;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
-import ar.fi.uba.tempore.hibernate.util.HibernateUtil;
+import ar.fi.uba.tempore.hibernate.TestDAO;
+
 import fi.uba.tempore.poc.entities.Client;
 import fi.uba.tempore.poc.entities.Project;
 import fi.uba.tempore.poc.entities.ProjectState;
 import fi.uba.tempore.poc.entities.Task;
 
-public class TestProjectDAO {
+public class TestProjectDAO extends TestDAO{
 
-	private final Logger log = Logger.getLogger(this.getClass());
 	private ProjectDAO pDAO = new ProjectDAO();
 	private Project p = null;
-	private Transaction transaction;
 
-	
-	@Before
-	public void setUp() throws Exception {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		transaction = session.beginTransaction();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		transaction.commit();
-	}
-
-	//@Test
+	@Test
 	public void testFindById() {
 		p = pDAO.findById(1);
 		log.info("Objeto encontrado: " + p.getName() + ", " + p.getProjectState().getName());
@@ -54,7 +33,7 @@ public class TestProjectDAO {
 		}
 	}
 
-	//@Test
+	@Test
 	public void testFindAll() {		
 		List<Project> findAll = pDAO.findAll();
 		int i=0;

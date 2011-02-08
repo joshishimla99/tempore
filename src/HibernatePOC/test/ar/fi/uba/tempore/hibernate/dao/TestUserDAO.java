@@ -3,39 +3,16 @@ package ar.fi.uba.tempore.hibernate.dao;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
-import org.hibernate.Transaction;
-import org.hibernate.classic.Session;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
-import ar.fi.uba.tempore.hibernate.util.HibernateUtil;
+import ar.fi.uba.tempore.hibernate.TestDAO;
 
-import fi.uba.tempore.poc.entities.Client;
 import fi.uba.tempore.poc.entities.User;
 
-public class TestUserDAO {
-
-	private final Logger log = Logger.getLogger(this.getClass());
-	private Transaction transaction;
-	private UserDAO uDAO = null;
+public class TestUserDAO extends TestDAO{
+	private UserDAO uDAO = new UserDAO();
 	private User u = null;
 	
-	@Before
-	public void setUp() throws Exception {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		transaction = session.beginTransaction();
-
-		uDAO = new UserDAO();				
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		uDAO = null;
-		transaction.commit();
-	}
-
 	@Test
 	public void testFindAll (){
 		List<User> findAll = uDAO.findAll();
