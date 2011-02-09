@@ -11,11 +11,9 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
+import com.gs.spring4.gwt.ex.client.component.MessagePanel;
 import com.gs.spring4.gwt.ex.shared.FieldVerifier;
 
 /**
@@ -62,30 +60,20 @@ public class Spring4gwtEx implements EntryPoint {
   final DialogBox dialogBox = new DialogBox();
   dialogBox.setText("Remote Procedure Call");
   dialogBox.setAnimationEnabled(true);
-  final Button closeButton = new Button("Close");
-  // We can set the id of a widget by accessing its Element
-  closeButton.getElement().setId("closeButton");
-  final Label textToServerLabel = new Label();
-  final HTML serverResponseLabel = new HTML();
-  VerticalPanel dialogVPanel = new VerticalPanel();
-  dialogVPanel.addStyleName("dialogVPanel");
-  dialogVPanel.add(new HTML("Sending name to the server:"));
-  dialogVPanel.add(textToServerLabel);
-  dialogVPanel.add(new HTML("Server replies:"));
-  dialogVPanel.add(serverResponseLabel);
-  dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-  dialogVPanel.add(closeButton);
+  
+  final Button closeButton = new Button("Cerrar");
+  final MessagePanel dialogVPanel = new MessagePanel("dialogVPanel", "", "", closeButton);
   dialogBox.setWidget(dialogVPanel);
-
+  
   // Add a handler to close the DialogBox
   closeButton.addClickHandler(new ClickHandler() {
-   public void onClick(ClickEvent event) {
-    dialogBox.hide();
-    sendButton.setEnabled(true);
-    sendButton.setFocus(true);
-   }
-  });
-  
+	   public void onClick(ClickEvent event) {
+	    dialogBox.hide();
+	    sendButton.setEnabled(true);
+	    sendButton.setFocus(true);
+	   }
+	  });
+
   ServiceDefTarget endpoint = (ServiceDefTarget) greetingService;
   endpoint.setServiceEntryPoint("../../springGwtServices/greetingService");
   
@@ -107,6 +95,11 @@ public class Spring4gwtEx implements EntryPoint {
 			   return true;
 		   }
 	   }
+	   dialogBox.setText("Error en los datos ingresados");
+	   dialogVPanel.setMessage("Los datos ingresados no son v&aacute;lidos. Verifique que el usuario y la clave no sean vacios. La clave debe ser mayor a 3 d&iacute;gitos.");
+	   dialogVPanel.setStyleName("serverResponseLabelError");
+       dialogBox.center();
+       closeButton.setFocus(true);
 	   return false;
    }
 
@@ -128,26 +121,23 @@ public class Spring4gwtEx implements EntryPoint {
    private void sendInformationToServer() {
     sendButton.setEnabled(false);
     String textToServer = nameField.getText();
-    textToServerLabel.setText(textToServer);
-    serverResponseLabel.setText("");
+    dialogVPanel.setMessage(textToServer);
     greetingService.greet(textToServer, passwordField.getText(),
       new AsyncCallback() {
        public void onFailure(Throwable caught) {
         // Show the RPC error message to the user
-        dialogBox
-          .setText("Remote Procedure Call - Failure");
-        serverResponseLabel
-          .addStyleName("serverResponseLabelError");
-        serverResponseLabel.setHTML(SERVER_ERROR);
+        dialogBox.setText("Remote Procedure Call - Failure");
+        dialogVPanel.setStyleName("serverResponseLabelError");
+        dialogVPanel.setMessage(SERVER_ERROR);
         dialogBox.center();
         closeButton.setFocus(true);
        }
 
        public void onSuccess(String result) {
         dialogBox.setText("Remote Procedure Call");
-        serverResponseLabel
-          .removeStyleName("serverResponseLabelError");
-        serverResponseLabel.setHTML(result);
+
+        dialogVPanel.removeStyle("serverResponseLabelError");
+        dialogVPanel.setMessage(result);
         dialogBox.center();
         closeButton.setFocus(true);
        }
