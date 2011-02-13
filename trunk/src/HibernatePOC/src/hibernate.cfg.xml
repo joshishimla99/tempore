@@ -33,5 +33,11 @@
 		<mapping class="fi.uba.tempore.poc.entities.User" />
 		<mapping class="fi.uba.tempore.poc.entities.Contact" />
 		<mapping class="fi.uba.tempore.poc.entities.ContactType" />
+		<mapping class="fi.uba.tempore.poc.entities.TaskUser" />
+		<mapping class="fi.uba.tempore.poc.entities.Position" />
+		<mapping class="fi.uba.tempore.poc.entities.UserProject" />
+		<mapping class="fi.uba.tempore.poc.entities.Role" />
+		<mapping class="fi.uba.tempore.poc.entities.Privilege" />
 	</session-factory>
 </hibernate-configuration>
+
