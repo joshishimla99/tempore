@@ -31,6 +31,8 @@ public class Project implements Serializable {
 	
 	private List<Task> taskList = new ArrayList<Task>();
 	private List<Client> clientList = new ArrayList<Client>();
+	private List<UserProject> userProjectList = new ArrayList<UserProject>();
+	
 	
 	@Id
 	@GeneratedValue
@@ -90,5 +92,17 @@ public class Project implements Serializable {
 	}
 	public void addClient(Client client) {
 		this.getClientList().add(client);
+	}
+
+	@OneToMany(
+			targetEntity=UserProject.class, 
+			mappedBy="project"
+	)
+	@LazyCollection(LazyCollectionOption.TRUE)
+	public List<UserProject> getUserProjectList() {
+		return userProjectList;
+	}
+	public void setUserProjectList(List<UserProject> userProjectList) {
+		this.userProjectList = userProjectList;
 	}
 }
