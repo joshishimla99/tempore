@@ -1,6 +1,7 @@
 package fi.uba.tempore.poc.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,8 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
 
@@ -26,6 +30,7 @@ public class Task implements Serializable {
 	private TaskState taskState;
 	private TaskType taskType;
 	private Project project;
+	private List<TaskUser> taskUser;
 	
 	
 	@Id
@@ -80,5 +85,17 @@ public class Task implements Serializable {
 	}
 	public void setProject(Project project) {
 		this.project = project;
+	}
+	
+	@OneToMany(
+			targetEntity=TaskUser.class, 
+			mappedBy="task"
+	)
+	@LazyCollection(LazyCollectionOption.TRUE)
+	public List<TaskUser> getTaskUser() {
+		return taskUser;
+	}
+	public void setTaskUser(List<TaskUser> taskUser) {
+		this.taskUser = taskUser;
 	}
 }
