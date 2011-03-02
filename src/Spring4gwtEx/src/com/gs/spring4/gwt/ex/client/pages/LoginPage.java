@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.gs.spring4.gwt.ex.client.Spring4gwtEx;
 import com.gs.spring4.gwt.ex.client.component.MessagePanel;
+import com.gs.spring4.gwt.ex.client.users.User;
 import com.gs.spring4.gwt.ex.shared.FieldVerifier;
 
 /*
@@ -117,8 +118,7 @@ public class LoginPage extends Composite{
 		    sendButton.setEnabled(false);
 		    String textToServer = nameField.getText();
 		    dialogVPanel.setMessage(textToServer);
-		    Spring4gwtEx.get().getService().greet(textToServer, passwordField.getText(),
-		      new AsyncCallback() {
+		    Spring4gwtEx.get().getService().checkLogin(textToServer, passwordField.getText(), new AsyncCallback() {
 		       public void onFailure(Throwable caught) {
 		        // Show the RPC error message to the user
 		        dialogBox.setText("Remote Procedure Call - Failure");
@@ -129,6 +129,8 @@ public class LoginPage extends Composite{
 		       }
 
 		       public void onSuccess(String result) {
+		    	   User user = new User(nameField.getText().toString(), passwordField.getText().toString());
+//		    	   Spring4gwtEx.get().setHomePage(user);
 		        dialogBox.setText("Remote Procedure Call");
 
 		        dialogVPanel.removeStyle("serverResponseLabelError");
