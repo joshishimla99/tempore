@@ -3,7 +3,9 @@
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.gs.spring4.gwt.ex.client.pages.HomePage;
 import com.gs.spring4.gwt.ex.client.pages.LoginPage;
+import com.gs.spring4.gwt.ex.client.users.User;
 
 /**
  * Entry point classes define onModuleLoad().
@@ -37,4 +39,21 @@ public class Spring4gwtEx implements EntryPoint {
  public GreetingServiceAsync getService(){
 	 return this.greetingService;
  }
+ 
+ /**
+  * Metodo para setear el home page
+  * @param user
+  */
+  public void setHomePage(User user)    {
+    HomePage homeScreen=new HomePage(user);
+      /**
+      * Clear whatever is on the screen
+      */
+    RootPanel.get().clear();
+      /**
+      * Replace it with this home screen
+      */
+    RootPanel.get().add(homeScreen);
+  }
+
 }

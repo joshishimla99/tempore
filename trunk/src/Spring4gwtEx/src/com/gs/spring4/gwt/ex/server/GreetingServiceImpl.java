@@ -11,8 +11,9 @@ import com.gs.spring4.gwt.ex.client.GreetingService;
 @Service("greetingService")
 public class GreetingServiceImpl implements  GreetingService {
 
- public String greet(String input, String password) {
+ public String checkLogin(String input, String password) {
 	 // TODO: Acceder al servicio que valide los datos en la base
   return "Aca debemos validar a , " + input + " que tiene la clave " + password;
  }
+
 }
