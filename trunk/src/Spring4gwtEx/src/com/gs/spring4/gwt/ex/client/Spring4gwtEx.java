@@ -2,6 +2,7 @@
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.gs.spring4.gwt.ex.client.pages.HomePage;
 import com.gs.spring4.gwt.ex.client.pages.LoginPage;
@@ -50,10 +51,11 @@ public class Spring4gwtEx implements EntryPoint {
       * Clear whatever is on the screen
       */
     RootPanel.get().clear();
+    RootPanel.get().add(new HTML());
       /**
       * Replace it with this home screen
       */
-    RootPanel.get().add(homeScreen);
+   // RootPanel.get().add(homeScreen);
   }
 
 }

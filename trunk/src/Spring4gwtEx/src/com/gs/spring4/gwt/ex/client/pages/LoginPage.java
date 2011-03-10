@@ -128,20 +128,19 @@ public class LoginPage extends Composite{
 		        closeButton.setFocus(true);
 		       }
 
-		       public void onSuccess(String result) {
-		    	   User user = new User(nameField.getText().toString(), passwordField.getText().toString());
-//		    	   Spring4gwtEx.get().setHomePage(user);
-		        dialogBox.setText("Remote Procedure Call");
-
-		        dialogVPanel.removeStyle("serverResponseLabelError");
-		        dialogVPanel.setMessage(result);
-		        dialogBox.center();
-		        closeButton.setFocus(true);
+		       public void onSuccess(User user) {
+		    	  // Spring4gwtEx.get().setHomePage(user);
+		    	   dialogBox.setText("Remote Procedure Call");
+		        
+		    	   dialogVPanel.removeStyle("serverResponseLabelError");
+		    	   dialogVPanel.setMessage("Validar usuario " + user.getUserName() + " y clave " + user.getPassword());
+		    	   dialogBox.center();
+		    	   closeButton.setFocus(true);
 		       }
 
 			@Override
 			public void onSuccess(Object result) {
-				String resul = (String) result;
+				User resul = (User) result;
 				onSuccess(resul);
 				
 			}
