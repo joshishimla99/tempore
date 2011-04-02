@@ -2,7 +2,7 @@ package ar.tempore.server;
 
 import ar.tempore.client.DemoService;
 import ar.tempore.dto.DemoDto;
-import ar.tempore.shared.FieldVerifier;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -22,7 +22,8 @@ public class DemoServiceImpl extends RemoteServiceServlet implements
 		userAgent = escapeHtml(userAgent);
 
 		return "Hello, " + input + "!<br><br>I am running " + serverInfo
-				+ ".<br><br>It looks like you are using:<br>" + userAgent;
+				+ ".<br><br>It looks like you are using:<br>" + userAgent +
+				"<br><br> <b>La serializacion de datos funciona:</b><br>" + escapeHtml(demoDto.toString());
 	}
 
 	/**
@@ -37,6 +38,6 @@ public class DemoServiceImpl extends RemoteServiceServlet implements
 			return null;
 		}
 		return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;")
-				.replaceAll(">", "&gt;");
+				.replaceAll(">", "&gt;").replaceAll("\\n", "<br>");
 	}
 }
