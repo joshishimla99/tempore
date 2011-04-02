@@ -1,0 +1,2 @@
+serviceClass: ar.tempore.client.DemoService
+path: AEAB3A69BE96400DE301D9E1F0901596.gwt.rpc
