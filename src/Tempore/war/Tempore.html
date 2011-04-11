@@ -1,63 +1,78 @@
-<!doctype html>
-<!-- The DOCTYPE declaration above will set the    -->
-<!-- browser's rendering engine into               -->
-<!-- "Standards Mode". Replacing this declaration  -->
-<!-- with a "Quirks Mode" doctype may lead to some -->
-<!-- differences in layout.                        -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 
-<html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<head>
+<TITLE>Tempore - Manejá tus tiempos</TITLE>
 
-    <!--                                                               -->
-    <!-- Consider inlining CSS to reduce the number of requested files -->
-    <!--                                                               -->
-    <link type="text/css" rel="stylesheet" href="Tempore.css">
 
-    <!--                                           -->
-    <!-- Any title is fine                         -->
-    <!--                                           -->
-    <title>Web Application Starter Project</title>
-    
-    <!--                                           -->
-    <!-- This script loads your compiled module.   -->
-    <!-- If you add any GWT meta tags, they must   -->
-    <!-- be added before this line.                -->
-    <!--                                           -->
-    <script type="text/javascript" language="javascript" src="tempore/tempore.nocache.js"></script>
-  </head>
+<meta name="keywords" content="" /> 
+<meta name="description" content="Tempore - Manejá tus tiempos" />
 
-  <!--                                           -->
-  <!-- The body can have arbitrary html, or      -->
-  <!-- you can leave the body empty if you want  -->
-  <!-- to create a completely dynamic UI.        -->
-  <!--                                           -->
-  <body>
+<meta http-equiv="Content-Type" content="{%MetaCharset%}">
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
 
-    <!-- OPTIONAL: include this if you want history support -->
-    <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position:absolute;width:0;height:0;border:0"></iframe>
-    
-    <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
-    <noscript>
-      <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
-        Your web browser must have JavaScript enabled
-        in order for this application to display correctly.
-      </div>
-    </noscript>
+<script type="text/javascript" language="javascript" src="tempore/tempore.nocache.js"></script>
 
-    <h1>Web Application Starter Project</h1>
+</head>
 
-    <table align="center">
-      <tr>
-        <td colspan="2" style="font-weight:bold;">Please enter your name:</td>        
-      </tr>
-      <tr>
-        <td id="nameFieldContainer"></td>
-        <td id="sendButtonContainer"></td>
-      </tr>
-      <tr>
-        <td colspan="2" style="color:red;" id="errorLabelContainer"></td>
-      </tr>
-    </table>
-  </body>
+<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+<!-- Shell -->	
+<div class="shell">
+	<!-- Header -->	
+	<div id="header"></div>
+	<!-- End Header -->		
+	
+		<!-- Navigation -->
+		<div id="navigation">
+			<ul>
+			    <li id="MainMenu"/>
+			    <li id="ProjectMenu"/>
+			    <li id="TaskMenu"/>
+				<li id="ReportMenu"/>
+				<li id="ConfigurationMenu"/>
+			    <li id="HelpMenu"/>
+			</ul>
+		</div>
+		<!-- End Navigation -->
+		
+		<!-- Path -->
+		<div id="path">Principal > Proyectos</div>
+		
+		<!-- Usuario -->
+		<div id="user">Usuario: gigantejp</div>
+		
+		<!-- Sidebar -->
+		<div id="sidebar">Proyecto1</div>
+		
+		<div id="content">Contenido</div>
+	
+		
+
+        <!-- Footer -->
+		<div id="footer">
+			<p class="left">
+				<a href="#">Principal</a>
+				<span>|</span>
+				<a href="#">Proyectos</a>
+				<span>|</span>
+				<a href="#">Tareas</a>
+				<span>|</span>
+				<a href="#">Informes</a>
+				<span>|</span>
+				<a href="#">Configuración</a>
+				<span>|</span>
+				<a href="#">Ayuda</a>
+			</p>
+			<p class="right">
+			&copy; 2011 Tempore - FIUBA
+			</p>
+		</div>
+		<!-- End Footer -->
+
+	</div>	
+
+</body>
 </html>
+
