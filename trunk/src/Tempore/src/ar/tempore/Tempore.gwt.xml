@@ -12,6 +12,9 @@
 
   <!-- Other module inherits                                      -->
 
+	<!-- Inherit the SmartGWT Toolkit library configuration.  --> 
+	<inherits name='com.smartgwt.SmartGwt' />
+
   <!-- Specify the app entry point class.                         -->
   <entry-point class='ar.tempore.client.Tempore'/>
   <!-- <entry-point class='ar.tempore.client.Principal'/> -->
