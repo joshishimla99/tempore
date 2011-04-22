@@ -11,10 +11,13 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.MenuBar;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -96,29 +99,42 @@ public class Tempore implements EntryPoint {
 		
 		}
 		
-		Label mainLabel = new Label("Principal");
-		RootPanel.get("MainMenu").add(mainLabel);		
-		mainLabel.addClickHandler(new FirstPageMenuHandler(Constant.CONTENT_MAIN));
+		Command cmdPrincipal = new Command(){
+			public void execute(){
+				Window.alert("Principal");
+			}
+		};
 		
-		Label projectLabel = new Label("Proyecto");
-		RootPanel.get("ProjectMenu").add(projectLabel);		
-		projectLabel.addClickHandler(new FirstPageMenuHandler(Constant.CONTENT_PROJECT));
+		Command cmdNuevoProyecto = new Command(){
+			public void execute(){
+				Window.alert("Nuevo Proyecto");
+			}
+		};
 		
-		Label taskLabel = new Label("Tarea");
-		RootPanel.get("TaskMenu").add(taskLabel);		
-		taskLabel.addClickHandler(new FirstPageMenuHandler(Constant.CONTENT_TASK));
+		MenuBar filemenu = new MenuBar(true);
 		
-		Label reportLabel = new Label("Reporte");
-		RootPanel.get("ReportMenu").add(reportLabel);		
-		reportLabel.addClickHandler(new FirstPageMenuHandler(Constant.CONTENT_REPORT));
+		filemenu.addItem("Nuevo", cmdNuevoProyecto);
+		
+		MenuBar menu = new MenuBar();
+		
+		
+		menu.addItem("Principal", cmdPrincipal);		
+		menu.addItem("Proyecto", filemenu);	
+		menu.addItem("Tarea", filemenu);	
+		menu.addItem("Reportes", filemenu);	
+		menu.addItem("Configuracion", filemenu);	
+		menu.addItem("Ayuda", filemenu);	
+		RootPanel.get("MainMenu").add(menu);
+		
+		
+		
+		
+		
+		
+		
+		
 
-		Label configurationLabel = new Label("Configuracion");
-		RootPanel.get("ConfigurationMenu").add(configurationLabel);		
-		configurationLabel.addClickHandler(new FirstPageMenuHandler(Constant.CONTENT_CONFIGURATION));
-		
-		Label helpLabel = new Label("Ayuda");
-		RootPanel.get("HelpMenu").add(helpLabel);		
-		helpLabel.addClickHandler(new FirstPageMenuHandler(Constant.CONTENT_HELP));
+
 	}
 	
 }
