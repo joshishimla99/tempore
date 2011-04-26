@@ -1,6 +1,5 @@
 package ar.fi.uba.tempore.hibernate.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -9,18 +8,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ar.fi.uba.tempore.hibernate.TestDAO;
-
 import fi.uba.tempore.poc.entities.Client;
 import fi.uba.tempore.poc.entities.Project;
 
 public class TestClientDAO extends TestDAO{
-	private ClientDAO cDAO = new ClientDAO();
-	private Client c = null;
+	private ClientDAO cDAO = new ClientDAO();	
 	
-	@Before
-	public void setUp() throws Exception {	
-		super.setUp();
-	}
 	
 	@Test
 	public void testFindById() {		
@@ -29,23 +22,31 @@ public class TestClientDAO extends TestDAO{
 		Assert.assertNotNull(actual.getId());
 		Assert.assertEquals("No se encontro al cliente", "TCS Tata Consulting Services"  , actual.getName());
 			
-		List<Project> actualProjectList = c.getProjectList();
+		List<Project> actualProjectList = actual.getProjectList();
 		Assert.assertEquals("La cantidad de proyectos del clientes no es correcta", 2, actualProjectList.size());
 	}
 
 	@Test
 	public void testMakePersistent() {
-		c = new Client();
+		Client c = new Client();
 		c.setName("Nuevo Cliente");
 		c = cDAO.makePersistent(c);
-		log.info("Cliente Gueardado: ID = " + c.getId());
+
+		Assert.assertNotNull("No se ha creado el Cliente", c);
+		
+		List<Client> allClients = cDAO.findAll();
+		Assert.assertEquals("La cantidad de proyectos del clientes no es correcta", 3, allClients.size());
+		
+		//Vuelvo a crear un cliente con el mismo nombre
+		c = cDAO.makePersistent(c);
+		Assert.assertNull("Se permite la creacion de cliente con el mismo nombre", c);
 	}
 
 	@Test
 	public void testDelete() {
-		c = new Client();
-		c.setName("Nuevo Cliente");
-		List<Client> list = cDAO.findByExample(c);
+		Client actual = new Client();
+		actual.setName("Nuevo Cliente");
+		List<Client> list = cDAO.findByExample(actual);
 		for (Client cl : list){
 			log.info("Borrando Cliente : " + cl.getId());
 			cDAO.delete(cl);
