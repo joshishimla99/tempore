@@ -13,7 +13,6 @@ import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.ext.mysql.MySqlDataTypeFactory;
 import org.dbunit.operation.DatabaseOperation;
 import org.hibernate.Transaction;
-import org.hibernate.classic.Session;
 import org.junit.After;
 import org.junit.Before;
 
@@ -22,11 +21,9 @@ import ar.fi.uba.tempore.hibernate.util.HibernateUtil;
 public class TestDAO extends DBTestCase{
 	protected final Logger log = Logger.getLogger(this.getClass());
 	private Transaction transaction;
-	private Session session = null;
 	
 	public TestDAO(){		
 		super("DBUnit Demostracion....");
-		session = HibernateUtil.getSessionFactory().getCurrentSession();
 		
         System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, "com.mysql.jdbc.Driver" );
         System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:mysql://localhost/tempore" );
@@ -43,7 +40,7 @@ public class TestDAO extends DBTestCase{
         
 		IDataSet dataSet = this.getDataSet();
 		DatabaseOperation.CLEAN_INSERT.execute(connection, dataSet);
-		transaction = session.beginTransaction();
+		transaction = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 	}
 
 	@After
@@ -57,6 +54,8 @@ public class TestDAO extends DBTestCase{
 		File file = new File("./Test1_setup.xml");
 		if (file.isFile()){
 			build = new FlatXmlDataSetBuilder().build(file);
+		} else {
+			throw new Exception("No se encuentra el archivo para iniciar la BBDD ("+file.getAbsolutePath()+")");
 		}
 		return build;
 	}
