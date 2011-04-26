@@ -23,6 +23,14 @@ public class Client implements Serializable {
 	private static final long serialVersionUID = 1638528124445097339L;
 	private Integer id;
 	private String name;
+	private String address;
+	private String country;
+	private String state;
+	private String zip;
+	private String fiscalNumber;
+	private String phone;
+	
+	
 	
 	private List<Project> projectList = new ArrayList<Project>();
 	private List<Contact> contactList = new ArrayList<Contact>();
@@ -76,6 +84,54 @@ public class Client implements Serializable {
 	}	
 	public void setContactList(List<Contact> contactList) {
 		this.contactList = contactList;
+	}
+
+	@Column(name="address")
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	@Column(name="country")
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	@Column(name="state")
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	@Column(name="zip")
+	public String getZip() {
+		return zip;
+	}
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+
+	@Column(name="fiscalNumber")
+	public String getFiscalNumber() {
+		return fiscalNumber;
+	}
+	public void setFiscalNumber(String fiscalNumber) {
+		this.fiscalNumber = fiscalNumber;
+	}
+
+	@Column(name="phone")
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	
 }
