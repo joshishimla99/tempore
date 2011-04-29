@@ -8,7 +8,6 @@ import org.dbunit.PropertiesBasedJdbcDatabaseTester;
 import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.ext.mysql.MySqlDataTypeFactory;
 import org.dbunit.operation.DatabaseOperation;
@@ -18,9 +17,11 @@ import org.junit.Before;
 
 import ar.fi.uba.tempore.hibernate.util.HibernateUtil;
 
-public class TestDAO extends DBTestCase{
+public abstract class TestDAO extends DBTestCase{
+	private static final String DDBB_XML_SETUP = "./BBDD_setup.xml";
+	
 	protected final Logger log = Logger.getLogger(this.getClass());
-	private Transaction transaction;
+	protected Transaction transaction;
 	
 	public TestDAO(){		
 		super("DBUnit Demostracion....");
@@ -40,6 +41,7 @@ public class TestDAO extends DBTestCase{
         
 		IDataSet dataSet = this.getDataSet();
 		DatabaseOperation.CLEAN_INSERT.execute(connection, dataSet);
+		
 		transaction = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 	}
 
@@ -50,13 +52,10 @@ public class TestDAO extends DBTestCase{
 
 	@Override
 	protected IDataSet getDataSet() throws Exception {
-		FlatXmlDataSet build = null;
-		File file = new File("./Test1_setup.xml");
-		if (file.isFile()){
-			build = new FlatXmlDataSetBuilder().build(file);
-		} else {
+		File file = new File(DDBB_XML_SETUP);
+		if (!file.isFile()){
 			throw new Exception("No se encuentra el archivo para iniciar la BBDD ("+file.getAbsolutePath()+")");
 		}
-		return build;
+		return new FlatXmlDataSetBuilder().build(file);
 	}
 }
