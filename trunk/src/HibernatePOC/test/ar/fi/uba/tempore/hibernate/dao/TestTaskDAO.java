@@ -5,10 +5,8 @@ import java.util.List;
 import org.junit.Test;
 
 import ar.fi.uba.tempore.hibernate.TestDAO;
-
 import fi.uba.tempore.poc.entities.Project;
 import fi.uba.tempore.poc.entities.Task;
-import fi.uba.tempore.poc.entities.TaskState;
 import fi.uba.tempore.poc.entities.TaskType;
 
 public class TestTaskDAO extends TestDAO{
@@ -21,8 +19,6 @@ public class TestTaskDAO extends TestDAO{
 		t = new Task();
 		t.setName("TareaTest");
 		t.setDescription("Tarea para realizar Test");
-		TaskState ts = new TaskStateDAO().findById(1);
-		t.setTaskState(ts);		
 		TaskType tt = new TaskTypeDAO().findById(1);
 		t.setTaskType(tt);
 		Project p = new ProjectDAO().findById(1);

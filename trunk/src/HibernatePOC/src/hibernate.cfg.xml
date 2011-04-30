@@ -23,7 +23,6 @@
 		<property name="hbm2ddl.auto">update</property>
 		
 		
-		<mapping class="fi.uba.tempore.poc.entities.TaskState" />
 		<mapping class="fi.uba.tempore.poc.entities.TaskType" />
 		<mapping class="fi.uba.tempore.poc.entities.Task" />
 		<mapping class="fi.uba.tempore.poc.entities.Client" />	
