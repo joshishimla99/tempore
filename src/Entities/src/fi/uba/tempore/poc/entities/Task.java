@@ -27,7 +27,6 @@ public class Task implements Serializable {
 	private String name;
 	private String description;
 	
-	private TaskState taskState;
 	private TaskType taskType;
 	private Project project;
 	private List<TaskUser> taskUser;
@@ -59,15 +58,6 @@ public class Task implements Serializable {
 		this.description = description;
 	}
 	
-	@ManyToOne
-	@JoinColumn(name="taskStateId")
-	public TaskState getTaskState() {
-		return taskState;
-	}
-	public void setTaskState(TaskState taskState) {
-		this.taskState = taskState;
-	}
-
 	@ManyToOne
 	@JoinColumn(name="taskTypeId")
 	public TaskType getTaskType() {

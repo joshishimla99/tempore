@@ -1,12 +1,18 @@
 package fi.uba.tempore.poc.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 
 @Entity
@@ -17,6 +23,8 @@ public class TaskType implements Serializable{
 	private Integer id;
 	private String name;
 	private String description;
+	
+	private List<Task> taskList = new ArrayList<Task>(); 
 	
 	@Id
 	@GeneratedValue
@@ -42,5 +50,17 @@ public class TaskType implements Serializable{
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@OneToMany(
+			targetEntity=Task.class, 
+			mappedBy="taskType"
+	)
+	@LazyCollection(LazyCollectionOption.TRUE)
+	public List<Task> getTaskList() {
+		return taskList;
+	}
+	public void setTaskList(List<Task> taskList) {
+		this.taskList = taskList;
 	}
 }

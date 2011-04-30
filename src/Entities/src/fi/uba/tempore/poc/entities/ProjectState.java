@@ -1,12 +1,18 @@
 package fi.uba.tempore.poc.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name="PROJECTSTATE")
@@ -16,6 +22,8 @@ public class ProjectState implements Serializable {
 	private Integer id;
 	private String name;
 	private String description;
+	
+	private List<Project> projectList = new ArrayList();
 	
 	@Id
 	@GeneratedValue
@@ -41,6 +49,18 @@ public class ProjectState implements Serializable {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	@OneToMany(
+			targetEntity=Project.class, 
+			mappedBy="projectState"
+	)
+	@LazyCollection(LazyCollectionOption.TRUE)
+	public List<Project> getProjectList() {
+		return projectList;
+	}
+	public void setProjectList(List<Project> projectList) {
+		this.projectList = projectList;
 	}
 
 }
