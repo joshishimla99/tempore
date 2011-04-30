@@ -36,8 +36,8 @@ h4 { font-size:12px; line-height:14px; text-transform: uppercase; color:#000; }
 
 #header { height:75px; position:relative; background:url(../images/logo_tempore.jpg);}
 
-#user { width:20%; line-height:30px; height:30px; float:right; font:bold; background:#FFFFFF;}
-#path { width:80%; line-height:30px; height:30px; position:relative; float:left; white-space:nowrap; background:#FFFFFF}
+#user { width:20%; line-height:25px; height:25px; float:right; font:bold; background:#FFFFFF;}
+#path { width:80%; line-height:25px; height:25px; position:relative; float:left; white-space:nowrap; background:#FFFFFF}
 
 .gwt-MenuBar { background-color:#008844;}
 .gwt-MenuItem { height:30px; font-weight: bold; float:left;}
@@ -45,10 +45,7 @@ h4 { font-size:12px; line-height:14px; text-transform: uppercase; color:#000; }
 .gwt-MenuItem-selected { background:#E6E9EF; color:#000; }
 
 #sidebar { float:left; width:150px; height:625px; padding:10px; background:#fff; border:#666666 solid;}
-#main { height:700px; width:100%;; padding:10px 0 0 0; background:#E6E9EF; }
-
-#sidebar2 { width:100px; height:30px; background:#ebebeb; padding:0 15px; color:#7b7b7b; margin-top:10px;}
-#main3 { width:860px; height:30px; background:#ebebeb; padding:0 15px; color:#7b7b7b; margin-top:10px;}
+#main { height:"600px"; width:100%;; padding:10px 0 0 0; background:#E6E9EF; }
 
 #footer { height:51px; background:#ebebeb; white-space:nowrap; line-height:50px; padding:0 15px; color:#7b7b7b; margin-top:10px;}
 #footer a{ color:#7b7b7b; text-decoration: none;}
