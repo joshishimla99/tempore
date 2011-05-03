@@ -24,7 +24,7 @@ public class User extends Person {
 	private static final long serialVersionUID = -6663691212226586135L;
 	
 	private List<TaskUser> taskUserList = new ArrayList<TaskUser>();
-	private List<UserProject> taskProjectList = new ArrayList<UserProject>();
+	private List<UserProject> userProjectList = new ArrayList<UserProject>();
 	private List<Role> roleList = new ArrayList<Role>();
 	
 	@OneToMany(
@@ -44,11 +44,11 @@ public class User extends Person {
 			mappedBy="user"
 	)
 	@LazyCollection(LazyCollectionOption.TRUE)
-	public List<UserProject> getTaskProjectList() {
-		return taskProjectList;
+	public List<UserProject> getUserProjectList() {
+		return userProjectList;
 	}
-	public void setTaskProjectList(List<UserProject> taskProjectList) {
-		this.taskProjectList = taskProjectList;
+	public void setUserProjectList(List<UserProject> userProjectList) {
+		this.userProjectList = userProjectList;
 	}
 	
 	@ManyToMany(
