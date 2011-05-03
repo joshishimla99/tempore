@@ -20,7 +20,8 @@ public class TaskUser implements Serializable{
 	private User user;
 	private Task task;
 	private Integer hourCount;
-	private Date dateHour;
+	private Date date;
+	private String comment;
 	
 	@Id
 	@GeneratedValue
@@ -58,11 +59,19 @@ public class TaskUser implements Serializable{
 		this.hourCount = hourCount;
 	}
 	
-	@Column(name="dateHour")
-	public Date getDateHour() {
-		return dateHour;
+	@Column(name="date")
+	public Date getDate() {
+		return date;
 	}
-	public void setDateHour(Date dateHour) {
-		this.dateHour = dateHour;
-	}	
+	public void setDate(Date dateHour) {
+		this.date = dateHour;
+	}
+	
+	@Column(name="comment")
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
 }
