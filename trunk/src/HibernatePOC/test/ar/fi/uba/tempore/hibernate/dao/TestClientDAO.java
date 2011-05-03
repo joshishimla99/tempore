@@ -11,6 +11,7 @@ import ar.fi.uba.tempore.hibernate.TestDAO;
 import fi.uba.tempore.poc.entities.Client;
 import fi.uba.tempore.poc.entities.Contact;
 import fi.uba.tempore.poc.entities.Project;
+import fi.uba.tempore.poc.entities.Task;
 
 public class TestClientDAO extends TestDAO{
 	private ClientDAO cDAO = new ClientDAO();	
@@ -33,6 +34,12 @@ public class TestClientDAO extends TestDAO{
 			Assert.assertTrue("No se encontro la entidad", false);
 		}
 	}
+	
+	@Test
+	public void testFindAll (){
+		List<Client> findAll = cDAO.findAll();
+		Assert.assertEquals("La cantidad del metodo FIND-ALL es incorrecta", 2, findAll.size());
+	}
 
 	@Test
 	public void testMakePersistent() {
@@ -53,6 +60,20 @@ public class TestClientDAO extends TestDAO{
 			Assert.assertTrue("No se encontro la entidad creada", false);
 		}
 		
+	}
+	
+	@Test
+	public void testUpdate(){
+		Integer id = 1;
+		String dataExpected = "updated name";
+		
+		Client expected = cDAO.findById(id);
+		expected.setName(dataExpected);
+		
+		cDAO.makePersistent(expected);
+		
+		Client actual = cDAO.findById(id);
+		Assert.assertEquals("Ocurrio un error al actualizar", dataExpected, actual.getName());
 	}
 	
 	/**

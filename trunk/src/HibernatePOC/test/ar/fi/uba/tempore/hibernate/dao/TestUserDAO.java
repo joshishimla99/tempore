@@ -3,49 +3,114 @@ package ar.fi.uba.tempore.hibernate.dao;
 
 import java.util.List;
 
+import junit.framework.Assert;
+
+import org.hibernate.ObjectNotFoundException;
 import org.junit.Test;
 
 import ar.fi.uba.tempore.hibernate.TestDAO;
-
+import fi.uba.tempore.poc.entities.Role;
+import fi.uba.tempore.poc.entities.TaskUser;
 import fi.uba.tempore.poc.entities.User;
+import fi.uba.tempore.poc.entities.UserProject;
 
 public class TestUserDAO extends TestDAO{
-	private UserDAO uDAO = new UserDAO();
-	private User u = null;
+
+	private UserDAO psDAO = new UserDAO();
 	
 	@Test
-	public void testFindAll (){
-		List<User> findAll = uDAO.findAll();
-		int i=0;
-		for (User u : findAll){
-			log.info("Usuario "+(i++)+": " + u.getName() + ", " + u.getLastName()+ " ," + u.getId());
+	public void testFindId() {
+		User actual = null;
+		try {	
+			actual = psDAO.findById(11);
+			Assert.assertEquals("No se encontro al tipo de contacto", "Rana"  , actual.getName());
+
+			List<Role> rList = actual.getRoleList();
+			Assert.assertEquals("El tamaño de la lista asociada a la entidad no es correcto 1", 1, rList.size());
+			List<TaskUser> tuList = actual.getTaskUserList();
+			Assert.assertEquals("El tamaño de la lista asociada a la entidad no es correcto 2", 3, tuList.size());
+			List<UserProject> pList = actual.getUserProjectList();
+			Assert.assertEquals("El tamaño de la lista asociada a la entidad no es correcto 3", 1, pList.size());
+			
+		} catch (ObjectNotFoundException e){
+			Assert.assertTrue("No se encontro la entidad", false);
 		}
 	}
 	
 	@Test
+	public void testFindAll (){
+		List<User> findAll = psDAO.findAll();
+		Assert.assertEquals("La cantidad del metodo FIND-ALL es incorrecta", 3, findAll.size());
+	}
+	
+	@Test
 	public void testMakePersistence (){
-		u = new User();
+		User newEntity = getDemoUser();						
+
+		newEntity = psDAO.makePersistent(newEntity);		
+		Assert.assertNotNull("No se ha podido crear la entidad", newEntity);
+		
+		List<User> allEntities = psDAO.findAll();
+		Assert.assertEquals("La cantidad de la entidad no es correcta", 4, allEntities.size());
+
+		try {
+			User expected = getDemoUser();
+			expected.setId(newEntity.getId());
+			
+			User actual = psDAO.findById(newEntity.getId());
+			Assert.assertEquals(expected.getName(), actual.getName());
+			Assert.assertEquals(expected.getLastName(), actual.getLastName());
+			Assert.assertEquals(expected.getCountry(), actual.getCountry());
+			Assert.assertEquals(expected.getPhone(), actual.getPhone());
+			Assert.assertEquals(expected.getState(), actual.getState());
+			
+		} catch (ObjectNotFoundException e){
+			Assert.assertTrue("No se encontro la entidad creada", false);
+		}
+	}
+	
+	@Test
+	public void testUpdate(){
+		Integer id = 11;
+		String dataExpected = "updated name";
+		
+		User expected = psDAO.findById(id);
+		expected.setName(dataExpected);
+		
+		psDAO.makePersistent(expected);
+		
+		User actual = psDAO.findById(id);
+		Assert.assertEquals("Ocurrio un error al actualizar", dataExpected, actual.getName());
+	}
+	
+	private User getDemoUser(){
+		User u = new User();
 		u.setName("JTest");
 		u.setLastName("JLastTest");
 		u.setAddress("JDirTest");
 		u.setCountry("JCountryTest");
 		u.setPhone("1111111111");
-		u.setState("JStateTest");		
-		
-		u = uDAO.makePersistent(u);
-		log.info("Nuevo usuario : " + u.getId());
+		u.setState("A");		
+		return u;
 	}
 	
 	@Test
 	public void testDelete (){
-		u = new User();
-		u.setName("JTest");
+		User entity = new User();
+		entity.setName("Rana");
 				
+		List<User> findByExample = psDAO.findByExample(entity);
+		for (User ct : findByExample){			
 		
-		List<User> findByExample = uDAO.findByExample(u);
-		for (User u : findByExample){
-			log.info("Eliminado usuario : " + u.getId());
-			uDAO.delete(u);
+			Integer id = ct.getId();
+			psDAO.delete(ct);
+			try {
+				psDAO.findById(id);
+				Assert.assertTrue("No se ha eliminado la entidad deseada", false);
+			} catch (ObjectNotFoundException e){
+				//No se encuentra la entidad
+				Assert.assertTrue(true);
+			}
 		}
 	}
 }
