@@ -92,7 +92,7 @@ public class TestClientDAO extends TestDAO{
 		return c;
 	}
 
-	@Test
+/*	@Test
 	public void testDelete() {
 		Client actual = new Client();
 		actual.setName("TCS Tata Consulting Services");
@@ -112,5 +112,5 @@ public class TestClientDAO extends TestDAO{
 			}
 		}		
 	}
-
+*/
 }

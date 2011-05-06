@@ -87,7 +87,7 @@ public class TestTaskDAO extends TestDAO{
 		return t;
 	}
 	
-	@Test
+/*	@Test
 	public void testDelete (){
 		Task entity = new Task();
 		entity.setName("Analisis Riesgos");
@@ -106,4 +106,5 @@ public class TestTaskDAO extends TestDAO{
 			}
 		}
 	}
+*/
 }
