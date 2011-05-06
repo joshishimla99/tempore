@@ -80,7 +80,7 @@ public class TestPositionDAO extends TestDAO{
 		return ct;
 	}
 	
-	@Test
+/*	@Test
 	public void testDelete (){
 		Position entity = new Position();
 		entity.setName("PM");
@@ -99,4 +99,5 @@ public class TestPositionDAO extends TestDAO{
 			}
 		}
 	}
+*/
 }

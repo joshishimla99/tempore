@@ -88,7 +88,7 @@ public class TestTaskUserDAO extends TestDAO{
 		return u;
 	}
 	
-	@Test
+/*	@Test
 	public void testDelete (){
 		Task task = new TaskDAO().findById(1);
 		
@@ -109,4 +109,5 @@ public class TestTaskUserDAO extends TestDAO{
 		List<TaskUser> findAll = tuDAO.findAll();
 		Assert.assertEquals("Se han borrado todas las instancias deseadas" , 4, findAll.size());
 	}
+*/
 }

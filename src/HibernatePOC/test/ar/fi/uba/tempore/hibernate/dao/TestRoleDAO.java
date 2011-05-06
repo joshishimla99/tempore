@@ -75,7 +75,7 @@ public class TestRoleDAO extends TestDAO{
 		return ps;
 	}
 	
-	@Test
+/*	@Test
 	public void testDelete (){
 		Role entity = new Role();
 		entity.setName("Usuario");
@@ -94,4 +94,5 @@ public class TestRoleDAO extends TestDAO{
 			}
 		}
 	}
+*/
 }

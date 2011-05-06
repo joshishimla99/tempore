@@ -83,10 +83,10 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> {
 	 * Delete
 	 * @param entity
 	 */
-	public void delete(T entity) {
+/*	public void delete(T entity) {
 		getSession().delete(entity);
 	}
-
+*/
 	public void flush() {
 		getSession().flush();
 	}

@@ -77,7 +77,7 @@ public class TestTaskTypeDAO extends TestDAO{
 		return ps;
 	}
 	
-	@Test
+/*	@Test
 	public void testDelete (){
 		TaskType entity = new TaskType();
 		entity.setName("Desarrollo");
@@ -96,4 +96,5 @@ public class TestTaskTypeDAO extends TestDAO{
 			}
 		}
 	}
+*/
 }

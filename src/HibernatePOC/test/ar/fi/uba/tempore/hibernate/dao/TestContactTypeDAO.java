@@ -79,7 +79,7 @@ public class TestContactTypeDAO extends TestDAO{
 		return ct;
 	}
 	
-	@Test
+/*	@Test
 	public void testDelete (){
 		ContactType entity = new ContactType();
 		entity.setName("PM");
@@ -99,4 +99,5 @@ public class TestContactTypeDAO extends TestDAO{
 			}
 		}
 	}
+*/
 }

@@ -75,7 +75,7 @@ public class TestPrivilegeDAO extends TestDAO{
 		return ps;
 	}
 	
-	@Test
+/*	@Test
 	public void testDelete (){
 		Privilege entity = new Privilege();
 		entity.setName("Mdoficar Horas");
@@ -94,4 +94,5 @@ public class TestPrivilegeDAO extends TestDAO{
 			}
 		}
 	}
+*/
 }

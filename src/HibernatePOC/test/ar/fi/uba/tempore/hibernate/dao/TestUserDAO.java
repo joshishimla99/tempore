@@ -94,7 +94,7 @@ public class TestUserDAO extends TestDAO{
 		return u;
 	}
 	
-	@Test
+/*	@Test
 	public void testDelete (){
 		User entity = new User();
 		entity.setName("Rana");
@@ -113,4 +113,5 @@ public class TestUserDAO extends TestDAO{
 			}
 		}
 	}
+*/
 }

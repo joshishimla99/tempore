@@ -82,7 +82,7 @@ public class TestProjectDAO extends TestDAO{
 		return t;
 	}
 	
-	@Test
+/*	@Test
 	public void testDelete (){
 		Project entity = new Project();
 		entity.setName("Proyecto 1");
@@ -101,4 +101,5 @@ public class TestProjectDAO extends TestDAO{
 			}
 		}
 	}
+*/
 }

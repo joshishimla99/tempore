@@ -75,7 +75,7 @@ public class TestContactDAO extends TestDAO{
 	}
 	
 
-	@Test
+/*	@Test
 	public void testDelete() {
 		Contact c = new Contact();
 		c.setName("Nicolás");
@@ -86,18 +86,18 @@ public class TestContactDAO extends TestDAO{
 		for (Contact cc : contacts){			
 			Integer id = cc.getId();
 			cDAO.delete(cc);
-			/*
-			try {
-				cDAO.findById(id);
-				Assert.assertTrue("No se ha eliminado la entidad deseada", false);
-			} catch (ObjectNotFoundException e){
-				//No se encuentra la entidad
-				Assert.assertTrue(true);
-			}
-			*/
+			
+//			try {
+//				cDAO.findById(id);
+//				Assert.assertTrue("No se ha eliminado la entidad deseada", false);
+//			} catch (ObjectNotFoundException e){
+//				//No se encuentra la entidad
+//				Assert.assertTrue(true);
+//			}
+			
 		}
 	}
-
+*/
 	private Contact getDemoContact (){
 		Contact c = new Contact();
 		c.setName("Nombre Demo");
