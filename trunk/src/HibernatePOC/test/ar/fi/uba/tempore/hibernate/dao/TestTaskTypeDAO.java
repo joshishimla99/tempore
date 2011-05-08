@@ -11,6 +11,7 @@ import org.junit.Test;
 import ar.fi.uba.tempore.hibernate.TestDAO;
 import fi.uba.tempore.poc.entities.Task;
 import fi.uba.tempore.poc.entities.TaskType;
+import fi.uba.tempore.poc.entities.TaskUser;
 
 public class TestTaskTypeDAO extends TestDAO{
 
@@ -77,16 +78,25 @@ public class TestTaskTypeDAO extends TestDAO{
 		return ps;
 	}
 	
-/*	@Test
+	@Test
 	public void testDelete (){
 		TaskType entity = new TaskType();
 		entity.setName("Desarrollo");
 				
 		List<TaskType> findByExample = psDAO.findByExample(entity);
-		for (TaskType ct : findByExample){			
+		for (TaskType tt : findByExample){			
 		
-			Integer id = ct.getId();
-			psDAO.delete(ct);
+			List<Task> taskList = tt.getTaskList();
+			for (Task task : taskList) {
+				List<TaskUser> taskUserList = task.getTaskUserList();
+				for (TaskUser taskUser : taskUserList) {
+					new TaskUserDAO().delete(taskUser);
+				}
+				new TaskDAO().delete(task);
+			}
+			
+			Integer id = tt.getId();
+			psDAO.delete(tt);
 			try {
 				psDAO.findById(id);
 				Assert.assertTrue("No se ha eliminado la entidad deseada", false);
@@ -96,5 +106,4 @@ public class TestTaskTypeDAO extends TestDAO{
 			}
 		}
 	}
-*/
 }

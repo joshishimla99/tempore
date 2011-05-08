@@ -1,5 +1,6 @@
 package ar.fi.uba.tempore.hibernate.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -75,7 +76,7 @@ public class TestContactDAO extends TestDAO{
 	}
 	
 
-/*	@Test
+	@Test
 	public void testDelete() {
 		Contact c = new Contact();
 		c.setName("Nicolás");
@@ -84,20 +85,28 @@ public class TestContactDAO extends TestDAO{
 		Assert.assertEquals("No se encontro el CONTACTOS buscado para borrar", contacts.size(), 1);
 		
 		for (Contact cc : contacts){			
+			//Elimino la referencia de clientes
+			List<Client> clientList = cc.getClientList();
+			for (Client cl : clientList){
+				List<Contact> contactList = cl.getContactList();
+				contactList.remove(cc);
+				new ClientDAO().makePersistent(cl);
+			}
+			
 			Integer id = cc.getId();
 			cDAO.delete(cc);
 			
-//			try {
-//				cDAO.findById(id);
-//				Assert.assertTrue("No se ha eliminado la entidad deseada", false);
-//			} catch (ObjectNotFoundException e){
-//				//No se encuentra la entidad
-//				Assert.assertTrue(true);
-//			}
+			try {
+				cDAO.findById(id);
+				Assert.assertTrue("No se ha eliminado la entidad deseada", false);
+			} catch (ObjectNotFoundException e){
+				//No se encuentra la entidad
+				Assert.assertTrue(true);
+			}
 			
 		}
 	}
-*/
+
 	private Contact getDemoContact (){
 		Contact c = new Contact();
 		c.setName("Nombre Demo");

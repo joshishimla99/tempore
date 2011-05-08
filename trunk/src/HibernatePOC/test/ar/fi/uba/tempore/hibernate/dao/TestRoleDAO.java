@@ -11,6 +11,7 @@ import org.junit.Test;
 import ar.fi.uba.tempore.hibernate.TestDAO;
 import fi.uba.tempore.poc.entities.Privilege;
 import fi.uba.tempore.poc.entities.Role;
+import fi.uba.tempore.poc.entities.User;
 
 public class TestRoleDAO extends TestDAO{
 
@@ -75,16 +76,29 @@ public class TestRoleDAO extends TestDAO{
 		return ps;
 	}
 	
-/*	@Test
+	@Test
 	public void testDelete (){
 		Role entity = new Role();
 		entity.setName("Usuario");
 				
 		List<Role> findByExample = pDAO.findByExample(entity);
-		for (Role ct : findByExample){			
-		
-			Integer id = ct.getId();
-			pDAO.delete(ct);
+		for (Role r : findByExample){			
+			
+			//Elimino la asociacion de los privilegios
+			List<Privilege> privilegeList = r.getPrivilegeList();
+			for (Privilege p : privilegeList) {
+				p.getRoleList().remove(r);
+				new PrivilegeDAO().makePersistent(p);
+			}
+			
+			List<User> userList = r.getUserList();
+			for (User u : userList) {
+				u.getRoleList().remove(r);
+				new UserDAO().makePersistent(u);
+			}
+			
+			Integer id = r.getId();
+			pDAO.delete(r);
 			try {
 				pDAO.findById(id);
 				Assert.assertTrue("No se ha eliminado la entidad deseada", false);
@@ -94,5 +108,4 @@ public class TestRoleDAO extends TestDAO{
 			}
 		}
 	}
-*/
 }

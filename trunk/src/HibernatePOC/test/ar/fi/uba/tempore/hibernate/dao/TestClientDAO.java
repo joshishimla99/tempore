@@ -92,7 +92,7 @@ public class TestClientDAO extends TestDAO{
 		return c;
 	}
 
-/*	@Test
+	@Test
 	public void testDelete() {
 		Client actual = new Client();
 		actual.setName("TCS Tata Consulting Services");
@@ -100,7 +100,20 @@ public class TestClientDAO extends TestDAO{
 		List<Client> list = cDAO.findByExample(actual);		
 		Assert.assertEquals("No se encontro el CLIENTE buscado para borrar", list.size(), 1);
 		
-		for (Client cl : list){						
+		for (Client cl : list){
+			
+			List<Contact> contactList = cl.getContactList();
+			for (Contact contact : contactList) {
+				contact.getClientList().remove(cl);
+				new ContactDAO().makePersistent(contact);
+			}
+			
+			List<Project> projectList = cl.getProjectList();
+			for (Project project : projectList) {
+				project.getClientList().remove(cl);
+				new ProjectDAO().makePersistent(project);
+			}
+			
 			cDAO.delete(cl);
 			
 			try {
@@ -112,5 +125,4 @@ public class TestClientDAO extends TestDAO{
 			}
 		}		
 	}
-*/
 }

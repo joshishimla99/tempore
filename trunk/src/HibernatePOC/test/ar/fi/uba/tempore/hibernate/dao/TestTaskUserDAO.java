@@ -88,13 +88,13 @@ public class TestTaskUserDAO extends TestDAO{
 		return u;
 	}
 	
-/*	@Test
+	@Test
 	public void testDelete (){
 		Task task = new TaskDAO().findById(1);
 		
-		List<TaskUser> findByExample = task.getTaskUser();
-		Assert.assertEquals(3, findByExample.size());
-		for (TaskUser ct : findByExample){			
+		List<TaskUser> taskUser = task.getTaskUserList();
+		Assert.assertEquals(3, taskUser.size());
+		for (TaskUser ct : taskUser){			
 		
 			Integer id = ct.getId();
 			tuDAO.delete(ct);
@@ -109,5 +109,4 @@ public class TestTaskUserDAO extends TestDAO{
 		List<TaskUser> findAll = tuDAO.findAll();
 		Assert.assertEquals("Se han borrado todas las instancias deseadas" , 4, findAll.size());
 	}
-*/
 }

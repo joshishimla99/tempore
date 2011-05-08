@@ -79,7 +79,7 @@ public class TestContactTypeDAO extends TestDAO{
 		return ct;
 	}
 	
-/*	@Test
+	@Test
 	public void testDelete (){
 		ContactType entity = new ContactType();
 		entity.setName("PM");
@@ -87,7 +87,15 @@ public class TestContactTypeDAO extends TestDAO{
 		
 		List<ContactType> findByExample = ctDAO.findByExample(entity);
 		for (ContactType ct : findByExample){			
-		
+			
+			//Elimino la referencia de todos los contactos que tengan ese tipo
+			List<Contact> contactList = ct.getContactList();
+			for (Contact c : contactList){
+				c.setContactType(null);
+				new ContactDAO().makePersistent(c);
+			}
+			
+			
 			Integer id = ct.getId();
 			ctDAO.delete(ct);
 			try {
@@ -99,5 +107,5 @@ public class TestContactTypeDAO extends TestDAO{
 			}
 		}
 	}
-*/
+
 }

@@ -25,7 +25,7 @@ public class TestTaskDAO extends TestDAO{
 			actual = psDAO.findById(1);
 			Assert.assertEquals("No se encontro al tipo de contacto", "Analisis Riesgos"  , actual.getName());
 
-			List<TaskUser> tuList = actual.getTaskUser();
+			List<TaskUser> tuList = actual.getTaskUserList();
 			Assert.assertEquals("El tamaño de la lista asociada a la entidad no es correcto 1", 3, tuList.size());
 			
 		} catch (ObjectNotFoundException e){
@@ -87,16 +87,21 @@ public class TestTaskDAO extends TestDAO{
 		return t;
 	}
 	
-/*	@Test
+	@Test
 	public void testDelete (){
 		Task entity = new Task();
 		entity.setName("Analisis Riesgos");
 				
 		List<Task> findByExample = psDAO.findByExample(entity);
-		for (Task ct : findByExample){			
-		
-			Integer id = ct.getId();
-			psDAO.delete(ct);
+		for (Task t : findByExample){			
+
+			List<TaskUser> taskUserList = t.getTaskUserList();			
+			for (TaskUser tu : taskUserList) {
+				new TaskUserDAO().delete(tu);
+			}
+			
+			Integer id = t.getId();
+			psDAO.delete(t);
 			try {
 				psDAO.findById(id);
 				Assert.assertTrue("No se ha eliminado la entidad deseada", false);
@@ -106,5 +111,4 @@ public class TestTaskDAO extends TestDAO{
 			}
 		}
 	}
-*/
 }
