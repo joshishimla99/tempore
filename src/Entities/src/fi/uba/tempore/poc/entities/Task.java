@@ -29,7 +29,7 @@ public class Task implements Serializable {
 	
 	private TaskType taskType;
 	private Project project;
-	private List<TaskUser> taskUser;
+	private List<TaskUser> taskUserList;
 	
 	
 	@Id
@@ -82,10 +82,10 @@ public class Task implements Serializable {
 			mappedBy="task"
 	)
 	@LazyCollection(LazyCollectionOption.TRUE)
-	public List<TaskUser> getTaskUser() {
-		return taskUser;
+	public List<TaskUser> getTaskUserList() {
+		return taskUserList;
 	}
-	public void setTaskUser(List<TaskUser> taskUser) {
-		this.taskUser = taskUser;
+	public void setTaskUserList(List<TaskUser> taskUserList) {
+		this.taskUserList = taskUserList;
 	}
 }
