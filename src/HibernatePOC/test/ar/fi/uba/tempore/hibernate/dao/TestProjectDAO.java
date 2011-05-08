@@ -9,8 +9,10 @@ import org.hibernate.ObjectNotFoundException;
 import org.junit.Test;
 
 import ar.fi.uba.tempore.hibernate.TestDAO;
+import fi.uba.tempore.poc.entities.Client;
 import fi.uba.tempore.poc.entities.Project;
 import fi.uba.tempore.poc.entities.Task;
+import fi.uba.tempore.poc.entities.TaskUser;
 import fi.uba.tempore.poc.entities.UserProject;
 
 public class TestProjectDAO extends TestDAO{
@@ -82,16 +84,39 @@ public class TestProjectDAO extends TestDAO{
 		return t;
 	}
 	
-/*	@Test
+	@Test
 	public void testDelete (){
 		Project entity = new Project();
 		entity.setName("Proyecto 1");
 				
 		List<Project> findByExample = pDAO.findByExample(entity);
-		for (Project ct : findByExample){			
-		
-			Integer id = ct.getId();
-			pDAO.delete(ct);
+		for (Project p : findByExample){			
+			//remove client
+			List<Client> clientList = p.getClientList();
+			for (Client client : clientList) {
+				client.getProjectList().remove(p);
+				new ClientDAO().makePersistent(client);
+			}
+			
+			//Elimino las tareas que tenia asociada
+			List<Task> taskList = p.getTaskList();
+			for (Task task : taskList) {
+				List<TaskUser> taskUserList = task.getTaskUserList();
+				//Elimino las horas cargadas
+				for (TaskUser taskUser : taskUserList) {
+					new TaskUserDAO().delete(taskUser);
+				}
+				new TaskDAO().delete(task);
+			}
+			
+			//Elimino los usuarios asignados
+			List<UserProject> userProjectList = p.getUserProjectList();
+			for (UserProject userProject : userProjectList) {
+				new UserProjectDAO().delete(userProject);
+			} 
+			
+			Integer id = p.getId();
+			pDAO.delete(p);
 			try {
 				pDAO.findById(id);
 				Assert.assertTrue("No se ha eliminado la entidad deseada", false);
@@ -101,5 +126,4 @@ public class TestProjectDAO extends TestDAO{
 			}
 		}
 	}
-*/
 }

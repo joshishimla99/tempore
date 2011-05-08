@@ -75,15 +75,23 @@ public class TestPrivilegeDAO extends TestDAO{
 		return ps;
 	}
 	
-/*	@Test
+	@Test
 	public void testDelete (){
 		Privilege entity = new Privilege();
 		entity.setName("Mdoficar Horas");
 				
 		List<Privilege> findByExample = pDAO.findByExample(entity);
 		for (Privilege ct : findByExample){			
-		
 			Integer id = ct.getId();
+
+			//Elimino la referencia del privilegio en el rol
+			List<Role> roleList = ct.getRoleList();
+			for (Role role : roleList) {
+				List<Privilege> privilegeList = role.getPrivilegeList();
+				privilegeList.remove(ct);				
+				new RoleDAO().makePersistent(role);
+			}
+			
 			pDAO.delete(ct);
 			try {
 				pDAO.findById(id);
@@ -94,5 +102,4 @@ public class TestPrivilegeDAO extends TestDAO{
 			}
 		}
 	}
-*/
 }

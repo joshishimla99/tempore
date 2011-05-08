@@ -94,16 +94,35 @@ public class TestUserDAO extends TestDAO{
 		return u;
 	}
 	
-/*	@Test
+	@Test
 	public void testDelete (){
 		User entity = new User();
 		entity.setName("Rana");
 				
 		List<User> findByExample = psDAO.findByExample(entity);
-		for (User ct : findByExample){			
+		for (User u : findByExample){			
 		
-			Integer id = ct.getId();
-			psDAO.delete(ct);
+			//Elimino los roles que tenia asociado a ese usuario
+			List<Role> roleList = u.getRoleList();
+			for (Role r : roleList) {
+				r.getUserList().remove(u);
+				new RoleDAO().makePersistent(r);
+			}
+			
+			//Elimino las horas cargadas
+			List<TaskUser> taskUserList = u.getTaskUserList();
+			for (TaskUser taskUser : taskUserList) {
+				new TaskUserDAO().delete(taskUser);
+			}
+			
+			//Elimino la asginacion a los proyectos
+			List<UserProject> userProjectList = u.getUserProjectList();
+			for (UserProject up : userProjectList) {
+				new UserProjectDAO().delete(up);
+			}
+			
+			Integer id = u.getId();
+			psDAO.delete(u);
 			try {
 				psDAO.findById(id);
 				Assert.assertTrue("No se ha eliminado la entidad deseada", false);
@@ -113,5 +132,4 @@ public class TestUserDAO extends TestDAO{
 			}
 		}
 	}
-*/
 }

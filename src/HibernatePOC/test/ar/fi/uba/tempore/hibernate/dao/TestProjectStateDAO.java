@@ -77,13 +77,20 @@ public class TestProjectStateDAO extends TestDAO{
 		return ps;
 	}
 	
-/*	@Test
+	@Test
 	public void testDelete (){
 		ProjectState entity = new ProjectState();
 		entity.setName("Adquirido");
 				
 		List<ProjectState> findByExample = psDAO.findByExample(entity);
 		for (ProjectState ct : findByExample){			
+			
+			//Elimino la referencia de los proyectos con ese estado
+			List<Project> projectList = ct.getProjectList();
+			for (Project project : projectList) {
+				project.setProjectState(null);
+				new ProjectDAO().makePersistent(project);
+			}
 		
 			Integer id = ct.getId();
 			psDAO.delete(ct);
@@ -96,5 +103,4 @@ public class TestProjectStateDAO extends TestDAO{
 			}
 		}
 	}
-*/
 }

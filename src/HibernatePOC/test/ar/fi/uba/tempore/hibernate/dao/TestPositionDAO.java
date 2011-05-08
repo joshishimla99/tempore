@@ -80,14 +80,19 @@ public class TestPositionDAO extends TestDAO{
 		return ct;
 	}
 	
-/*	@Test
+	@Test
 	public void testDelete (){
 		Position entity = new Position();
 		entity.setName("PM");
 				
 		List<Position> findByExample = pDAO.findByExample(entity);
 		for (Position ct : findByExample){			
-		
+			List<UserProject> userProjectList = ct.getUserProjectList();
+			for (UserProject userProject : userProjectList) {
+				userProject.setPosition(null);
+				new UserProjectDAO().makePersistent(userProject);
+			}
+			
 			Integer id = ct.getId();
 			pDAO.delete(ct);
 			try {
@@ -99,5 +104,5 @@ public class TestPositionDAO extends TestDAO{
 			}
 		}
 	}
-*/
+
 }
