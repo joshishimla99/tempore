@@ -5,7 +5,7 @@ import junit.framework.TestSuite;
 import ar.fi.uba.tempore.hibernate.dao.TestClientDAO;
 import ar.fi.uba.tempore.hibernate.dao.TestContactDAO;
 import ar.fi.uba.tempore.hibernate.dao.TestContactTypeDAO;
-import ar.fi.uba.tempore.hibernate.dao.TestPositionDAO;
+import ar.fi.uba.tempore.hibernate.dao.TestAlertDAO;
 import ar.fi.uba.tempore.hibernate.dao.TestPrivilegeDAO;
 import ar.fi.uba.tempore.hibernate.dao.TestProjectDAO;
 import ar.fi.uba.tempore.hibernate.dao.TestProjectStateDAO;
@@ -24,7 +24,7 @@ public class AllTests {
 		suite.addTestSuite(TestClientDAO.class);
 		suite.addTestSuite(TestContactDAO.class);
 		suite.addTestSuite(TestContactTypeDAO.class);
-		suite.addTestSuite(TestPositionDAO.class);
+		suite.addTestSuite(TestAlertDAO.class);
 		suite.addTestSuite(TestProjectStateDAO.class);
 		suite.addTestSuite(TestTaskTypeDAO.class);
 		suite.addTestSuite(TestPrivilegeDAO.class);

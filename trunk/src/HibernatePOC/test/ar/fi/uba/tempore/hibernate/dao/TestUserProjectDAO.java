@@ -50,7 +50,7 @@ public class TestUserProjectDAO extends TestDAO{
 			expected.setId(newEntity.getId());
 			
 			UserProject actual = tuDAO.findById(newEntity.getId());
-			Assert.assertEquals(expected.getPosition().getName(), actual.getPosition().getName());
+			Assert.assertEquals(expected.getAlertList().size(), actual.getAlertList().size());
 			Assert.assertEquals(expected.getUser().getName(), actual.getUser().getName());
 			Assert.assertEquals(expected.getProject().getName(), actual.getProject().getName());
 			
@@ -73,8 +73,7 @@ public class TestUserProjectDAO extends TestDAO{
 	}
 	
 	private UserProject getDemoUserProject(){
-		UserProject u = new UserProject();
-		u.setPosition(new PositionDAO().findById(1));
+		UserProject u = new UserProject();		
 		u.setProject(new ProjectDAO().findById(1));
 		u.setUser(new UserDAO().findById(13));
 		return u;

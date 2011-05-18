@@ -12,6 +12,7 @@ import ar.fi.uba.tempore.hibernate.TestDAO;
 import fi.uba.tempore.poc.entities.Privilege;
 import fi.uba.tempore.poc.entities.Role;
 import fi.uba.tempore.poc.entities.User;
+import fi.uba.tempore.poc.entities.UserProject;
 
 public class TestRoleDAO extends TestDAO{
 
@@ -91,10 +92,10 @@ public class TestRoleDAO extends TestDAO{
 				new PrivilegeDAO().makePersistent(p);
 			}
 			
-			List<User> userList = r.getUserList();
-			for (User u : userList) {
+			List<UserProject> userList = r.getUserProjectList();
+			for (UserProject u : userList) {
 				u.getRoleList().remove(r);
-				new UserDAO().makePersistent(u);
+				new UserProjectDAO().makePersistent(u);
 			}
 			
 			Integer id = r.getId();

@@ -22,6 +22,7 @@ public class TestClientDAO extends TestDAO{
 		Client actual = null;
 		try {	
 			actual = cDAO.findById(1);
+			
 			Assert.assertEquals("No se encontro al cliente", "TCS Tata Consulting Services"  , actual.getName());
 
 			List<Project> actualProjectList = actual.getProjectList();
@@ -43,37 +44,27 @@ public class TestClientDAO extends TestDAO{
 
 	@Test
 	public void testMakePersistent() {
-		Client clientExpected = getDemoClient(); 
-		
-		Client newClient = cDAO.makePersistent(clientExpected);
-		Assert.assertNotNull("No se ha podido crear la entidad", newClient);
-		
-		
-		List<Client> allClients = cDAO.findAll();
-		Assert.assertEquals("La cantidad de proyectos de la entidad no es correcta", 3, allClients.size());
+		Client clientExpected = getDemoClient(); 	
+		cDAO.makePersistent(clientExpected);
 
-		try {
-			clientExpected.setId(newClient.getId());
-			Client clientFound = cDAO.findById(clientExpected.getId());
-			Assert.assertEquals("No se crea la entidad correctamente", clientExpected, clientFound);
-		} catch (ObjectNotFoundException e){
-			Assert.assertTrue("No se encontro la entidad creada", false);
-		}
-		
+		this.validResult("CLIENT", "Client_New.xml");
 	}
 	
 	@Test
 	public void testUpdate(){
-		Integer id = 1;
-		String dataExpected = "updated name";
-		
-		Client expected = cDAO.findById(id);
-		expected.setName(dataExpected);
+		Client expected = cDAO.findById(1);
+
+		expected.setName("updated name");
+		expected.setAddress("Direccion del cliente");
+		expected.setCountry("Pais del cliente");
+		expected.setFiscalNumber("Fiscal Number del cliente");
+		expected.setPhone("(+54-11) 4269-4564");
+		expected.setZip("zip del cliente");
+		expected.setState("Estado del cliente");
 		
 		cDAO.makePersistent(expected);
 		
-		Client actual = cDAO.findById(id);
-		Assert.assertEquals("Ocurrio un error al actualizar", dataExpected, actual.getName());
+		this.validResult("CLIENT", "Client_Update.xml");
 	}
 	
 	/**
@@ -97,9 +88,7 @@ public class TestClientDAO extends TestDAO{
 		Client actual = new Client();
 		actual.setName("TCS Tata Consulting Services");
 		
-		List<Client> list = cDAO.findByExample(actual);		
-		Assert.assertEquals("No se encontro el CLIENTE buscado para borrar", list.size(), 1);
-		
+		List<Client> list = cDAO.findByExample(actual);				
 		for (Client cl : list){
 			
 			List<Contact> contactList = cl.getContactList();
@@ -116,13 +105,12 @@ public class TestClientDAO extends TestDAO{
 			
 			cDAO.delete(cl);
 			
-			try {
-				cDAO.findById(cl.getId());
-				Assert.assertTrue("No se ha eliminado la entidad deseada", false);
-			} catch (ObjectNotFoundException e){
-				//No se encuentra la entidad
-				Assert.assertTrue(true);
-			}
-		}		
+		}	
+		this.validResult("CLIENT", "Client_Delete.xml");
+		this.validResult("CONTACT", "Client_Delete.xml");
+		this.validResult("CLIENTCONTACT", "Client_Delete.xml");
+		this.validResult("PROJECT", "Client_Delete.xml");
+		this.validResult("PROJECTCLIENT", "Client_Delete.xml");
+		
 	}
 }
