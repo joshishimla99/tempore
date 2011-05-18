@@ -24,7 +24,7 @@ public class Role implements Serializable {
 	private Integer id;
 	private String name;
 
-	private List<User> userList = new ArrayList<User>();
+	private List<UserProject> userProjectList = new ArrayList<UserProject>();
 	private List<Privilege> privilegeList = new ArrayList<Privilege>();
 	
 	@Id
@@ -46,15 +46,15 @@ public class Role implements Serializable {
 	}
 
 	@ManyToMany(
-			targetEntity=User.class,
+			targetEntity=UserProject.class,
 			mappedBy="roleList"
 	)
 	@LazyCollection(LazyCollectionOption.TRUE)
-	public List<User> getUserList() {
-		return userList;
+	public List<UserProject> getUserProjectList() {
+		return userProjectList;
 	}
-	public void setUserList(List<User> userList) {
-		this.userList = userList;
+	public void setUserProjectList(List<UserProject> userProjectList) {
+		this.userProjectList = userProjectList;
 	}
 	
 	@ManyToMany(

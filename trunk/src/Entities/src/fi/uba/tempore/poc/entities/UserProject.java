@@ -1,14 +1,22 @@
 package fi.uba.tempore.poc.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name="USERPROJECT")
@@ -18,7 +26,8 @@ public class UserProject implements Serializable {
 	private Integer id;
 	private User user;
 	private Project project;
-	private Position position;
+	private List<Alert> alertList = new ArrayList<Alert>();
+	private List<Role> roleList = new ArrayList<Role>();
 	
 	@Id
 	@GeneratedValue
@@ -48,12 +57,31 @@ public class UserProject implements Serializable {
 		this.project = project;
 	}
 	
-	@ManyToOne
-	@JoinColumn(name="positionId")
-	public Position getPosition() {
-		return position;
+	@OneToMany(
+			targetEntity=Alert.class, 
+			mappedBy="userProject"
+	)
+	@LazyCollection(LazyCollectionOption.TRUE)
+	public List<Alert> getAlertList() {
+		return alertList;
 	}
-	public void setPosition(Position position) {
-		this.position = position;
+	public void setAlertList(List<Alert> alertList) {
+		this.alertList = alertList;
+	}
+	
+	@ManyToMany(
+			targetEntity=Role.class
+	)
+	@JoinTable(
+			name="ROLEUSERPROJECT",
+			joinColumns=@JoinColumn(name="userProjectId"), 
+			inverseJoinColumns=@JoinColumn(name="roleId")
+	)
+	@LazyCollection(LazyCollectionOption.TRUE)
+	public List<Role> getRoleList() {
+		return roleList;
+	}
+	public void setRoleList(List<Role> roleList) {
+		this.roleList = roleList;
 	}
 }

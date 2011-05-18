@@ -22,8 +22,9 @@ public class Person implements Serializable {
 	private String lastName;
 	private String phone;
 	private String address;
-	private String state;
 	private String country;
+	private String zip;
+	private String email;
 	
 	@Id
 	@GeneratedValue
@@ -66,20 +67,28 @@ public class Person implements Serializable {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
-	@Column(name="state")
-	public String getState() {
-		return state;
-	}
-	public void setState(String state) {
-		this.state = state;
-	}
-	
+		
 	@Column(name="country")
 	public String getCountry() {
 		return country;
 	}
 	public void setCountry(String country) {
 		this.country = country;
+	}
+
+	@Column(name="zip")
+	public String getZip() {
+		return zip;
+	}
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+
+	@Column(name="email")
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }
