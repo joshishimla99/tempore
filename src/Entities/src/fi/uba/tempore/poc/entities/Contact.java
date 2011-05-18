@@ -4,7 +4,6 @@ package fi.uba.tempore.poc.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -17,22 +16,13 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name="CONTACT")
-@PrimaryKeyJoinColumn(name="personId")
-public class Contact extends Person {
+@PrimaryKeyJoinColumn(name="userId")
+public class Contact extends User {
 
 	private static final long serialVersionUID = -4574263897746894680L;
 
-	private String state;
 	private ContactType contactType;
 	private List<Client> clientList = new ArrayList<Client>();
-	
-	@Column (name="state")
-	public String getState(){
-		return state;
-	}
-	public void setState(String state){
-		this.state = state;
-	}
 	
 	@ManyToOne()
 	@JoinColumn(name="contactTypeId")
