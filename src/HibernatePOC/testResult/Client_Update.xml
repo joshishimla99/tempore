@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+
+	<CLIENT id='1' name='updated name' address='Direccion del cliente' country='Pais del cliente' fiscalNumber='Fiscal Number del cliente' phone='(+54-11) 4269-4564' zip='zip del cliente' state='Estado del cliente'/>
+	<CLIENT id='2' name='Experian'/>
+	
+</dataset>

@@ -25,8 +25,6 @@ public class TestUserDAO extends TestDAO{
 			actual = psDAO.findById(11);
 			Assert.assertEquals("No se encontro al tipo de contacto", "Rana"  , actual.getName());
 
-			List<Role> rList = actual.getRoleList();
-			Assert.assertEquals("El tamaño de la lista asociada a la entidad no es correcto 1", 1, rList.size());
 			List<TaskUser> tuList = actual.getTaskUserList();
 			Assert.assertEquals("El tamaño de la lista asociada a la entidad no es correcto 2", 3, tuList.size());
 			List<UserProject> pList = actual.getUserProjectList();
@@ -100,14 +98,7 @@ public class TestUserDAO extends TestDAO{
 		entity.setName("Rana");
 				
 		List<User> findByExample = psDAO.findByExample(entity);
-		for (User u : findByExample){			
-		
-			//Elimino los roles que tenia asociado a ese usuario
-			List<Role> roleList = u.getRoleList();
-			for (Role r : roleList) {
-				r.getUserList().remove(u);
-				new RoleDAO().makePersistent(r);
-			}
+		for (User u : findByExample){					
 			
 			//Elimino las horas cargadas
 			List<TaskUser> taskUserList = u.getTaskUserList();

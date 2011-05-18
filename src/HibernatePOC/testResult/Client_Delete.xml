@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+
+	<CLIENT id='2' name='Experian'/>
+	
+	<PROJECT id='1' name='Proyecto 1' projectStateId='1' description='Descripcion del proyecto 1 de TCS' initDate='2011-02-09'  budget='50000'/>
+	<PROJECT id='2' name='Proyecto 2' projectStateId='2' description='Descripcion del proyecto 2 de TCS' initDate='2010-05-01'  budget='77000'/>
+		
+	<CONTACT userId='1' contactTypeId='1'/>
+	<CONTACT userId='2' contactTypeId='2'/>
+	<CONTACT userId='3' contactTypeId='1'/>
+	
+	<CLIENTCONTACT clientId='2' contactId='3'/>
+	
+	<PROJECTCLIENT/>
+	
+</dataset>

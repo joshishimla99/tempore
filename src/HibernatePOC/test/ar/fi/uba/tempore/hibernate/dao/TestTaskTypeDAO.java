@@ -41,34 +41,20 @@ public class TestTaskTypeDAO extends TestDAO{
 	@Test
 	public void testMakePersistence (){
 		TaskType newEntity = getDemoTaskType();						
+		newEntity = psDAO.makePersistent(newEntity);				
 
-		newEntity = psDAO.makePersistent(newEntity);		
-		Assert.assertNotNull("No se ha podido crear la entidad", newEntity);
-		
-		List<TaskType> allEntities = psDAO.findAll();
-		Assert.assertEquals("La cantidad de la entidad no es correcta", 4, allEntities.size());
-
-		try {
-			TaskType expected = getDemoTaskType();
-			expected.setId(newEntity.getId());
-			
-			TaskType actual = psDAO.findById(newEntity.getId());
-			Assert.assertEquals(expected.getName(), actual.getName());
-			Assert.assertEquals(expected.getDescription(), actual.getDescription());
-		} catch (ObjectNotFoundException e){
-			Assert.assertTrue("No se encontro la entidad creada", false);
-		}
+		this.validResult("TASKTYPE", "TaskType_New.xml");		
 	}
 	
 	@Test
 	public void testUpdate(){
 		TaskType expected = psDAO.findById(1);
 		expected.setName("update");
+		expected.setDescription("descripción");
 		
 		psDAO.makePersistent(expected);
 		
-		TaskType actual = psDAO.findById(1);
-		Assert.assertEquals("Ocurrio un error al actualizar", "update", actual.getName());
+		this.validResult("TASKTYPE", "TaskType_Update.xml");
 	}
 	
 	private TaskType getDemoTaskType(){
@@ -95,15 +81,9 @@ public class TestTaskTypeDAO extends TestDAO{
 				new TaskDAO().delete(task);
 			}
 			
-			Integer id = tt.getId();
-			psDAO.delete(tt);
-			try {
-				psDAO.findById(id);
-				Assert.assertTrue("No se ha eliminado la entidad deseada", false);
-			} catch (ObjectNotFoundException e){
-				//No se encuentra la entidad
-				Assert.assertTrue(true);
-			}
+			psDAO.delete(tt);			
 		}
+		
+		this.validResult("TASKTYPE", "TaskType_Delete.xml");			
 	}
 }
