@@ -2,6 +2,7 @@ package fi.uba.tempore.poc.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -27,6 +28,10 @@ public class Project implements Serializable {
 	private static final long serialVersionUID = -725210458722870857L;
 	private Integer id;
 	private String name;
+	private String description;
+	private Date initDate;
+	private Date endDate;
+	private Double budget;
 	private ProjectState projectState;
 	
 	private List<Task> taskList = new ArrayList<Task>();
@@ -104,5 +109,37 @@ public class Project implements Serializable {
 	}
 	public void setUserProjectList(List<UserProject> userProjectList) {
 		this.userProjectList = userProjectList;
+	}
+	
+	@Column(name="description")
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Column(name="initDate")
+	public Date getInitDate() {
+		return initDate;
+	}
+	public void setInitDate(Date initDate) {
+		this.initDate = initDate;
+	}
+	
+	@Column(name="endDate")
+	public Date getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+	
+	@Column(name="budget")
+	public void setBudget(Double budget) {
+		this.budget = budget;
+	}
+	public Double getBudget() {
+		return budget;
 	}
 }
