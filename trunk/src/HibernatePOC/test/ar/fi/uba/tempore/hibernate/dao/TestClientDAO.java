@@ -11,7 +11,6 @@ import ar.fi.uba.tempore.hibernate.TestDAO;
 import fi.uba.tempore.poc.entities.Client;
 import fi.uba.tempore.poc.entities.Contact;
 import fi.uba.tempore.poc.entities.Project;
-import fi.uba.tempore.poc.entities.Task;
 
 public class TestClientDAO extends TestDAO{
 	private ClientDAO cDAO = new ClientDAO();	

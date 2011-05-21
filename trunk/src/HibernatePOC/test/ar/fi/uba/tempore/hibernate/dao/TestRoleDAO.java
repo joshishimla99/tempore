@@ -11,7 +11,6 @@ import org.junit.Test;
 import ar.fi.uba.tempore.hibernate.TestDAO;
 import fi.uba.tempore.poc.entities.Privilege;
 import fi.uba.tempore.poc.entities.Role;
-import fi.uba.tempore.poc.entities.User;
 import fi.uba.tempore.poc.entities.UserProject;
 
 public class TestRoleDAO extends TestDAO{
@@ -44,20 +43,8 @@ public class TestRoleDAO extends TestDAO{
 		Role newEntity = getDemoRole();						
 
 		newEntity = pDAO.makePersistent(newEntity);		
-		Assert.assertNotNull("No se ha podido crear la entidad", newEntity);
 		
-		List<Role> allEntities = pDAO.findAll();
-		Assert.assertEquals("La cantidad de la entidad no es correcta", 4, allEntities.size());
-
-		try {
-			Role expected = getDemoRole();
-			expected.setId(newEntity.getId());
-			
-			Role actual = pDAO.findById(newEntity.getId());
-			Assert.assertEquals(expected.getName(), actual.getName());
-		} catch (ObjectNotFoundException e){
-			Assert.assertTrue("No se encontro la entidad creada", false);
-		}
+		this.validResult("ROLE", "Role_New.xml");
 	}
 	
 	@Test
@@ -67,8 +54,7 @@ public class TestRoleDAO extends TestDAO{
 		
 		pDAO.makePersistent(expected);
 		
-		Role actual = pDAO.findById(1);
-		Assert.assertEquals("Ocurrio un error al actualizar", "update", actual.getName());
+		this.validResult("ROLE", "Role_Update.xml");
 	}
 	
 	private Role getDemoRole(){
@@ -92,21 +78,16 @@ public class TestRoleDAO extends TestDAO{
 				new PrivilegeDAO().makePersistent(p);
 			}
 			
-			List<UserProject> userList = r.getUserProjectList();
-			for (UserProject u : userList) {
+			List<UserProject> userProjectList = r.getUserProjectList();
+			for (UserProject u : userProjectList) {
 				u.getRoleList().remove(r);
 				new UserProjectDAO().makePersistent(u);
 			}
 			
-			Integer id = r.getId();
-			pDAO.delete(r);
-			try {
-				pDAO.findById(id);
-				Assert.assertTrue("No se ha eliminado la entidad deseada", false);
-			} catch (ObjectNotFoundException e){
-				//No se encuentra la entidad
-				Assert.assertTrue(true);
-			}
+			pDAO.delete(r);			
 		}
+		this.validResult("ROLE", "Role_Delete.xml");
+		this.validResult("PRIVILEGEROLE", "Role_Delete.xml");
+		this.validResult("ROLEUSERPROJECT", "Role_Delete.xml");
 	}
 }

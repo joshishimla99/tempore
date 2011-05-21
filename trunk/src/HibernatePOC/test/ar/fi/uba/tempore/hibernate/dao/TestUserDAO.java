@@ -9,6 +9,7 @@ import org.hibernate.ObjectNotFoundException;
 import org.junit.Test;
 
 import ar.fi.uba.tempore.hibernate.TestDAO;
+import fi.uba.tempore.poc.entities.Alert;
 import fi.uba.tempore.poc.entities.Role;
 import fi.uba.tempore.poc.entities.TaskUser;
 import fi.uba.tempore.poc.entities.User;
@@ -38,7 +39,7 @@ public class TestUserDAO extends TestDAO{
 	@Test
 	public void testFindAll (){
 		List<User> findAll = psDAO.findAll();
-		Assert.assertEquals("La cantidad del metodo FIND-ALL es incorrecta", 3, findAll.size());
+		Assert.assertEquals("La cantidad del metodo FIND-ALL es incorrecta", 6, findAll.size());
 	}
 	
 	@Test
@@ -46,39 +47,27 @@ public class TestUserDAO extends TestDAO{
 		User newEntity = getDemoUser();						
 
 		newEntity = psDAO.makePersistent(newEntity);		
-		Assert.assertNotNull("No se ha podido crear la entidad", newEntity);
-		
-		List<User> allEntities = psDAO.findAll();
-		Assert.assertEquals("La cantidad de la entidad no es correcta", 4, allEntities.size());
-
-		try {
-			User expected = getDemoUser();
-			expected.setId(newEntity.getId());
-			
-			User actual = psDAO.findById(newEntity.getId());
-			Assert.assertEquals(expected.getName(), actual.getName());
-			Assert.assertEquals(expected.getLastName(), actual.getLastName());
-			Assert.assertEquals(expected.getCountry(), actual.getCountry());
-			Assert.assertEquals(expected.getPhone(), actual.getPhone());
-			Assert.assertEquals(expected.getState(), actual.getState());
-			
-		} catch (ObjectNotFoundException e){
-			Assert.assertTrue("No se encontro la entidad creada", false);
-		}
+		this.validResult("USER", "User_New.xml");
+		this.validResult("PERSON", "User_New.xml");
 	}
 	
 	@Test
 	public void testUpdate(){
-		Integer id = 11;
-		String dataExpected = "updated name";
-		
-		User expected = psDAO.findById(id);
-		expected.setName(dataExpected);
+		User expected = psDAO.findById(11);
+		expected.setName("JTest");
+		expected.setLastName("JLastTest");
+		expected.setAddress("JDirTest");
+		expected.setCountry("JCountryTest");
+		expected.setPhone("1111111111");
+		expected.setEmail("mail@mail.com");
+		expected.setState("A");
+		expected.setZip("123");
+		expected.setUserName("username");
+		expected.setPassword("pass");
 		
 		psDAO.makePersistent(expected);
-		
-		User actual = psDAO.findById(id);
-		Assert.assertEquals("Ocurrio un error al actualizar", dataExpected, actual.getName());
+		this.validResult("USER", "User_Update.xml");
+		this.validResult("PERSON", "User_Update.xml");
 	}
 	
 	private User getDemoUser(){
@@ -88,7 +77,11 @@ public class TestUserDAO extends TestDAO{
 		u.setAddress("JDirTest");
 		u.setCountry("JCountryTest");
 		u.setPhone("1111111111");
-		u.setState("A");		
+		u.setState("A");
+		u.setZip("123");
+		u.setEmail("mail@mail.com");
+		u.setUserName("username");
+		u.setPassword("pass");
 		return u;
 	}
 	
@@ -109,18 +102,25 @@ public class TestUserDAO extends TestDAO{
 			//Elimino la asginacion a los proyectos
 			List<UserProject> userProjectList = u.getUserProjectList();
 			for (UserProject up : userProjectList) {
+				List<Alert> alertList = up.getAlertList();
+				for (Alert alert : alertList) {
+					new AlertDAO().delete(alert);
+				}
+				
+				List<Role> roleList = up.getRoleList();
+				for (Role role : roleList) {
+					List<UserProject> userProjectList2 = role.getUserProjectList();
+					userProjectList2.remove(up);
+					new RoleDAO().makePersistent(role);
+				}
+				
 				new UserProjectDAO().delete(up);
 			}
-			
-			Integer id = u.getId();
 			psDAO.delete(u);
-			try {
-				psDAO.findById(id);
-				Assert.assertTrue("No se ha eliminado la entidad deseada", false);
-			} catch (ObjectNotFoundException e){
-				//No se encuentra la entidad
-				Assert.assertTrue(true);
-			}
 		}
+		this.validResult("USER", "User_Delete.xml");
+		this.validResult("PERSON", "User_Delete.xml");
+		this.validResult("USERPROJECT", "User_Delete.xml");
+		this.validResult("TASKUSER", "User_Delete.xml");
 	}
 }

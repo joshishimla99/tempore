@@ -42,32 +42,18 @@ public class TestProjectStateDAO extends TestDAO{
 		ProjectState newEntity = getDemoProject();						
 
 		newEntity = psDAO.makePersistent(newEntity);		
-		Assert.assertNotNull("No se ha podido crear la entidad", newEntity);
-		
-		List<ProjectState> allEntities = psDAO.findAll();
-		Assert.assertEquals("La cantidad de la entidad no es correcta", 5, allEntities.size());
-
-		try {
-			ProjectState expected = getDemoProject();
-			expected.setId(newEntity.getId());
-			
-			ProjectState actual = psDAO.findById(newEntity.getId());
-			Assert.assertEquals(expected.getName(), actual.getName());
-			Assert.assertEquals(expected.getDescription(), actual.getDescription());
-		} catch (ObjectNotFoundException e){
-			Assert.assertTrue("No se encontro la entidad creada", false);
-		}
+		this.validResult("PROJECTSTATE", "ProjectState_New.xml");
 	}
 	
 	@Test
 	public void testUpdate(){
 		ProjectState expected = psDAO.findById(1);
-		expected.setName("QC");
+		expected.setName("Vencido");
+		expected.setDescription("Vencido y perdido");
 		
 		psDAO.makePersistent(expected);
 		
-		ProjectState actual = psDAO.findById(1);
-		Assert.assertEquals("Ocurrio un error al actualizar", "QC", actual.getName());
+		this.validResult("PROJECTSTATE", "ProjectState_Update.xml");
 	}
 	
 	private ProjectState getDemoProject(){
@@ -92,15 +78,8 @@ public class TestProjectStateDAO extends TestDAO{
 				new ProjectDAO().makePersistent(project);
 			}
 		
-			Integer id = ct.getId();
 			psDAO.delete(ct);
-			try {
-				psDAO.findById(id);
-				Assert.assertTrue("No se ha eliminado la entidad deseada", false);
-			} catch (ObjectNotFoundException e){
-				//No se encuentra la entidad
-				Assert.assertTrue(true);
-			}
 		}
+		this.validResult("PROJECTSTATE", "ProjectState_Delete.xml");
 	}
 }
