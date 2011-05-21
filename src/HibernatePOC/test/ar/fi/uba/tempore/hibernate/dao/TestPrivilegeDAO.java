@@ -42,20 +42,9 @@ public class TestPrivilegeDAO extends TestDAO{
 		Privilege newEntity = getDemoPrivilege();						
 
 		newEntity = pDAO.makePersistent(newEntity);		
-		Assert.assertNotNull("No se ha podido crear la entidad", newEntity);
 		
-		List<Privilege> allEntities = pDAO.findAll();
-		Assert.assertEquals("La cantidad de la entidad no es correcta", 4, allEntities.size());
-
-		try {
-			Privilege expected = getDemoPrivilege();
-			expected.setId(newEntity.getId());
-			
-			Privilege actual = pDAO.findById(newEntity.getId());
-			Assert.assertEquals(expected.getName(), actual.getName());
-		} catch (ObjectNotFoundException e){
-			Assert.assertTrue("No se encontro la entidad creada", false);
-		}
+		this.validResult("PRIVILEGE", "Privilege_New.xml");
+		this.validResult("PRIVILEGEROLE", "Privilege_New.xml");
 	}
 	
 	@Test
@@ -65,8 +54,8 @@ public class TestPrivilegeDAO extends TestDAO{
 		
 		pDAO.makePersistent(expected);
 		
-		Privilege actual = pDAO.findById(1);
-		Assert.assertEquals("Ocurrio un error al actualizar", "update", actual.getName());
+		this.validResult("PRIVILEGE", "Privilege_Update.xml");
+		this.validResult("PRIVILEGEROLE", "Privilege_New.xml");
 	}
 	
 	private Privilege getDemoPrivilege(){
@@ -82,8 +71,6 @@ public class TestPrivilegeDAO extends TestDAO{
 				
 		List<Privilege> findByExample = pDAO.findByExample(entity);
 		for (Privilege ct : findByExample){			
-			Integer id = ct.getId();
-
 			//Elimino la referencia del privilegio en el rol
 			List<Role> roleList = ct.getRoleList();
 			for (Role role : roleList) {
@@ -93,13 +80,9 @@ public class TestPrivilegeDAO extends TestDAO{
 			}
 			
 			pDAO.delete(ct);
-			try {
-				pDAO.findById(id);
-				Assert.assertTrue("No se ha eliminado la entidad deseada", false);
-			} catch (ObjectNotFoundException e){
-				//No se encuentra la entidad
-				Assert.assertTrue(true);
-			}
 		}
+		this.validResult("PRIVILEGE", "Privilege_Delete.xml");
+		this.validResult("PRIVILEGEROLE", "Privilege_Delete.xml");
+		this.validResult("ROLE", "Privilege_Delete.xml");
 	}
 }

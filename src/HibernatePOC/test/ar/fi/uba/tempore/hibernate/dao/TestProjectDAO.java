@@ -1,14 +1,17 @@
 package ar.fi.uba.tempore.hibernate.dao;
 
 
+import java.text.ParseException;
 import java.util.List;
 
 import junit.framework.Assert;
 
+import org.apache.log4j.lf5.util.DateFormatManager;
 import org.hibernate.ObjectNotFoundException;
 import org.junit.Test;
 
 import ar.fi.uba.tempore.hibernate.TestDAO;
+import fi.uba.tempore.poc.entities.Alert;
 import fi.uba.tempore.poc.entities.Client;
 import fi.uba.tempore.poc.entities.Project;
 import fi.uba.tempore.poc.entities.Task;
@@ -47,39 +50,42 @@ public class TestProjectDAO extends TestDAO{
 		Project newEntity = getDemoProject();						
 
 		newEntity = pDAO.makePersistent(newEntity);		
-		Assert.assertNotNull("No se ha podido crear la entidad", newEntity);
 		
-		List<Project> allEntities = pDAO.findAll();
-		Assert.assertEquals("La cantidad de la entidad no es correcta", 3, allEntities.size());
-
-		try {
-			Project expected = getDemoProject();
-			expected.setId(newEntity.getId());
-			
-			Project actual = pDAO.findById(newEntity.getId());
-			Assert.assertEquals(expected.getName(), actual.getName());
-		} catch (ObjectNotFoundException e){
-			Assert.assertTrue("No se encontro la entidad creada", false);
-		}
+		this.validResult("PROJECT", "Project_New.xml");
 	}
 	
 	@Test
 	public void testUpdate(){
-		Integer id = 1;
-		String dataExpected = "updated name";
+		Project expected = pDAO.findById(1);
+		expected.setName("Proyecto 3");
+		expected.setBudget(12.23);
+		expected.setDescription("Descripcion a");
+		try {
+			expected.setInitDate(new DateFormatManager("dd-MM-yyyy").parse("11-12-2008"));
+			expected.setEndDate(new DateFormatManager("dd-MM-yyyy").parse("11-12-2008"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}		
 		
-		Project expected = pDAO.findById(id);
-		expected.setName(dataExpected);
+		expected.setProjectState(new ProjectStateDAO().findById(1));
 		
 		pDAO.makePersistent(expected);
 		
-		Project actual = pDAO.findById(id);
-		Assert.assertEquals("Ocurrio un error al actualizar", dataExpected, actual.getName());
+		this.validResult("PROJECT", "Project_Update.xml");
 	}
 	
 	private Project getDemoProject(){
 		Project t = new Project();
 		t.setName("Proyecto 3");
+		t.setBudget(12.23);
+		t.setDescription("Descripcion a");
+		try {
+			t.setInitDate(new DateFormatManager("dd-MM-yyyy").parse("11-12-2008"));
+			t.setEndDate(new DateFormatManager("dd-MM-yyyy").parse("11-12-2008"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}		
+		
 		t.setProjectState(new ProjectStateDAO().findById(1));
 		return t;
 	}
@@ -112,18 +118,21 @@ public class TestProjectDAO extends TestDAO{
 			//Elimino los usuarios asignados
 			List<UserProject> userProjectList = p.getUserProjectList();
 			for (UserProject userProject : userProjectList) {
+				
+				List<Alert> alertList = userProject.getAlertList();
+				//Elimino las alertas del usuario
+				for (Alert alert : alertList) {
+					new AlertDAO().delete(alert);
+				}
+				
 				new UserProjectDAO().delete(userProject);
 			} 
 			
-			Integer id = p.getId();
 			pDAO.delete(p);
-			try {
-				pDAO.findById(id);
-				Assert.assertTrue("No se ha eliminado la entidad deseada", false);
-			} catch (ObjectNotFoundException e){
-				//No se encuentra la entidad
-				Assert.assertTrue(true);
-			}
 		}
+		this.validResult("PROJECT", "Project_Delete.xml");
+		this.validResult("USERPROJECT", "Project_Delete.xml");
+		this.validResult("PROJECTCLIENT", "Project_Delete.xml");
+		this.validResult("TASK", "Project_Delete.xml");
 	}
 }

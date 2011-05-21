@@ -9,6 +9,8 @@ import org.hibernate.ObjectNotFoundException;
 import org.junit.Test;
 
 import ar.fi.uba.tempore.hibernate.TestDAO;
+import fi.uba.tempore.poc.entities.Alert;
+import fi.uba.tempore.poc.entities.Role;
 import fi.uba.tempore.poc.entities.User;
 import fi.uba.tempore.poc.entities.UserProject;
 
@@ -40,36 +42,16 @@ public class TestUserProjectDAO extends TestDAO{
 		UserProject newEntity = getDemoUserProject();						
 
 		newEntity = tuDAO.makePersistent(newEntity);		
-		Assert.assertNotNull("No se ha podido crear la entidad", newEntity);
-		
-		List<UserProject> allEntities = tuDAO.findAll();
-		Assert.assertEquals("La cantidad de la entidad no es correcta", 5, allEntities.size());
-
-		try {
-			UserProject expected = getDemoUserProject();
-			expected.setId(newEntity.getId());
-			
-			UserProject actual = tuDAO.findById(newEntity.getId());
-			Assert.assertEquals(expected.getAlertList().size(), actual.getAlertList().size());
-			Assert.assertEquals(expected.getUser().getName(), actual.getUser().getName());
-			Assert.assertEquals(expected.getProject().getName(), actual.getProject().getName());
-			
-		} catch (ObjectNotFoundException e){
-			Assert.assertTrue("No se encontro la entidad creada", false);
-		}
+		this.validResult("USERPROJECT", "UserProject_New.xml");
 	}
 	
 	@Test
 	public void testUpdate(){
-		Integer id = 1;
-
-		UserProject expected = tuDAO.findById(id);
+		UserProject expected = tuDAO.findById(1);
 		expected.setUser(new UserDAO().findById(13));
 		
 		tuDAO.makePersistent(expected);
-		
-		UserProject actual = tuDAO.findById(id);
-		Assert.assertEquals("Ocurrio un error al actualizar", "Bill", actual.getUser().getName());
+		this.validResult("USERPROJECT", "UserProject_Update.xml");
 	}
 	
 	private UserProject getDemoUserProject(){
@@ -85,19 +67,25 @@ public class TestUserProjectDAO extends TestDAO{
 		
 		List<UserProject> findByExample = user.getUserProjectList();
 		Assert.assertEquals(1, findByExample.size());
-		for (UserProject ct : findByExample){			
-		
-			Integer id = ct.getId();
-			tuDAO.delete(ct);
-			try {
-				tuDAO.findById(id);
-				Assert.assertTrue("No se ha eliminado la entidad deseada", false);
-			} catch (ObjectNotFoundException e){
-				//No se encuentra la entidad
-				Assert.assertTrue(true);
+		for (UserProject ct : findByExample){
+			
+			List<Alert> alertList = ct.getAlertList();
+			for (Alert alert : alertList) {
+				new AlertDAO().delete(alert);
 			}
+			
+			List<Role> roleList = ct.getRoleList();
+			for (Role role : roleList) {
+				List<UserProject> userProjectList = role.getUserProjectList();
+				userProjectList.remove(ct);
+				new RoleDAO().makePersistent(role);
+			}
+			
+			
+			tuDAO.delete(ct);		
 		}
-		List<UserProject> findAll = tuDAO.findAll();
-		Assert.assertEquals("Se han borrado todas las instancias deseadas" , 3, findAll.size());
+		this.validResult("USERPROJECT", "UserProject_Delete.xml");
+		this.validResult("ROLEUSERPROJECT", "UserProject_Delete.xml");
+		this.validResult("ALERT", "UserProject_Delete.xml");
 	}
 }

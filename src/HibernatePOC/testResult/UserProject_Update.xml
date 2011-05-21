@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+	
+	<USERPROJECT id='1' userId='13' projectId='1' />
+	<USERPROJECT id='2' userId='12' projectId='1' />
+	<USERPROJECT id='3' userId='12' projectId='2' />
+	<USERPROJECT id='4' userId='13' projectId='2' />
+	
+	<ROLEUSERPROJECT roleId='2' userProjectId='1'/>
+	<ROLEUSERPROJECT roleId='1' userProjectId='2'/>
+	<ROLEUSERPROJECT roleId='3' userProjectId='3'/>
+</dataset>

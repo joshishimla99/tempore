@@ -1,6 +1,5 @@
 package ar.fi.uba.tempore.hibernate.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -44,35 +43,30 @@ public class TestContactDAO extends TestDAO{
 	@Test
 	public void testMakePersistence (){
 		Contact newEntity = getDemoContact();						
-
 		newEntity = cDAO.makePersistent(newEntity);		
-		Assert.assertNotNull("No se ha podido crear la entidad", newEntity);
 		
-		List<Contact> allEntities = cDAO.findAll();
-		Assert.assertEquals("La cantidad de la entidad no es correcta", 4, allEntities.size());
-
-		try {
-			Contact expected = getDemoContact();
-			expected.setId(newEntity.getId());
-			
-			Contact actual = cDAO.findById(newEntity.getId());
-			Assert.assertEquals(expected.getName(), actual.getName());
-			Assert.assertEquals(expected.getPhone(), actual.getPhone());
-			Assert.assertEquals(expected.getState(), actual.getState());
-		} catch (ObjectNotFoundException e){
-			Assert.assertTrue("No se encontro la entidad creada", false);
-		}
+		this.validResult("CONTACT", "Contact_New.xml");
 	}
 	
 	@Test
 	public void testUpdate(){
 		Contact expected = cDAO.findById(1);
-		expected.setName("Lucas");
+		expected.setName("Nombre Demo");
+		expected.setLastName("Apellido Demo");
+		expected.setCountry("Argentina");
+		expected.setState("A");
+		expected.setAddress("Dirección Demo");
+		expected.setPhone("54 11 4266-6223");
+		expected.setUserName("admin");
+		expected.setPassword("admin");
+		expected.setEmail("mail@mail.com");
+		
+		expected.setContactType(new ContactTypeDAO().findById(2));
+
 		
 		cDAO.makePersistent(expected);
 		
-		Contact actual = cDAO.findById(1);
-		Assert.assertEquals("Ocurrio un error al actualizar", expected, actual);
+		this.validResult("CONTACT", "Contact_Update.xml");
 	}
 	
 
@@ -82,7 +76,6 @@ public class TestContactDAO extends TestDAO{
 		c.setName("Nicolás");
 		
 		List<Contact> contacts = cDAO.findByExample(c);
-		Assert.assertEquals("No se encontro el CONTACTOS buscado para borrar", contacts.size(), 1);
 		
 		for (Contact cc : contacts){			
 			//Elimino la referencia de clientes
@@ -93,18 +86,12 @@ public class TestContactDAO extends TestDAO{
 				new ClientDAO().makePersistent(cl);
 			}
 			
-			Integer id = cc.getId();
-			cDAO.delete(cc);
-			
-			try {
-				cDAO.findById(id);
-				Assert.assertTrue("No se ha eliminado la entidad deseada", false);
-			} catch (ObjectNotFoundException e){
-				//No se encuentra la entidad
-				Assert.assertTrue(true);
-			}
-			
+			cDAO.delete(cc);			
 		}
+		
+		this.validResult("CONTACT", "Contact_Delete.xml");
+		this.validResult("USER", "Contact_Delete.xml");
+		this.validResult("PERSON", "Contact_Delete.xml");
 	}
 
 	private Contact getDemoContact (){
@@ -115,15 +102,12 @@ public class TestContactDAO extends TestDAO{
 		c.setState("A");
 		c.setAddress("Dirección Demo");
 		c.setPhone("54 11 4266-6223");
+		c.setUserName("admin");
+		c.setPassword("admin");
+		c.setEmail("mail@mail.com");
 		
-		try {	
-			ContactTypeDAO ctDAO = new ContactTypeDAO();
-			ContactType contactType = ctDAO.findById(1);
-			
-			c.setContactType(contactType);
-		} catch (ObjectNotFoundException e){
-			Assert.assertTrue("No se encontro la el tipo de contacto para realizar la demo", false);
-		}
+		
+		c.setContactType(new ContactTypeDAO().findById(1));
 		return c;
 	}
 }

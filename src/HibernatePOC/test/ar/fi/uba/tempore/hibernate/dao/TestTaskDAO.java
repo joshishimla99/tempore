@@ -9,8 +9,6 @@ import org.hibernate.ObjectNotFoundException;
 import org.junit.Test;
 
 import ar.fi.uba.tempore.hibernate.TestDAO;
-import fi.uba.tempore.poc.entities.Project;
-import fi.uba.tempore.poc.entities.Role;
 import fi.uba.tempore.poc.entities.Task;
 import fi.uba.tempore.poc.entities.TaskUser;
 
@@ -44,46 +42,28 @@ public class TestTaskDAO extends TestDAO{
 		Task newEntity = getDemoTask();						
 
 		newEntity = psDAO.makePersistent(newEntity);		
-		Assert.assertNotNull("No se ha podido crear la entidad", newEntity);
-		
-		List<Task> allEntities = psDAO.findAll();
-		Assert.assertEquals("La cantidad de la entidad no es correcta", 5, allEntities.size());
-
-		try {
-			Task expected = getDemoTask();
-			expected.setId(newEntity.getId());
-			
-			Task actual = psDAO.findById(newEntity.getId());
-			Assert.assertEquals(expected.getName(), actual.getName());
-			Assert.assertEquals(expected.getDescription(), actual.getDescription());
-			Assert.assertEquals(expected.getTaskType().getName(), actual.getTaskType().getName());
-			Assert.assertEquals(expected.getProject().getName(), actual.getProject().getName());
-			
-		} catch (ObjectNotFoundException e){
-			Assert.assertTrue("No se encontro la entidad creada", false);
-		}
+		this.validResult("TASK", "Task_New.xml");
 	}
 	
 	@Test
-	public void testUpdate(){
-		Integer id = 1;
-		String dataExpected = "updated name";
-		
-		Task expected = psDAO.findById(id);
-		expected.setName(dataExpected);
+	public void testUpdate(){		
+		Task expected = psDAO.findById(1);
+		expected.setName("Tarea");
+		expected.setDescription("Descripcion de la tarea");
+		expected.setTaskType(new TaskTypeDAO().findById(2));
+		expected.setProject(new ProjectDAO().findById(2));	
 		
 		psDAO.makePersistent(expected);
 		
-		Task actual = psDAO.findById(id);
-		Assert.assertEquals("Ocurrio un error al actualizar", dataExpected, actual.getName());
+		this.validResult("TASK", "Task_Update.xml");
 	}
 	
 	private Task getDemoTask(){
 		Task t = new Task();
 		t.setName("Tarea");
 		t.setDescription("Descripcion de la tarea");
-		t.setTaskType(new TaskTypeDAO().findById(1));
-		t.setProject(new ProjectDAO().findById(1));				
+		t.setTaskType(new TaskTypeDAO().findById(2));
+		t.setProject(new ProjectDAO().findById(2));				
 		return t;
 	}
 	
@@ -99,16 +79,9 @@ public class TestTaskDAO extends TestDAO{
 			for (TaskUser tu : taskUserList) {
 				new TaskUserDAO().delete(tu);
 			}
-			
-			Integer id = t.getId();
 			psDAO.delete(t);
-			try {
-				psDAO.findById(id);
-				Assert.assertTrue("No se ha eliminado la entidad deseada", false);
-			} catch (ObjectNotFoundException e){
-				//No se encuentra la entidad
-				Assert.assertTrue(true);
-			}
 		}
+		this.validResult("TASK", "Task_Delete.xml");
+		this.validResult("TASKUSER", "Task_Delete.xml");
 	}
 }

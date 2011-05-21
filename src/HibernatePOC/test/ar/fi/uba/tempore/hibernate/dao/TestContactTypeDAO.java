@@ -9,8 +9,6 @@ import org.hibernate.ObjectNotFoundException;
 import org.junit.Test;
 
 import ar.fi.uba.tempore.hibernate.TestDAO;
-
-import fi.uba.tempore.poc.entities.Client;
 import fi.uba.tempore.poc.entities.Contact;
 import fi.uba.tempore.poc.entities.ContactType;
 
@@ -44,32 +42,19 @@ public class TestContactTypeDAO extends TestDAO{
 		ContactType newEntity = getDemoContactType();						
 
 		newEntity = ctDAO.makePersistent(newEntity);		
-		Assert.assertNotNull("No se ha podido crear la entidad", newEntity);
 		
-		List<ContactType> allEntities = ctDAO.findAll();
-		Assert.assertEquals("La cantidad de la entidad no es correcta", 3, allEntities.size());
-
-		try {
-			ContactType expected = getDemoContactType();
-			expected.setId(newEntity.getId());
-			
-			ContactType actual = ctDAO.findById(newEntity.getId());
-			Assert.assertEquals(expected.getName(), actual.getName());
-			Assert.assertEquals(expected.getDescription(), actual.getDescription());
-		} catch (ObjectNotFoundException e){
-			Assert.assertTrue("No se encontro la entidad creada", false);
-		}
+		this.validResult("CONTACTTYPE", "ContactType_New.xml");
 	}
 	
 	@Test
 	public void testUpdate(){
 		ContactType expected = ctDAO.findById(1);
-		expected.setName("PL");
+		expected.setName("JTest");
+		expected.setDescription("adsfasd asdf asdfa");
 		
 		ctDAO.makePersistent(expected);
 		
-		ContactType actual = ctDAO.findById(1);
-		Assert.assertEquals("Ocurrio un error al actualizar", "PL", actual.getName());
+		this.validResult("CONTACTTYPE", "ContactType_Update.xml");		
 	}
 	
 	private ContactType getDemoContactType(){
@@ -94,18 +79,9 @@ public class TestContactTypeDAO extends TestDAO{
 				c.setContactType(null);
 				new ContactDAO().makePersistent(c);
 			}
-			
-			
-			Integer id = ct.getId();
 			ctDAO.delete(ct);
-			try {
-				ctDAO.findById(id);
-				Assert.assertTrue("No se ha eliminado la entidad deseada", false);
-			} catch (ObjectNotFoundException e){
-				//No se encuentra la entidad
-				Assert.assertTrue(true);
-			}
 		}
+		this.validResult("CONTACTTYPE", "ContactType_Delete.xml");
 	}
 
 }

@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+	
+	<CONTACTTYPE name='PM' description='Project Manager'/>
+	<CONTACTTYPE name='SP' description='Sponsor del Proyecto'/>
+	
+	<CONTACTTYPE name='JTest' description='adsfasd asdf asdfa'/>
+
+</dataset>
