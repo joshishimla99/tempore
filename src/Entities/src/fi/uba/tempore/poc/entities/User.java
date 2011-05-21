@@ -20,6 +20,8 @@ public class User extends Person {
 
 	private static final long serialVersionUID = -6663691212226586135L;
 	private String state;
+	private String userName;
+	private String password;
 	private List<TaskUser> taskUserList = new ArrayList<TaskUser>();
 	private List<UserProject> userProjectList = new ArrayList<UserProject>();
 	
@@ -55,5 +57,20 @@ public class User extends Person {
 	public void setState(String state) {
 		this.state = state;
 	}
-}
 
+	@Column(name="username")
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
+	@Column(name="password")
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getPassword() {
+		return password;
+	}
+}
