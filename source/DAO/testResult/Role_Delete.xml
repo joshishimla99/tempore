@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+		
+	<ROLE id='1' name='Administrador'/>
+	<ROLE id='3' name='Cliente'/>
+	
+	<PRIVILEGEROLE roleId='1' privilegeId='1'/>
+	<PRIVILEGEROLE roleId='1' privilegeId='2'/>
+	<PRIVILEGEROLE roleId='1' privilegeId='3'/>
+	<PRIVILEGEROLE roleId='3' privilegeId='3'/>
+		
+	<ROLEUSERPROJECT roleId='1' userProjectId='2'/>
+	<ROLEUSERPROJECT roleId='3' userProjectId='3'/>
+</dataset>

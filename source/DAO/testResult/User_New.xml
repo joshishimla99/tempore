@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+	<PERSON name='Nicolás' lastname='García' phone='15-6789-0123' email='nicolasgarcia@gmail.com' zip='ADFAAFSD' country='Argentina' address='a'/>
+	<PERSON name='Juan' lastname='Perez' phone='12132132123' email='juanperez@gmail.com' zip='ADFAAFSD' country='Argentina' address='direccion'/>
+	<PERSON name='Pepe' lastname='Pompin' phone='11321233' email='pepepompin@gmail.com' zip='ADFAAFSD' country='Argentina' address='asdfasd'/>
+	<PERSON name='Rana' lastname='Rene' phone='15-6789-0123' email='nicolasgarcia@gmail.com' zip='ADFAAFSD' country='Argentina' address='asdf'/>
+	<PERSON name='Jose' lastname='Marmol' phone='12132132123' email='juanperez@gmail.com' zip='ADFAAFSD' country='Argentina' address='qret'/>
+	<PERSON name='Bill' lastname='Gates' phone='11321233' email='pepepompin@gmail.com' zip='ADFAAFSD' country='Argentina' address='jghjkgh'/>
+	<PERSON name='No se usa' lastname='-' phone='11321233' email='pepepompin@gmail.com' zip='ADFAAFSD' country='Argentina' address='qwerwerqwe'/>
+	
+	<PERSON name='JTest' lastname='JLastTest' phone='1111111111' email='mail@mail.com' zip='123' country='JCountryTest' address='JDirTest'/>
+
+	<USER state='A' username='user1' password='pass1'/>
+	<USER state='A' username='user2' password='pass2'/>
+	<USER state='A' username='user3' password='pass3'/>
+	<USER state='A' username='user11' password='pass11'/>
+	<USER state='A' username='user12' password='pass12'/>
+	<USER state='A' username='user13' password='pass13'/>
+	
+	<USER  state='A' username='username' password='pass'/>
+	
+</dataset>

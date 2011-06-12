@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+	<TASKUSER userId='11' taskId='1' hourCount='2' date='2011-04-30' comment='-'/>
+	<TASKUSER userId='11' taskId='1' hourCount='3' date='2010-06-01' comment='-'/>
+	<TASKUSER userId='11' taskId='2' hourCount='5' date='2011-04-25' comment='nfsda'/>
+	<TASKUSER userId='12' taskId='3' hourCount='1' date='2011-04-18' comment='ddfsad'/>
+	<TASKUSER userId='12' taskId='4' hourCount='3' date='2011-04-10' comment='f f'/>
+	<TASKUSER userId='12' taskId='1' hourCount='7' date='2011-03-30' comment='asd'/>
+	<TASKUSER userId='13' taskId='4' hourCount='9' date='2011-04-30' comment='fds'/>
+	
+	<TASKUSER userId='11' taskId='1' hourCount='9' date='2011-09-18' comment='comentario de la tarea'/>	
+</dataset>
