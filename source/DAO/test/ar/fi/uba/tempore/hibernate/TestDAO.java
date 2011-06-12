@@ -22,7 +22,7 @@ import org.hibernate.Transaction;
 import org.junit.After;
 import org.junit.Before;
 
-import ar.fi.uba.tempore.hibernate.util.HibernateUtil;
+import ar.fi.uba.tempore.dao.util.HibernateUtil;
 
 public abstract class TestDAO extends DBTestCase{
 	private static final String DDBB_XML_SETUP = "./BBDD_setup.xml";

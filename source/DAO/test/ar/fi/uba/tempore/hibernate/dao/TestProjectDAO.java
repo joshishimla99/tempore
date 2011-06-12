@@ -10,13 +10,20 @@ import org.apache.log4j.lf5.util.DateFormatManager;
 import org.hibernate.ObjectNotFoundException;
 import org.junit.Test;
 
+import ar.fi.uba.tempore.dao.AlertDAO;
+import ar.fi.uba.tempore.dao.ClientDAO;
+import ar.fi.uba.tempore.dao.ProjectDAO;
+import ar.fi.uba.tempore.dao.ProjectStateDAO;
+import ar.fi.uba.tempore.dao.TaskDAO;
+import ar.fi.uba.tempore.dao.TaskUserDAO;
+import ar.fi.uba.tempore.dao.UserProjectDAO;
+import ar.fi.uba.tempore.entity.Alert;
+import ar.fi.uba.tempore.entity.Client;
+import ar.fi.uba.tempore.entity.Project;
+import ar.fi.uba.tempore.entity.Task;
+import ar.fi.uba.tempore.entity.TaskUser;
+import ar.fi.uba.tempore.entity.UserProject;
 import ar.fi.uba.tempore.hibernate.TestDAO;
-import fi.uba.tempore.poc.entities.Alert;
-import fi.uba.tempore.poc.entities.Client;
-import fi.uba.tempore.poc.entities.Project;
-import fi.uba.tempore.poc.entities.Task;
-import fi.uba.tempore.poc.entities.TaskUser;
-import fi.uba.tempore.poc.entities.UserProject;
 
 public class TestProjectDAO extends TestDAO{
 

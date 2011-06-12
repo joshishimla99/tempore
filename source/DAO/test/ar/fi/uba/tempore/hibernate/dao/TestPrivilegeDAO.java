@@ -8,9 +8,11 @@ import junit.framework.Assert;
 import org.hibernate.ObjectNotFoundException;
 import org.junit.Test;
 
+import ar.fi.uba.tempore.dao.PrivilegeDAO;
+import ar.fi.uba.tempore.dao.RoleDAO;
+import ar.fi.uba.tempore.entity.Privilege;
+import ar.fi.uba.tempore.entity.Role;
 import ar.fi.uba.tempore.hibernate.TestDAO;
-import fi.uba.tempore.poc.entities.Role;
-import fi.uba.tempore.poc.entities.Privilege;
 
 public class TestPrivilegeDAO extends TestDAO{
 
