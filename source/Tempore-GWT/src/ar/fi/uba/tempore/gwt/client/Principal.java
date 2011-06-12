@@ -1,6 +1,7 @@
 package ar.fi.uba.tempore.gwt.client;
 
 import ar.fi.uba.tempore.gwt.shared.FieldVerifier;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -20,7 +21,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class Tempore_GWT implements EntryPoint {
+public class Principal implements EntryPoint {
 	/**
 	 * The message displayed to the user when the server cannot be reached or
 	 * returns an error.
@@ -32,8 +33,7 @@ public class Tempore_GWT implements EntryPoint {
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting service.
 	 */
-	private final GreetingServiceAsync greetingService = GWT
-			.create(GreetingService.class);
+	private final DemoServiceAsync greetingService = GWT.create(DemoService.class);
 
 	/**
 	 * This is the entry point method.
@@ -119,7 +119,7 @@ public class Tempore_GWT implements EntryPoint {
 				sendButton.setEnabled(false);
 				textToServerLabel.setText(textToServer);
 				serverResponseLabel.setText("");
-				greetingService.greetServer(textToServer,
+				greetingService.callServer(textToServer,null,
 						new AsyncCallback<String>() {
 							public void onFailure(Throwable caught) {
 								// Show the RPC error message to the user

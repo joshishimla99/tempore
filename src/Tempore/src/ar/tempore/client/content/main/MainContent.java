@@ -1,9 +1,9 @@
-package ar.tempore.client.content.main;
+package ar.fi.uba.tempore.gwt.client.content.main;
+
+import ar.fi.uba.tempore.gwt.client.content.Content;
 
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
-
-import ar.tempore.client.content.Content;
 
 public class MainContent implements Content{
 
