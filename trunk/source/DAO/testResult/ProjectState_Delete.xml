@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+		
+	<PROJECTSTATE  id='2' name='Iniciado' description='El proyecto ya esta iniciado'/>
+	<PROJECTSTATE  id='3' name='UAT' description='Proyecto en UAT'/>
+	<PROJECTSTATE  id='4' name='Cerrado' description='Proyecto cerrado'/>
+	
+</dataset>
