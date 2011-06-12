@@ -8,10 +8,13 @@ import junit.framework.Assert;
 import org.hibernate.ObjectNotFoundException;
 import org.junit.Test;
 
+import ar.fi.uba.tempore.dao.TaskDAO;
+import ar.fi.uba.tempore.dao.TaskTypeDAO;
+import ar.fi.uba.tempore.dao.TaskUserDAO;
+import ar.fi.uba.tempore.entity.Task;
+import ar.fi.uba.tempore.entity.TaskType;
+import ar.fi.uba.tempore.entity.TaskUser;
 import ar.fi.uba.tempore.hibernate.TestDAO;
-import fi.uba.tempore.poc.entities.Task;
-import fi.uba.tempore.poc.entities.TaskType;
-import fi.uba.tempore.poc.entities.TaskUser;
 
 public class TestTaskTypeDAO extends TestDAO{
 

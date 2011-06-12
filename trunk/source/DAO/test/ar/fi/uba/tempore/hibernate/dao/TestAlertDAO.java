@@ -8,9 +8,11 @@ import junit.framework.Assert;
 import org.hibernate.ObjectNotFoundException;
 import org.junit.Test;
 
+import ar.fi.uba.tempore.dao.AlertDAO;
+import ar.fi.uba.tempore.dao.UserProjectDAO;
+import ar.fi.uba.tempore.entity.Alert;
+import ar.fi.uba.tempore.entity.UserProject;
 import ar.fi.uba.tempore.hibernate.TestDAO;
-import fi.uba.tempore.poc.entities.Alert;
-import fi.uba.tempore.poc.entities.UserProject;
 
 public class TestAlertDAO extends TestDAO{
 

@@ -7,10 +7,13 @@ import junit.framework.Assert;
 import org.hibernate.ObjectNotFoundException;
 import org.junit.Test;
 
+import ar.fi.uba.tempore.dao.ClientDAO;
+import ar.fi.uba.tempore.dao.ContactDAO;
+import ar.fi.uba.tempore.dao.ContactTypeDAO;
+import ar.fi.uba.tempore.entity.Client;
+import ar.fi.uba.tempore.entity.Contact;
+import ar.fi.uba.tempore.entity.ContactType;
 import ar.fi.uba.tempore.hibernate.TestDAO;
-import fi.uba.tempore.poc.entities.Client;
-import fi.uba.tempore.poc.entities.Contact;
-import fi.uba.tempore.poc.entities.ContactType;
 
 public class TestContactDAO extends TestDAO{
 	private ContactDAO cDAO = new ContactDAO();

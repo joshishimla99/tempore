@@ -8,9 +8,11 @@ import junit.framework.Assert;
 import org.hibernate.ObjectNotFoundException;
 import org.junit.Test;
 
+import ar.fi.uba.tempore.dao.ProjectDAO;
+import ar.fi.uba.tempore.dao.ProjectStateDAO;
+import ar.fi.uba.tempore.entity.Project;
+import ar.fi.uba.tempore.entity.ProjectState;
 import ar.fi.uba.tempore.hibernate.TestDAO;
-import fi.uba.tempore.poc.entities.Project;
-import fi.uba.tempore.poc.entities.ProjectState;
 
 public class TestProjectStateDAO extends TestDAO{
 
