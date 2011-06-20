@@ -8,17 +8,17 @@
   <!-- Servlets -->
   <servlet>
     <servlet-name>greetServlet</servlet-name>
-    <servlet-class>ar.fi.uba.tempore.gwt.server.GreetingServiceImpl</servlet-class>
+    <servlet-class>ar.fi.uba.tempore.gwt.server.DemoServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
     <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/tempore_gwt/greet</url-pattern>
+    <url-pattern>/tempore_gwt/demo</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>
-    <welcome-file>Tempore_GWT.html</welcome-file>
+    <welcome-file>Tempore.html</welcome-file>
   </welcome-file-list>
 
 </web-app>
