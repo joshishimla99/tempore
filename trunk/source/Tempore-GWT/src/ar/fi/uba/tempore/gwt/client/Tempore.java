@@ -3,6 +3,7 @@ package ar.fi.uba.tempore.gwt.client;
 import ar.fi.uba.tempore.gwt.client.content.main.MainContent;
 import ar.fi.uba.tempore.gwt.client.panel.MainPanel;
 import ar.fi.uba.tempore.gwt.client.panel.MenuPanel;
+import ar.fi.uba.tempore.gwt.client.panel.MiddlePanel;
 import ar.fi.uba.tempore.gwt.shared.Constant;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -105,9 +106,12 @@ public class Tempore implements EntryPoint {
 			}
 		
 		}
+		MiddlePanel middlePanel = new MiddlePanel();
+		MenuPanel menuPanel = new MenuPanel();
 		
 		RootPanel.get("main").add(new VLayout());
-		RootPanel.get("main").add(new MenuPanel());
+		RootPanel.get("main").add(middlePanel);
+		RootPanel.get("main").add(menuPanel);
 				
 		
 	}

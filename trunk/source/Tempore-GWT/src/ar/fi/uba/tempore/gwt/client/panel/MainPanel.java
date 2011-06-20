@@ -40,6 +40,7 @@ public class MainPanel extends VerticalPanel implements ContextPanel {
 		       
 		       portalLayout.setWidth("760px");
 		       portalLayout.setHeight("580px");
+		       portalLayout.setAlign(Alignment.RIGHT);
 		  
 		        // create portlets...  
 		        for (int i = 1; i <= 2; i++) {  
