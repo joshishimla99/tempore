@@ -10,11 +10,20 @@
     <servlet-name>greetServlet</servlet-name>
     <servlet-class>ar.fi.uba.tempore.gwt.server.DemoServiceImpl</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>projectServlet</servlet-name>
+    <servlet-class>ar.fi.uba.tempore.gwt.server.ProjectServicesImpl</servlet-class>
+  </servlet>
   
   <servlet-mapping>
     <servlet-name>greetServlet</servlet-name>
     <url-pattern>/tempore_gwt/demo</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>projectServlet</servlet-name>
+    <url-pattern>/tempore_gwt/project</url-pattern>
+  </servlet-mapping>
+  
   
   <!-- Default page to serve -->
   <welcome-file-list>
