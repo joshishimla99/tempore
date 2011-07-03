@@ -1,8 +1,9 @@
 package ar.fi.uba.tempore.gwt.client.panel;
 
+import ar.fi.uba.tempore.gwt.client.MenuService;
+
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.MenuBar;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.layout.HLayout;
@@ -14,15 +15,21 @@ public class MenuPanel extends HLayout{
 		
 		Command cmdPrincipal = new Command(){
 			public void execute(){
-				Window win = new Window();
-				win.addItem(new Label("Principal"));
-				win.show();
+//				Window win = new Window();
+//				win.addItem(new Label("Principal"));
+//				win.show();
+				MainPanel mainPanel = new MainPanel();
+				MenuService.getInstance().setNewContextPanel(mainPanel);
+				
 			}
 		};
 		
 		Command cmdNuevoProyecto = new Command(){
 			public void execute(){
-				new Window().addItem(new Label("Nuevo Proyecto"));
+//				ProjectMainPanel projectMainPanel = new ProjectMainPanel();
+//				MenuService.getInstance().setNewContextPanel(projectMainPanel);
+//				new Window().addItem(new Label("Nuevo Proyecto"));
+				
 			}
 		};
 		
@@ -37,7 +44,7 @@ public class MenuPanel extends HLayout{
 		menu.addItem("Reportes", filemenu);	
 		menu.addItem("Configuracion", filemenu);	
 		menu.addItem("Ayuda", filemenu);	
-		RootPanel.get("MainMenu").add(menu);
+		this.addMember(menu);
 	}
 	
 }
