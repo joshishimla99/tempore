@@ -110,6 +110,7 @@ public class Tempore implements EntryPoint {
 		MiddlePanel middlePanel = new MiddlePanel();
 		MenuPanel menuPanel = new MenuPanel();
 		FooterPanel footerPanel = new FooterPanel();
+		MenuService.getInstance().init(middlePanel);
 		
 		RootPanel.get("main").add(menuPanel);
 		RootPanel.get("main").add(middlePanel);

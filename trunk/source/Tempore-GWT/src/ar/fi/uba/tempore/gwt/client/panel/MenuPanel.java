@@ -11,7 +11,6 @@ import com.smartgwt.client.widgets.layout.HLayout;
 public class MenuPanel extends HLayout{
 
 	public MenuPanel(){
-		MenuBar filemenu = new MenuBar(true);
 		
 		Command cmdPrincipal = new Command(){
 			public void execute(){
@@ -24,27 +23,80 @@ public class MenuPanel extends HLayout{
 			}
 		};
 		
-		Command cmdNuevoProyecto = new Command(){
+		MenuBar menu = new MenuBar(false);
+		
+		menu.addItem("Principal", cmdPrincipal);		
+		menu.addItem("Proyecto", createProjectMenu());	
+		menu.addItem("Tarea", createTaskMenu());	
+		menu.addItem("Reportes", createReportMenu());	
+		menu.addItem("Configuracion", createConfigurationMenu());	
+		menu.addItem("Ayuda", createHelpMenu());	
+		this.addMember(menu);
+	}
+
+	private MenuBar createHelpMenu() {
+		
+		return null;
+	}
+
+	private MenuBar createConfigurationMenu() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private MenuBar createReportMenu() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private MenuBar createTaskMenu() {
+		Command cmdNewTask = new Command(){
 			public void execute(){
 //				ProjectMainPanel projectMainPanel = new ProjectMainPanel();
 //				MenuService.getInstance().setNewContextPanel(projectMainPanel);
-//				new Window().addItem(new Label("Nuevo Proyecto"));
+				new Window().addItem(new Label("Nueva Tarea"));
 				
 			}
 		};
 		
-		filemenu.addItem("Nuevo", cmdNuevoProyecto);
+		Command cmdModifyTask = new Command(){
+			public void execute(){
+//				ProjectMainPanel projectMainPanel = new ProjectMainPanel();
+//				MenuService.getInstance().setNewContextPanel(projectMainPanel);
+				new Window().addItem(new Label("Modificar Tarea"));
+				
+			}
+		};
 		
-		MenuBar menu = new MenuBar();
+		MenuBar fileMenu = new MenuBar(true);
+		fileMenu.addItem("Nueva", cmdNewTask);
+		fileMenu.addItem("Modificar", cmdModifyTask);
+		return fileMenu;
+	}
+
+	private MenuBar createProjectMenu() {
+		Command cmdNewProject = new Command(){
+			public void execute(){
+//				ProjectMainPanel projectMainPanel = new ProjectMainPanel();
+//				MenuService.getInstance().setNewContextPanel(projectMainPanel);
+				new Window().addItem(new Label("Nuevo Proyecto"));
+				
+			}
+		};
 		
+		Command cmdModifyProject = new Command(){
+			public void execute(){
+//				ProjectMainPanel projectMainPanel = new ProjectMainPanel();
+//				MenuService.getInstance().setNewContextPanel(projectMainPanel);
+				new Window().addItem(new Label("Modificar Proyecto"));
+				
+			}
+		};
 		
-		menu.addItem("Principal", cmdPrincipal);		
-		menu.addItem("Proyecto", filemenu);	
-		menu.addItem("Tarea", filemenu);	
-		menu.addItem("Reportes", filemenu);	
-		menu.addItem("Configuracion", filemenu);	
-		menu.addItem("Ayuda", filemenu);	
-		this.addMember(menu);
+		MenuBar fileMenu = new MenuBar(true);
+		fileMenu.addItem("Nuevo", cmdNewProject);
+		fileMenu.addItem("Modificar", cmdModifyProject);
+		return fileMenu;
 	}
 	
 }
