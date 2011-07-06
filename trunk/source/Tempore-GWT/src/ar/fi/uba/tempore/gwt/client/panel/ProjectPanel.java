@@ -8,9 +8,13 @@ import ar.fi.uba.tempore.gwt.client.ProjectServicesClientAsync;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.types.TreeModelType;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.smartgwt.client.widgets.tree.Tree;
+import com.smartgwt.client.widgets.tree.TreeGrid;
+import com.smartgwt.client.widgets.tree.TreeNode;
 
 public class ProjectPanel extends VLayout {
 
@@ -34,6 +38,9 @@ public class ProjectPanel extends VLayout {
 				
 				projectLabel.setContents(result.get(0).getName());
 				projectLabel.draw();
+				Tree tree = new Tree();
+				tree.setModelType(TreeModelType.CHILDREN);
+				tree.setRoot(new TreeNode ("root", new TreeNode(result.get(0).getName()), new TreeNode(result.get(1).getName())));
 			}
 		});
 	}

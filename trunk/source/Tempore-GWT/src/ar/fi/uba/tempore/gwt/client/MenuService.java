@@ -1,5 +1,6 @@
 package ar.fi.uba.tempore.gwt.client;
 
+import ar.fi.uba.tempore.gwt.client.panel.ContextPanel;
 import ar.fi.uba.tempore.gwt.client.panel.MiddlePanel;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -24,7 +25,7 @@ public class MenuService {
 	}
 	
 	public void setNewContextPanel(Widget panel){
-		middlePanel.addMember(panel);
+		middlePanel.updateContextPanel(panel);
 	}
 
 }

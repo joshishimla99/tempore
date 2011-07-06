@@ -1,5 +1,6 @@
 package ar.fi.uba.tempore.gwt.client.panel;
 
+import com.google.gwt.user.client.ui.Widget;
 import com.smartgwt.client.widgets.Canvas;
 
 /*
@@ -12,5 +13,10 @@ public class ContextPanel extends Canvas{
 		this.addChild(new MainPanel());
 	}
 	
+	public void updateContextPanel(Widget panel){
+		this.clear();
+		this.addChild(panel);
+		this.show();
+	}
 	
 }

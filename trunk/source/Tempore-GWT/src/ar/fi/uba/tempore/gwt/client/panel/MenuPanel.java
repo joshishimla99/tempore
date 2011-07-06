@@ -52,9 +52,8 @@ public class MenuPanel extends HLayout{
 	private MenuBar createTaskMenu() {
 		Command cmdNewTask = new Command(){
 			public void execute(){
-//				ProjectMainPanel projectMainPanel = new ProjectMainPanel();
-//				MenuService.getInstance().setNewContextPanel(projectMainPanel);
-				new Window().addItem(new Label("Nueva Tarea"));
+				NewTaskPanel projectMainPanel = new NewTaskPanel();
+				MenuService.getInstance().setNewContextPanel(projectMainPanel);
 				
 			}
 		};
