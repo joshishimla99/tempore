@@ -53,6 +53,7 @@ public class UserConfigurationPanel extends VerticalPanel {
 		userGrid.setEditEvent(ListGridEditEvent.CLICK);
 		userGrid.setListEndEditAction(RowEndEditAction.NEXT);
 		userGrid.setAutoSaveEdits(false);
+		userGrid.setCanRemoveRecords(true);
 		canvas.addChild(userGrid);
 
 		IButton editButton = new IButton("Nuevo");
