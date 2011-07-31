@@ -165,6 +165,7 @@ public class UserServices {
 		user.setZipCode("1980");
 		userList.add(user);
 		
+		//TODO: obtener la info de la BD
 		return userList;
 	}
 }
