@@ -4,6 +4,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.smartgwt.client.types.Autofit;
 import com.smartgwt.client.types.ListGridEditEvent;
 import com.smartgwt.client.types.RowEndEditAction;
+import com.smartgwt.client.types.SelectionAppearance;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Label;
@@ -15,11 +16,13 @@ import com.smartgwt.client.widgets.grid.ListGridField;
 public class UserConfigurationPanel extends VerticalPanel {
 
 	public UserConfigurationPanel() {
-		this.add(new Label("Configuracion de usuarios"));
+		Label label = new Label("Configuracion de usuarios");
+		label.setSize("195px", "39px");
+		this.add(label);
 
 		Canvas canvas = new Canvas();
 
-		final ListGrid userGrid = new ListGrid();
+		final ListGrid userGrid = 	new ListGrid();
 		userGrid.setWidth(800);
 		userGrid.setHeight(224);
 		userGrid.setCellHeight(22);
@@ -29,6 +32,7 @@ public class UserConfigurationPanel extends VerticalPanel {
 //		userGrid.setAutoFitField(true);
 		userGrid.setAutoFitData(Autofit.HORIZONTAL);
 //		userGrid.setAutoFitMaxColumns(7);
+		userGrid.setSelectionAppearance(SelectionAppearance.CHECKBOX);
 		
 		ListGridField clientField = new ListGridField("client", "Cliente");
 		ListGridField nameField = new ListGridField("userName", "Nombre");
