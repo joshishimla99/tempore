@@ -85,4 +85,20 @@ h4 { font-size:12px; line-height:14px; text-transform: uppercase; color:#000; }
 	font: bold;
 }
 
+.conteinerPanel{
+	margin: 0px 0px 0px 100px;
+}
+
+.itemMenu{
+	background-color:#F3F5F6;
+	background-image: url(images/hborder.png);
+	background-repeat-x: repeat;
+	background-repeat-y: no-repeat;
+	background-attachment: initial;
+	border:outset 1px;
+	background-origin: initial;
+	background-clip: initial;
+	z-index:10;
+}
+
 #ssdss* { padding:0; margin:0; outline:0; }

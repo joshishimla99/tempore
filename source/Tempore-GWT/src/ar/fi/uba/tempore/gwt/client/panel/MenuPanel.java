@@ -16,9 +16,11 @@ public class MenuPanel extends MenuBar {
 		// menuProject
 		MenuBar menuProject = new MenuBar(true);
 		MenuItem itemProject = new MenuItem("Proyectos", false, menuProject);
-		menuProject.addItem(new MenuItem("Nuevo", createCmd(Constant.MENU_OPTION_NEW_PROJECT)));
+		MenuItem itemNewProject = new MenuItem("Nuevo", createCmd(Constant.MENU_OPTION_NEW_PROJECT));
+		itemNewProject.setStyleName("itemMenu");
+		menuProject.addItem(itemNewProject);
 		menuProject.addItem(new MenuItem("Modificar", createCmd(Constant.MENU_OPTION_MODIFY_PROJECT)));
-
+		
 		// MenuConfiguration
 		MenuBar menuConfiguration = new MenuBar(true);
 		MenuItem itemConfiguration = new MenuItem("Configuracion", false, menuConfiguration);

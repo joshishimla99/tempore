@@ -50,7 +50,6 @@ public class UserConfigurationPanel extends VerticalPanel {
 			@Override
 			public void onSuccess(List<UserDTO> userList) {
 				
-				
 				userGrid.setWidth(600);
 				userGrid.setHeight(224);
 				userGrid.setCellHeight(22);
@@ -77,7 +76,7 @@ public class UserConfigurationPanel extends VerticalPanel {
 				userGrid.setFields( nameField, userLastNameField, companyField, clientField,
 						phoneField, userField, emailField);
 
-				userGrid.setAutoFetchData(true);
+//				userGrid.setAutoFetchData(true);
 				userGrid.setCanEdit(true);
 //				userGrid.setModalEditing(true);
 				userGrid.setEditEvent(ListGridEditEvent.CLICK);
