@@ -3,6 +3,7 @@ package ar.fi.uba.tempore.gwt.client.panel.configuration;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.smartgwt.client.types.Autofit;
 import com.smartgwt.client.types.ListGridEditEvent;
+import com.smartgwt.client.types.ListGridFieldType;
 import com.smartgwt.client.types.RowEndEditAction;
 import com.smartgwt.client.types.SelectionAppearance;
 import com.smartgwt.client.widgets.Canvas;
@@ -29,7 +30,6 @@ public class UserConfigurationPanel extends VerticalPanel {
 		userGrid.setData(UserData.getRecords());
 		//TODO: hacer que las columnas tengan el tamanio en funcion del contenido
 //		userGrid.setAutoFitWidthApproach(AutoFitWidthApproach.VALUE);
-//		userGrid.setAutoFitField(true);
 		userGrid.setAutoFitData(Autofit.HORIZONTAL);
 //		userGrid.setAutoFitMaxColumns(7);
 		userGrid.setSelectionAppearance(SelectionAppearance.CHECKBOX);
@@ -40,6 +40,8 @@ public class UserConfigurationPanel extends VerticalPanel {
 		ListGridField userLastNameField = new ListGridField("userLastName",	"Apellido");
 		userLastNameField.setRequired(true);
 		ListGridField companyField = new ListGridField("company", "Empresa");
+		clientField.setType(ListGridFieldType.BOOLEAN); 
+		
 		// TODO: obtener este listado de empresas, de las que esten almacenadas
 		companyField.setValueMap("Gemalto", "Nobleza Picardo", "Tata", "itMentor", "PetroleraX", "EmpresaX");
 		companyField.setRequired(true);
@@ -59,6 +61,13 @@ public class UserConfigurationPanel extends VerticalPanel {
 		userGrid.setAutoSaveEdits(false);
 		userGrid.setCanRemoveRecords(true);
 		canvas.addChild(userGrid);
+		
+		userGrid.setAutoFitWidth("email", true);
+		userGrid.setAutoFitWidth("user", true);
+		userGrid.setAutoFitWidth("phone", true);
+		userGrid.setAutoFitWidth("company", true);
+		userGrid.setAutoFitWidth("userName", true);
+		userGrid.setAutoFitWidth("userLastName", true);
 
 		IButton editButton = new IButton("Nuevo");
 		editButton.setTop(250);
