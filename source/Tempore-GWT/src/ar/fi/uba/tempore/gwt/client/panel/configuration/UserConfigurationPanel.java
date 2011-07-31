@@ -23,24 +23,21 @@ public class UserConfigurationPanel extends VerticalPanel {
 
 		Canvas canvas = new Canvas();
 
-		final ListGrid userGrid = 	new ListGrid();
-		userGrid.setWidth(800);
+		final ListGrid userGrid = new ListGrid();
+		userGrid.setWidth(600);
 		userGrid.setHeight(224);
 		userGrid.setCellHeight(22);
 		userGrid.setData(UserData.getRecords());
-		//TODO: hacer que las columnas tengan el tamanio en funcion del contenido
-//		userGrid.setAutoFitWidthApproach(AutoFitWidthApproach.VALUE);
 		userGrid.setAutoFitData(Autofit.HORIZONTAL);
-//		userGrid.setAutoFitMaxColumns(7);
 		userGrid.setSelectionAppearance(SelectionAppearance.CHECKBOX);
 		
 		ListGridField clientField = new ListGridField("client", "Cliente");
+		clientField.setType(ListGridFieldType.BOOLEAN); 
 		ListGridField nameField = new ListGridField("userName", "Nombre");
 		nameField.setRequired(true);
 		ListGridField userLastNameField = new ListGridField("userLastName",	"Apellido");
 		userLastNameField.setRequired(true);
 		ListGridField companyField = new ListGridField("company", "Empresa");
-		clientField.setType(ListGridFieldType.BOOLEAN); 
 		
 		// TODO: obtener este listado de empresas, de las que esten almacenadas
 		companyField.setValueMap("Gemalto", "Nobleza Picardo", "Tata", "itMentor", "PetroleraX", "EmpresaX");
@@ -50,12 +47,12 @@ public class UserConfigurationPanel extends VerticalPanel {
 		ListGridField emailField = new ListGridField("email", "Email");
 		ListGridField userField = new ListGridField("user", "Usuario");
 		userField.setRequired(true);
-		userGrid.setFields(clientField, nameField, userLastNameField, companyField,
+		userGrid.setFields( nameField, userLastNameField, companyField, clientField,
 				phoneField, userField, emailField);
 
 		userGrid.setAutoFetchData(true);
 		userGrid.setCanEdit(true);
-		userGrid.setModalEditing(true);
+//		userGrid.setModalEditing(true);
 		userGrid.setEditEvent(ListGridEditEvent.CLICK);
 		userGrid.setListEndEditAction(RowEndEditAction.NEXT);
 		userGrid.setAutoSaveEdits(false);
@@ -65,8 +62,8 @@ public class UserConfigurationPanel extends VerticalPanel {
 		userGrid.setAutoFitWidth("email", true);
 		userGrid.setAutoFitWidth("user", true);
 		userGrid.setAutoFitWidth("phone", true);
-		userGrid.setAutoFitWidth("company", true);
 		userGrid.setAutoFitWidth("userName", true);
+		userGrid.setAutoFitWidth("company", true);
 		userGrid.setAutoFitWidth("userLastName", true);
 
 		IButton editButton = new IButton("Nuevo");
