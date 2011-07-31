@@ -1,5 +1,13 @@
 package ar.fi.uba.tempore.gwt.client.panel.configuration;
 
+import java.util.List;
+
+import ar.fi.uba.tempore.dto.UserDTO;
+import ar.fi.uba.tempore.gwt.client.UserServicesClient;
+import ar.fi.uba.tempore.gwt.client.UserServicesClientAsync;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.smartgwt.client.types.Autofit;
 import com.smartgwt.client.types.ListGridEditEvent;
@@ -16,56 +24,80 @@ import com.smartgwt.client.widgets.grid.ListGridField;
 
 public class UserConfigurationPanel extends VerticalPanel {
 
+	List<UserDTO> users;
+	private final UserServicesClientAsync userService = GWT.create(UserServicesClient.class);
+	
 	public UserConfigurationPanel() {
 		Label label = new Label("Configuracion de usuarios");
 		label.setSize("195px", "39px");
 		this.add(label);
 
-		Canvas canvas = new Canvas();
-
+		final Canvas canvas = new Canvas();
 		final ListGrid userGrid = new ListGrid();
-		userGrid.setWidth(600);
-		userGrid.setHeight(224);
-		userGrid.setCellHeight(22);
-		userGrid.setData(UserData.getRecords());
-		userGrid.setAutoFitData(Autofit.HORIZONTAL);
-		userGrid.setSelectionAppearance(SelectionAppearance.CHECKBOX);
-		
-		ListGridField clientField = new ListGridField("client", "Cliente");
-		clientField.setType(ListGridFieldType.BOOLEAN); 
-		ListGridField nameField = new ListGridField("userName", "Nombre");
-		nameField.setRequired(true);
-		ListGridField userLastNameField = new ListGridField("userLastName",	"Apellido");
-		userLastNameField.setRequired(true);
-		ListGridField companyField = new ListGridField("company", "Empresa");
-		
-		// TODO: obtener este listado de empresas, de las que esten almacenadas
-		companyField.setValueMap("Gemalto", "Nobleza Picardo", "Tata", "itMentor", "PetroleraX", "EmpresaX");
-		companyField.setRequired(true);
-		
-		ListGridField phoneField = new ListGridField("phone", "Telefono");
-		ListGridField emailField = new ListGridField("email", "Email");
-		ListGridField userField = new ListGridField("user", "Usuario");
-		userField.setRequired(true);
-		userGrid.setFields( nameField, userLastNameField, companyField, clientField,
-				phoneField, userField, emailField);
+		userService.getUsers(new AsyncCallback<List<UserDTO>>(){
 
-		userGrid.setAutoFetchData(true);
-		userGrid.setCanEdit(true);
-//		userGrid.setModalEditing(true);
-		userGrid.setEditEvent(ListGridEditEvent.CLICK);
-		userGrid.setListEndEditAction(RowEndEditAction.NEXT);
-		userGrid.setAutoSaveEdits(false);
-		userGrid.setCanRemoveRecords(true);
-		canvas.addChild(userGrid);
-		
-		userGrid.setAutoFitWidth("email", true);
-		userGrid.setAutoFitWidth("user", true);
-		userGrid.setAutoFitWidth("phone", true);
-		userGrid.setAutoFitWidth("userName", true);
-		userGrid.setAutoFitWidth("company", true);
-		userGrid.setAutoFitWidth("userLastName", true);
+			@Override
+			public void onFailure(Throwable caught) {
+				Label errorLabel = new Label();
+				errorLabel.setIcon("/images/64x64/Alert.png");
+				errorLabel.setContents("Ha ocurrido un error intentando recuperar el listado de usuarios");
+				errorLabel.setStyleName("label-errorMessages");
+				errorLabel.setSize("395px", "39px");
+				canvas.addChild(errorLabel);
+				
+			}
 
+			@Override
+			public void onSuccess(List<UserDTO> result) {
+				
+				
+				userGrid.setWidth(600);
+				userGrid.setHeight(224);
+				userGrid.setCellHeight(22);
+				userGrid.setData(UserData.getRecords());
+				userGrid.setAutoFitData(Autofit.HORIZONTAL);
+				userGrid.setSelectionAppearance(SelectionAppearance.CHECKBOX);
+				
+				ListGridField clientField = new ListGridField("client", "Cliente");
+				clientField.setType(ListGridFieldType.BOOLEAN); 
+				ListGridField nameField = new ListGridField("userName", "Nombre");
+				nameField.setRequired(true);
+				ListGridField userLastNameField = new ListGridField("userLastName",	"Apellido");
+				userLastNameField.setRequired(true);
+				ListGridField companyField = new ListGridField("company", "Empresa");
+				
+				// TODO: obtener este listado de empresas, de las que esten almacenadas
+				companyField.setValueMap("Gemalto", "Nobleza Picardo", "Tata", "itMentor", "PetroleraX", "EmpresaX");
+				companyField.setRequired(true);
+				
+				ListGridField phoneField = new ListGridField("phone", "Telefono");
+				ListGridField emailField = new ListGridField("email", "Email");
+				ListGridField userField = new ListGridField("user", "Usuario");
+				userField.setRequired(true);
+				userGrid.setFields( nameField, userLastNameField, companyField, clientField,
+						phoneField, userField, emailField);
+
+				userGrid.setAutoFetchData(true);
+				userGrid.setCanEdit(true);
+//				userGrid.setModalEditing(true);
+				userGrid.setEditEvent(ListGridEditEvent.CLICK);
+				userGrid.setListEndEditAction(RowEndEditAction.NEXT);
+				userGrid.setAutoSaveEdits(false);
+				userGrid.setCanRemoveRecords(true);
+				canvas.addChild(userGrid);
+				
+				userGrid.setAutoFitWidth("email", true);
+				userGrid.setAutoFitWidth("user", true);
+				userGrid.setAutoFitWidth("phone", true);
+				userGrid.setAutoFitWidth("userName", true);
+				userGrid.setAutoFitWidth("company", true);
+				userGrid.setAutoFitWidth("userLastName", true);
+
+			}
+		});
+		
+
+		
 		IButton editButton = new IButton("Nuevo");
 		editButton.setTop(250);
 		editButton.addClickHandler(new ClickHandler() {
