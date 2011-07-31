@@ -24,7 +24,7 @@ import com.smartgwt.client.widgets.grid.ListGridField;
 
 public class UserConfigurationPanel extends VerticalPanel {
 
-	List<UserDTO> users;
+//	List<UserDTO> users;
 	private final UserServicesClientAsync userService = GWT.create(UserServicesClient.class);
 	
 	public UserConfigurationPanel() {
@@ -48,13 +48,13 @@ public class UserConfigurationPanel extends VerticalPanel {
 			}
 
 			@Override
-			public void onSuccess(List<UserDTO> result) {
+			public void onSuccess(List<UserDTO> userList) {
 				
 				
 				userGrid.setWidth(600);
 				userGrid.setHeight(224);
 				userGrid.setCellHeight(22);
-				userGrid.setData(UserData.getRecords());
+				userGrid.setData(UserData.getRecords(userList));
 				userGrid.setAutoFitData(Autofit.HORIZONTAL);
 				userGrid.setSelectionAppearance(SelectionAppearance.CHECKBOX);
 				
