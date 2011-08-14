@@ -25,7 +25,7 @@ public class UserServices {
 		user.setZipCode("1670");
 		userList.add(user);
 		
-		user.setName("Juan Pablo");
+	/*	user.setName("Juan Pablo");
 		user.setLastName("Gigante");
 		user.setAddress("Corrientes 900 - 21");
 		user.setClient(false);
@@ -164,7 +164,7 @@ public class UserServices {
 		user.setUserName("jmartinez");
 		user.setZipCode("1980");
 		userList.add(user);
-		
+		*/
 		//TODO: obtener la info de la BD
 		return userList;
 	}
