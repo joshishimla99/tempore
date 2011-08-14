@@ -6,7 +6,7 @@ import ar.fi.uba.tempore.dto.UserDTO;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-@RemoteServiceRelativePath("user")
+@RemoteServiceRelativePath("UserServices")
 public interface UserServicesClient extends RemoteService {
 
 	List<UserDTO> getUsers() throws IllegalArgumentException;

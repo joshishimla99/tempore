@@ -6,7 +6,7 @@ import ar.fi.uba.tempore.dto.ProjectDTO;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-@RemoteServiceRelativePath("project")
+@RemoteServiceRelativePath("ProjectServices")
 public interface ProjectServicesClient extends RemoteService {
 
 	List<ProjectDTO> getProjects() throws IllegalArgumentException;
