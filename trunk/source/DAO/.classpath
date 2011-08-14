@@ -2,9 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="src" path="resource"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Entities"/>
-	<classpathentry kind="lib" path="lib/hibernate/hibernate3.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/mysql/mysql-connector-java-5.1.14-bin.jar"/>
 	<classpathentry kind="lib" path="lib/genericos/log4j.1.2.14.jar"/>
@@ -14,7 +13,9 @@
 	<classpathentry kind="lib" path="lib/hibernate/javassist-3.12.0.GA.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate/jta-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate/slf4j-api-1.6.1.jar"/>
-	<classpathentry kind="lib" path="lib/hibernate/slf4j-log4j12-1.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/DBUnit/dbunit-2.4.8.jar" sourcepath="C:/Documents and Settings/Nicolas/.m2/repository/org/dbunit/dbunit/2.4.8/dbunit-2.4.8-sources.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate/hibernate3.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate/slf4j-log4j12-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

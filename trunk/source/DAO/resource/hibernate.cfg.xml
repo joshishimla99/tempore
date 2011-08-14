@@ -5,9 +5,9 @@
 	<session-factory>
 		<!-- Database connection settings -->
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="connection.url">jdbc:mysql://localhost/tempore</property>
-		<property name="connection.username">root</property>
-		<property name="connection.password" />
+		<property name="connection.url">jdbc:mysql://localhost:3306/tempore</property>
+		<property name="connection.username">admin</property>
+		<property name="connection.password">admin</property>
 		<!-- roperty name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property 
 			JDBC connection pool (use the built-in) -->
 		<property name="connection.pool_size">10</property>
@@ -15,27 +15,28 @@
 		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 		<!-- Enable Hibernate's automatic session context management -->
 		<property name="current_session_context_class">thread</property>
-		<!-- Disable the second-level cache -->
+		<!-- Disable the second-level cache 
 		<property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+		-->
 		<!-- Echo all executed SQL to stdout -->
 		<property name="show_sql">true</property>		
 		<!-- Drop and re-create the database schema on startup -->
 		<property name="hbm2ddl.auto">update</property>		
 		
-		<mapping class="fi.uba.tempore.poc.entities.TaskType" />
-		<mapping class="fi.uba.tempore.poc.entities.Task" />
-		<mapping class="fi.uba.tempore.poc.entities.Client" />	
-		<mapping class="fi.uba.tempore.poc.entities.Project" />
-		<mapping class="fi.uba.tempore.poc.entities.ProjectState" />
-		<mapping class="fi.uba.tempore.poc.entities.Person" />
-		<mapping class="fi.uba.tempore.poc.entities.User" />
-		<mapping class="fi.uba.tempore.poc.entities.Contact" />
-		<mapping class="fi.uba.tempore.poc.entities.ContactType" />
-		<mapping class="fi.uba.tempore.poc.entities.TaskUser" />
-		<mapping class="fi.uba.tempore.poc.entities.Alert" />
-		<mapping class="fi.uba.tempore.poc.entities.UserProject" />
-		<mapping class="fi.uba.tempore.poc.entities.Role" />
-		<mapping class="fi.uba.tempore.poc.entities.Privilege" />
+		<mapping class="ar.fi.uba.tempore.entity.TaskType" />
+		<mapping class="ar.fi.uba.tempore.entity.Task" />
+		<mapping class="ar.fi.uba.tempore.entity.Client" />	
+		<mapping class="ar.fi.uba.tempore.entity.Project" />
+		<mapping class="ar.fi.uba.tempore.entity.ProjectState" />
+		<mapping class="ar.fi.uba.tempore.entity.Person" />
+		<mapping class="ar.fi.uba.tempore.entity.User" />
+		<mapping class="ar.fi.uba.tempore.entity.Contact" />
+		<mapping class="ar.fi.uba.tempore.entity.ContactType" />
+		<mapping class="ar.fi.uba.tempore.entity.TaskUser" />
+		<mapping class="ar.fi.uba.tempore.entity.Alert" />
+		<mapping class="ar.fi.uba.tempore.entity.UserProject" />
+		<mapping class="ar.fi.uba.tempore.entity.Role" />
+		<mapping class="ar.fi.uba.tempore.entity.Privilege" />
 	</session-factory>
 </hibernate-configuration>
 
