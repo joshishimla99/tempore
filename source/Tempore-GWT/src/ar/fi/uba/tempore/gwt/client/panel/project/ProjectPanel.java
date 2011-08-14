@@ -5,32 +5,55 @@ import java.util.List;
 import ar.fi.uba.tempore.dto.ProjectDTO;
 import ar.fi.uba.tempore.gwt.client.ProjectServicesClient;
 import ar.fi.uba.tempore.gwt.client.ProjectServicesClientAsync;
+import ar.fi.uba.tempore.gwt.client.callback.ProjectCallback;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.smartgwt.client.types.TreeModelType;
+import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.Label;
-import com.smartgwt.client.widgets.events.DrawEvent;
-import com.smartgwt.client.widgets.events.DrawHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
-import com.smartgwt.client.widgets.tree.Tree;
-import com.smartgwt.client.widgets.tree.TreeGrid;
-import com.smartgwt.client.widgets.tree.TreeGridField;
 import com.smartgwt.client.widgets.tree.TreeNode;
 
 public class ProjectPanel extends VLayout {
 
 //	List<ProjectDTO> projects;
-	private final ProjectServicesClientAsync projectService = GWT.create(ProjectServicesClient.class);
-
+	private final ProjectServicesClientAsync projectService = (ProjectServicesClientAsync) GWT.create(ProjectServicesClient.class);
+	
+	
 	public ProjectPanel() {
 		final Label projectLabel = new Label();
 		this.addChild(projectLabel);
 		
-		final Canvas canvas = new Canvas();
+		final Canvas canvas = new Canvas();		
 		
-		projectService.getProjects(new AsyncCallback<List<ProjectDTO>>(){
+		List<ProjectDTO> lista = null;
+		
+		/*ProjectServicesClientAsync service = (ProjectServicesClientAsync) GWT.create(ProjectServicesClientAsync.class);
+		ServiceDefTarget serviceDef = (ServiceDefTarget) service;
+		serviceDef.setServiceEntryPoint(GWT.getModuleBaseURL()+ "ProjectServices");
+		*/
+		ProjectCallback myUserCallback = new ProjectCallback(lista);
+		/*
+		com.google.gwt.user.client.Window.alert("Invocando al servicio!!!");
+		projectService.getProjects(new AsyncCallback<List<ProjectDTO>>() {
+			
+			@Override
+			public void onSuccess(List<ProjectDTO> result) {
+				// TODO Auto-generated method stub
+				com.google.gwt.user.client.Window.alert("OK");
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				com.google.gwt.user.client.Window.alert("ERROR: " + caught.getMessage());
+			}
+		});
+		*/
+		projectService.getProjects(myUserCallback);
+		
+		/*(new AsyncCallback<List<ProjectDTO>>(){
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -85,7 +108,9 @@ public class ProjectPanel extends VLayout {
 		        canvas.addChild(treeGrid);
 		        treeGrid.draw();
 			}
-		});
+		});*/
+		
+		
 		this.addChild(canvas);
 		canvas.draw();
 	}

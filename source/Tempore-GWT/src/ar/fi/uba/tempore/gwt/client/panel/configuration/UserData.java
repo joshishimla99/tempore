@@ -1,5 +1,6 @@
 package ar.fi.uba.tempore.gwt.client.panel.configuration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ar.fi.uba.tempore.dto.UserDTO;
@@ -16,13 +17,17 @@ public class UserData {
 	}
 
 	public static UserRecord[] getNewRecords(List<UserDTO> userList) {
+		UserRecord[] r = new UserRecord[10];
 		for (int i = 0; i < userList.size(); i++) {
-			records[i] = new UserRecord(userList.get(i).getLastName(), userList.get(i).getName(), 
-					userList.get(i).getCompany(), userList.get(i).getPhone(), userList.get(i).getEmail(), 
-					userList.get(i).getCountry(), userList.get(i).getAddress(),	userList.get(i).getZipCode(),
-					userList.get(i).getUserName(), userList.get(i).getPassword(), userList.get(i).isClient(),
-					userList.get(i).getRole());
+			UserDTO userDTO = userList.get(i);
+			r[i] = new UserRecord(userDTO.getLastName(), 
+							userDTO.getName(), 
+							userDTO.getCompany(), userDTO.getPhone(), userDTO.getEmail(), 
+							userDTO.getCountry(), userDTO.getAddress(),	userDTO.getZipCode(),
+							userDTO.getUserName(), userDTO.getPassword(), userDTO.isClient(),
+							userDTO.getRole());
 		}
-		return records;
+		
+		return r;
 	}
 }
