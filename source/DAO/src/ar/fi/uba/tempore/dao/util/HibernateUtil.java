@@ -10,13 +10,13 @@ public class HibernateUtil {
 		try {		
 			return new Configuration().configure().buildSessionFactory();
 		} catch (Throwable ex) {
-			System.err.println("Initial SessionFactory creation failed." + ex);
+			System.err.println("Error al inicializar Sesion de Hibernate. Mensaje de error: " + ex.getMessage());
 			throw new ExceptionInInitializerError(ex);
 		}
 	}
 
 	public static SessionFactory getSessionFactory() {
-		if (sessionFactory.isClosed()){
+		if (sessionFactory.isClosed()){		
 			buildSessionFactory();
 		}
 		return sessionFactory;
