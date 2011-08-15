@@ -16,11 +16,11 @@ public class ProjectCallback implements AsyncCallback<List<ProjectDTO>> {
 	}
 
 	public void onFailure(Throwable caught) {
-		Window.alert("Failure");
+		Window.alert("Proyecto Failure");
 	}
 
 	public void onSuccess(List<ProjectDTO> result) {
-		Window.alert(result.get(0).getName());
+		Window.alert("Proyecto Success, " + result.get(0).getName());
 	}
 }
 
