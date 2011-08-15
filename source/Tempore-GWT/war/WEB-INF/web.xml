@@ -7,28 +7,23 @@
 
 	<!-- Servlets -->
 	<servlet>
-		<servlet-name>greetServlet</servlet-name>
-		<servlet-class>ar.fi.uba.tempore.gwt.server.DemoServiceImpl</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>projectServlet</servlet-name>
+		<servlet-name>ProjectServices</servlet-name>
 		<servlet-class>ar.fi.uba.tempore.gwt.server.ProjectServicesImpl</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>userServlet</servlet-name>
+		<servlet-name>UserServices</servlet-name>
 		<servlet-class>ar.fi.uba.tempore.gwt.server.UserServicesImpl</servlet-class>
 	</servlet>
 
+
+
+
 	<servlet-mapping>
-		<servlet-name>greetServlet</servlet-name>
-		<url-pattern>/tempore/demo</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>projectServlet</servlet-name>
+		<servlet-name>ProjectServices</servlet-name>
 		<url-pattern>/tempore/ProjectServices</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>userServlet</servlet-name>
+		<servlet-name>UserServices</servlet-name>
 		<url-pattern>/tempore/UserServices</url-pattern>
 	</servlet-mapping>
 
@@ -38,13 +33,4 @@
 		<welcome-file>Tempore.html</welcome-file>
 	</welcome-file-list>
 
-	<!-- Filtro de todos las pedidos al servidor -->
-	<filter>
-		<filter-name>Filter</filter-name>
-		<filter-class>ar.fi.uba.tempore.gwt.server.filter.ServletFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>Filter</filter-name>
-		<url-pattern>/tempore/*</url-pattern>
-	</filter-mapping>
 </web-app>
