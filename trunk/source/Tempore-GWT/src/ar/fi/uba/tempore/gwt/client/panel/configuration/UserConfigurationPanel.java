@@ -46,7 +46,7 @@ public class UserConfigurationPanel extends VerticalPanel {
 				errorLabel.setSize("395px", "39px");
 				canvas.addChild(errorLabel);
 				*/
-				Window.alert("Error");
+				Window.alert("Users Error");
 			}
 
 			@Override

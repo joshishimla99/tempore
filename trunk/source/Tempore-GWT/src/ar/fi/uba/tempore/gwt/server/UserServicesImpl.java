@@ -3,21 +3,22 @@ package ar.fi.uba.tempore.gwt.server;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import ar.fi.uba.tempore.dto.UserDTO;
-import ar.fi.uba.tempore.service.UserServices;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.tempore.gwt.client.UserServicesClient {
-
-	/**
-	 * 
-	 */
+	
+	private final Logger log = Logger.getLogger(this.getClass());
+	
 	private static final long serialVersionUID = -6786157718346471647L;
 
 	@Override
 	public List<UserDTO> getUsers() {
-		System.out.println("***************** INICIO SERVICO *********************");
+		log.debug("Service getUsers()");
+		
 		List<UserDTO> userList = new ArrayList<UserDTO>();
 		
 		UserDTO user = new UserDTO();
@@ -34,7 +35,6 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 		user.setUserName("lrinaudo");
 		user.setZipCode("1670");
 		userList.add(user);
-		System.out.println("***************** FIN SERVICO *********************");
 		return userList;
 	}
 
