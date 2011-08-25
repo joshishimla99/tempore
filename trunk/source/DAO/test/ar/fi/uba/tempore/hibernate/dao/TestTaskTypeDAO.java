@@ -80,8 +80,8 @@ public class TestTaskTypeDAO extends TestDAO{
 				List<TaskUser> taskUserList = task.getTaskUserList();
 				for (TaskUser taskUser : taskUserList) {
 					new TaskUserDAO().delete(taskUser);
-				}
-				new TaskDAO().delete(task);
+				}				
+				new TaskDAO().delete(task);				
 			}
 			
 			psDAO.delete(tt);			

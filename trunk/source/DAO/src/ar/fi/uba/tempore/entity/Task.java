@@ -76,7 +76,7 @@ public class Task implements Serializable {
 	public void setProject(Project project) {
 		this.project = project;
 	}
-	
+
 	@OneToMany(
 			targetEntity=TaskUser.class, 
 			mappedBy="task"

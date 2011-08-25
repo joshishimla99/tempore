@@ -2,41 +2,48 @@
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
                                          "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-	<session-factory>
-		<!-- Database connection settings -->
-		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="connection.url">jdbc:mysql://localhost:3306/tempore</property>
-		<property name="connection.username">admin</property>
-		<property name="connection.password">admin</property>
-		<!-- roperty name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property 
+ <session-factory name="">
+  <!-- Database connection settings -->
+  <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+  <property name="connection.url">jdbc:mysql://localhost:3306/tempore</property>
+  <property name="connection.username">admin</property>
+  <property name="connection.password">admin</property>  
+  <!-- roperty name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property 
 			JDBC connection pool (use the built-in) -->
-		<property name="connection.pool_size">10</property>
-		<!-- SQL dialect -->
-		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
-		<!-- Enable Hibernate's automatic session context management -->
-		<property name="current_session_context_class">thread</property>
-		<!-- Disable the second-level cache 
-		<property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
-		-->
-		<!-- Echo all executed SQL to stdout -->
-		<property name="show_sql">true</property>		
-		<!-- Drop and re-create the database schema on startup -->
-		<property name="hbm2ddl.auto">update</property>		
+  <property name="connection.pool_size">10</property>
+  <!-- SQL dialect -->
+  <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+  <!-- Enable Hibernate's automatic session context management -->
+  <property name="current_session_context_class">thread</property>
+  <!-- Disable the second-level cache 
+		<property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>	
 		
-		<mapping class="ar.fi.uba.tempore.entity.TaskType" />
-		<mapping class="ar.fi.uba.tempore.entity.Task" />
-		<mapping class="ar.fi.uba.tempore.entity.Client" />	
-		<mapping class="ar.fi.uba.tempore.entity.Project" />
-		<mapping class="ar.fi.uba.tempore.entity.ProjectState" />
-		<mapping class="ar.fi.uba.tempore.entity.Person" />
-		<mapping class="ar.fi.uba.tempore.entity.User" />
-		<mapping class="ar.fi.uba.tempore.entity.Contact" />
-		<mapping class="ar.fi.uba.tempore.entity.ContactType" />
-		<mapping class="ar.fi.uba.tempore.entity.TaskUser" />
-		<mapping class="ar.fi.uba.tempore.entity.Alert" />
-		<mapping class="ar.fi.uba.tempore.entity.UserProject" />
-		<mapping class="ar.fi.uba.tempore.entity.Role" />
-		<mapping class="ar.fi.uba.tempore.entity.Privilege" />
-	</session-factory>
+ Echo all executed SQL to stdout --> 
+ <property name="show_sql">true</property>
+  <!-- Drop and re-create the database schema on startup -->
+  <property name="hbm2ddl.auto">update</property>
+  <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+  <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/tempore</property>
+  <property name="hibernate.connection.username">admin</property>
+  <property name="hibernate.connection.password">admin</property>
+  <property name="hibernate.connection.pool_size">10</property>
+  <property name="hibernate.connection.autocommit">false</property>
+  <!-- <property name="javax.persistence.validation.mode">none</property> -->
+  
+  
+  
+  <mapping class="ar.fi.uba.tempore.entity.TaskType"/>
+  <mapping class="ar.fi.uba.tempore.entity.Task"/>
+  <mapping class="ar.fi.uba.tempore.entity.Project"/>
+  <mapping class="ar.fi.uba.tempore.entity.ProjectState"/>
+  <mapping class="ar.fi.uba.tempore.entity.Client"/>
+  <mapping class="ar.fi.uba.tempore.entity.User"/>
+  <mapping class="ar.fi.uba.tempore.entity.TaskUser"/>
+  <mapping class="ar.fi.uba.tempore.entity.UserProject"/>
+  <mapping class="ar.fi.uba.tempore.entity.Role"/>
+  
+  <mapping class="ar.fi.uba.tempore.entity.Alert"/>
+  <mapping class="ar.fi.uba.tempore.entity.Person"/>  
+  
+ </session-factory>
 </hibernate-configuration>
-

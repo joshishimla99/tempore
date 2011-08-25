@@ -57,6 +57,7 @@ public class UserProject implements Serializable {
 		this.project = project;
 	}
 	
+	
 	@OneToMany(
 			targetEntity=Alert.class, 
 			mappedBy="userProject"
@@ -68,7 +69,7 @@ public class UserProject implements Serializable {
 	public void setAlertList(List<Alert> alertList) {
 		this.alertList = alertList;
 	}
-	
+		
 	@ManyToMany(
 			targetEntity=Role.class
 	)

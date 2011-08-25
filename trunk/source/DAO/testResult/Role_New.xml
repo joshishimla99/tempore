@@ -5,14 +5,7 @@
 	<ROLE name='Usuario'/>
 	<ROLE name='Cliente'/>
 	<ROLE name='Super Administrador'/>
-	
-	<PRIVILEGEROLE roleId='1' privilegeId='1'/>
-	<PRIVILEGEROLE roleId='1' privilegeId='2'/>
-	<PRIVILEGEROLE roleId='1' privilegeId='3'/>
-	<PRIVILEGEROLE roleId='2' privilegeId='2'/>
-	<PRIVILEGEROLE roleId='2' privilegeId='3'/>
-	<PRIVILEGEROLE roleId='3' privilegeId='3'/>
-		
+			
 	<ROLEUSERPROJECT roleId='2' userProjectId='1'/>
 	<ROLEUSERPROJECT roleId='1' userProjectId='2'/>
 	<ROLEUSERPROJECT roleId='3' userProjectId='3'/>

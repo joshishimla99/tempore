@@ -8,8 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -24,8 +22,7 @@ public class Role implements Serializable {
 	private Integer id;
 	private String name;
 
-	private List<UserProject> userProjectList = new ArrayList<UserProject>();
-	private List<Privilege> privilegeList = new ArrayList<Privilege>();
+	private List<UserProject> userProjectList = new ArrayList<UserProject>();	
 	
 	@Id
 	@GeneratedValue
@@ -56,20 +53,4 @@ public class Role implements Serializable {
 	public void setUserProjectList(List<UserProject> userProjectList) {
 		this.userProjectList = userProjectList;
 	}
-	
-	@ManyToMany(
-			targetEntity=Privilege.class
-	)
-	@JoinTable(
-			name="PRIVILEGEROLE",
-			joinColumns=@JoinColumn(name="roleId"), 
-			inverseJoinColumns=@JoinColumn(name="privilegeId")
-	)
-	@LazyCollection(LazyCollectionOption.TRUE)
-	public List<Privilege> getPrivilegeList() {
-		return privilegeList;
-	}
-	public void setPrivilegeList(List<Privilege> privilegeList) {
-		this.privilegeList = privilegeList;
-	}		
 }
