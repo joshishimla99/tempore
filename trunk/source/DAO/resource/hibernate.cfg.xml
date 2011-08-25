@@ -28,7 +28,7 @@
   <property name="hibernate.connection.password">admin</property>
   <property name="hibernate.connection.pool_size">10</property>
   <property name="hibernate.connection.autocommit">false</property>
-  <!-- <property name="javax.persistence.validation.mode">none</property> -->
+  <property name="javax.persistence.validation.mode">none</property>
   
   
   
