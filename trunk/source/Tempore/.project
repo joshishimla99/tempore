@@ -54,13 +54,17 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 		<nature>com.google.gwt.eclipse.core.gwtNature</nature>
-		<nature>org.hibernate.eclipse.console.hibernateNature</nature>
 	</natures>
 	<linkedResources>
 		<link>
-			<name>DTO Link</name>
+			<name>DTO src</name>
 			<type>2</type>
-			<location>C:/Tempore/workspace/DTO/src</location>
+			<location>C:/Workspace/Tempore/DTO/src</location>
+		</link>
+		<link>
+			<name>src-1</name>
+			<type>2</type>
+			<location>C:/Workspace/Tempore/DTO/src</location>
 		</link>
 	</linkedResources>
 </projectDescription>
