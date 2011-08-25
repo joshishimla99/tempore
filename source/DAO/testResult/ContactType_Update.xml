@@ -1,9 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<dataset>
-	
-	<CONTACTTYPE id='1' name='JTest' description='adsfasd asdf asdfa'/>
-	
-	<CONTACTTYPE id='2' name='SP' description='Sponsor del Proyecto'/>
-	
-
-</dataset>

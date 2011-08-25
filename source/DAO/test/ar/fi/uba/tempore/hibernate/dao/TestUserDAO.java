@@ -44,7 +44,7 @@ public class TestUserDAO extends TestDAO{
 	@Test
 	public void testFindAll (){
 		List<User> findAll = psDAO.findAll();
-		Assert.assertEquals("La cantidad del metodo FIND-ALL es incorrecta", 6, findAll.size());
+		Assert.assertEquals("La cantidad del metodo FIND-ALL es incorrecta", 9, findAll.size());
 	}
 	
 	@Test

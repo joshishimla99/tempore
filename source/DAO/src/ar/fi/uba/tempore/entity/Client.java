@@ -30,10 +30,8 @@ public class Client implements Serializable {
 	private String fiscalNumber;
 	private String phone;
 	
-	
-	
 	private List<Project> projectList = new ArrayList<Project>();
-	private List<Contact> contactList = new ArrayList<Contact>();
+	private List<User> userList = new ArrayList<User>();
 	
 	@Id
 	@GeneratedValue
@@ -70,19 +68,19 @@ public class Client implements Serializable {
 	}
 
 	@ManyToMany(
-			targetEntity=Contact.class
+			targetEntity=User.class
 	)
 	@JoinTable(
 			name="CLIENTCONTACT",
 			joinColumns=@JoinColumn(name="clientId"),
-			inverseJoinColumns=@JoinColumn(name="contactId")
+			inverseJoinColumns=@JoinColumn(name="userId")
 			)
 	@LazyCollection(LazyCollectionOption.TRUE)
-	public List<Contact> getContactList() {
-		return contactList;
+	public List<User> getUserList() {
+		return userList;
 	}	
-	public void setContactList(List<Contact> contactList) {
-		this.contactList = contactList;
+	public void setUserList(List<User> userList) {
+		this.userList = userList;
 	}
 
 	@Column(name="address")

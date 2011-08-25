@@ -8,11 +8,11 @@ import org.hibernate.ObjectNotFoundException;
 import org.junit.Test;
 
 import ar.fi.uba.tempore.dao.ClientDAO;
-import ar.fi.uba.tempore.dao.ContactDAO;
 import ar.fi.uba.tempore.dao.ProjectDAO;
+import ar.fi.uba.tempore.dao.UserDAO;
 import ar.fi.uba.tempore.entity.Client;
-import ar.fi.uba.tempore.entity.Contact;
 import ar.fi.uba.tempore.entity.Project;
+import ar.fi.uba.tempore.entity.User;
 import ar.fi.uba.tempore.hibernate.TestDAO;
 
 public class TestClientDAO extends TestDAO{
@@ -30,8 +30,8 @@ public class TestClientDAO extends TestDAO{
 			List<Project> actualProjectList = actual.getProjectList();
 			Assert.assertEquals("La cantidad de proyectos del clientes no es correcta", 2, actualProjectList.size());
 			
-			List<Contact> actualContactList = actual.getContactList();
-			Assert.assertEquals("La cantidad de contactos del clientes no es correcta", 2, actualContactList.size());
+			List<User> actualContactList = actual.getUserList();
+			Assert.assertEquals("La cantidad de usuarios del clientes no es correcta", 2, actualContactList.size());
 			
 		} catch (ObjectNotFoundException e){
 			Assert.assertTrue("No se encontro la entidad", false);
@@ -93,10 +93,10 @@ public class TestClientDAO extends TestDAO{
 		List<Client> list = cDAO.findByExample(actual);				
 		for (Client cl : list){
 			
-			List<Contact> contactList = cl.getContactList();
-			for (Contact contact : contactList) {
-				contact.getClientList().remove(cl);
-				new ContactDAO().makePersistent(contact);
+			List<User> userList = cl.getUserList();
+			for (User user : userList) {
+				user.getClientList().remove(cl);
+				new UserDAO().makePersistent(user);
 			}
 			
 			List<Project> projectList = cl.getProjectList();
@@ -109,7 +109,7 @@ public class TestClientDAO extends TestDAO{
 			
 		}	
 		this.validResult("CLIENT", "Client_Delete.xml");
-		this.validResult("CONTACT", "Client_Delete.xml");
+		this.validResult("USER", "Client_Delete.xml");
 		this.validResult("CLIENTCONTACT", "Client_Delete.xml");
 		this.validResult("PROJECT", "Client_Delete.xml");
 		this.validResult("PROJECTCLIENT", "Client_Delete.xml");

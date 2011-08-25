@@ -8,10 +8,8 @@ import junit.framework.Assert;
 import org.hibernate.ObjectNotFoundException;
 import org.junit.Test;
 
-import ar.fi.uba.tempore.dao.PrivilegeDAO;
 import ar.fi.uba.tempore.dao.RoleDAO;
 import ar.fi.uba.tempore.dao.UserProjectDAO;
-import ar.fi.uba.tempore.entity.Privilege;
 import ar.fi.uba.tempore.entity.Role;
 import ar.fi.uba.tempore.entity.UserProject;
 import ar.fi.uba.tempore.hibernate.TestDAO;
@@ -26,9 +24,6 @@ public class TestRoleDAO extends TestDAO{
 		try {	
 			actual = pDAO.findById(1);
 			Assert.assertEquals("No se encontro al tipo de contacto", "Administrador"  , actual.getName());
-
-			List<Privilege> list = actual.getPrivilegeList();
-			Assert.assertEquals("El tamaño de la lista asociada a la entidad no es correcto", 3, list.size());			
 			
 		} catch (ObjectNotFoundException e){
 			Assert.assertTrue("No se encontro la entidad", false);
@@ -74,13 +69,6 @@ public class TestRoleDAO extends TestDAO{
 		List<Role> findByExample = pDAO.findByExample(entity);
 		for (Role r : findByExample){			
 			
-			//Elimino la asociacion de los privilegios
-			List<Privilege> privilegeList = r.getPrivilegeList();
-			for (Privilege p : privilegeList) {
-				p.getRoleList().remove(r);
-				new PrivilegeDAO().makePersistent(p);
-			}
-			
 			List<UserProject> userProjectList = r.getUserProjectList();
 			for (UserProject u : userProjectList) {
 				u.getRoleList().remove(r);
@@ -90,7 +78,6 @@ public class TestRoleDAO extends TestDAO{
 			pDAO.delete(r);			
 		}
 		this.validResult("ROLE", "Role_Delete.xml");
-		this.validResult("PRIVILEGEROLE", "Role_Delete.xml");
 		this.validResult("ROLEUSERPROJECT", "Role_Delete.xml");
 	}
 }

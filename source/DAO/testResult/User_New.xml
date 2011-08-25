@@ -7,6 +7,10 @@
 	<PERSON name='Jose' lastname='Marmol' phone='12132132123' email='juanperez@gmail.com' zip='ADFAAFSD' country='Argentina' address='qret'/>
 	<PERSON name='Bill' lastname='Gates' phone='11321233' email='pepepompin@gmail.com' zip='ADFAAFSD' country='Argentina' address='jghjkgh'/>
 	<PERSON name='No se usa' lastname='-' phone='11321233' email='pepepompin@gmail.com' zip='ADFAAFSD' country='Argentina' address='qwerwerqwe'/>
+	<PERSON name='tcs1' lastname='-' phone='123123123132' email='tcs1@gmail.com' zip='ADFAAFSD' country='Argentina' address='qwerwerqwe'/>
+	<PERSON name='tcs2' lastname='-' phone='11321233' email='tcs2@gmail.com' zip='ADFAAFSD' country='Argentina' address='qwerwerqwe'/>
+	<PERSON name='Experian' lastname='-' phone='11321233' email='experian@gmail.com' zip='ADFAAFSD' country='Argentina' address='qwerwerqwe'/>
+	
 	
 	<PERSON name='JTest' lastname='JLastTest' phone='1111111111' email='mail@mail.com' zip='123' country='JCountryTest' address='JDirTest'/>
 
@@ -16,6 +20,9 @@
 	<USER state='A' username='user11' password='pass11'/>
 	<USER state='A' username='user12' password='pass12'/>
 	<USER state='A' username='user13' password='pass13'/>
+	<USER state='A' username='tcs1' password='tcs1'/>
+	<USER state='A' username='tcs2' password='tcs2'/>
+	<USER state='A' username='Experian' password='Experian'/>
 	
 	<USER  state='A' username='username' password='pass'/>
 	

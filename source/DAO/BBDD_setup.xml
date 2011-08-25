@@ -8,6 +8,9 @@
 	<PERSON id ='12' name='Jose' lastname='Marmol' phone='12132132123' email='juanperez@gmail.com' zip='ADFAAFSD' country='Argentina' address='qret'/>
 	<PERSON id ='13' name='Bill' lastname='Gates' phone='11321233' email='pepepompin@gmail.com' zip='ADFAAFSD' country='Argentina' address='jghjkgh'/>
 	<PERSON id ='14' name='No se usa' lastname='-' phone='11321233' email='pepepompin@gmail.com' zip='ADFAAFSD' country='Argentina' address='qwerwerqwe'/>
+	<PERSON id ='20' name='tcs1' lastname='-' phone='123123123132' email='tcs1@gmail.com' zip='ADFAAFSD' country='Argentina' address='qwerwerqwe'/>
+	<PERSON id ='21' name='tcs2' lastname='-' phone='11321233' email='tcs2@gmail.com' zip='ADFAAFSD' country='Argentina' address='qwerwerqwe'/>
+	<PERSON id ='22' name='Experian' lastname='-' phone='11321233' email='experian@gmail.com' zip='ADFAAFSD' country='Argentina' address='qwerwerqwe'/>
 
 	<CLIENT id='1' name='TCS Tata Consulting Services'/>
 	<CLIENT id='2' name='Experian'/>
@@ -23,24 +26,19 @@
 	<PROJECTCLIENT clientId='1' projectId='1'/>
 	<PROJECTCLIENT clientId='1' projectId='2'/>
 	
-	
-	<CONTACTTYPE id='1' name='PM' description='Project Manager'/>
-	<CONTACTTYPE id='2' name='SP' description='Sponsor del Proyecto'/>
-
 	<USER personId='1' state='A' username='user1' password='pass1'/>
 	<USER personId='2' state='A' username='user2' password='pass2'/>
 	<USER personId='3' state='A' username='user3' password='pass3'/>
 	<USER personId='11' state='A' username='user11' password='pass11'/>
 	<USER personId='12' state='A' username='user12' password='pass12'/>
 	<USER personId='13' state='A' username='user13' password='pass13'/>
-
-	<CONTACT userId='1' contactTypeId='1'/>
-	<CONTACT userId='2' contactTypeId='2'/>
-	<CONTACT userId='3' contactTypeId='1'/>
+	<USER personId='20' state='A' username='tcs1' password='tcs1'/>
+	<USER personId='21' state='A' username='tcs2' password='tcs2'/>
+	<USER personId='22' state='A' username='Experian' password='Experian'/>	
 	
-	<CLIENTCONTACT clientId='1' contactId='1'/>
-	<CLIENTCONTACT clientId='1' contactId='2'/>
-	<CLIENTCONTACT clientId='2' contactId='3'/>
+	<CLIENTCONTACT clientId='1' userId='20'/>
+	<CLIENTCONTACT clientId='1' userId='21'/>
+	<CLIENTCONTACT clientId='2' userId='22'/>
 	
 	<USERPROJECT id='1' userId='11' projectId='1' />
 	<USERPROJECT id='2' userId='12' projectId='1' />
@@ -67,23 +65,13 @@
 	<TASKUSER id='5' userId='12' taskId='4' hourCount='3' date='2011-04-10' comment='f f'/>
 	<TASKUSER id='6' userId='12' taskId='1' hourCount='7' date='2011-03-30' comment='asd'/>
 	<TASKUSER id='7' userId='13' taskId='4' hourCount='9' date='2011-04-30' comment='fds'/>
-	
-	<PRIVILEGE id='1' name='Administrar Usuarios'/>
-	<PRIVILEGE id='2' name='Mdoficar Horas'/>
-	<PRIVILEGE id='3' name='Visualizar Reportes'/>
-	
+		
 	<ROLE id='1' name='Administrador'/>
 	<ROLE id='2' name='Usuario'/>
 	<ROLE id='3' name='Cliente'/>
-	
-	<PRIVILEGEROLE roleId='1' privilegeId='1'/>
-	<PRIVILEGEROLE roleId='1' privilegeId='2'/>
-	<PRIVILEGEROLE roleId='1' privilegeId='3'/>
-	<PRIVILEGEROLE roleId='2' privilegeId='2'/>
-	<PRIVILEGEROLE roleId='2' privilegeId='3'/>
-	<PRIVILEGEROLE roleId='3' privilegeId='3'/>
-		
+			
 	<ROLEUSERPROJECT roleId='2' userProjectId='1'/>
 	<ROLEUSERPROJECT roleId='1' userProjectId='2'/>
 	<ROLEUSERPROJECT roleId='3' userProjectId='3'/>
+
 </dataset>
