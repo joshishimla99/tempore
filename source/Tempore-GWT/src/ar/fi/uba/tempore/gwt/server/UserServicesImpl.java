@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import ar.fi.uba.tempore.dto.UserDTO;
+import ar.fi.uba.tempore.service.UserServices;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -17,7 +18,9 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 
 	@Override
 	public List<UserDTO> getUsers() {
-		log.debug("Service getUsers()");
+//			return new UserServices().allUsers();
+//		HARDCODED
+        log.debug("Service getUsers()");
 		
 		List<UserDTO> userList = new ArrayList<UserDTO>();
 		
