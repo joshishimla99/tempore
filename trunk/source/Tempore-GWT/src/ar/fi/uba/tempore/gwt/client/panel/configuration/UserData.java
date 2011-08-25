@@ -1,6 +1,5 @@
 package ar.fi.uba.tempore.gwt.client.panel.configuration;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ar.fi.uba.tempore.dto.UserDTO;
