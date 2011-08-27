@@ -16,7 +16,6 @@ import com.google.gwt.user.client.ui.DeckPanel;
 public class ContextPanel extends DeckPanel{
 
 	public ContextPanel(){
-		//TODO: mejorar esto, ahora carga todo de entrada
 		this.add(new MainPanel()); // widget 0
 		this.add(new NewProjectPanel()); // widget 1
 		this.add(new ModifyProjectPanel()); // widget 2
@@ -30,6 +29,8 @@ public class ContextPanel extends DeckPanel{
 	
 	public void updateContextPanel(int index){
 		if (index < this.getWidgetCount()){
+			// Primero actualizo el contenido del panel
+			((ContextChildPanel) this.getWidget(index)).UpdateContent();
 			this.showWidget(index);
 		}
 	}

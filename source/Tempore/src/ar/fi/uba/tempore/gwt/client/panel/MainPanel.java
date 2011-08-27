@@ -23,7 +23,7 @@ import com.smartgwt.client.widgets.layout.VStack;
 
 /* PanelControl class*/
 
-public class MainPanel extends VerticalPanel {
+public class MainPanel extends VerticalPanel  implements ContextChildPanel {
 		private  String[] colors = new String[]{  
 	        "FF6600", "808000", "008000", "008080", "0000FF", "666699",  
 	        "FF0000", "FF9900", "99CC00", "339966", "33CCCC", "3366FF",  
@@ -165,6 +165,12 @@ public class MainPanel extends VerticalPanel {
 	        
 	        //panel.show();   
 			
+	}
+
+	@Override
+	public void UpdateContent() {
+		// TODO Auto-generated method stub
+		
 	}
 }
 /*End PanelControl*/

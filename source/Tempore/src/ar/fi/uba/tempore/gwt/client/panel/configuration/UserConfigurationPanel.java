@@ -5,9 +5,9 @@ import java.util.List;
 import ar.fi.uba.tempore.dto.UserDTO;
 import ar.fi.uba.tempore.gwt.client.UserServicesClient;
 import ar.fi.uba.tempore.gwt.client.UserServicesClientAsync;
+import ar.fi.uba.tempore.gwt.client.panel.ContextChildPanel;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.smartgwt.client.types.Autofit;
@@ -23,82 +23,79 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 
-public class UserConfigurationPanel extends VerticalPanel {
+public class UserConfigurationPanel extends VerticalPanel implements ContextChildPanel{
 
 //	List<UserDTO> users;
 	private final UserServicesClientAsync userService = GWT.create(UserServicesClient.class);
+	private Canvas canvas = null; 
+	private ListGrid userGrid = null;
 	
 	public UserConfigurationPanel() {
-		Label label = new Label("Configuracion de usuarios");
-		label.setSize("195px", "39px");
-		this.add(label);
+		Label title = new Label("Configuracion de usuarios");
+		title.setSize("195px", "39px");
+		this.add(title);
+	}
 
-		final Canvas canvas = new Canvas();
-		final ListGrid userGrid = new ListGrid();
+	@Override
+	public void UpdateContent() {
 		userService.getUsers(new AsyncCallback<List<UserDTO>>(){
 
 			@Override
 			public void onFailure(Throwable caught) {
-				/*Label errorLabel = new Label();
+				Label errorLabel = new Label();
 				errorLabel.setIcon("/images/64x64/Alert.png");
 				errorLabel.setContents("Ha ocurrido un error intentando recuperar el listado de usuarios");
 				errorLabel.setStyleName("label-errorMessages");
 				errorLabel.setSize("395px", "39px");
 				canvas.addChild(errorLabel);
-				*/
-				Window.alert("Users Error");
 			}
 
 			@Override
 			public void onSuccess(List<UserDTO> userList) {
-				Window.alert("OK users" + userList);
-				
-				userGrid.setWidth(600);
-				userGrid.setHeight(224);
-				userGrid.setCellHeight(22);
-				userGrid.setData(UserData.getRecords(userList));
-				userGrid.setAutoFitData(Autofit.HORIZONTAL);
-				userGrid.setSelectionAppearance(SelectionAppearance.CHECKBOX);
-				Window.alert("OK users 2");
-				ListGridField clientField = new ListGridField("client", "Cliente");
-				clientField.setType(ListGridFieldType.BOOLEAN); 
-				ListGridField nameField = new ListGridField("userName", "Nombre");
-				nameField.setRequired(true);
-				ListGridField userLastNameField = new ListGridField("userLastName",	"Apellido");
-				userLastNameField.setRequired(true);
-				ListGridField companyField = new ListGridField("company", "Empresa");
-				Window.alert("OK users 3");
-				// TODO: obtener este listado de empresas, de las que esten almacenadas
-				companyField.setValueMap("Gemalto", "Nobleza Picardo", "Tata", "itMentor", "PetroleraX", "EmpresaX");
-				companyField.setRequired(true);
-				Window.alert("OK users 4");
-				ListGridField phoneField = new ListGridField("phone", "Telefono");
-				ListGridField emailField = new ListGridField("email", "Email");
-				ListGridField userField = new ListGridField("user", "Usuario");
-				userField.setRequired(true);
-				userGrid.setFields( nameField, userLastNameField, companyField, clientField,
-						phoneField, userField, emailField);
-				Window.alert("OK users 5");
-//				userGrid.setAutoFetchData(true);
-				userGrid.setCanEdit(true);
-//				userGrid.setModalEditing(true);
-				userGrid.setEditEvent(ListGridEditEvent.CLICK);
-				userGrid.setListEndEditAction(RowEndEditAction.NEXT);
-				userGrid.setAutoSaveEdits(false);
-				userGrid.setCanRemoveRecords(true);
-				canvas.addChild(userGrid);
-				
-				userGrid.setAutoFitWidth("email", true);
-				userGrid.setAutoFitWidth("user", true);
-				userGrid.setAutoFitWidth("phone", true);
-				userGrid.setAutoFitWidth("userName", true);
-				userGrid.setAutoFitWidth("company", true);
-				userGrid.setAutoFitWidth("userLastName", true);
-				
+				// Si es la primera vez que se accedio al panel, se crearan los componentes
+				if (userGrid == null){
+					userGrid = new ListGrid();
+					userGrid.setWidth(600);
+					userGrid.setHeight(224);
+					userGrid.setCellHeight(22);
+					userGrid.setData(UserData.getRecords(userList));
+					userGrid.setAutoFitData(Autofit.HORIZONTAL);
+					userGrid.setSelectionAppearance(SelectionAppearance.CHECKBOX);
+					ListGridField clientField = new ListGridField("client", "Cliente");
+					clientField.setType(ListGridFieldType.BOOLEAN); 
+					ListGridField nameField = new ListGridField("userName", "Nombre");
+					nameField.setRequired(true);
+					ListGridField userLastNameField = new ListGridField("userLastName",	"Apellido");
+					userLastNameField.setRequired(true);
+					ListGridField companyField = new ListGridField("company", "Empresa");
+					// TODO: obtener este listado de empresas, de las que esten almacenadas
+					companyField.setValueMap("Gemalto", "Nobleza Picardo", "Tata", "itMentor", "PetroleraX", "EmpresaX");
+					companyField.setRequired(true);
+					ListGridField phoneField = new ListGridField("phone", "Telefono");
+					ListGridField emailField = new ListGridField("email", "Email");
+					ListGridField userField = new ListGridField("user", "Usuario");
+					userField.setRequired(true);
+					userGrid.setFields( nameField, userLastNameField, companyField, clientField,
+							phoneField, userField, emailField);
+//					userGrid.setAutoFetchData(true);
+					userGrid.setCanEdit(true);
+					userGrid.setEditEvent(ListGridEditEvent.CLICK);
+					userGrid.setListEndEditAction(RowEndEditAction.NEXT);
+					userGrid.setAutoSaveEdits(false);
+					userGrid.setCanRemoveRecords(true);
+					canvas.addChild(userGrid);
+					
+					userGrid.setAutoFitWidth("email", true);
+					userGrid.setAutoFitWidth("user", true);
+					userGrid.setAutoFitWidth("phone", true);
+					userGrid.setAutoFitWidth("userName", true);
+					userGrid.setAutoFitWidth("company", true);
+					userGrid.setAutoFitWidth("userLastName", true);
+				} else { // si ya se habia accedido, solo se actualizan los componentes
+					userGrid.refreshFields();
+				}
 			}
 		});
-		
-
 		
 		IButton editButton = new IButton("Nuevo");
 		editButton.setTop(250);
@@ -107,6 +104,9 @@ public class UserConfigurationPanel extends VerticalPanel {
 				userGrid.startEditingNew();
 			}
 		});
+		if (canvas == null){
+			canvas = new Canvas();
+		}
 		canvas.addChild(editButton);
 
 		IButton saveButton = new IButton("Guardar");
@@ -131,5 +131,6 @@ public class UserConfigurationPanel extends VerticalPanel {
 
 		this.add(canvas);
 		canvas.draw();
+		
 	}
 }
