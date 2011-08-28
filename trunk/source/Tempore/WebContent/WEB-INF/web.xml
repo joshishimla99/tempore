@@ -34,5 +34,13 @@
 		<filter-name>Filter</filter-name>
 		<url-pattern>/tempore/*</url-pattern>
 	</filter-mapping>
+	<servlet>
+		<servlet-name>AlertServicesClient</servlet-name>
+		<servlet-class>ar.fi.uba.tempore.gwt.server.AlertServicesImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AlertServicesClient</servlet-name>
+		<url-pattern>/tempore/AlertServicesClient</url-pattern>
+	</servlet-mapping>
 	 
 </web-app>
