@@ -20,7 +20,7 @@ public class ProjectCallback implements AsyncCallback<List<ProjectDTO>> {
 	}
 
 	public void onSuccess(List<ProjectDTO> result) {
-		Window.alert("Proyecto Success, " + result.get(0).getName());
+		Window.alert("getProjects() Succes, Cantidad de proyectos recuperados " + result.size());
 	}
 }
 
