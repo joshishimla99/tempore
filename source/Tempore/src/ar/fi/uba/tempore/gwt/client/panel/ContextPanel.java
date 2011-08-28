@@ -1,5 +1,6 @@
 package ar.fi.uba.tempore.gwt.client.panel;
 
+import ar.fi.uba.tempore.gwt.client.panel.configuration.AlertConfigurationPanel;
 import ar.fi.uba.tempore.gwt.client.panel.configuration.ClientConfigurationPanel;
 import ar.fi.uba.tempore.gwt.client.panel.configuration.UserConfigurationPanel;
 import ar.fi.uba.tempore.gwt.client.panel.project.ModifyProjectPanel;
@@ -24,6 +25,7 @@ public class ContextPanel extends DeckPanel{
 		this.add(new MainReportPanel()); //widget 5
 		this.add(new UserConfigurationPanel()); // widget 6
 		this.add(new ClientConfigurationPanel()); //widget 7
+		this.add(new AlertConfigurationPanel()); // widget 8
 		this.showWidget(Constant.MENU_OPTION_MAIN);
 	}
 	
