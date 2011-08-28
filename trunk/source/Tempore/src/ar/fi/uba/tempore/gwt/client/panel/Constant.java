@@ -10,4 +10,5 @@ public final class Constant {
 	public static final int MENU_OPTION_MAIN_REPORT = 5;
 	public static final int MENU_OPTION_USER_CONFIGURATION = 6;
 	public static final int MENU_OPTION_CLIENT_CONFIGURATION = 7;
+	public static final int MENU_OPTION_ALERT_CONFIGURATION = 8;
 }

@@ -26,6 +26,7 @@ public class MenuPanel extends MenuBar {
 		MenuItem itemConfiguration = new MenuItem("Configuracion", false, menuConfiguration);
 		menuConfiguration.addItem(new MenuItem("Usuarios", createCmd(Constant.MENU_OPTION_USER_CONFIGURATION)));
 		menuConfiguration.addItem(new MenuItem("Clientes", createCmd(Constant.MENU_OPTION_CLIENT_CONFIGURATION)));
+		menuConfiguration.addItem(new MenuItem("Alertas", createCmd(Constant.MENU_OPTION_ALERT_CONFIGURATION)));
 		
 		// MenuTask
 		MenuBar menuTask = new MenuBar(true);
