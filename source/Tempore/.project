@@ -57,14 +57,9 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>DTO src</name>
+			<name>DTO Link</name>
 			<type>2</type>
-			<location>C:/Workspace/Tempore/DTO/src</location>
-		</link>
-		<link>
-			<name>src-1</name>
-			<type>2</type>
-			<location>C:/Workspace/Tempore/DTO/src</location>
+			<location>C:/Tempore/workspace/DTO/src</location>
 		</link>
 	</linkedResources>
 </projectDescription>
