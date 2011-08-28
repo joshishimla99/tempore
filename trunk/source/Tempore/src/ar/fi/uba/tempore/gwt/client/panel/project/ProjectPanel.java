@@ -8,8 +8,6 @@ import ar.fi.uba.tempore.gwt.client.ProjectServicesClientAsync;
 import ar.fi.uba.tempore.gwt.client.callback.ProjectCallback;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.VLayout;
