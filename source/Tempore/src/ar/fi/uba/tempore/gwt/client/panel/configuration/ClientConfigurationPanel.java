@@ -56,28 +56,20 @@ public class ClientConfigurationPanel extends VerticalPanel implements ContextCh
 					ClientGrid = new ListGrid();
 					ClientGrid.setWidth(600);
 					ClientGrid.setHeight(224);
-					ClientGrid.setCellHeight(22);
-					
-					ClientGrid.setData(ClientData.getRecords(ClientList));
-					
+					ClientGrid.setCellHeight(22);					
+					ClientGrid.setData(ClientData.getRecords(ClientList));					
 					ClientGrid.setAutoFitData(Autofit.HORIZONTAL);
-					ClientGrid.setSelectionAppearance(SelectionAppearance.CHECKBOX); 
-					
-					ListGridField nameField = new ListGridField("Name", "Razon Social");
-					nameField.setRequired(true);
-					
-					ListGridField addressField = new ListGridField("Address",	"Direccion");
-					addressField.setRequired(true);
-					
-					ListGridField countryField = new ListGridField("Country", "Pais");
-					countryField.setRequired(true);
-					
-					ListGridField stateField = new ListGridField("State", "Provincia");
-					ListGridField zipField = new ListGridField("State", "Provincia");
-					ListGridField fiscalNumberField = new ListGridField("State", "Provincia");
-					
-					ListGridField phoneField = new ListGridField("Phone", "Telefono");
-					
+					ClientGrid.setSelectionAppearance(SelectionAppearance.CHECKBOX); 					
+					ListGridField nameField = new ListGridField("clientName", "Razon Social");
+					nameField.setRequired(true);					
+					ListGridField addressField = new ListGridField("clientAddress",	"Direccion");
+					addressField.setRequired(true);					
+					ListGridField countryField = new ListGridField("clientCountry", "Pais");
+					countryField.setRequired(true);					
+					ListGridField stateField = new ListGridField("clientState", "Provincia");
+					ListGridField zipField = new ListGridField("clientZip", "Provincia");
+					ListGridField fiscalNumberField = new ListGridField("clientFiscalNumber", "Provincia");					
+					ListGridField phoneField = new ListGridField("clientPhone", "Telefono");					
 					ClientGrid.setFields( nameField, addressField, countryField, stateField, zipField, fiscalNumberField, phoneField);
 //					ClientGrid.setAutoFetchData(true);
 					ClientGrid.setCanEdit(true);
