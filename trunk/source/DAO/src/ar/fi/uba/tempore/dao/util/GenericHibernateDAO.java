@@ -24,7 +24,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> {
 	 * @return
 	 */
 	protected Session getSession() {
-		if (session == null) {
+		if (session == null || !session.isOpen()) {
 			session = HibernateUtil.getSessionFactory().getCurrentSession();
 			//throw new IllegalStateException("Session has not been set on DAO before usage");
 		}
@@ -106,5 +106,5 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> {
 		}
 		return crit.list();
 	}
-
+	
 }
