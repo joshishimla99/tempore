@@ -3,7 +3,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/log4j.1.2.14.jar"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="DTO src"/>
+	<classpathentry kind="src" path="DTO Link"/>
 	<classpathentry kind="src" path="resource"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DAO"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
@@ -18,5 +18,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/dozer-5.3.2.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>
