@@ -10,36 +10,64 @@ public class ClientRecord extends ListGridRecord {
 
 	public ClientRecord(String Name, String Address, String Country, String State, String Zip, String FiscalNumber, String Phone) {
 
-		setClientName(Name);
-		setClientAddress(Address);
-		setClientCountry(Country);
-		setClientState(State);
-		setClientZip(Zip);
-		setClientFiscalNumber(FiscalNumber);
-		setClientPhone(Phone);
+		setName(Name);
+		setAddress(Address);
+		setCountry(Country);
+		setState(State);
+		setZip(Zip);
+		setFiscalNumber(FiscalNumber);
+		setPhone(Phone);
 	}
 	
-	public void setClientName(String Name) {
+	public void setName(String Name) {
 		setAttribute("clientName", Name);
 	}
 	
-	public void setClientAddress(String Address) {
+	public void setAddress(String Address) {
 		setAttribute("clientAddress", Address);
 	}
-	public void setClientCountry(String Country) {
+	public void setCountry(String Country) {
 		setAttribute("clientCountry", Country);
 	}
-	public void setClientState(String State) {
+	public void setState(String State) {
 		setAttribute("clientState", State);
 	}
-	public void setClientZip(String Zip) {
+	public void setZip(String Zip) {
 		setAttribute("clientZip", Zip);
 	}
-	public void setClientFiscalNumber(String FiscalNumber) {
+	public void setFiscalNumber(String FiscalNumber) {
 		setAttribute("clientFiscalNumber", FiscalNumber);
 	}
-	public void setClientPhone(String Phone) {
+	public void setPhone(String Phone) {
 		setAttribute("clientPhone", Phone);
+	}
+	
+	public String getName() {
+		return getAttributeAsString("clientName");
+	}
+	
+	public String getAddress() {
+		return getAttributeAsString("clientAddress");
+	}
+	
+	public String getCountry() {
+		return getAttributeAsString("clientCountry");
+	}
+	
+	public String getState() {
+		return getAttributeAsString("clientState");
+	}
+	
+	public String getZip() {
+		return getAttributeAsString("clientZip");
+	}
+	
+	public String getFiscalNumber() {
+		return getAttributeAsString("clientFiscalNumber");
+	}
+	
+	public String getPhone() {
+		return getAttributeAsString("clientPhone");
 	}
 
 }
