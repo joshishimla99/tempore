@@ -88,7 +88,6 @@ public class ProjectPanel extends VLayout {
 	 * @param taskNode
 	 */
 	private void loadProjects(List<ProjectDTO> projects, Tree treeProject, ProjectTreeNode root) {
-		com.google.gwt.user.client.Window.alert(Integer.toString(projects.size()));
 		for (Iterator<ProjectDTO> i = projects.iterator(); i.hasNext();) {
 			ProjectDTO project = (ProjectDTO) i.next();
 			ProjectTreeNode node = new ProjectTreeNode(Integer.toString(project.getId()), root.getProjectId(), project.getName(),

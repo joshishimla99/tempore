@@ -26,7 +26,7 @@ public class ContextPanel extends DeckPanel{
 		this.add(new UserConfigurationPanel()); // widget 6
 		this.add(new ClientConfigurationPanel()); //widget 7
 		this.add(new AlertConfigurationPanel()); // widget 8
-		this.showWidget(Constant.MENU_OPTION_MAIN);
+		this.showWidget(Constant.MENU_OPTION_NEW_PROJECT);
 	}
 	
 	public void updateContextPanel(int index){

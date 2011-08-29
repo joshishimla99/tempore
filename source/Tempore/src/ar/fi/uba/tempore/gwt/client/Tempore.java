@@ -31,7 +31,6 @@ public class Tempore implements EntryPoint {
 		
 		ContextPanel contextPanel = new ContextPanel();
 		ProjectPanel projectPanel = new ProjectPanel();
-		//projectPanel.setSize("20%", "250");
 		MenuPanel menuPanel = new MenuPanel(contextPanel);
 		FooterPanel footerPanel = new FooterPanel();
 		

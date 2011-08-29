@@ -42,6 +42,7 @@ public class MenuPanel extends MenuBar {
 		// MenuHelp
 		MenuBar menuHelp = new MenuBar(true);
 		MenuItem itemHelp = new MenuItem("Ayuda", false, menuHelp);
+		menuHelp.addItem(new MenuItem("Acerca de", createCmd(Constant.MENU_OPTION_ABOUT)));
 
 		// MenuPpal
 		this.addItem(itemProject);

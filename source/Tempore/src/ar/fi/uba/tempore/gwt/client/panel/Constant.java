@@ -14,6 +14,7 @@ public final class Constant {
 	public static final int MENU_OPTION_USER_CONFIGURATION = 6;
 	public static final int MENU_OPTION_CLIENT_CONFIGURATION = 7;
 	public static final int MENU_OPTION_ALERT_CONFIGURATION = 8;
+	public static final int MENU_OPTION_ABOUT = 9;
 	
 	/*
 	 * Icon Type for the project tree
@@ -28,4 +29,5 @@ public final class Constant {
 	 */
 	public static final int ID_RESOURCE_GENERATOR = 1000;
 	public static final int ID_TASK_GENERATOR = 2000;
+	
 }
