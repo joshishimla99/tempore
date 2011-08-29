@@ -22,10 +22,13 @@ public class NewTaskPanel extends VerticalPanel implements ContextChildPanel{
 
 	@Override
 	public void UpdateContent() {
+		
 		if (form == null){
 			form = new DynamicForm();
+		} else {
+			form.clear();
 		}
-		form.clear();
+		
 		// Nombre de la tarea
 		TextItem taskNameLabel = new TextItem();
 		taskNameLabel.setTitle("Nombre");

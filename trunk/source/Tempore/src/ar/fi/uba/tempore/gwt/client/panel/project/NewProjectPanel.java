@@ -14,7 +14,7 @@ import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
 
 public class NewProjectPanel extends VerticalPanel implements ContextChildPanel {
 
-	private DynamicForm form;
+	private DynamicForm form = null;
 
 	public NewProjectPanel() {
 		this.UpdateContent();
@@ -22,7 +22,12 @@ public class NewProjectPanel extends VerticalPanel implements ContextChildPanel 
 
 	@Override
 	public void UpdateContent() {
-		form = new DynamicForm();
+		if (form == null){
+			form = new DynamicForm();
+		}
+		else {
+			form.clear();
+		}
 
 		// Nombre del proyecto
 		TextItem projectNameLabel = new TextItem();
