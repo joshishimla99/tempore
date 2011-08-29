@@ -1,58 +1,70 @@
 package ar.fi.uba.tempore.gwt.client.panel.project;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import ar.fi.uba.tempore.dto.ProjectDTO;
 import ar.fi.uba.tempore.gwt.client.ProjectServicesClient;
 import ar.fi.uba.tempore.gwt.client.ProjectServicesClientAsync;
-import ar.fi.uba.tempore.gwt.client.callback.ProjectCallback;
+import ar.fi.uba.tempore.gwt.client.panel.Constant;
 
 import com.google.gwt.core.client.GWT;
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.types.TreeModelType;
+
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.Label;
+import com.smartgwt.client.widgets.events.DrawEvent;
+import com.smartgwt.client.widgets.events.DrawHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.smartgwt.client.widgets.tree.Tree;
+import com.smartgwt.client.widgets.tree.TreeGrid;
+import com.smartgwt.client.widgets.tree.TreeGridField;
 import com.smartgwt.client.widgets.tree.TreeNode;
 
 public class ProjectPanel extends VLayout {
 
-//	List<ProjectDTO> projects;
 	private final ProjectServicesClientAsync projectService = (ProjectServicesClientAsync) GWT.create(ProjectServicesClient.class);
-	
+	private Tree treeProject;
 	
 	public ProjectPanel() {
-		final Label projectLabel = new Label();
-		this.addChild(projectLabel);
 		
 		final Canvas canvas = new Canvas();		
 		
-		List<ProjectDTO> lista = null;
-		
-		/*ProjectServicesClientAsync service = (ProjectServicesClientAsync) GWT.create(ProjectServicesClientAsync.class);
-		ServiceDefTarget serviceDef = (ServiceDefTarget) service;
-		serviceDef.setServiceEntryPoint(GWT.getModuleBaseURL()+ "ProjectServices");
-		*/
-		ProjectCallback myUserCallback = new ProjectCallback(lista);
-		/*
-		com.google.gwt.user.client.Window.alert("Invocando al servicio!!!");
 		projectService.getProjects(new AsyncCallback<List<ProjectDTO>>() {
 			
 			@Override
 			public void onSuccess(List<ProjectDTO> result) {
-				// TODO Auto-generated method stub
-				com.google.gwt.user.client.Window.alert("OK");
+				TreeGrid treeGrid = new TreeGrid();
+				treeGrid.setWidth(200);
+				treeGrid.setHeight(400);
+
+				TreeGridField field = new TreeGridField("ProjectName","Projectos Tempore");
+				field.setCanSort(false);
+
+				treeGrid.setFields(field);
+
+				treeProject = new Tree();
+				treeProject.setModelType(TreeModelType.PARENT);
+				treeProject.setNameProperty("ProjectName");
+				treeProject.setIdField("ProjectId");
+				treeProject.setParentIdField("DependsOf");
+				treeProject.setShowRoot(true);
+				ProjectTreeNode rootNode = new ProjectTreeNode("4", "1", "Proyectos", Constant.ICON_PROJECT);
+
+				treeProject.setRoot(rootNode);
+				loadProjects(allProject(), treeProject, rootNode);
+				treeGrid.setData(treeProject);
+				treeGrid.addDrawHandler(new DrawHandler() {
+					public void onDraw(DrawEvent event) {
+						treeProject.openAll();
+					}
+				});
+				canvas.addChild(treeGrid);
 			}
 			
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				com.google.gwt.user.client.Window.alert("ERROR: " + caught.getMessage());
-			}
-		});
-		*/
-		projectService.getProjects(myUserCallback);
-		
-		/*(new AsyncCallback<List<ProjectDTO>>(){
-
 			@Override
 			public void onFailure(Throwable caught) {
 				Label errorLabel = new Label();
@@ -62,75 +74,75 @@ public class ProjectPanel extends VLayout {
 				errorLabel.draw();
 				canvas.addChild(errorLabel);
 			}
-
-			@Override
-			public void onSuccess(List<ProjectDTO> result) {
-				
-				projectLabel.setContents(result.get(0).getName());
-				projectLabel.draw();
-				Tree tree = new Tree();
-				tree.setModelType(TreeModelType.CHILDREN);
-				tree.setRoot(new TreeNode ("root", new TreeNode(result.get(0).getName()), new TreeNode(result.get(1).getName())));
-				
-				///LUD
-				TreeGrid treeGrid = new TreeGrid();  
-		        treeGrid.setWidth(300);  
-		        treeGrid.setHeight(400);  
-		  
-		        TreeGridField field = new TreeGridField("Name", "Tree from local data");  
-		        field.setCanSort(false);  
-		  
-		        treeGrid.setFields(field);  
-		  
-		        final Tree treeUser = new Tree();  
-		        treeUser.setModelType(TreeModelType.PARENT);  
-		        treeUser.setNameProperty("Name");  
-		        treeUser.setIdField("EmployeeId");  
-		        treeUser.setParentIdField("ReportsTo");  
-		        treeUser.setShowRoot(true);  
-		  
-		        EmployeeTreeNode root = new EmployeeTreeNode("4", "1", "Charles Madigen");  
-		        EmployeeTreeNode node2 = new EmployeeTreeNode("188", "4", "Rogine Leger");  
-		        EmployeeTreeNode node3 = new EmployeeTreeNode("189", "4", "Gene Porter");  
-		        EmployeeTreeNode node4 = new EmployeeTreeNode("265", "189", "Olivier Doucet");  
-		        EmployeeTreeNode node5 = new EmployeeTreeNode("264", "189", "Cheryl Pearson");  
-		        treeUser.setData(new TreeNode[]{root, node2, node3, node4, node5});  
-		  
-		        treeGrid.addDrawHandler(new DrawHandler() {  
-		            public void onDraw(DrawEvent event) {  
-		            	treeUser.openAll();  
-		            }  
-		        });  
-		          
-		        treeGrid.setData(tree);  
-		        canvas.addChild(treeGrid);
-		        treeGrid.draw();
-			}
-		});*/
-		
-		
-		this.addChild(canvas);
+		});
+    	this.addChild(canvas);
 		canvas.draw();
 	}
+	
+	/**
+	 * Carga en el tree el nodo del proyecto
+	 * @param projects
+	 * @param treeProject
+	 * @param root
+	 * @param resourceNode
+	 * @param taskNode
+	 */
+	private void loadProjects(List<ProjectDTO> projects, Tree treeProject, ProjectTreeNode root) {
+		com.google.gwt.user.client.Window.alert(Integer.toString(projects.size()));
+		for (Iterator<ProjectDTO> i = projects.iterator(); i.hasNext();) {
+			ProjectDTO project = (ProjectDTO) i.next();
+			ProjectTreeNode node = new ProjectTreeNode(Integer.toString(project.getId()), root.getProjectId(), project.getName(),
+					Constant.ICON_PROJECT);
+			addResourceAndTask(node, project.getId());
+			treeProject.add(node, root);
+		}
+	}
 
-	 public static class EmployeeTreeNode extends TreeNode {  
-		  
-	        public EmployeeTreeNode(String employeeId, String reportsTo, String name) {  
-	            setEmployeeId(employeeId);  
-	            setReportsTo(reportsTo);  
-	            setName(name);  
-	        }  
-	  
-	        public void setEmployeeId(String value) {  
-	            setAttribute("EmployeeId", value);  
-	        }  
-	  
-	        public void setReportsTo(String value) {  
-	            setAttribute("ReportsTo", value);  
-	        }  
-	  
-	        public void setName(String name) {  
-	            setAttribute("Name", name);  
-	        }  
-	    }  
+	/**
+	 * Agrega al tree los nodos task y resources 
+	 * @param resourceNode
+	 * @param taskNode
+	 * @param treeProject
+	 * @param root
+	 */
+	private void addResourceAndTask(ProjectTreeNode root, int projectId) {
+		TreeNode[] children = new TreeNode[2];
+		ProjectTreeNode resourceNode = new ProjectTreeNode("", "", "Recursos", Constant.ICON_RESOURCE);
+		ProjectTreeNode taskNode = new ProjectTreeNode("", "", "Tareas", Constant.ICON_TASK);
+		resourceNode.setProjectId(Integer.toString(projectId + Constant.ID_RESOURCE_GENERATOR));
+		resourceNode.setDependsOf(Integer.toString(projectId));
+		taskNode.setProjectId(Integer.toString(projectId + Constant.ID_TASK_GENERATOR));
+		taskNode.setDependsOf(Integer.toString(projectId));
+		children[0]= taskNode;
+		children[1]=resourceNode;
+		root.setChildren(children);
+	}
+	
+	 private List<ProjectDTO> allProject() {
+			List<ProjectDTO> list = new ArrayList<ProjectDTO>();
+
+			ProjectDTO p1 = new ProjectDTO();
+			p1.setId(new Integer(1));
+			p1.setName("Proyecto 1");
+			list.add(p1);
+			
+			ProjectDTO p2 = new ProjectDTO();
+			p2.setId(new Integer(2));
+			p2.setName("Proyecto 2");
+			list.add(p2);
+
+			ProjectDTO p3 = new ProjectDTO();
+			p3.setId(new Integer(3));
+			p3.setName("Proyecto 3");
+			list.add(p3);
+
+			ProjectDTO p4 = new ProjectDTO();
+			p4.setId(new Integer(4));
+			p4.setName("Proyecto 4");
+			list.add(p4);
+
+			// TODO Buscar en BBDD
+
+			return list;
+		}
 }
