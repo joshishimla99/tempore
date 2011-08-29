@@ -11,6 +11,7 @@ import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
 import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
+import com.smartgwt.client.widgets.form.validator.Validator;
 
 public class NewProjectPanel extends VerticalPanel implements ContextChildPanel {
 
@@ -40,12 +41,14 @@ public class NewProjectPanel extends VerticalPanel implements ContextChildPanel 
 		DateItem startDate = new DateItem();
 		startDate.setTitle("Fecha Inicio");
 		startDate.setRequired(true);
+		startDate.setInvalidDateStringMessage("La fecha ingresada no es v&aacute;lida");
 
 		DateItem endDate = new DateItem();
 		endDate.setTitle("Fecha Fin");
 		endDate.setHint("<nobr>Fecha estimada</nobr>");
 		endDate.setRequired(true);
-
+		endDate.setInvalidDateStringMessage("La fecha ingresada no es v&aacute;lida");
+		
 		ComboBoxItem projectClient = new ComboBoxItem();
 		projectClient.setTitle("Cliente");
 		projectClient.setType("comboBox");
