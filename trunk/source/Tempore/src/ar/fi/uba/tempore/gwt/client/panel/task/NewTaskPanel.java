@@ -1,6 +1,7 @@
 package ar.fi.uba.tempore.gwt.client.panel.task;
 
 import ar.fi.uba.tempore.gwt.client.panel.ContextChildPanel;
+import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.smartgwt.client.widgets.form.DynamicForm;
@@ -13,11 +14,11 @@ import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
 
 public class NewTaskPanel extends VerticalPanel implements ContextChildPanel{
 	
+	private ProjectPanel projectPanel;
 	private DynamicForm form;
-	//TODO: asociar la tarea al proyecto!!!!!!!!!!!!!!
 	
-	public NewTaskPanel(){
-		// todo nothing
+	public NewTaskPanel(ProjectPanel projectPanel){
+		this.projectPanel = projectPanel;
 	}
 
 	@Override
