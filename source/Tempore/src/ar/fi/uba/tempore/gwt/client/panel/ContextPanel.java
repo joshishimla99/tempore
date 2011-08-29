@@ -5,6 +5,7 @@ import ar.fi.uba.tempore.gwt.client.panel.configuration.ClientConfigurationPanel
 import ar.fi.uba.tempore.gwt.client.panel.configuration.UserConfigurationPanel;
 import ar.fi.uba.tempore.gwt.client.panel.project.ModifyProjectPanel;
 import ar.fi.uba.tempore.gwt.client.panel.project.NewProjectPanel;
+import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 import ar.fi.uba.tempore.gwt.client.panel.task.ModifyTaskPanel;
 import ar.fi.uba.tempore.gwt.client.panel.task.NewTaskPanel;
 
@@ -16,11 +17,11 @@ import com.google.gwt.user.client.ui.DeckPanel;
  */
 public class ContextPanel extends DeckPanel{
 
-	public ContextPanel(){
+	public ContextPanel(ProjectPanel projectPanel){
 		this.add(new MainPanel()); // widget 0
-		this.add(new NewProjectPanel()); // widget 1
+		this.add(new NewProjectPanel(projectPanel)); // widget 1
 		this.add(new ModifyProjectPanel()); // widget 2
-		this.add(new NewTaskPanel()); // widget 3
+		this.add(new NewTaskPanel(projectPanel)); // widget 3
 		this.add(new ModifyTaskPanel()); // widget 4
 		this.add(new MainReportPanel()); //widget 5
 		this.add(new UserConfigurationPanel()); // widget 6

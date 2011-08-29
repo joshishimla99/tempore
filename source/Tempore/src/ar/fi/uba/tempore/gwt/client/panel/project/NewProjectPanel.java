@@ -15,8 +15,10 @@ import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
 public class NewProjectPanel extends VerticalPanel implements ContextChildPanel {
 
 	private DynamicForm form = null;
-
-	public NewProjectPanel() {
+	private ProjectPanel projectPanel;
+	
+	public NewProjectPanel(ProjectPanel projectPanel) {
+		this.projectPanel = projectPanel;
 		this.UpdateContent();
 	}
 
@@ -65,6 +67,7 @@ public class NewProjectPanel extends VerticalPanel implements ContextChildPanel 
 		createProjectButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				form.validate(false);
+				//TODO: actualizar el panel de proyectos!!!!!!!!!!!
 			}
 		});
 

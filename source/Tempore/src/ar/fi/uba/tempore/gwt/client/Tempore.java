@@ -28,9 +28,9 @@ public class Tempore implements EntryPoint {
 		// Paneles del dock panel: norte(MENU), oeste(PROYECTOS), centro (MIDDLE)
 		FlowPanel headPanel = new FlowPanel();
 		conteinerPanel.setStyleName("conteinerPanel");
-		
-		ContextPanel contextPanel = new ContextPanel();
 		ProjectPanel projectPanel = new ProjectPanel();
+		
+		ContextPanel contextPanel = new ContextPanel(projectPanel);
 		MenuPanel menuPanel = new MenuPanel(contextPanel);
 		FooterPanel footerPanel = new FooterPanel();
 		
