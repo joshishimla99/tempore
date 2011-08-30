@@ -56,8 +56,10 @@ public class ClientConfigurationPanel extends VerticalPanel implements ContextCh
 					ClientGrid = new ListGrid();
 					ClientGrid.setWidth(600);
 					ClientGrid.setHeight(224);
-					ClientGrid.setCellHeight(22);					
-					ClientGrid.setData(ClientData.getRecords(ClientList));					
+					ClientGrid.setCellHeight(22);		
+					
+					ClientGrid.setData(ClientData.getRecords(ClientList));	
+					
 					ClientGrid.setAutoFitData(Autofit.HORIZONTAL);
 					ClientGrid.setSelectionAppearance(SelectionAppearance.CHECKBOX); 					
 					ListGridField nameField = new ListGridField("clientName", "Razon Social");
