@@ -4,46 +4,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.dozer.DozerBeanMapper;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import ar.fi.uba.tempore.dao.ClientDAO;
 import ar.fi.uba.tempore.dto.ClientDTO;
+import ar.fi.uba.tempore.entity.Client;
 
 public class ClientServicesImpl extends RemoteServiceServlet implements ar.fi.uba.tempore.gwt.client.ClientServicesClient {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private final Logger log = Logger.getLogger(this.getClass());
+	private static final long serialVersionUID = -2409690393681645739L;
+
+	private final Logger log = Logger.getLogger(this.getClass());	
+	private final DozerBeanMapper mapper = new DozerBeanMapper();
+	private final ClientDAO cDAO = new ClientDAO(); 
 
 	@Override
 	public List<ClientDTO> getClients() {
-		log.debug("Service getClients()");
+		log.info("getClients()");
 		
-		List<ClientDTO> ClientList = new ArrayList<ClientDTO>();
+		List<ClientDTO> list = new ArrayList<ClientDTO>();
 		
-		ClientDTO Client = new ClientDTO();
-		Client.setName("Interno");
-		Client.setAddress("Eduardo Madero 900 - 21");
-		Client.setCountry("Argentina");
-		Client.setState("Bs As");
-		Client.setZip("1000");
-		Client.setFiscalNumber("111111");
-		Client.setPhone("111111");
-		ClientList.add(Client);
+		List<Client> findAll = cDAO.findAll();
+		for (Client c : findAll) {
+			ClientDTO cDTO = mapper.map(c, ClientDTO.class);
+			list.add(cDTO);
+		}
 		
-		ClientDTO Client1 = new ClientDTO();
-		Client1.setName("Interno");
-		Client1.setAddress("Eduardo Madero 900 - 21");
-		Client1.setCountry("Argentina");
-		Client1.setState("Bs As");
-		Client1.setZip("1000");
-		Client1.setFiscalNumber("111111");
-		Client1.setPhone("111111");
-		ClientList.add(Client1);		
-		return ClientList;
+		return list;
 	}
-
 }
 
