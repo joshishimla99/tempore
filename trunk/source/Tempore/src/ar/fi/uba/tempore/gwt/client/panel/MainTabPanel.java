@@ -15,11 +15,11 @@ public class MainTabPanel extends TabSet {
 		super.setHeight(800);
 		
 		Tab timeTab = new Tab("Tempore  ", "../images/ico/schedule.ico");
-		timeTab.setWidth(150);
+		timeTab.setWidth(100);
 		timeTab.setPane(new TimeTabPanel());
 		
 		Tab projectTab = new Tab("Proyectos  ", "../images/ico/briefcase.ico");
-		projectTab.setWidth(150);   
+		projectTab.setWidth(100);   
 		projectTab.setPane(new ProjectTabPanel(projectPanel));
 		
 		Tab configurationTab = new Tab("Configuraci&oacute;n  ", "../images/ico/wrench.ico");
