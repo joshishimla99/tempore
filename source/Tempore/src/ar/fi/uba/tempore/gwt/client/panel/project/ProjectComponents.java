@@ -74,7 +74,7 @@ public class ProjectComponents {
 	}
 	
 	public void clearProjectComponents(){
-		form.clear();
+		form.clearValues();
 	}
 	
 }
