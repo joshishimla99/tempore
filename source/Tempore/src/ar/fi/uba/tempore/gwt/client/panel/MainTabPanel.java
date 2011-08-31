@@ -14,23 +14,27 @@ public class MainTabPanel extends TabSet {
 		super.setWidth(700);
 		super.setHeight(800);
 		
-		Tab projectTab = new Tab("Proyectos   ", "../images/32x32/Portfolio.png");
-		projectTab.setWidth(100);   
+		Tab timeTab = new Tab("Tempore  ", "../images/ico/schedule.ico");
+		timeTab.setWidth(150);
+		timeTab.setPane(new TimeTabPanel());
+		
+		Tab projectTab = new Tab("Proyectos  ", "../images/ico/briefcase.ico");
+		projectTab.setWidth(150);   
 		projectTab.setPane(new ProjectTabPanel(projectPanel));
 		
-		Tab configurationTab = new Tab("Configuraci&oacute;n   ", "../images/32x32/Tools.png");
+		Tab configurationTab = new Tab("Configuraci&oacute;n  ", "../images/ico/wrench.ico");
 		configurationTab.setWidth(100);
 		configurationTab.setPane(new ConfigurationTabPanel());
 		
-		Tab taskTab = new Tab("Tareas   ", "../images/32x32/Paste.png");
+		Tab taskTab = new Tab("Tareas  ", "../images/ico/notes.ico");
 		taskTab.setWidth(100);
 		taskTab.setPane(new TaskTabPanel(projectPanel));
 		
-		Tab reportTab = new Tab("Reportes   ", "../images/32x32/Mail.png");
+		Tab reportTab = new Tab("Reportes  ", "../images/ico/report.ico");
 		reportTab.setWidth(100);
 		reportTab.setPane(new ReportTabPanel());
 		
-		Tab helpTab = new Tab("Ayuda   ", "../images/32x32/Help.png");
+		Tab helpTab = new Tab("Ayuda  ", "../images/ico/help1.ico");
 		helpTab.setWidth(100);
 		helpTab.setPane(new HelpTabPanel());
 		
@@ -42,7 +46,7 @@ public class MainTabPanel extends TabSet {
             }
         });
 
-		super.setTabs(projectTab, configurationTab, taskTab, reportTab, helpTab);
+		super.setTabs(timeTab, projectTab, configurationTab, taskTab, reportTab, helpTab);
 		super.draw();
 	}
 
