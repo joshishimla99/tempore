@@ -11,6 +11,7 @@ import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
 import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
+import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 public class NewTaskPanel extends VerticalPanel implements ContextChildPanel{
 	
@@ -61,6 +62,10 @@ public class NewTaskPanel extends VerticalPanel implements ContextChildPanel{
 		createTaskButton.setTitle("Crear Tarea");
 		createTaskButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				ListGridRecord projectSelected = projectPanel.getProjectSelected();
+				if (projectSelected != null) {
+					//TODO: agregar la tarea al proyecto
+				}
 				form.validate(false);
 			}
 		});

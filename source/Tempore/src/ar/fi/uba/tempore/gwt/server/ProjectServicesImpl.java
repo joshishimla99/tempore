@@ -34,4 +34,10 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 		return list;
 	}
 
+	@Override
+	public ProjectDTO save(ProjectDTO project) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

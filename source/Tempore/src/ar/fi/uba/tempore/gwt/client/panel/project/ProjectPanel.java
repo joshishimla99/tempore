@@ -18,6 +18,7 @@ import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.DrawEvent;
 import com.smartgwt.client.widgets.events.DrawHandler;
+import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tree.Tree;
 import com.smartgwt.client.widgets.tree.TreeGrid;
@@ -28,16 +29,19 @@ public class ProjectPanel extends VLayout {
 
 	private final ProjectServicesClientAsync projectService = (ProjectServicesClientAsync) GWT.create(ProjectServicesClient.class);
 	private Tree treeProject;
+	private Canvas canvas;
+	private ProjectTreeNode rootNode;
+	private TreeGrid treeGrid; 
 	
 	public ProjectPanel() {
 		
-		final Canvas canvas = new Canvas();		
+		canvas = new Canvas();		
 		
 		projectService.getProjects(new AsyncCallback<List<ProjectDTO>>() {
 			
 			@Override
 			public void onSuccess(List<ProjectDTO> result) {
-				TreeGrid treeGrid = new TreeGrid();
+				treeGrid = new TreeGrid();
 				treeGrid.setWidth(200);
 				treeGrid.setHeight(400);
 
@@ -52,7 +56,7 @@ public class ProjectPanel extends VLayout {
 				treeProject.setIdField("ProjectId");
 				treeProject.setParentIdField("DependsOf");
 				treeProject.setShowRoot(true);
-				ProjectTreeNode rootNode = new ProjectTreeNode("4", "1", "Proyectos", Constant.ICON_PROJECT);
+				rootNode = new ProjectTreeNode("4", "1", "Proyectos", Constant.ICON_PROJECT);
 
 				treeProject.setRoot(rootNode);
 				loadProjects(allProject(), treeProject, rootNode);
@@ -77,6 +81,18 @@ public class ProjectPanel extends VLayout {
 		});
     	this.addChild(canvas);
 		canvas.draw();
+	}
+	
+	public ListGridRecord getProjectSelected(){
+		return this.treeGrid.getSelectedRecord();
+	}
+	
+	/**
+	 * Se encarga de actualizar el arbol de proyectos cuando hay un cambio
+	 */
+	public void updateProjectTree(){
+		loadProjects(allProject(), treeProject, rootNode);
+		canvas.redraw();
 	}
 	
 	/**

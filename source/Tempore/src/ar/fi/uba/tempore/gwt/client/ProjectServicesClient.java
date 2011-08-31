@@ -10,6 +10,8 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 public interface ProjectServicesClient extends RemoteService {
 
 	List<ProjectDTO> getProjects() throws IllegalArgumentException;
+	
+	ProjectDTO save(ProjectDTO project);
 }
 
 
