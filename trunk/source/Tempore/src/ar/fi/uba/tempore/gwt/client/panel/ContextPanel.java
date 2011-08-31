@@ -20,7 +20,7 @@ public class ContextPanel extends DeckPanel{
 	public ContextPanel(ProjectPanel projectPanel){
 		this.add(new MainPanel()); // widget 0
 		this.add(new NewProjectPanel(projectPanel)); // widget 1
-		this.add(new ModifyProjectPanel()); // widget 2
+		this.add(new ModifyProjectPanel(projectPanel)); // widget 2
 		this.add(new NewTaskPanel(projectPanel)); // widget 3
 		this.add(new ModifyTaskPanel()); // widget 4
 		this.add(new MainReportPanel()); //widget 5

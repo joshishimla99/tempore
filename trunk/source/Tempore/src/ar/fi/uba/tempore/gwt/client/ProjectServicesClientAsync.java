@@ -10,4 +10,6 @@ public interface ProjectServicesClientAsync {
 
 	void getProjects(AsyncCallback<List<ProjectDTO>> callback);
 
+	void save(ProjectDTO project, AsyncCallback<ProjectDTO> callback);
+
 }
