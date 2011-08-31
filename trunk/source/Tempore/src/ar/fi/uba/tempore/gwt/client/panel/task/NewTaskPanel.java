@@ -28,7 +28,7 @@ public class NewTaskPanel extends VerticalPanel implements ContextChildPanel{
 		if (form == null){
 			form = new DynamicForm();
 		} else {
-			form.clear();
+			form.clearValues();
 		}
 		
 		// Nombre de la tarea
