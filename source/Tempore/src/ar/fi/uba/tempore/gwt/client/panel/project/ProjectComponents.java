@@ -1,9 +1,10 @@
 package ar.fi.uba.tempore.gwt.client.panel.project;
 
+import com.smartgwt.client.types.MultipleAppearance;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.ButtonItem;
-import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
 import com.smartgwt.client.widgets.form.fields.DateItem;
+import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
@@ -22,7 +23,7 @@ public class ProjectComponents {
 	TextAreaItem projectDescription;
 	DateItem startDate;
 	DateItem endDate;
-	ComboBoxItem projectClient;
+	SelectItem projectClient;
 	ButtonItem actionButton;
 	
 	public ProjectComponents(){
@@ -54,9 +55,10 @@ public class ProjectComponents {
 		endDate.setRequired(true);
 		endDate.setInvalidDateStringMessage("La fecha ingresada no es v&aacute;lida");
 		
-		projectClient = new ComboBoxItem();
-		projectClient.setTitle("Cliente");
-		projectClient.setType("comboBox");
+		projectClient = new SelectItem();
+		projectClient.setTitle("Clientes");
+		projectClient.setMultiple(true);
+		projectClient.setMultipleAppearance(MultipleAppearance.PICKLIST);
 		// TODO: traer el listado de la base de datos!!!!!!!!!!!!!
 		projectClient.setValueMap("Gemalto", "Nobleza Picardo", "Tata",	"itMentor", "PetroleraX", "EmpresaX");
 		projectClient.setRequired(true);
