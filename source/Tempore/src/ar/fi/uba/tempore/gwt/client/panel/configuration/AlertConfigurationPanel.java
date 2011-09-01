@@ -10,31 +10,29 @@ import ar.fi.uba.tempore.gwt.client.panel.menus.ContextChildPanel;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.smartgwt.client.data.Record;
 import com.smartgwt.client.types.Autofit;
 import com.smartgwt.client.types.ListGridEditEvent;
 import com.smartgwt.client.types.RowEndEditAction;
-import com.smartgwt.client.types.SelectionAppearance;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
-import com.smartgwt.client.widgets.grid.ListGridRecord;
-import com.smartgwt.client.widgets.grid.events.CellContextClickEvent;
-import com.smartgwt.client.widgets.grid.events.CellContextClickHandler;
 import com.smartgwt.client.widgets.grid.events.CellSavedEvent;
 import com.smartgwt.client.widgets.grid.events.CellSavedHandler;
 
-public class AlertConfigurationPanel extends VerticalPanel implements ContextChildPanel{
+public class AlertConfigurationPanel extends Canvas implements ContextChildPanel{
 
 	private Canvas canvas = null; 
 	private AlertListGrid alertGrid = null;
+	private VerticalPanel vPanel;
 	
 	public AlertConfigurationPanel() {
-		Label title = new Label("Configuración de Alertas");
+		super();
+		vPanel = new VerticalPanel();
+		Label title = new Label("Configuraci&oacute;n de Alertas");
 		title.setSize("195px", "39px");
-		this.add(title);
+		vPanel.add(title);
 	}
 
 	@Override
@@ -124,7 +122,8 @@ public class AlertConfigurationPanel extends VerticalPanel implements ContextChi
 		});
 		canvas.addChild(discardButton);
 
-		this.add(canvas);
+		vPanel.add(canvas);
+		this.addChild(this.vPanel);
 		canvas.draw();
 		
 	}

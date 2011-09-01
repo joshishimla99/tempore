@@ -4,20 +4,20 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.google.gwt.user.client.ui.DecoratedTabPanel;
 import com.smartgwt.client.widgets.Canvas;
+import com.smartgwt.client.widgets.tab.TabSet;
 
 public class SubTabPanel extends Canvas {
 	
 	private List<ContextChildPanel> panels;
-	DecoratedTabPanel tabPanel;
+	TabSet tabPanel;
 	
 	public SubTabPanel(){
 		super();
 		this.panels = new ArrayList<ContextChildPanel>();
-		tabPanel = new DecoratedTabPanel();
-		tabPanel.setWidth("800px");
-		tabPanel.setAnimationEnabled(true);
+		tabPanel = new TabSet();
+		tabPanel.setWidth("720px");
+		tabPanel.setHeight("600 px");
 		
 	}
 	
@@ -25,7 +25,7 @@ public class SubTabPanel extends Canvas {
 		this.panels.add(childPanel);
 	}
 	
-	protected DecoratedTabPanel getTabPanel(){
+	protected TabSet getTabPanel(){
 		return this.tabPanel;
 	}
 	

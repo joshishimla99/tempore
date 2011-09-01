@@ -4,6 +4,7 @@ import ar.fi.uba.tempore.gwt.client.panel.menus.ContextChildPanel;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.ButtonItem;
 import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
@@ -13,12 +14,15 @@ import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
 import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
-public class NewTaskPanel extends VerticalPanel implements ContextChildPanel{
+public class NewTaskPanel extends Canvas implements ContextChildPanel{
 	
 	private ProjectPanel projectPanel;
 	private DynamicForm form;
+	private VerticalPanel vPanel;
 	
 	public NewTaskPanel(ProjectPanel projectPanel){
+		super();
+		this.vPanel = new VerticalPanel();
 		this.projectPanel = projectPanel;
 	}
 
@@ -71,7 +75,8 @@ public class NewTaskPanel extends VerticalPanel implements ContextChildPanel{
 		});
 
 		form.setFields(taskNameLabel, taskDescription, estimatedTimeLabel, taskResponsable, createTaskButton);
-		this.add(form);
+		this.vPanel.add(form);
+		this.addChild(this.vPanel);
 		form.draw();
 	}
 

@@ -22,17 +22,19 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 
-public class ClientConfigurationPanel extends VerticalPanel implements ContextChildPanel{
+public class ClientConfigurationPanel extends Canvas implements ContextChildPanel{
 
 //	List<ClientDTO> Clients;
 	private final ClientServicesClientAsync clientService = GWT.create(ClientServicesClient.class);
 	private Canvas canvas = null; 
 	private ListGrid ClientGrid = null;
+	private VerticalPanel vPanel;
 	
 	public ClientConfigurationPanel() {
+		vPanel = new VerticalPanel();
 		Label title = new Label("Configuracion de clientes");
 		title.setSize("195px", "39px");
-		this.add(title);
+		vPanel.add(title);
 	}
 
 	@Override
@@ -125,9 +127,9 @@ public class ClientConfigurationPanel extends VerticalPanel implements ContextCh
 		});
 		canvas.addChild(discardButton);
 
-		this.add(canvas);
+		vPanel.add(canvas);
+		this.addChild(this.vPanel);
 		canvas.draw();
-		
 	}
 }
 
