@@ -23,17 +23,20 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 
-public class UserConfigurationPanel extends VerticalPanel implements ContextChildPanel{
+public class UserConfigurationPanel extends Canvas implements ContextChildPanel{
 
 //	List<UserDTO> users;
 	private final UserServicesClientAsync userService = GWT.create(UserServicesClient.class);
 	private Canvas canvas = null; 
 	private ListGrid userGrid = null;
+	private VerticalPanel vPanel;
 	
 	public UserConfigurationPanel() {
+		super();
+		vPanel = new VerticalPanel();
 		Label title = new Label("Configuracion de usuarios");
 		title.setSize("195px", "39px");
-		this.add(title);
+		vPanel.add(title);
 	}
 
 	@Override
@@ -129,7 +132,8 @@ public class UserConfigurationPanel extends VerticalPanel implements ContextChil
 		});
 		canvas.addChild(discardButton);
 
-		this.add(canvas);
+		vPanel.add(canvas);
+		this.addChild(this.vPanel);
 		canvas.draw();
 		
 	}

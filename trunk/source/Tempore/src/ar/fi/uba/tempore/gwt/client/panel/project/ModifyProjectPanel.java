@@ -2,17 +2,22 @@ package ar.fi.uba.tempore.gwt.client.panel.project;
 
 import ar.fi.uba.tempore.gwt.client.panel.menus.ContextChildPanel;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
 import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
-public class ModifyProjectPanel extends VerticalPanel implements ContextChildPanel {
+public class ModifyProjectPanel extends Canvas implements ContextChildPanel {
 
 	private ProjectPanel projectPanel;
 	ProjectComponents projectComponents = null;
+	private VerticalPanel vPanel;
 	
 	public ModifyProjectPanel(ProjectPanel projectPanel){
+		super();
+		this.vPanel = new VerticalPanel();
 		this.projectPanel = projectPanel;
 	}
 
@@ -37,10 +42,8 @@ public class ModifyProjectPanel extends VerticalPanel implements ContextChildPan
 		else {
 			projectComponents.clearProjectComponents();
 		}
-		
-		
-		this.add(this.projectComponents.getForm());
+		this.vPanel.add(this.projectComponents.getForm());
+		this.addChild(vPanel);
 		this.projectComponents.getForm().draw();
-
 	}
 }

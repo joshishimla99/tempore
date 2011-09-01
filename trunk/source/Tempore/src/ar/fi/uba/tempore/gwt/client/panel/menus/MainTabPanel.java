@@ -12,7 +12,7 @@ public class MainTabPanel extends TabSet {
 	public MainTabPanel(ProjectPanel projectPanel){
 		super();
 		super.setWidth(760);
-		super.setHeight(800);
+		super.setHeight(600);
 		
 		Tab timeTab = new Tab("Tempore  ", "../images/ico/schedule.ico");
 		timeTab.setWidth(100);
