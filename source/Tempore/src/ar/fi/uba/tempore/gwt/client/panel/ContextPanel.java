@@ -3,6 +3,7 @@ package ar.fi.uba.tempore.gwt.client.panel;
 import ar.fi.uba.tempore.gwt.client.panel.configuration.AlertConfigurationPanel;
 import ar.fi.uba.tempore.gwt.client.panel.configuration.ClientConfigurationPanel;
 import ar.fi.uba.tempore.gwt.client.panel.configuration.UserConfigurationPanel;
+import ar.fi.uba.tempore.gwt.client.panel.menus.ContextChildPanel;
 import ar.fi.uba.tempore.gwt.client.panel.project.ModifyProjectPanel;
 import ar.fi.uba.tempore.gwt.client.panel.project.NewProjectPanel;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;

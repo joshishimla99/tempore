@@ -5,7 +5,7 @@ import java.util.List;
 import ar.fi.uba.tempore.dto.UserDTO;
 import ar.fi.uba.tempore.gwt.client.UserServicesClient;
 import ar.fi.uba.tempore.gwt.client.UserServicesClientAsync;
-import ar.fi.uba.tempore.gwt.client.panel.ContextChildPanel;
+import ar.fi.uba.tempore.gwt.client.panel.menus.ContextChildPanel;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -55,7 +55,7 @@ public class UserConfigurationPanel extends VerticalPanel implements ContextChil
 				// Si es la primera vez que se accedio al panel, se crearan los componentes
 				if (userGrid == null){
 					userGrid = new ListGrid();
-					userGrid.setWidth(600);
+					userGrid.setWidth(500);
 					userGrid.setHeight(224);
 					userGrid.setCellHeight(22);
 					userGrid.setData(UserData.getRecords(userList));

@@ -4,8 +4,8 @@ import java.util.List;
 
 import ar.fi.uba.tempore.dto.AlertDTO;
 import ar.fi.uba.tempore.gwt.client.AlertServicesClient;
-import ar.fi.uba.tempore.gwt.client.panel.ContextChildPanel;
 import ar.fi.uba.tempore.gwt.client.panel.configuration.AlertListGrid.AlertRecord;
+import ar.fi.uba.tempore.gwt.client.panel.menus.ContextChildPanel;
 
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;

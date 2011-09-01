@@ -5,7 +5,7 @@ import java.util.List;
 import ar.fi.uba.tempore.dto.ClientDTO;
 import ar.fi.uba.tempore.gwt.client.ClientServicesClient;
 import ar.fi.uba.tempore.gwt.client.ClientServicesClientAsync;
-import ar.fi.uba.tempore.gwt.client.panel.ContextChildPanel;
+import ar.fi.uba.tempore.gwt.client.panel.menus.ContextChildPanel;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
