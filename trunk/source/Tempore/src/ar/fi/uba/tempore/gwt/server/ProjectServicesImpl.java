@@ -1,5 +1,6 @@
 package ar.fi.uba.tempore.gwt.server;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,21 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 	public ProjectDTO save(ProjectDTO project) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public ProjectDTO getProject(String id) {
+		// TODO: Generar la implementacion correcta!!!
+		Date endDate = new Date(2011, 12, 1);
+		Date initDate = new Date(2010, 12, 1);
+		ProjectDTO exampleProject = new ProjectDTO();
+		exampleProject.setBudget((double) 12345);
+		exampleProject.setDescription("Proyecto Dummy para probar que se obtiene el proyecto");
+		exampleProject.setEndDate(endDate);
+		exampleProject.setId(12);
+		exampleProject.setInitDate(initDate);
+		exampleProject.setName("Proyecto Dummy");
+		return exampleProject;
 	}
 
 }

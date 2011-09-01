@@ -12,6 +12,8 @@ public interface ProjectServicesClient extends RemoteService {
 	List<ProjectDTO> getProjects() throws IllegalArgumentException;
 	
 	ProjectDTO save(ProjectDTO project);
+	
+	ProjectDTO getProject(String id);
 }
 
 
