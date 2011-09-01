@@ -2,7 +2,7 @@ package ar.fi.uba.tempore.gwt.client;
 
 import ar.fi.uba.tempore.gwt.client.panel.ContextPanel;
 import ar.fi.uba.tempore.gwt.client.panel.FooterPanel;
-import ar.fi.uba.tempore.gwt.client.panel.MainTabPanel;
+import ar.fi.uba.tempore.gwt.client.panel.menus.MainTabPanel;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 
 import com.google.gwt.core.client.EntryPoint;
