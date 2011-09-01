@@ -16,8 +16,8 @@ public class SubTabPanel extends Canvas {
 		super();
 		this.panels = new ArrayList<ContextChildPanel>();
 		tabPanel = new TabSet();
-		tabPanel.setWidth("720px");
-		tabPanel.setHeight("600 px");
+		tabPanel.setWidth("725px");
+		tabPanel.setHeight("560 px");
 		
 	}
 	
