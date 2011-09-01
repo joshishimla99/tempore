@@ -24,7 +24,7 @@ public class Tempore implements EntryPoint {
 	public void onModuleLoad() {		
 		
 		DockPanel conteinerPanel = new DockPanel();
-		conteinerPanel.setSize("90%", "100%");
+		//conteinerPanel.setSize("90%", "100%");
 		// Paneles del dock panel: norte(MENU), oeste(PROYECTOS), centro (MIDDLE)
 		FlowPanel headPanel = new FlowPanel();
 		conteinerPanel.setStyleName("conteinerPanel");
