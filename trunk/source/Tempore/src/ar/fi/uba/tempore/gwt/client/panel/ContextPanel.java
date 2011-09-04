@@ -32,7 +32,7 @@ public class ContextPanel extends DeckPanel{
 	public void updateContextPanel(int index){
 		if (index < this.getWidgetCount()){
 			// Primero actualizo el contenido del panel
-			((ContextChildPanel) this.getWidget(index)).UpdateContent();
+			((ContextChildPanel) this.getWidget(index)).updateContent();
 			this.showWidget(index);
 		}
 	}
