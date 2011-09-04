@@ -3,7 +3,6 @@ package ar.fi.uba.tempore.gwt.client.panel.configuration;
 import ar.fi.uba.tempore.gwt.client.panel.menus.ContextChildPanel;
 
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.smartgwt.client.types.ListGridEditEvent;
 import com.smartgwt.client.types.RowEndEditAction;
 import com.smartgwt.client.widgets.Canvas;
@@ -12,11 +11,12 @@ import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.grid.ListGrid;
+import com.smartgwt.client.widgets.layout.VLayout;
 
 public class AlertConfigurationPanel extends Canvas implements ContextChildPanel{
 
 	//private Canvas canvas = null;
-	private VerticalPanel vPanel;
+	private VLayout vPanel;
 	
 
 	public AlertConfigurationPanel() {
@@ -27,11 +27,11 @@ public class AlertConfigurationPanel extends Canvas implements ContextChildPanel
 	public void updateContent() {
 		Window.alert("Pagina de Alertas. Actualizacion Num 9");
 
-		vPanel = new VerticalPanel();
+		vPanel = new VLayout();
 		
 		Label title = new Label("Configuración de Alertas");
 		title.setSize("195px", "39px");
-		vPanel.add(title);
+		vPanel.addChild(title);
 
 		//final AlertDataSource dataSource = AlertDataSource.getInstance();
 		//dataSource.fetchData();
@@ -47,7 +47,7 @@ public class AlertConfigurationPanel extends Canvas implements ContextChildPanel
 		grid.setAutoSaveEdits(true);
 		grid.setCanRemoveRecords(true);	
 		
-		vPanel.add(grid);	
+		vPanel.addChild(grid);	
 		this.addChild(this.vPanel);
 		this.redraw();
 
