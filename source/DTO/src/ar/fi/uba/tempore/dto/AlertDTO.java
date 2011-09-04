@@ -1,8 +1,8 @@
 package ar.fi.uba.tempore.dto;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class AlertDTO implements Serializable {
+public class AlertDTO implements IsSerializable {
 
 	private static final long serialVersionUID = 2087608124623022391L;
 	private Integer id;
