@@ -3,7 +3,6 @@ package ar.fi.uba.tempore.gwt.client.panel.task;
 import ar.fi.uba.tempore.gwt.client.panel.menus.ContextChildPanel;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.ButtonItem;
@@ -13,16 +12,17 @@ import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
 import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
+import com.smartgwt.client.widgets.layout.VLayout;
 
 public class NewTaskPanel extends Canvas implements ContextChildPanel{
 	
 	private ProjectPanel projectPanel;
 	private DynamicForm form;
-	private VerticalPanel vPanel;
+	private VLayout vPanel;
 	
 	public NewTaskPanel(ProjectPanel projectPanel){
 		super();
-		this.vPanel = new VerticalPanel();
+		this.vPanel = new VLayout();
 		this.projectPanel = projectPanel;
 	}
 
@@ -75,9 +75,9 @@ public class NewTaskPanel extends Canvas implements ContextChildPanel{
 		});
 
 		form.setFields(taskNameLabel, taskDescription, estimatedTimeLabel, taskResponsable, createTaskButton);
-		this.vPanel.add(form);
+		this.vPanel.addChild(form);
 		this.addChild(this.vPanel);
-		form.draw();
+		this.draw();
 	}
 
 }
