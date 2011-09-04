@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.tab.TabSet;
 
@@ -33,7 +34,7 @@ public class SubTabPanel extends Canvas {
 		Iterator<ContextChildPanel> i = panels.iterator();
 		while (i.hasNext()){
 			ContextChildPanel childPanel = i.next();
-			childPanel.UpdateContent();
+			childPanel.updateContent();
 		}
 	}
 
