@@ -1,44 +1,38 @@
 package ar.fi.uba.tempore.gwt.client.panel.project;
 
-import java.util.List;
-
 import ar.fi.uba.tempore.dto.ProjectDTO;
 import ar.fi.uba.tempore.gwt.client.ClientServicesClient;
 import ar.fi.uba.tempore.gwt.client.ClientServicesClientAsync;
 import ar.fi.uba.tempore.gwt.client.ProjectServicesClient;
 import ar.fi.uba.tempore.gwt.client.ProjectServicesClientAsync;
 import ar.fi.uba.tempore.gwt.client.panel.menus.ContextChildPanel;
-import ar.fi.uba.tempore.gwt.client.util.MessagesModalWindow;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.smartgwt.client.types.MultipleAppearance;
 import com.smartgwt.client.widgets.Canvas;
-import com.smartgwt.client.widgets.IButton;  
+import com.smartgwt.client.widgets.IButton;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.fields.ButtonItem;
 import com.smartgwt.client.widgets.form.fields.DateItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
-import com.smartgwt.client.widgets.events.ClickHandler; 
-import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.layout.HLayout;
-import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.layout.VLayout;
 
 public class NewProjectPanel extends Canvas implements ContextChildPanel {
 
 	private ProjectPanel projectPanel;
-	private VerticalPanel vPanel = null;
+	private VLayout vPanel = null;
 	private DynamicForm form;
 	private TextItem projectNameLabel, budget;
 	private TextAreaItem projectDescription;
 	private DateItem startDate;
 	private DateItem endDate;
 	private SelectItem projectClient;
-	HLayout hLayout;
+	private HLayout hLayout;
 	private IButton createProjectButton, editProjectButton, applyButton;
 
 	public NewProjectPanel(ProjectPanel projectPanel) {
@@ -48,18 +42,18 @@ public class NewProjectPanel extends Canvas implements ContextChildPanel {
 
 	@Override
 	public void UpdateContent() {
+
 		if (this.vPanel == null) {
-			this.vPanel = new VerticalPanel();
+			this.vPanel = new VLayout();
 			this.addComponents();
 		} else {
 			form.clearValues();
 		}
 
-		this.vPanel.add(this.form);
-		this.vPanel.add(hLayout);
+		this.vPanel.addChild(this.form);
+		this.vPanel.addChild(hLayout);
 		this.addChild(vPanel);
-		this.form.draw();
-
+		this.redraw();
 	}
 
 	private void addComponents() {
@@ -131,31 +125,32 @@ public class NewProjectPanel extends Canvas implements ContextChildPanel {
 		editProjectButton.setIcon("../images/ico/modify.ico");
 		editProjectButton.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent event) {
-				ListGridRecord projectSelected = projectPanel.getProjectSelected();
-				if (projectSelected != null) {
-					ProjectServicesClientAsync projectService = (ProjectServicesClientAsync) GWT.create(ProjectServicesClient.class);
-					String[] id = projectSelected.getAttributeAsStringArray("ProjectId");
-					projectService.getProject(id.toString(), new AsyncCallback<ProjectDTO>(){
-
-						@Override
-						public void onFailure(Throwable caught) {
-							Window.alert("Error al obtener el objeto seleccionado");
-						}
-
-						@Override
-						public void onSuccess(ProjectDTO result) {
-							projectNameLabel.setValue(result.getName());
-							projectDescription.setValue(result.getDescription());
-							budget.setValue(result.getBudget());
-							startDate.setDataPath(result.getInitDate().toString());
-							endDate.setEndDate(result.getEndDate());
-						} 
-					
-					});
-				} else {
-					MessagesModalWindow modal = new MessagesModalWindow("Proyectos", "Se debe seleccionar un proyecto");
-					modal.display();
-				}
+				Window.alert("SE COMENTO CON PRUEBAS");
+//				ListGridRecord projectSelected = projectPanel.getProjectSelected();
+//				if (projectSelected != null) {
+//					ProjectServicesClientAsync projectService = (ProjectServicesClientAsync) GWT.create(ProjectServicesClient.class);
+//					String[] id = projectSelected.getAttributeAsStringArray("ProjectId");
+//					projectService.getProject(id.toString(), new AsyncCallback<ProjectDTO>(){
+//
+//						@Override
+//						public void onFailure(Throwable caught) {
+//							Window.alert("Error al obtener el objeto seleccionado");
+//						}
+//
+//						@Override
+//						public void onSuccess(ProjectDTO result) {
+//							projectNameLabel.setValue(result.getName());
+//							projectDescription.setValue(result.getDescription());
+//							budget.setValue(result.getBudget());
+//							startDate.setDataPath(result.getInitDate().toString());
+//							endDate.setEndDate(result.getEndDate());
+//						} 
+//					
+//					});
+//				} else {
+//					MessagesModalWindow modal = new MessagesModalWindow("Proyectos", "Se debe seleccionar un proyecto");
+//					modal.display();
+//				}
 			}
 		});
 		
