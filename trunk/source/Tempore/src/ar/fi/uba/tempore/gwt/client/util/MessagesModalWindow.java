@@ -27,6 +27,8 @@ public class MessagesModalWindow {
         winModal.setIsModal(true);  
         winModal.setShowModalMask(true);  
         winModal.centerInPage();  
+        winModal.setShowEdges(true);
+        
         winModal.addCloseClickHandler(new CloseClickHandler() {  
         	
         	@Override
@@ -39,6 +41,7 @@ public class MessagesModalWindow {
         IButton acceptButton = new IButton(" Aceptar "); 
         acceptButton.setAutoFit(true);  
         acceptButton.addClickHandler(new ClickHandler() {  
+        	@Override
             public void onClick(ClickEvent event) {  
             		winModal.destroy();  
             }  
@@ -46,8 +49,8 @@ public class MessagesModalWindow {
         Label messageLabel = new Label(messageToDisplay);
         messageLabel.setAlign(Alignment.CENTER);
         vPanel.add(messageLabel);
-        vPanel.add(acceptButton);
         winModal.addItem(vPanel);  
+        winModal.addItem(acceptButton);
 	}
 	
 	public void display(){
