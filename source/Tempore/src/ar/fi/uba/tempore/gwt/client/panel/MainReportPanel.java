@@ -11,7 +11,7 @@ public class MainReportPanel extends VerticalPanel implements ContextChildPanel{
 	}
 
 	@Override
-	public void UpdateContent() {
+	public void updateContent() {
 		// TODO Auto-generated method stub
 		this.add(new Label("Visor de reportes"));
 	}
