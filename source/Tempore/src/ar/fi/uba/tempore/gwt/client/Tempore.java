@@ -1,6 +1,5 @@
 package ar.fi.uba.tempore.gwt.client;
 
-import ar.fi.uba.tempore.gwt.client.panel.ContextPanel;
 import ar.fi.uba.tempore.gwt.client.panel.FooterPanel;
 import ar.fi.uba.tempore.gwt.client.panel.menus.MainTabPanel;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
@@ -30,7 +29,6 @@ public class Tempore implements EntryPoint {
 		conteinerPanel.setStyleName("conteinerPanel");
 		ProjectPanel projectPanel = new ProjectPanel();
 		
-		ContextPanel contextPanel = new ContextPanel(projectPanel);
 		MainTabPanel mainTabPanel = new MainTabPanel(projectPanel);
 		//MenuPanel menuPanel = new MenuPanel(contextPanel);
 		FooterPanel footerPanel = new FooterPanel();
@@ -39,6 +37,7 @@ public class Tempore implements EntryPoint {
 		conteinerPanel.add(projectPanel, DockPanel.WEST);
 		conteinerPanel.add(footerPanel, DockPanel.SOUTH);
 		conteinerPanel.add(mainTabPanel, DockPanel.CENTER);
+//		Orchestrator orchestator = new Orchestrator(mainTabPanel, projectPanel);
 		
 		//conteinerPanel.setWidth("100%");
 		RootPanel.get().add(conteinerPanel);
