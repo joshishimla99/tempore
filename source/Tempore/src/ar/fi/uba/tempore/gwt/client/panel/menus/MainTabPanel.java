@@ -11,16 +11,16 @@ public class MainTabPanel extends TabSet {
 	
 	public MainTabPanel(ProjectPanel projectPanel){
 		super();
-		super.setWidth(760);
-		super.setHeight(600);
+		setWidth(760);
+		setHeight(600);
 		
 		Tab timeTab = new Tab("Tempore  ", "../images/ico/schedule.ico");
 		timeTab.setWidth(100);
 		timeTab.setPane(new TimeTabPanel());
 		
-		Tab resourceTab = new Tab("Recursos  ", "../images/ico/user_group.ico");
-		resourceTab.setWidth(100);   
-		resourceTab.setPane(new ResourceTabPanel());
+//		Tab resourceTab = new Tab("Recursos  ", "../images/ico/user_group.ico");
+//		resourceTab.setWidth(100);   
+//		resourceTab.setPane(new ResourceTabPanel(projectPanel));
 		
 		Tab projectTab = new Tab("Proyectos  ", "../images/ico/briefcase.ico");
 		projectTab.setWidth(100);   
@@ -50,8 +50,7 @@ public class MainTabPanel extends TabSet {
             }
         });
 
-		super.setTabs(timeTab, projectTab, resourceTab, taskTab, reportTab, configurationTab, helpTab);
-		super.draw();
+		setTabs(timeTab, projectTab, taskTab, reportTab, configurationTab, helpTab);
 	}
 
 }
