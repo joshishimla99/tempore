@@ -16,7 +16,7 @@ public class ModifyTaskPanel extends Canvas implements ContextChildPanel{
 	}
 
 	@Override
-	public void UpdateContent() {
+	public void updateContent() {
 		// TODO Auto-generated method stub
 		this.vPanel.add(new Label("Modificar tareas"));
 		this.addChild(this.vPanel);

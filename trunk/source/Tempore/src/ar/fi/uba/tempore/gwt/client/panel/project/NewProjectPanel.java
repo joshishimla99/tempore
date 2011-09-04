@@ -41,7 +41,7 @@ public class NewProjectPanel extends Canvas implements ContextChildPanel {
 	}
 
 	@Override
-	public void UpdateContent() {
+	public void updateContent() {
 
 		if (this.vPanel == null) {
 			this.vPanel = new VLayout();
