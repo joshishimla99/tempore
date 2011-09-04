@@ -12,6 +12,6 @@ public interface ProjectServicesClientAsync {
 
 	void save(ProjectDTO project, AsyncCallback<ProjectDTO> callback);
 
-	void getProject(String id, AsyncCallback<ProjectDTO> callback);
+	void getProject(Integer id, AsyncCallback<ProjectDTO> callback);
 
 }

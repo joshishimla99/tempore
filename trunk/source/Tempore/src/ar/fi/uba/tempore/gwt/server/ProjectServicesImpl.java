@@ -36,14 +36,21 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 	}
 
 	@Override
-	public ProjectDTO save(ProjectDTO project) {
-		// TODO Auto-generated method stub
-		return null;
+	public ProjectDTO save(ProjectDTO projectDTO) {
+		Project p = mapper.map(projectDTO, Project.class);
+		Project pSaved = projectDAO.makePersistent(p);
+		ProjectDTO pSavedDTO = mapper.map(pSaved, ProjectDTO.class);
+		return pSavedDTO;
 	}
 
 	@Override
-	public ProjectDTO getProject(String id) {
+	public ProjectDTO getProject(Integer id) {
+		
+		Project findById = projectDAO.findById(id);
+		ProjectDTO dto = mapper.map(findById, ProjectDTO.class);
+		return dto;
 		// TODO: Generar la implementacion correcta!!!
+		/*
 		Date endDate = new Date(2011, 12, 1);
 		Date initDate = new Date(2010, 12, 1);
 		ProjectDTO exampleProject = new ProjectDTO();
@@ -54,6 +61,7 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 		exampleProject.setInitDate(initDate);
 		exampleProject.setName("Proyecto Dummy");
 		return exampleProject;
+		*/
 	}
 
 }

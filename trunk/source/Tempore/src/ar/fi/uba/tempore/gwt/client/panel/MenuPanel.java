@@ -33,6 +33,7 @@ public class MenuPanel extends MenuBar {
 		MenuItem itemTask = new MenuItem("Tareas", false, menuTask);
 		menuTask.addItem(new MenuItem("Nueva", createCmd(Constant.MENU_OPTION_NEW_TASK)));
 		menuTask.addItem(new MenuItem("Modificar", createCmd(Constant.MENU_OPTION_MODIFY_TASK)));
+		menuTask.addItem(new MenuItem("Alertas Test", createCmd(Constant.MENU_OPTION_ALERT_CONFIGURATION)));
 
 		// MenuReport
 		MenuBar menuReport = new MenuBar(true);

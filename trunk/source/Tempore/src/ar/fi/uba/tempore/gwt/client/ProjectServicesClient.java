@@ -13,7 +13,7 @@ public interface ProjectServicesClient extends RemoteService {
 	
 	ProjectDTO save(ProjectDTO project);
 	
-	ProjectDTO getProject(String id);
+	ProjectDTO getProject(Integer id);
 }
 
 

@@ -19,9 +19,10 @@ public class AlertServicesImpl extends RemoteServiceServlet implements AlertServ
 
 	private final AlertDAO aDAO = new AlertDAO();
 	private final DozerBeanMapper mapper = new DozerBeanMapper();
-	
+		
+
 	@Override
-	public List<AlertDTO> getAlerts() {
+	public List<AlertDTO> fetch() {
 		log.info("getAlerts()");
 		List<AlertDTO> list = new ArrayList<AlertDTO>();
 		List<Alert> findAll = aDAO.findAll();
@@ -32,11 +33,24 @@ public class AlertServicesImpl extends RemoteServiceServlet implements AlertServ
 		
 		return list;
 	}
-	
+
 	@Override
-	public AlertDTO updateSaveAlert (AlertDTO alertDTO){
+	public AlertDTO add(AlertDTO alertDTO) {
 		Alert a = mapper.map(alertDTO, Alert.class);
 		Alert makePersistent = aDAO.makePersistent(a);
 		return mapper.map(makePersistent, AlertDTO.class);
 	}
+
+	@Override
+	public AlertDTO update(AlertDTO alertDTO) {
+		Alert a = mapper.map(alertDTO, Alert.class);
+		Alert makePersistent = aDAO.makePersistent(a);
+		return mapper.map(makePersistent, AlertDTO.class);
+	}
+
+	@Override
+	public void remove(AlertDTO alertDTO) {
+		Alert a = mapper.map(alertDTO, Alert.class);
+		aDAO.delete(a);	
+	}	
 }
