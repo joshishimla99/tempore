@@ -61,5 +61,10 @@
 			<type>2</type>
 			<location>C:/Tempore/workspace/DTO/src</location>
 		</link>
+		<link>
+			<name>TemporeUtils src</name>
+			<type>2</type>
+			<location>C:/Tempore/workspace/TemporeUtils/src</location>
+		</link>
 	</linkedResources>
 </projectDescription>
