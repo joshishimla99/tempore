@@ -10,10 +10,8 @@ import ar.fi.uba.tempore.gwt.client.ProjectServicesClientAsync;
 import ar.fi.uba.tempore.gwt.client.panel.Constant;
 
 import com.google.gwt.core.client.GWT;
-
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.TreeModelType;
-
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.DrawEvent;
@@ -85,6 +83,10 @@ public class ProjectPanel extends VLayout {
 	
 	public ListGridRecord getProjectSelected(){
 		return this.treeGrid.getSelectedRecord();
+	}
+	
+	public ListGridRecord[] getProjectsSelected(){
+		return this.treeGrid.getSelection();
 	}
 	
 	/**
