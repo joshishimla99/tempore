@@ -27,7 +27,7 @@ public class NewTaskPanel extends Canvas implements ContextChildPanel{
 	}
 
 	@Override
-	public void UpdateContent() {
+	public void updateContent() {
 		
 		if (form == null){
 			form = new DynamicForm();
