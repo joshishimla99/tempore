@@ -7,6 +7,6 @@ package ar.fi.uba.tempore.gwt.client.panel.menus;
  * */
 public interface ContextChildPanel {
 	
-	public void UpdateContent();
+	public void updateContent();
 
 }
