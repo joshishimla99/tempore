@@ -18,12 +18,13 @@ public class ProjectTabPanel extends SubTabPanel{
 		Tab newProjectTab = new Tab("Nuevo");
 		newProjectTab.setPane(newProjectPanel);
 		
-		super.addChildPanels(newProjectPanel);
+		addChildPanels(newProjectPanel);
+
+		getTabPanel().setTabs(newProjectTab);
 		
-		super.getTabPanel().setTabs(newProjectTab);
-		
-		super.getTabPanel().selectTab(0);
-		this.addChild(super.getTabPanel());
+		getTabPanel().selectTab(0);
+		this.addChild(getTabPanel());
+		this.redraw();
 	}
 
 }
