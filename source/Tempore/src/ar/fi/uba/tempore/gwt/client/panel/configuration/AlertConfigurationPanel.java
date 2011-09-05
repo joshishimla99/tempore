@@ -15,9 +15,7 @@ import com.smartgwt.client.widgets.layout.VLayout;
 
 public class AlertConfigurationPanel extends Canvas implements ContextChildPanel{
 
-	//private Canvas canvas = null;
 	private VLayout vPanel;
-	
 
 	public AlertConfigurationPanel() {
 		super();
@@ -25,18 +23,14 @@ public class AlertConfigurationPanel extends Canvas implements ContextChildPanel
 
 	@Override
 	public void updateContent() {
-		Window.alert("Pagina de Alertas. Actualizacion Num 9");
-
 		vPanel = new VLayout();
 		
 		Label title = new Label("Configuración de Alertas");
 		title.setSize("195px", "39px");
 		vPanel.addChild(title);
 
-		//final AlertDataSource dataSource = AlertDataSource.getInstance();
-		//dataSource.fetchData();
 		final ListGrid grid = new ListGrid();
-		AlertGwtRcpDataSource dataSource = new AlertGwtRcpDataSource(); 		
+		AlertConfigurationDataSource dataSource = new AlertConfigurationDataSource(); 		
 		grid.setDataSource(dataSource);
 		grid.setWidth(600);
 		grid.setHeight(200);		
@@ -60,32 +54,6 @@ public class AlertConfigurationPanel extends Canvas implements ContextChildPanel
 				grid.startEditingNew();
 			}
 		});
-		this.addChild(editButton);
-		
-		// BOTONERA  
-//		IButton saveButton = new IButton("Guardar");
-//		saveButton.setTop(250);
-//		saveButton.setLeft(110);
-//		saveButton.addClickHandler(new ClickHandler() {
-//			public void onClick(ClickEvent event) {
-//				grid.saveAllEdits();
-//			}
-//		});
-//		this.addChild(saveButton);
-//
-//
-//		IButton discardButton = new IButton("Restaurar");
-//		discardButton.setTop(250);
-//		discardButton.setLeft(220);
-//		discardButton.addClickHandler(new ClickHandler() {
-//			public void onClick(ClickEvent event) {
-//				grid.discardAllEdits();
-//			}
-//		});
-//		this.addChild(discardButton);
-
-		//vPanel.add(canvas);
-		//this.draw();
-		//this.redraw();		
+		this.addChild(editButton);		
 	}
 }
