@@ -6,18 +6,50 @@
 		<servlet-name>projectServlet</servlet-name>
 		<servlet-class>ar.fi.uba.tempore.gwt.server.ProjectServicesImpl</servlet-class>
 	</servlet>
+	<servlet-mapping>
+		<servlet-name>projectServlet</servlet-name>
+		<url-pattern>/tempore/ProjectServices</url-pattern>
+	</servlet-mapping>
+
 	<servlet>
 		<servlet-name>userServlet</servlet-name>
 		<servlet-class>ar.fi.uba.tempore.gwt.server.UserServicesImpl</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>projectServlet</servlet-name>
-		<url-pattern>/tempore/ProjectServices</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
 		<servlet-name>userServlet</servlet-name>
 		<url-pattern>/tempore/UserServices</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>alertServlet</servlet-name>
+		<servlet-class>ar.fi.uba.tempore.gwt.server.AlertServicesImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>alertServlet</servlet-name>
+		<url-pattern>/tempore/AlertServicesClient</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>clientServlet</servlet-name>
+		<servlet-class>ar.fi.uba.tempore.gwt.server.ClientServicesImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>clientServlet</servlet-name>
+		<url-pattern>/tempore/ClientServices</url-pattern>
+	</servlet-mapping>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	<!-- Default page to serve -->
@@ -34,13 +66,6 @@
 		<filter-name>Filter</filter-name>
 		<url-pattern>/tempore/*</url-pattern>
 	</filter-mapping>
-	<servlet>
-		<servlet-name>AlertServicesClient</servlet-name>
-		<servlet-class>ar.fi.uba.tempore.gwt.server.AlertServicesImpl</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>AlertServicesClient</servlet-name>
-		<url-pattern>/tempore/AlertServicesClient</url-pattern>
-	</servlet-mapping>
+	
 	 
 </web-app>
