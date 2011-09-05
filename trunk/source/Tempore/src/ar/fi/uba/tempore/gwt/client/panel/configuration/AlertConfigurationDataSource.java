@@ -14,7 +14,7 @@ import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
-public class AlertGwtRcpDataSource extends GenericGwtRpcDataSource<AlertDTO, ListGridRecord, AlertServicesClientAsync> {
+public class AlertConfigurationDataSource extends GenericGwtRpcDataSource<AlertDTO, ListGridRecord, AlertServicesClientAsync> {
 	private static final String COL_ID = "idCol";
 	private static final String COL_NAME = "nameCol";
 	private static final String COL_DESCRIPTION = "descriptionCol";
