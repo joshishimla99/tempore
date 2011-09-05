@@ -4,6 +4,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class ClientDTO implements IsSerializable{
 
+	private Integer id;
 	private String clientName;
 	private String clientAddress;
 	private String clientCountry;
@@ -68,5 +69,11 @@ public class ClientDTO implements IsSerializable{
 		return clientPhone;
 	}
 
-	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 }
