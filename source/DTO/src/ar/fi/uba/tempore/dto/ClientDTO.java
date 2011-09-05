@@ -76,4 +76,6 @@ public class ClientDTO implements IsSerializable{
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
+	
 }
