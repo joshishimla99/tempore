@@ -10,6 +10,7 @@ public class ConfigurationTabPanel extends SubTabPanel {
 	
 	public ConfigurationTabPanel(){
 		super();
+		
 		ClientConfigurationPanel clientConfigurationPanel = new ClientConfigurationPanel();
 		UserConfigurationPanel userConfigurationPanel = new UserConfigurationPanel();
 		AlertConfigurationPanel alertConfigurationPanel = new AlertConfigurationPanel();

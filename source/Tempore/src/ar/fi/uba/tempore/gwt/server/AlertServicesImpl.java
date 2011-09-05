@@ -23,7 +23,7 @@ public class AlertServicesImpl extends RemoteServiceServlet implements AlertServ
 
 	@Override
 	public List<AlertDTO> fetch() {
-		log.info("getAlerts()");
+		log.info("FETCH - ALERTS");
 		List<AlertDTO> list = new ArrayList<AlertDTO>();
 		List<Alert> findAll = aDAO.findAll();
 		for (Alert a : findAll) {
@@ -35,14 +35,13 @@ public class AlertServicesImpl extends RemoteServiceServlet implements AlertServ
 	}
 
 	@Override
-	public AlertDTO add(AlertDTO alertDTO) {
-		Alert a = mapper.map(alertDTO, Alert.class);
-		Alert makePersistent = aDAO.makePersistent(a);
-		return mapper.map(makePersistent, AlertDTO.class);
+	public AlertDTO add(AlertDTO alertDTO) {		
+		return update(alertDTO);
 	}
 
 	@Override
 	public AlertDTO update(AlertDTO alertDTO) {
+		log.info("UPDATE - ALERT");
 		Alert a = mapper.map(alertDTO, Alert.class);
 		Alert makePersistent = aDAO.makePersistent(a);
 		return mapper.map(makePersistent, AlertDTO.class);
@@ -50,6 +49,7 @@ public class AlertServicesImpl extends RemoteServiceServlet implements AlertServ
 
 	@Override
 	public void remove(AlertDTO alertDTO) {
+		log.info("REMOVE - ALERT");
 		Alert a = mapper.map(alertDTO, Alert.class);
 		aDAO.delete(a);	
 	}	
