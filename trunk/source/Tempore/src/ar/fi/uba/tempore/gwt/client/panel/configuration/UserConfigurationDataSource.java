@@ -46,13 +46,13 @@ public class UserConfigurationDataSource extends GenericGwtRpcDataSource<UserDTO
 		DataSourceTextField field3 = new DataSourceTextField(USER_NAME, "Usuario");
 		field3.setRequired(true);
 		fields.add(field3);
-		DataSourcePasswordField field4 = new DataSourcePasswordField(PASSWORD, "Contraseña");
+		DataSourcePasswordField field4 = new DataSourcePasswordField(PASSWORD, "Contrase&ntilde;a");
 		field4.setRequired(true);
 		fields.add(field4);		
 		DataSourceTextField field7 = new DataSourceTextField(EMAIL, "Email");
 		field7.setRequired(true);
 		fields.add(field7);
-		DataSourceTextField field8 = new DataSourceTextField(ADDRESS, "Direccion");
+		DataSourceTextField field8 = new DataSourceTextField(ADDRESS, "Direcci&oacute;n");
 		field8.setRequired(true);
 		fields.add(field8);		
 		DataSourceTextField field9 = new DataSourceTextField(COMPANY, "Empresa");
@@ -61,10 +61,10 @@ public class UserConfigurationDataSource extends GenericGwtRpcDataSource<UserDTO
 		DataSourceTextField field10 = new DataSourceTextField(COUNTRY, "Pais");
 		field10.setRequired(true);
 		fields.add(field10);
-		DataSourceTextField field11 = new DataSourceTextField(PHONE, "Telefono");
+		DataSourceTextField field11 = new DataSourceTextField(PHONE, "Tel&eacute;fono");
 		field11.setRequired(true);
 		fields.add(field11);
-		DataSourceTextField field12 = new DataSourceTextField(ZIP_CODE, "Codogo Postal");
+		DataSourceTextField field12 = new DataSourceTextField(ZIP_CODE, "C&oacute;digo Postal");
 		field12.setRequired(true);
 		fields.add(field12);
 		
