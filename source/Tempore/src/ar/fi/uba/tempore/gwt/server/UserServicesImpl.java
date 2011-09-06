@@ -22,6 +22,7 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 
 	@Override
 	public List<UserDTO> fetch() {
+		log.info("FETCH - Users");
 		List<UserDTO> userList = new ArrayList<UserDTO>();
 		
 		List<User> users = uDAO.findAll();
@@ -39,6 +40,7 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 
 	@Override
 	public UserDTO update(UserDTO userDTO) {
+		log.info("UPDATE - User");
 		User user = mapper.map(userDTO, User.class);
 		User newUser = uDAO.makePersistent(user);
 		UserDTO newUserDto = mapper.map(newUser, UserDTO.class);
@@ -47,6 +49,7 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 
 	@Override
 	public void remove(UserDTO userDTO) {
+		log.info("REMOVE - User");
 		User user = mapper.map(userDTO, User.class);
 		uDAO.delete(user);
 	}
