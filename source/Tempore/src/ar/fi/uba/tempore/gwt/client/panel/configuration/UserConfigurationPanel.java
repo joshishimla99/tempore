@@ -23,7 +23,7 @@ public class UserConfigurationPanel extends Canvas implements ContextChildPanel{
 	public void updateContent() {
 		vPanel = new VLayout();
 		
-		Label title = new Label("Configuración de Alertas");
+		Label title = new Label("Configuraci&oacute;n de Alertas");
 		title.setSize("195px", "39px");
 		vPanel.addChild(title);
 
