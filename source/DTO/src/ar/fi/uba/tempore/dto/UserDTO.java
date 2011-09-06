@@ -6,18 +6,17 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  */
 public class UserDTO implements IsSerializable{
 
+	private Integer id;
 	private String name;
 	private String lastName;
 	private String phone;
 	private String email;
-	private String company;
-	private boolean isClient;
+	private String company;	
 	private String address;
 	private String country;
 	private String zipCode;
 	private String userName;
 	private String password;
-	private String role;
 	
 	public String getName() {
 		return name;
@@ -49,12 +48,6 @@ public class UserDTO implements IsSerializable{
 	public void setCompany(String company) {
 		this.company = company;
 	}
-	public boolean isClient() {
-		return isClient;
-	}
-	public void setClient(boolean isClient) {
-		this.isClient = isClient;
-	}
 	public String getAddress() {
 		return address;
 	}
@@ -85,11 +78,11 @@ public class UserDTO implements IsSerializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getRole() {
-		return role;
+	public Integer getId() {
+		return id;
 	}
-	public void setRole(String role) {
-		this.role = role;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	
 }
