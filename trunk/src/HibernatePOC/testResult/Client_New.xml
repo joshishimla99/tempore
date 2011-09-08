@@ -1,9 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<dataset>
-
-	<CLIENT name='TCS Tata Consulting Services'/>
-	<CLIENT name='Experian'/>
-
-	<CLIENT name='Nombre del cliente' address='Direccion del cliente' country='Pais del cliente' fiscalNumber='Fiscal Number del cliente' phone='(+54-11) 4269-4564' zip='zip del cliente' state='Estado del cliente'/>
-	
-</dataset>
