@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<dataset>
-	<TASKTYPE name='update' description='descripción'/>
-	<TASKTYPE name='Desarrollo' description='Desarrollo de la aplicacion'/>
-	<TASKTYPE name='Soporte' description='Soporte al proyecto'/>
-</dataset>
