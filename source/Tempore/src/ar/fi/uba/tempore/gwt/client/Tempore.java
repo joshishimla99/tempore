@@ -1,5 +1,7 @@
 package ar.fi.uba.tempore.gwt.client;
 
+import ar.fi.uba.tempore.gwt.client.login.LoginPanel;
+import ar.fi.uba.tempore.gwt.client.panel.ConteinerMainPanel;
 import ar.fi.uba.tempore.gwt.client.panel.FooterPanel;
 import ar.fi.uba.tempore.gwt.client.panel.menus.MainTabPanel;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
@@ -22,26 +24,14 @@ public class Tempore implements EntryPoint {
 	 */
 	public void onModuleLoad() {		
 		
-		DockPanel conteinerPanel = new DockPanel();
-		//conteinerPanel.setSize("90%", "100%");
-		// Paneles del dock panel: norte(MENU), oeste(PROYECTOS), centro (MIDDLE)
-		FlowPanel headPanel = new FlowPanel();
-		conteinerPanel.setStyleName("conteinerPanel");
-		ProjectPanel projectPanel = new ProjectPanel();
+		loadLogin();
+//		ConteinerMainPanel.getInstance().init();
+		RootPanel.get().add(ConteinerMainPanel.getInstance());
 		
-		MainTabPanel mainTabPanel = new MainTabPanel(projectPanel);
-		//MenuPanel menuPanel = new MenuPanel(contextPanel);
-		FooterPanel footerPanel = new FooterPanel();
-		
-		conteinerPanel.add(headPanel, DockPanel.NORTH);
-		conteinerPanel.add(projectPanel, DockPanel.WEST);
-		conteinerPanel.add(footerPanel, DockPanel.SOUTH);
-		conteinerPanel.add(mainTabPanel, DockPanel.CENTER);
-//		Orchestrator orchestator = new Orchestrator(mainTabPanel, projectPanel);
-		
-		//conteinerPanel.setWidth("100%");
-		RootPanel.get().add(conteinerPanel);
-		
+	}
+
+	private void loadLogin() {
+		LoginPanel login = new LoginPanel();
 	}
 	
 }
