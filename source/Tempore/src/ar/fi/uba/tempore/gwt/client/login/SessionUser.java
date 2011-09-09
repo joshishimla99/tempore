@@ -1,21 +1,30 @@
 package ar.fi.uba.tempore.gwt.client.login;
+
+
 /**
- * Clase que contiene la informacion del usuario que esta logeado en la sesion
+ * Clase singleton que contiene la informacion del usuario que esta logeado en la sesion
  * @author Ludmila
  *
  */
 public class SessionUser {
 
+	static private SessionUser instance = null;
+	
 	private String username;
 	private String role;
 	private String name;
 	private String lastname;
 	private String id;
 	
-	public SessionUser(){
-		
-	}
+	private SessionUser(){}
 
+	public SessionUser getInstance(){
+		if (instance == null){
+			instance = new SessionUser();
+		}
+		return instance;
+	}
+	
 	public String getUsername() {
 		return username;
 	}
