@@ -1,16 +1,15 @@
 package ar.fi.uba.tempore.gwt.client.panel.menus;
 
-import com.smartgwt.client.widgets.tab.Tab;
-
-import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 import ar.fi.uba.tempore.gwt.client.panel.task.ModifyTaskPanel;
 import ar.fi.uba.tempore.gwt.client.panel.task.NewTaskPanel;
 
+import com.smartgwt.client.widgets.tab.Tab;
+
 public class TaskTabPanel extends SubTabPanel {
 	
-	public TaskTabPanel(ProjectPanel projectPanel){
+	public TaskTabPanel(){
 		super();
-		NewTaskPanel newTaskPanel = new NewTaskPanel(projectPanel);
+		NewTaskPanel newTaskPanel = new NewTaskPanel();
 		ModifyTaskPanel modifyTaskPanel = new ModifyTaskPanel();
 		
 		Tab newTaskTab = new Tab("Nueva");
