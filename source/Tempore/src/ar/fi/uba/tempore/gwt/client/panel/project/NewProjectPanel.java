@@ -24,7 +24,6 @@ import com.smartgwt.client.widgets.layout.VLayout;
 
 public class NewProjectPanel extends Canvas implements ContextChildPanel {
 
-	private ProjectPanel projectPanel;
 	private VLayout vPanel = null;
 	private DynamicForm form;
 	private TextItem projectNameLabel, budget;
@@ -35,9 +34,8 @@ public class NewProjectPanel extends Canvas implements ContextChildPanel {
 	private HLayout hLayout;
 	private IButton createProjectButton, editProjectButton, applyButton;
 
-	public NewProjectPanel(ProjectPanel projectPanel) {
+	public NewProjectPanel() {
 		super();
-		this.projectPanel = projectPanel;
 	}
 
 	@Override
@@ -49,7 +47,6 @@ public class NewProjectPanel extends Canvas implements ContextChildPanel {
 		} else {
 			form.clearValues();
 		}
-
 		this.vPanel.addChild(this.form);
 		this.vPanel.addChild(hLayout);
 		this.addChild(vPanel);
@@ -155,6 +152,7 @@ public class NewProjectPanel extends Canvas implements ContextChildPanel {
 		});
 		
 		hLayout = new HLayout();
+		hLayout.setTop(250);
 		hLayout.setMembersMargin(20);  
 	    hLayout.addMember(createProjectButton);
 	    hLayout.addMember(applyButton);
@@ -175,7 +173,7 @@ public class NewProjectPanel extends Canvas implements ContextChildPanel {
 		project.setBudget(Double.valueOf(budget.getValueAsString()));
 		
 		//TODO: UPDATE EL ARBOL projectService.save(project, callback);
-		projectPanel.updateProjectTree();
+		ProjectPanel.getInstance().updateProjectTree();
 	}
 
 }

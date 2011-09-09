@@ -23,16 +23,32 @@ import com.smartgwt.client.widgets.tree.TreeGrid;
 import com.smartgwt.client.widgets.tree.TreeGridField;
 import com.smartgwt.client.widgets.tree.TreeNode;
 
+/**
+ * Panel con el arbol de proyectos, es singleton
+ * @author Ludmila
+ *
+ */
 public class ProjectPanel extends VLayout {
 
+	static private ProjectPanel instance = null;
+	
 	private final ProjectServicesClientAsync projectService = (ProjectServicesClientAsync) GWT.create(ProjectServicesClient.class);
 	private Tree treeProject;
 	private Canvas canvas;
 	private ProjectTreeNode rootNode;
 	private TreeGrid treeGrid; 
 	
-	public ProjectPanel() {
+	private ProjectPanel() {}
 		
+	static public ProjectPanel getInstance() {
+
+		if (instance == null) {
+		instance = new ProjectPanel();
+		}
+		return instance;
+		}
+	
+	public void init(){
 		canvas = new Canvas();		
 		
 		projectService.getProjects(new AsyncCallback<List<ProjectDTO>>() {
@@ -78,7 +94,7 @@ public class ProjectPanel extends VLayout {
 			}
 		});
     	this.addChild(canvas);
-		canvas.draw();
+		canvas.redraw();
 	}
 	
 	public ListGridRecord getProjectSelected(){
