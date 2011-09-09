@@ -16,14 +16,12 @@ import com.smartgwt.client.widgets.layout.VLayout;
 
 public class NewTaskPanel extends Canvas implements ContextChildPanel{
 	
-	private ProjectPanel projectPanel;
 	private DynamicForm form;
 	private VLayout vPanel;
 	
-	public NewTaskPanel(ProjectPanel projectPanel){
+	public NewTaskPanel(){
 		super();
 		this.vPanel = new VLayout();
-		this.projectPanel = projectPanel;
 	}
 
 	@Override
@@ -66,7 +64,7 @@ public class NewTaskPanel extends Canvas implements ContextChildPanel{
 		createTaskButton.setTitle("Crear Tarea");
 		createTaskButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				ListGridRecord projectSelected = projectPanel.getProjectSelected();
+				ListGridRecord projectSelected = ProjectPanel.getInstance().getProjectSelected();
 				if (projectSelected != null) {
 					//TODO: agregar la tarea al proyecto
 				}
@@ -77,7 +75,7 @@ public class NewTaskPanel extends Canvas implements ContextChildPanel{
 		form.setFields(taskNameLabel, taskDescription, estimatedTimeLabel, taskResponsable, createTaskButton);
 		this.vPanel.addChild(form);
 		this.addChild(this.vPanel);
-		this.draw();
+		vPanel.draw();
 	}
 
 }
