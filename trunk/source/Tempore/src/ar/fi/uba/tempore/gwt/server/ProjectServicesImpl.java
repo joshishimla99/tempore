@@ -1,6 +1,5 @@
 package ar.fi.uba.tempore.gwt.server;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +19,17 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 	
 	private final ProjectDAO projectDAO = new ProjectDAO();
 	private final DozerBeanMapper mapper = new DozerBeanMapper();
-	
+		
+
 	@Override
-	public List<ProjectDTO> getProjects() {
+	public ProjectDTO getProjectById(Integer id) {
+		Project findById = projectDAO.findById(id);
+		ProjectDTO dto = mapper.map(findById, ProjectDTO.class);
+		return dto;
+	}
+
+	@Override
+	public List<ProjectDTO> fetch() {
 		log.debug("getProjects");
 		List<ProjectDTO> list = new ArrayList<ProjectDTO>();
 		
@@ -36,7 +43,12 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 	}
 
 	@Override
-	public ProjectDTO save(ProjectDTO projectDTO) {
+	public ProjectDTO add(ProjectDTO projectDTO) {
+		return update(projectDTO);
+	}
+
+	@Override
+	public ProjectDTO update(ProjectDTO projectDTO) {
 		Project p = mapper.map(projectDTO, Project.class);
 		Project pSaved = projectDAO.makePersistent(p);
 		ProjectDTO pSavedDTO = mapper.map(pSaved, ProjectDTO.class);
@@ -44,24 +56,7 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 	}
 
 	@Override
-	public ProjectDTO getProject(Integer id) {
-		
-		Project findById = projectDAO.findById(id);
-		ProjectDTO dto = mapper.map(findById, ProjectDTO.class);
-		return dto;
-		// TODO: Generar la implementacion correcta!!!
-		/*
-		Date endDate = new Date(2011, 12, 1);
-		Date initDate = new Date(2010, 12, 1);
-		ProjectDTO exampleProject = new ProjectDTO();
-		exampleProject.setBudget((double) 12345);
-		exampleProject.setDescription("Proyecto Dummy para probar que se obtiene el proyecto");
-		exampleProject.setEndDate(endDate);
-		exampleProject.setId(12);
-		exampleProject.setInitDate(initDate);
-		exampleProject.setName("Proyecto Dummy");
-		return exampleProject;
-		*/
+	public void remove(ProjectDTO data) {
+		// TODO Auto-generated method stub
 	}
-
 }
