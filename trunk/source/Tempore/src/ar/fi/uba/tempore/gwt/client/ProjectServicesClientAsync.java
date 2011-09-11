@@ -3,10 +3,11 @@ package ar.fi.uba.tempore.gwt.client;
 import java.util.List;
 
 import ar.fi.uba.tempore.dto.ProjectDTO;
+import ar.fi.uba.temporeutils.listgrid.GenericGwtRpcDataSourceServiceAsync;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public interface ProjectServicesClientAsync {
+public interface ProjectServicesClientAsync extends GenericGwtRpcDataSourceServiceAsync<ProjectDTO>{
 
 	void getProjects(AsyncCallback<List<ProjectDTO>> callback);
 
