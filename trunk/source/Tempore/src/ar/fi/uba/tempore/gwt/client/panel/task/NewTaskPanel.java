@@ -64,7 +64,7 @@ public class NewTaskPanel extends Canvas implements ContextChildPanel{
 		createTaskButton.setTitle("Crear Tarea");
 		createTaskButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				ListGridRecord projectSelected = ProjectPanel.getInstance().getProjectSelected();
+				ListGridRecord projectSelected = ProjectPanel.getInstance().getSelectedRecord();
 				if (projectSelected != null) {
 					//TODO: agregar la tarea al proyecto
 				}
