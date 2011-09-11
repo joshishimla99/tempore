@@ -31,7 +31,6 @@ public class ConteinerMainPanel extends DockPanel {
 		// Paneles del dock panel: norte(MENU), oeste(PROYECTOS), centro (MIDDLE)
 		FlowPanel headPanel = new FlowPanel();
 		this.setStyleName("conteinerPanel");
-		ProjectPanel.getInstance().init();
 		
 		MainTabPanel mainTabPanel = new MainTabPanel();
 		FooterPanel footerPanel = new FooterPanel();
