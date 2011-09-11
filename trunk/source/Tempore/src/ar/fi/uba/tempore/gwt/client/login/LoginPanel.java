@@ -61,7 +61,7 @@ public class LoginPanel  extends Composite{
                 if (formLogin.validate(false)){
                 	// TODO: Crear la sesion
                 	if (mdp.getValueAsString().equals("password") && login.getValueAsString().equals("user")){
-                		Window.alert("Validacion correcta");
+                		//Window.alert("Validacion correcta");
                 		layout.clear();
                 		loadUser();
                 		ConteinerMainPanel.getInstance().init();
