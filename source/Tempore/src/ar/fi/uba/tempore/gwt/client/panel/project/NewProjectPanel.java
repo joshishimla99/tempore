@@ -173,7 +173,7 @@ public class NewProjectPanel extends Canvas implements ContextChildPanel {
 		project.setBudget(Double.valueOf(budget.getValueAsString()));
 		
 		//TODO: UPDATE EL ARBOL projectService.save(project, callback);
-		ProjectPanel.getInstance().updateProjectTree();
+		ProjectPanel.getInstance().fetchData();
 	}
 
 }
