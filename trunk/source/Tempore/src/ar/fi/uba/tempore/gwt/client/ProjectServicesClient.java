@@ -1,6 +1,4 @@
 package ar.fi.uba.tempore.gwt.client;
-import java.util.List;
-
 import ar.fi.uba.tempore.dto.ProjectDTO;
 import ar.fi.uba.temporeutils.listgrid.GenericGwtRpcDataSourceService;
 
@@ -19,12 +17,8 @@ public interface ProjectServicesClient extends GenericGwtRpcDataSourceService<Pr
 			return instance;
 		}
 	}
-
-	List<ProjectDTO> getProjects() throws IllegalArgumentException;
 	
-	ProjectDTO save(ProjectDTO project);
-	
-	ProjectDTO getProject(Integer id);
+	ProjectDTO getProjectById(Integer id);
 }
 
 
