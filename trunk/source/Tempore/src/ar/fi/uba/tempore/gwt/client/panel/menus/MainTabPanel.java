@@ -1,7 +1,5 @@
 package ar.fi.uba.tempore.gwt.client.panel.menus;
 
-import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
-
 import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;
 import com.smartgwt.client.widgets.tab.events.TabSelectedEvent;
@@ -11,7 +9,8 @@ public class MainTabPanel extends TabSet {
 	
 	public MainTabPanel(){
 		super();
-		setWidth(760);
+		setWidth("70%");
+		setMargin(5);
 		setHeight(600);
 		
 		Tab timeTab = new Tab("Tempore  ", "../images/ico/schedule.ico");
