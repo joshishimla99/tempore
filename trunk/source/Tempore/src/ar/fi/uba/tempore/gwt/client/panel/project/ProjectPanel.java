@@ -1,6 +1,11 @@
 package ar.fi.uba.tempore.gwt.client.panel.project;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ar.fi.uba.tempore.dto.ProjectDTO;
+import ar.fi.uba.temporeutils.observer.ProjectObserved;
+import ar.fi.uba.temporeutils.observer.ProjectObserver;
 
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
@@ -12,15 +17,24 @@ import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
  * @author Ludmila
  *
  */
-public class ProjectPanel extends ListGrid {
+public class ProjectPanel extends ListGrid implements ProjectObserved {
 
-	static private ProjectPanel instance = null;
-	//private ListGrid this;
+	private static ProjectPanel instance = null;
+	private ProjectPanelDataSource dataSource = null;
+	private List<ProjectObserver> listObserver = new ArrayList<ProjectObserver>();
+
+	static public ProjectPanel getInstance() {
+		if (instance == null) {
+			instance = new ProjectPanel();			
+		}
+		return instance;
+	}
 	
 	private ProjectPanel() {
 		super();
 		
-		this.setDataSource(new ProjectPanelDataSource());
+		dataSource = new ProjectPanelDataSource();		
+		this.setDataSource(dataSource);
 		this.setAutoFetchData(true);
 		this.setEditByCell(false);
 //		myList1.setCanDragRecordsOut(true);  
@@ -41,26 +55,12 @@ public class ProjectPanel extends ListGrid {
 		
 		this.addRecordClickHandler(new RecordClickHandler() {
 			@Override
-			public void onRecordClick(RecordClickEvent event) {
-				ProjectDTO dto = null;
-				ListGridRecord selectedRecord = (ListGridRecord) event.getRecord();
-				if (selectedRecord == null) {
-					dto = new ProjectDTO();
-					((ProjectPanelDataSource)getDataSource()).copyValues(selectedRecord, dto);
-				}
-				
-				//TODO Avisar al resto que se produjo una actualizacion				
+			public void onRecordClick(RecordClickEvent event) {				
+				notifyObservers();				
 			}
 		});
 		
 		this.redraw();	
-	}
-		
-	static public ProjectPanel getInstance() {
-		if (instance == null) {
-			instance = new ProjectPanel();
-		}
-		return instance;
 	}
 	
 	@Override  
@@ -74,12 +74,40 @@ public class ProjectPanel extends ListGrid {
 	 */
 	public ProjectDTO getSelected(){
 		ProjectDTO dto = null;
-		ListGridRecord selectedRecord = this.getSelectedRecord();
-		if (selectedRecord == null) {
+		ListGridRecord recSel = this.getSelectedRecord();
+		if (recSel != null) {
 			dto = new ProjectDTO();
-			((ProjectPanelDataSource)getDataSource()).copyValues(selectedRecord, dto);
+			dataSource.copyValues(recSel, dto);
 		}
 		
 		return dto ;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addObserver (ProjectObserver observer){
+		listObserver.add(observer);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeObserver(ProjectObserver observer){
+		listObserver.remove(observer);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void notifyObservers(){
+		for (ProjectObserver po : listObserver){
+			if (po != null){
+				po.updateProjectSelected();
+			}
+		}
 	}
 }
