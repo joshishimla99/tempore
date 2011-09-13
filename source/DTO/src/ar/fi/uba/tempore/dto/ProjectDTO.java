@@ -15,7 +15,7 @@ public class ProjectDTO implements IsSerializable {
 	private String description;
 	private Date initDate;
 	private Date endDate;
-	private Double budget;
+	private Float budget;
 	//private ProjectState projectState;
 
 	//private List<Task> taskList = new ArrayList<Task>();
@@ -98,11 +98,11 @@ public class ProjectDTO implements IsSerializable {
 		this.endDate = endDate;
 	}
 
-	public void setBudget(Double budget) {
+	public void setBudget(Float budget) {
 		this.budget = budget;
 	}
 
-	public Double getBudget() {
+	public Float getBudget() {
 		return budget;
 	}
 
