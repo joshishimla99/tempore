@@ -24,14 +24,13 @@ public class ConfigurationTabPanel extends SubTabPanel {
 		Tab alertTab = new Tab("Alertas");
 		alertTab.setPane(alertConfigurationPanel);
 				
-		super.getTabPanel().setTabs(clientTab, userTab, alertTab);
+		this.getTabPanel().setTabs(clientTab, userTab, alertTab);
 		
-		super.addChildPanels(clientConfigurationPanel);
-		super.addChildPanels(userConfigurationPanel);
-		super.addChildPanels(alertConfigurationPanel);
-		
-		super.getTabPanel().selectTab(0);
-		this.addChild(super.getTabPanel());
+		this.addChildPanels(clientConfigurationPanel);
+		this.addChildPanels(userConfigurationPanel);
+		this.addChildPanels(alertConfigurationPanel);
+				
+		this.addChild(getTabPanel());
 	}
 
 }
