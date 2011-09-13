@@ -1,6 +1,6 @@
 package ar.fi.uba.tempore.gwt.client.panel.menus;
 
-import ar.fi.uba.tempore.gwt.client.panel.project.NewProjectPanel;
+import ar.fi.uba.tempore.gwt.client.panel.project.ABMProjectPanel;
 
 import com.smartgwt.client.widgets.tab.Tab;
 
@@ -10,7 +10,7 @@ public class ProjectTabPanel extends SubTabPanel{
 	public ProjectTabPanel(){
 		super();
 		
-		NewProjectPanel newProjectPanel = new NewProjectPanel();
+		ABMProjectPanel newProjectPanel = new ABMProjectPanel();
 		
 		Tab newProjectTab = new Tab("Nuevo");
 		newProjectTab.setPane(newProjectPanel);
