@@ -74,8 +74,8 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 		txtDescription.setLength(150);
 		txtDescription.setRequired(true);
 		
-		final TextItem budget = new TextItem(BUDGET_FIELD, "Costo");
-		budget.setKeyPressFilter("[0-9.]");
+		final TextItem budget = new TextItem(BUDGET_FIELD, "Presupuesto");
+		budget.setKeyPressFilter("[0-9]");
 		budget.setRequired(true);
 		
 		final DateItem startDate = new DateItem(START_FIELD, "Fecha Inicio");
@@ -98,19 +98,25 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 		selClient.setMultipleAppearance(MultipleAppearance.PICKLIST);
 		//TODO hacerlo obligatorio
 		selClient.setRequired(false);
-		selClient.setValueMap("Gemalto", "Nobleza Picardo", "Tata",	"itMentor", "PetroleraX", "EmpresaX");
+//		selClient.setValueMap("Gemalto", "Nobleza Picardo", "Tata",	"itMentor", "PetroleraX", "EmpresaX");
+		LinkedHashMap<String, String> v = new LinkedHashMap<String, String>();
+		v.put("1", "Gemalto");
+		v.put("2", "Nobleza Picardo");
+		v.put("3", "Tata");
+		v.put("4", "itMentor");
+//		selClient.setValueMap(v);
+		
 		
 		ClientServicesClient.Util.getInstance().fetch(new AsyncCallback<List<ClientDTO>>() {			
 			@Override
 			public void onSuccess(List<ClientDTO> result) {
 				FormItem item = form.getItem(CLIENT_FIELD);
-				Window.alert("Cantidad de clientes: " + result.size());
-				LinkedHashMap<Integer, String> valueMap = new LinkedHashMap<Integer, String>();  
+				LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();  
 				for (ClientDTO clientDTO : result) {
-					valueMap.put(clientDTO.getId(), clientDTO.getName());
+					valueMap.put(clientDTO.getId().toString(), clientDTO.getName());
 				}
 				//TODO cargar select
-				//item.setValueMap(valueMap);
+				item.setValueMap(valueMap);
 			}
 			@Override
 			public void onFailure(Throwable caught) {
@@ -204,12 +210,12 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 	 */
 	private void copy (DynamicForm from, ProjectDTO to){
 		to.setId((Integer)from.getValue(ID_FIELD));
-		to.setDescription((String) from.getValue(DESCRIPTION_FIELD));
+		to.setDescription(from.getValue(DESCRIPTION_FIELD).toString());
 		to.setEndDate((Date) from.getValue(END_FIELD));
 		to.setInitDate((Date) from.getValue(START_FIELD));
-		to.setName((String) from.getValue(NAME_FIELD));
+		to.setName(from.getValue(NAME_FIELD).toString());
 		
-		to.setBudget(new Float((String)from.getValue(BUDGET_FIELD)));
+		to.setBudget(new Float(from.getValue(BUDGET_FIELD).toString()));
 		Window.alert(to.getBudget()+"");
 		
 		//TODO faltan los clientes
