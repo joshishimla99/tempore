@@ -31,7 +31,7 @@ public class Project implements Serializable {
 	private String description;
 	private Date initDate;
 	private Date endDate;
-	private Double budget;
+	private Float budget;
 	private ProjectState projectState;
 	
 	private List<Task> taskList = new ArrayList<Task>();
@@ -136,10 +136,10 @@ public class Project implements Serializable {
 	}
 	
 	@Column(name="budget")
-	public void setBudget(Double budget) {
+	public void setBudget(Float budget) {
 		this.budget = budget;
 	}
-	public Double getBudget() {
+	public Float getBudget() {
 		return budget;
 	}
 }
