@@ -19,11 +19,10 @@ public class ProjectPanelDataSource extends GenericGwtRpcDataSource<ProjectDTO, 
 	public static final String IMAGE_COL = "IMAGE_COL";
 	public static final String NAME_FIELD = "nameCol";
 	public static final String ID_FIELD = "idCol";
-	//private static final String DEFAULT_ROOT = "defaultRoot";
-	private static final String BUDGET_FIELD = null;
-	private static final String DESCRIPTION_FIELD = null;
-	private static final String ENDDATE_FIELD = null;
-	private static final String INITDATE_FIELD = null;
+	private static final String BUDGET_FIELD = "budgetCol";
+	private static final String DESCRIPTION_FIELD = "descCol";
+	private static final String ENDDATE_FIELD = "endCol";
+	private static final String INITDATE_FIELD = "iniDate";
 	
 	@Override
 	public List<DataSourceField> getDataSourceFields() {
@@ -67,7 +66,7 @@ public class ProjectPanelDataSource extends GenericGwtRpcDataSource<ProjectDTO, 
 	public void copyValues(ListGridRecord from, ProjectDTO to) {
 		to.setId(from.getAttributeAsInt(ID_FIELD));
 		to.setName(from.getAttribute(NAME_FIELD));
-		to.setBudget(from.getAttributeAsDouble(BUDGET_FIELD));
+		to.setBudget(from.getAttributeAsFloat(BUDGET_FIELD));
 		to.setDescription(from.getAttribute(DESCRIPTION_FIELD));
 		to.setEndDate(from.getAttributeAsDate(ENDDATE_FIELD));
 		to.setInitDate(from.getAttributeAsDate(INITDATE_FIELD));
