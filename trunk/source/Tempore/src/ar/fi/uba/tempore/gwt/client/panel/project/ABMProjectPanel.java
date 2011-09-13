@@ -13,19 +13,23 @@ import ar.fi.uba.temporeutils.observer.ProjectObserver;
 
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.DateDisplayFormat;
 import com.smartgwt.client.types.MultipleAppearance;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
+import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.DateItem;
+import com.smartgwt.client.widgets.form.fields.FileItem;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
+import com.smartgwt.client.widgets.form.fields.UploadItem;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
@@ -38,6 +42,7 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 	private static final String START_FIELD = "pStartDate";
 	private static final String END_FIELD = "pEndDate";
 	private static final String CLIENT_FIELD = "pClient";
+	private static final String FILE_FIELD = "pLogo";
 	
 	private DynamicForm form;
 	
@@ -53,6 +58,7 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 		super.destroy();
 	}
 	
+	
 	@Override
 	public void updateContent() {
 		
@@ -62,22 +68,36 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 		
 		//FORM
 		form = new DynamicForm();		
-		final TextItem hId = new TextItem(ID_FIELD);
-		hId.setDisabled(true);
+		final TextItem idCode = new TextItem(ID_FIELD, "C&oacute;digo");
+		idCode.setDisabled(true);
 		
 		final TextItem txtName = new TextItem(NAME_FIELD, "Nombre");
 		txtName.setLength(30);
 		txtName.setHint("<nobr>30 caracteres m&aacute;ximo</nobr>");
 		txtName.setRequired(true);
 
-		final TextAreaItem txtDescription = new TextAreaItem(DESCRIPTION_FIELD, "Descripci&oacute;n");
-		txtDescription.setLength(150);
-		txtDescription.setRequired(true);
+		final SelectItem selClient = new SelectItem(CLIENT_FIELD, "Clientes");
+		selClient.setMultiple(true);
+		selClient.setMultipleAppearance(MultipleAppearance.PICKLIST);
+		//TODO hacerlo obligatorio
+		selClient.setRequired(false);		
 		
-		final TextItem budget = new TextItem(BUDGET_FIELD, "Presupuesto");
-		budget.setKeyPressFilter("[0-9]");
-		budget.setRequired(true);
-		
+		ClientServicesClient.Util.getInstance().fetch(new AsyncCallback<List<ClientDTO>>() {			
+			@Override
+			public void onSuccess(List<ClientDTO> result) {
+				FormItem item = form.getItem(CLIENT_FIELD);
+				LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();  
+				for (ClientDTO clientDTO : result) {
+					valueMap.put(clientDTO.getId().toString(), clientDTO.getName());
+				}
+				item.setValueMap(valueMap);
+			}
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Fallo la carga del combo 'Clientes'");				
+			}
+		});
+
 		final DateItem startDate = new DateItem(START_FIELD, "Fecha Inicio");
 		startDate.setUseTextField(true);
 		startDate.setDisplayFormat(DateDisplayFormat.TOEUROPEANSHORTDATE);
@@ -93,40 +113,28 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 		endDate.setRequired(true);
 		endDate.setInvalidDateStringMessage("La fecha ingresada no es v&aacute;lida");
 		
-		final SelectItem selClient = new SelectItem(CLIENT_FIELD, "Clientes");
-		selClient.setMultiple(true);
-		selClient.setMultipleAppearance(MultipleAppearance.PICKLIST);
-		//TODO hacerlo obligatorio
-		selClient.setRequired(false);
-//		selClient.setValueMap("Gemalto", "Nobleza Picardo", "Tata",	"itMentor", "PetroleraX", "EmpresaX");
-		LinkedHashMap<String, String> v = new LinkedHashMap<String, String>();
-		v.put("1", "Gemalto");
-		v.put("2", "Nobleza Picardo");
-		v.put("3", "Tata");
-		v.put("4", "itMentor");
-//		selClient.setValueMap(v);
+		final TextItem budget = new TextItem(BUDGET_FIELD, "Presupuesto");
+		budget.setHint("$");
+		budget.setKeyPressFilter("[0-9]");
+		budget.setRequired(true);
 		
+		final TextAreaItem txtDescription = new TextAreaItem(DESCRIPTION_FIELD, "Descripci&oacute;n");
+		txtDescription.setLength(150);
+		txtDescription.setWidth(250);
+		txtDescription.setRequired(true);
+
+		final UploadItem imageFile = new UploadItem(FILE_FIELD, "Logo");
+		imageFile.setRequired(false);
 		
-		ClientServicesClient.Util.getInstance().fetch(new AsyncCallback<List<ClientDTO>>() {			
-			@Override
-			public void onSuccess(List<ClientDTO> result) {
-				FormItem item = form.getItem(CLIENT_FIELD);
-				LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();  
-				for (ClientDTO clientDTO : result) {
-					valueMap.put(clientDTO.getId().toString(), clientDTO.getName());
-				}
-				//TODO cargar select
-				item.setValueMap(valueMap);
-			}
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("Fallo la carga del combo 'Clientes'");				
-			}
-		});
-		form.setFields(hId, txtName, txtDescription, budget, startDate, endDate, selClient);
-		
-		
-		
+		form.setFields(	idCode, 
+				txtName, 
+				selClient,
+				startDate, 
+				endDate, 
+				budget, 
+				txtDescription,
+				imageFile);
+
 		//BOTONERA
 		final IButton createProjectButton = new IButton();
 		createProjectButton.setTitle("Nuevo");
@@ -164,24 +172,25 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 			}
 		});
 		
-		final IButton editProjectButton = new IButton();
-		editProjectButton.setTitle("Resetear");
-		editProjectButton.setIcon("../images/ico/reset.ico");
-		editProjectButton.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event) {
-				form.reset();
-			}			
-		});
-		
-		
+//		final IButton editProjectButton = new IButton();
+//		editProjectButton.setTitle("Resetear");
+//		editProjectButton.setIcon("../images/ico/reset.ico");
+//		editProjectButton.addClickHandler(new ClickHandler(){
+//			public void onClick(ClickEvent event) {
+//				form.reset();
+//			}			
+//		});
+				
 		//LAYOUTs
 		final HLayout hLayout = new HLayout();
 		hLayout.setMembersMargin(10);
+		hLayout.setWidth(340);
+		hLayout.setAlign(Alignment.RIGHT);
 	    hLayout.addMember(createProjectButton);
 	    hLayout.addMember(applyButton);
-	    hLayout.addMember(editProjectButton);
+//	    hLayout.addMember(editProjectButton);
 
-		final VLayout vLayout = new VLayout();
+		final VLayout vLayout = new VLayout();		
 		vLayout.setMembersMargin(20);
 		vLayout.addMember(title);
 		vLayout.addMember(form);
@@ -216,7 +225,6 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 		to.setName(from.getValue(NAME_FIELD).toString());
 		
 		to.setBudget(new Float(from.getValue(BUDGET_FIELD).toString()));
-		Window.alert(to.getBudget()+"");
 		
 		//TODO faltan los clientes
 	}
