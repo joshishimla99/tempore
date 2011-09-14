@@ -1,5 +1,14 @@
 package ar.fi.uba.tempore.gwt.client.panel.project;
 
+import gwtupload.client.IUploadStatus.Status;
+import gwtupload.client.IUploader.OnFinishUploaderHandler;
+import gwtupload.client.IUploader.UploadedInfo;
+import gwtupload.client.IUploader;
+import gwtupload.client.MultiUploader;
+import gwtupload.client.PreloadedImage;
+import gwtupload.client.IFileInput.FileInputType;
+import gwtupload.client.PreloadedImage.OnLoadPreloadedImageHandler;
+
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -11,8 +20,10 @@ import ar.fi.uba.tempore.gwt.client.ProjectServicesClient;
 import ar.fi.uba.tempore.gwt.client.panel.menus.ContextChildPanel;
 import ar.fi.uba.temporeutils.observer.ProjectObserver;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.DateDisplayFormat;
 import com.smartgwt.client.types.MultipleAppearance;
@@ -45,6 +56,7 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 	private static final String FILE_FIELD = "pLogo";
 	
 	private DynamicForm form;
+	
 	
 	public ABMProjectPanel() {
 		super();
@@ -123,8 +135,9 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 		txtDescription.setWidth(250);
 		txtDescription.setRequired(true);
 
-		final UploadItem imageFile = new UploadItem(FILE_FIELD, "Logo");
-		imageFile.setRequired(false);
+//		final UploadItem imageFile = new UploadItem(FILE_FIELD, "Logo");
+//		imageFile.setRequired(false);
+			
 		
 		form.setFields(	idCode, 
 				txtName, 
@@ -132,9 +145,41 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 				startDate, 
 				endDate, 
 				budget, 
-				txtDescription,
-				imageFile);
+				txtDescription);
 
+		final FlowPanel panelImages = new FlowPanel();
+		
+		final MultiUploader uploaderItem = new MultiUploader(FileInputType.BROWSER_INPUT);
+		uploaderItem.setEnabled(true);
+		uploaderItem.addOnFinishUploadHandler(new OnFinishUploaderHandler() {
+			@Override
+			public void onFinish(IUploader uploader) {
+				if (uploader.getStatus() == Status.SUCCESS) {
+					
+					new PreloadedImage(uploader.fileUrl(), new OnLoadPreloadedImageHandler() {
+						public void onLoad(PreloadedImage image) {
+							image.setWidth("150px");
+							panelImages.clear();
+							panelImages.add(image);
+						}
+					});
+
+					// The server sends useful information to the client by default
+					UploadedInfo info = uploader.getServerInfo();
+			        GWT.log("GWTUpload - File name " + info.name);
+			        GWT.log("GWTUpload - File size " + info.size);
+			
+			        // Also, you can send any customized message and parse it 
+			        GWT.log("GWTUpload - Server message " + info.message);
+			        GWT.log("GWTUpload - Respuesta: " + uploader.getServerResponse());
+				} 			
+			}
+		});
+
+		
+		
+		
+		
 		//BOTONERA
 		final IButton createProjectButton = new IButton();
 		createProjectButton.setTitle("Nuevo");
@@ -182,19 +227,28 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 //		});
 				
 		//LAYOUTs
-		final HLayout hLayout = new HLayout();
-		hLayout.setMembersMargin(10);
-		hLayout.setWidth(340);
-		hLayout.setAlign(Alignment.RIGHT);
-	    hLayout.addMember(createProjectButton);
-	    hLayout.addMember(applyButton);
-//	    hLayout.addMember(editProjectButton);
+		final HLayout hLayoutButton = new HLayout();
+		hLayoutButton.setMembersMargin(10);
+		hLayoutButton.setWidth(340);
+		hLayoutButton.setAlign(Alignment.RIGHT);
+	    hLayoutButton.addMember(createProjectButton);
+	    hLayoutButton.addMember(applyButton);
 
+	    final VLayout vLayoutInfo = new VLayout();
+//	    vLayoutInfo.setMembersMargin(30);
+	    vLayoutInfo.addMember(form);
+//	    vLayoutInfo.addMember(uploaderItem);
+	    
+	    final HLayout hLayoutBody = new HLayout();
+//	    hLayoutBody.setMembersMargin(50);
+	    hLayoutBody.addMember(vLayoutInfo);
+//	    hLayoutBody.addMember(panelImages);
+	    
 		final VLayout vLayout = new VLayout();		
 		vLayout.setMembersMargin(20);
 		vLayout.addMember(title);
-		vLayout.addMember(form);
-		vLayout.addMember(hLayout);
+		vLayout.addMember(hLayoutBody);
+		vLayout.addMember(hLayoutButton);
 		
 		addChild(vLayout);
 		this.redraw();
