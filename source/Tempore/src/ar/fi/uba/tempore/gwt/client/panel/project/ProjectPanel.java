@@ -33,25 +33,17 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 	private ProjectPanel() {
 		super();
 		
+		this.setCanResizeFields(true);
+		
 		dataSource = new ProjectPanelDataSource();		
 		this.setDataSource(dataSource);
 		this.setAutoFetchData(true);
-		this.setEditByCell(false);
-//		myList1.setCanDragRecordsOut(true);  
-//		myList1.setCanAcceptDroppedRecords(true);  
-//		myList1.setCanReorderFields(true);  
-//		myList1.setDragDataAction(DragDataAction.MOVE);  
-		
-		this.setWidth(200);
-		this.setHeight(700);
+		this.setHeight100();
 		this.setCellHeight(24);
 		this.setImageSize(16);
-		this.setShowEdges(true);
-		
-		//this.setBorder("0px");
-		//this.setBodyStyleName("normal");
-		this.setShowHeader(false);
+		this.setShowHeader(true);
 		this.setLeaveScrollbarGap(false);
+
 		
 		this.addRecordClickHandler(new RecordClickHandler() {
 			@Override
@@ -88,7 +80,9 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 	 */
 	@Override
 	public void addObserver (ProjectObserver observer){
-		listObserver.add(observer);
+		if (!listObserver.contains(observer)){
+			listObserver.add(observer);
+		}
 	}
 
 	/**

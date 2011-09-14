@@ -1,4 +1,4 @@
-package ar.fi.uba.tempore.gwt.client.panel;
+package ar.fi.uba.tempore.gwt.client.panel.report;
 
 import ar.fi.uba.tempore.gwt.client.panel.menus.ContextChildPanel;
 
