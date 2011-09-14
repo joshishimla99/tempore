@@ -75,7 +75,7 @@ public class NewTaskPanel extends Canvas implements ContextChildPanel{
 		form.setFields(taskNameLabel, taskDescription, estimatedTimeLabel, taskResponsable, createTaskButton);
 		this.vPanel.addChild(form);
 		this.addChild(this.vPanel);
-		vPanel.draw();
+		vPanel.redraw();
 	}
 
 }
