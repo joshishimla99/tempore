@@ -12,17 +12,16 @@ public class ExplorerPanel extends VLayout {
 
 	public ExplorerPanel (){
 		super();
-		this.setStyleName(TEMPORE_EXPLORER);
-		this.setShowEdges(true);  
-		//moveLayout.setEdgeImage("../edges/gray/sharpframe_10.png");
-		this.setBorder("1px");
+		this.setStyleName(TEMPORE_EXPLORER); 
+		this.setEdgeImage("../edges/blue/sharpframe_10.png");
 		this.setDragAppearance(DragAppearance.TARGET);  
 		this.setOverflow(Overflow.HIDDEN);
+		this.setShowResizeBar(true);
 		this.setCanDragResize(true);  
 		this.setResizeFrom("R");  
 		this.setMinWidth(100);  
 		this.setMinHeight(50);
-
+		 
 		
 		
 		//TODO agregar botones para cambiar la vista del ProjectPanel
