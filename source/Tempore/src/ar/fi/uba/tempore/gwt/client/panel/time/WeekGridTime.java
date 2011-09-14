@@ -22,7 +22,7 @@ public class WeekGridTime extends VLayout{
 		});
 
          this.addChild(calendar);  
-        calendar.draw();  		
+        calendar.redraw();  		
 	}
 	
 	
