@@ -1,2 +1,0 @@
-serviceClass: ar.fi.uba.tempore.gwt.client.UserServicesClient
-path: FB0769757E5870006E6EF0F844080F60.gwt.rpc
