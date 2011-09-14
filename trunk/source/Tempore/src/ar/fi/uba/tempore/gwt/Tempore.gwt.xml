@@ -6,7 +6,9 @@
 	<inherits name='ar.fi.uba.tempore.DTO' />
 	<inherits name='ar.fi.uba.temporeutils.TemporeListGrid' />
 	<inherits name='ar.fi.uba.temporeutils.Observer' />
-	
+
+	<!-- External library -->	
+	<inherits name="gwtupload.GWTUpload"/>
 
 	<!-- Inherit the default GWT style sheet. You can change -->
 	<!-- the theme of your GWT application by uncommenting -->
