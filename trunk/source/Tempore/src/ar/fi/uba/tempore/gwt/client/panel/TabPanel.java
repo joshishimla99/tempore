@@ -1,17 +1,33 @@
-package ar.fi.uba.tempore.gwt.client.panel.menus;
+package ar.fi.uba.tempore.gwt.client.panel;
+
+import ar.fi.uba.tempore.gwt.client.panel.menus.ConfigurationTabPanel;
+import ar.fi.uba.tempore.gwt.client.panel.menus.HelpTabPanel;
+import ar.fi.uba.tempore.gwt.client.panel.menus.ProjectTabPanel;
+import ar.fi.uba.tempore.gwt.client.panel.menus.ReportTabPanel;
+import ar.fi.uba.tempore.gwt.client.panel.menus.SubTabPanel;
+import ar.fi.uba.tempore.gwt.client.panel.menus.TaskTabPanel;
+import ar.fi.uba.tempore.gwt.client.panel.menus.TimeTabPanel;
 
 import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;
 import com.smartgwt.client.widgets.tab.events.TabSelectedEvent;
 import com.smartgwt.client.widgets.tab.events.TabSelectedHandler;
 
-public class MainTabPanel extends TabSet {
+public class TabPanel extends TabSet {
 	
-	public MainTabPanel(){
+	private static final String TEMPORE_TABS = "Tempore_Tabs";
+
+	public TabPanel(){
 		super();
-		setWidth("70%");
+		setWidth("80%");
+		setHeight100();
 		setMargin(5);
-		setHeight(600);
+		setCanDragResize(true);  
+		setResizeFrom("L", "R");   
+		setMinWidth(400);  
+		setMinHeight(200);
+		setStyleName(TEMPORE_TABS);
+		
 		
 		Tab timeTab = new Tab("Tempore  ", "../images/ico/schedule.ico");
 		timeTab.setWidth(100);

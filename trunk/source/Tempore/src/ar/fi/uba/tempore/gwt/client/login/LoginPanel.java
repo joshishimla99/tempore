@@ -4,6 +4,7 @@ import ar.fi.uba.tempore.gwt.client.panel.ConteinerMainPanel;
 
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.Img;
@@ -24,7 +25,6 @@ public class LoginPanel  extends Composite{
 	private DynamicForm formLogin = new DynamicForm();
 	private TextItem login;
 	private PasswordItem mdp ;
-//	private final Logger log = Logger.getLogger(this.getClass());
 	
 	public LoginPanel(){
 		
@@ -61,13 +61,11 @@ public class LoginPanel  extends Composite{
                 if (formLogin.validate(false)){
                 	// TODO: Crear la sesion
                 	if (mdp.getValueAsString().equals("password") && login.getValueAsString().equals("user")){
-                		//Window.alert("Validacion correcta");
                 		layout.clear();
                 		loadUser();
-                		ConteinerMainPanel.getInstance().init();
+                		RootPanel.get("Content").add(new ConteinerMainPanel());
                 	} else{
                     	Window.alert("Validacion incorrecta" + " " + mdp.getValueAsString() +" " + login.getValueAsString() );
-//                    	log.info("Login Error: " + login.getValueAsString() + " " + mdp.getValueAsString() );
                     }
                 	
                 }

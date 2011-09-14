@@ -60,8 +60,6 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 	
 	public ABMProjectPanel() {
 		super();
-		
-		ProjectPanel.getInstance().addObserver(this);
 	}
 	
 	@Override
@@ -73,6 +71,7 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 	
 	@Override
 	public void updateContent() {
+		ProjectPanel.getInstance().addObserver(this);
 		
 		final Label title = new Label("Administraci&oacute;n de Proyectos");
 		title.setWidth(200);
