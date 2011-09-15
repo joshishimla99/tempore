@@ -8,6 +8,7 @@ import org.dozer.DozerBeanMapper;
 
 import ar.fi.uba.tempore.dao.ProjectDAO;
 import ar.fi.uba.tempore.dto.ProjectDTO;
+import ar.fi.uba.tempore.dto.ProjectStateDTO;
 import ar.fi.uba.tempore.entity.Project;
 import ar.fi.uba.tempore.gwt.client.ProjectServicesClient;
 
@@ -36,6 +37,7 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 		List<Project> projects = projectDAO.findAll();
 		for (Project p : projects) {
 			ProjectDTO pDTO = mapper.map(p, ProjectDTO.class);
+			pDTO.setProjectState(mapper.map(p.getProjectState(), ProjectStateDTO.class));
 			list.add(pDTO);
 		}
 		
