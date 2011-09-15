@@ -11,37 +11,30 @@ import ar.fi.uba.temporeutils.listgrid.GenericGwtRpcDataSource;
 
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceDateField;
-import com.smartgwt.client.data.fields.DataSourceImageField;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 public class ProjectPanelDataSource extends GenericGwtRpcDataSource<ProjectDTO, ListGridRecord, ProjectServicesClientAsync> {
 
-	public static final String IMAGE_COL = "IMAGE_COL";
 	public static final String NAME_FIELD = "nameCol";
 	public static final String ID_FIELD = "idCol";
-	private static final String BUDGET_FIELD = "budgetCol";
-	private static final String DESCRIPTION_FIELD = "descCol";
-	private static final String ENDDATE_FIELD = "endCol";
-	private static final String INITDATE_FIELD = "iniDate";
-	private static final String STATE_ID_FIELD = "stateIdCol";
-	private static final String STATE_NAME_FIELD = "stateNameCol";
+	public static final String BUDGET_FIELD = "budgetCol";
+	public static final String DESCRIPTION_FIELD = "descCol";
+	public static final String ENDDATE_FIELD = "endCol";
+	public static final String INITDATE_FIELD = "iniDate";
+	public static final String STATE_ID_FIELD = "stateIdCol";
+	public static final String STATE_NAME_FIELD = "stateNameCol";
 	
 	@Override
 	public List<DataSourceField> getDataSourceFields() {
 		List<DataSourceField> list = new ArrayList<DataSourceField>();
 		
 		DataSourceField fId = new DataSourceTextField(ID_FIELD);
-		fId.setHidden(true);
+		//fId.setHidden(true);
 		fId.setPrimaryKey(true);
 		list.add(fId);		
 		
-		DataSourceImageField fImage = new DataSourceImageField(IMAGE_COL);          
-        fImage.setImageURLPrefix("../images/32x32/");
-        fImage.setWidth(30);
-		list.add(fImage);
-
 		DataSourceField fName = new DataSourceTextField(NAME_FIELD);
 		fName.setRequired(true);
 		list.add(fName);
@@ -93,7 +86,6 @@ public class ProjectPanelDataSource extends GenericGwtRpcDataSource<ProjectDTO, 
 	public void copyValues(ProjectDTO from, ListGridRecord to) {
 		to.setAttribute(ID_FIELD, from.getId());
 		to.setAttribute(NAME_FIELD, from.getName());
-		to.setAttribute(IMAGE_COL, "Portfolio.png");
 		to.setAttribute(BUDGET_FIELD, from.getBudget());
 		to.setAttribute(DESCRIPTION_FIELD, from.getDescription());
 		to.setAttribute(ENDDATE_FIELD, from.getEndDate());

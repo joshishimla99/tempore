@@ -7,7 +7,11 @@ import ar.fi.uba.tempore.dto.ProjectDTO;
 import ar.fi.uba.temporeutils.observer.ProjectObserved;
 import ar.fi.uba.temporeutils.observer.ProjectObserver;
 
+import com.google.gwt.user.client.Window;
+import com.smartgwt.client.types.GroupStartOpen;
+import com.smartgwt.client.types.ListGridFieldType;
 import com.smartgwt.client.widgets.grid.ListGrid;
+import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
 import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
@@ -41,9 +45,24 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 		this.setHeight100();
 		this.setCellHeight(24);
 		this.setImageSize(16);
-		this.setShowHeader(true);
+		this.setShowHeader(false);
 		this.setLeaveScrollbarGap(false);
+		this.setShowFilterEditor(false);
+		this.setFilterOnKeypress(true);
+		this.setGroupStartOpen(GroupStartOpen.ALL);
 
+		//Columnas a ser visualizadas
+		ListGridField image = new ListGridField("image");
+		image.setType(ListGridFieldType.ICON);
+		image.setIcon("../images/png/24x24/Briefcase.png");
+		image.setIconHeight(16);
+		image.setWidth(25);
+		image.setCanFilter(false);
+		
+		ListGridField name = new ListGridField(ProjectPanelDataSource.NAME_FIELD);
+		ListGridField state = new ListGridField(ProjectPanelDataSource.STATE_NAME_FIELD);
+		this.setFields(image,name, state);
+		this.hideField(ProjectPanelDataSource.STATE_NAME_FIELD);
 		
 		this.addRecordClickHandler(new RecordClickHandler() {
 			@Override
@@ -74,6 +93,7 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 		
 		return dto ;
 	}
+		
 	
 	/**
 	 * {@inheritDoc}
@@ -103,5 +123,36 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 				po.updateProjectSelected();
 			}
 		}
+	}
+	
+	/**
+	 * Habilita el filtro de la grilla
+	 */
+	public void showFilter(){
+		//TODO limpiar filtro cuando se deshabilita
+		this.setShowFilterEditor(!this.getShowFilterEditor());
+		this.redraw();
+	}
+	
+	/**
+	 * Agrupa por estado del proyecto
+	 */
+	public void viewByStateProjectGroup (){
+		this.groupBy(ProjectPanelDataSource.STATE_NAME_FIELD);
+	}
+	
+	/**
+	 * Agrupa por el cliente del proyecto
+	 */
+	public void viewByClientProjectGroup (){
+		//TODO falta implementar
+		Window.alert("Falta agregar el cliente al Proyecto");
+	}
+	
+	/**
+	 * Elimina las agrupaciones
+	 */
+	public void viewWithoutGroup (){
+		this.ungroup();
 	}
 }
