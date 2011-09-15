@@ -31,7 +31,7 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 
 	@Override
 	public List<ProjectDTO> fetch() {
-		log.debug("getProjects");
+		log.info("FETCH - Proyectos");
 		List<ProjectDTO> list = new ArrayList<ProjectDTO>();
 		
 		List<Project> projects = projectDAO.findAll();
@@ -51,6 +51,7 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 
 	@Override
 	public ProjectDTO update(ProjectDTO projectDTO) {
+		log.info("UPDATE - Proyectos");
 		Project p = mapper.map(projectDTO, Project.class);
 		Project pSaved = projectDAO.makePersistent(p);
 		ProjectDTO pSavedDTO = mapper.map(pSaved, ProjectDTO.class);
