@@ -23,7 +23,7 @@ public class TabPanel extends TabSet {
 		setHeight100();
 		setMargin(5);
 		setCanDragResize(true);  
-		setResizeFrom("L", "R");   
+		setResizeFrom("L");   
 		setMinWidth(400);  
 		setMinHeight(200);
 		setStyleName(TEMPORE_TABS);
@@ -66,6 +66,7 @@ public class TabPanel extends TabSet {
         });
 
 		setTabs(timeTab, projectTab, /*resourceTab,*/ taskTab, reportTab, configurationTab, helpTab);
+		selectTab(4);
 	}
 
 }
