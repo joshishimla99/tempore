@@ -23,8 +23,9 @@ public class UserConfigurationPanel extends Canvas implements ContextChildPanel{
 	@Override
 	public void updateContent() {
 		VLayout vLayout = new VLayout();
+		vLayout.setWidth100();
+		vLayout.setHeight100();
 		vLayout.setMembersMargin(6);
-		int width = 700;
 		
 		//TITULO
 		Label title = new Label("Configuraci&oacute;n de Alertas");
@@ -35,8 +36,8 @@ public class UserConfigurationPanel extends Canvas implements ContextChildPanel{
 		final ListGrid grid = new ListGrid();
 		UserConfigurationDataSource dataSource = new UserConfigurationDataSource(); 		
 		grid.setDataSource(dataSource);
-		grid.setWidth(width);
-		grid.setHeight(300);		
+		grid.setWidth100();
+		grid.setHeight100();		
 		grid.setAutoFetchData(true);
 		grid.setCanEdit(true);
 		grid.setEditEvent(ListGridEditEvent.CLICK);		
@@ -46,13 +47,12 @@ public class UserConfigurationPanel extends Canvas implements ContextChildPanel{
 		
 		// BOTONERA
 		final HLayout btnHLayout = new HLayout();		
-		btnHLayout.setWidth(width);
+		btnHLayout.setWidth100();		
 		btnHLayout.setMembersMargin(6);
 		btnHLayout.setAlign(Alignment.RIGHT);
 		
 		IButton newButton = new IButton("Nuevo");
-		newButton.setIcon("../images/ico/add.ico");
-		newButton.setTop(350);
+		newButton.setIcon("../images/ico/add.ico");		
 		newButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				grid.startEditingNew();

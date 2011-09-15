@@ -5,7 +5,6 @@ import ar.fi.uba.tempore.gwt.client.panel.menus.ContextChildPanel;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.ListGridEditEvent;
 import com.smartgwt.client.types.RowEndEditAction;
-import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Label;
@@ -24,8 +23,9 @@ public class ClientConfigurationPanel extends Canvas implements ContextChildPane
 	@Override
 	public void updateContent() {
 		final VLayout vLayout = new VLayout();
+		vLayout.setWidth100();
+		vLayout.setHeight100();
 		vLayout.setMembersMargin(6);
-		int width = 600;
 		
 		final Label title = new Label("Configuraci&oacute;n de Clientes");
 		title.setWidth(200);
@@ -34,8 +34,8 @@ public class ClientConfigurationPanel extends Canvas implements ContextChildPane
 		final ListGrid grid = new ListGrid();
 		ClientConfigurationDataSource dataSource = new ClientConfigurationDataSource(); 		
 		grid.setDataSource(dataSource);
-		grid.setWidth(width);
-		grid.setHeight(200);		
+		grid.setWidth100();
+		grid.setHeight100();		
 		grid.setAutoFetchData(true);
 		grid.setCanEdit(true);
 		grid.setEditEvent(ListGridEditEvent.CLICK);		
@@ -45,7 +45,7 @@ public class ClientConfigurationPanel extends Canvas implements ContextChildPane
 		
 		// BOTONERA 
 		final HLayout btnHLayout = new HLayout();		
-		btnHLayout.setWidth(width);
+		btnHLayout.setWidth100();
 		btnHLayout.setMembersMargin(6);
 		btnHLayout.setAlign(Alignment.RIGHT);
 		//btnHLayout.setAlign(VerticalAlignment.CENTER);
