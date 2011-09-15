@@ -1,12 +1,12 @@
 package ar.fi.uba.tempore.gwt.client.panel.project;
 
+import gwtupload.client.IFileInput.FileInputType;
 import gwtupload.client.IUploadStatus.Status;
+import gwtupload.client.IUploader;
 import gwtupload.client.IUploader.OnFinishUploaderHandler;
 import gwtupload.client.IUploader.UploadedInfo;
-import gwtupload.client.IUploader;
 import gwtupload.client.MultiUploader;
 import gwtupload.client.PreloadedImage;
-import gwtupload.client.IFileInput.FileInputType;
 import gwtupload.client.PreloadedImage.OnLoadPreloadedImageHandler;
 
 import java.util.Date;
@@ -15,9 +15,12 @@ import java.util.List;
 
 import ar.fi.uba.tempore.dto.ClientDTO;
 import ar.fi.uba.tempore.dto.ProjectDTO;
+import ar.fi.uba.tempore.dto.ProjectStateDTO;
 import ar.fi.uba.tempore.gwt.client.ClientServicesClient;
 import ar.fi.uba.tempore.gwt.client.ProjectServicesClient;
+import ar.fi.uba.tempore.gwt.client.ProjectStateServicesClient;
 import ar.fi.uba.tempore.gwt.client.panel.menus.ContextChildPanel;
+import ar.fi.uba.tempore.gwt.server.ProjectStateServicesImpl;
 import ar.fi.uba.temporeutils.observer.ProjectObserver;
 
 import com.google.gwt.core.client.GWT;
@@ -29,18 +32,15 @@ import com.smartgwt.client.types.DateDisplayFormat;
 import com.smartgwt.client.types.MultipleAppearance;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
-import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.DateItem;
-import com.smartgwt.client.widgets.form.fields.FileItem;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
-import com.smartgwt.client.widgets.form.fields.UploadItem;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
@@ -54,6 +54,7 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 	private static final String END_FIELD = "pEndDate";
 	private static final String CLIENT_FIELD = "pClient";
 	private static final String FILE_FIELD = "pLogo";
+	private static final String STATE_FIELD = "pState";
 	
 	private DynamicForm form;
 	
@@ -136,7 +137,25 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 
 //		final UploadItem imageFile = new UploadItem(FILE_FIELD, "Logo");
 //		imageFile.setRequired(false);
+		final SelectItem selState = new SelectItem(STATE_FIELD, "Estado");
+		//TODO hacerlo obligatorio
+		selState.setRequired(false);
+		ProjectStateServicesClient.Util.getInstance().findAll(new AsyncCallback<List<ProjectStateDTO>>() {
+			@Override
+			public void onSuccess(List<ProjectStateDTO> result) {
+				LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();  
+				for (ProjectStateDTO dto : result) {
+					valueMap.put(dto.getId().toString(), dto.getName());
+				}
+				selState.setValueMap(valueMap);				
+			}
 			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Error al cargar los Estados del Proyecto");
+			}
+		});
+		
 		
 		form.setFields(	idCode, 
 				txtName, 
@@ -144,7 +163,8 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 				startDate, 
 				endDate, 
 				budget, 
-				txtDescription);
+				txtDescription,
+				selState);
 
 		final FlowPanel panelImages = new FlowPanel();
 		
