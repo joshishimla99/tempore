@@ -16,8 +16,10 @@
  */
 package ar.fi.uba.tempore.gwt.server;
 
+import static gwtupload.shared.UConsts.TAG_ERROR;
 import gwtupload.server.UploadAction;
 import gwtupload.server.exceptions.UploadActionException;
+import gwtupload.shared.UConsts;
 
 import org.apache.commons.fileupload.FileItem;
 
@@ -94,14 +96,14 @@ public class UpploadImageServlet extends UploadAction {
    */
   @Override
   public void getUploadedFile(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String fieldName = request.getParameter(PARAM_SHOW);
+    String fieldName = request.getParameter(UConsts.PARAM_SHOW);
     File f = receivedFiles.get(fieldName);
     if (f != null) {
       response.setContentType(receivedContentTypes.get(fieldName));
       FileInputStream is = new FileInputStream(f);
       copyFromInputStreamToOutputStream(is, response.getOutputStream());
     } else {
-      renderXmlResponse(request, response, ERROR_ITEM_NOT_FOUND);
+      renderXmlResponse(request, response, "<" + TAG_ERROR + ">item not found</" + TAG_ERROR + ">");
    }
   }
   
