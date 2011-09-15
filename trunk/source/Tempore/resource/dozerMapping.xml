@@ -6,6 +6,10 @@
 		<class-b>ar.fi.uba.tempore.entity.Project</class-b>	
 	</mapping>
 	<mapping>
+		<class-a>ar.fi.uba.tempore.dto.ProjectStateDTO</class-a>
+		<class-b>ar.fi.uba.tempore.entity.ProjectState</class-b>	
+	</mapping>
+	<mapping>
 		<class-a>ar.fi.uba.tempore.dto.UserDTO</class-a>
 		<class-b>ar.fi.uba.tempore.entity.User</class-b>
 	</mapping>
