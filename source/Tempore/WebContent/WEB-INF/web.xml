@@ -12,6 +12,15 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>projectStateServlet</servlet-name>
+		<servlet-class>ar.fi.uba.tempore.gwt.server.ProjectStateServicesImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>projectStateServlet</servlet-name>
+		<url-pattern>/tempore/ProjectStateServicesClient</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>userServlet</servlet-name>
 		<servlet-class>ar.fi.uba.tempore.gwt.server.UserServicesImpl</servlet-class>
 	</servlet>
@@ -114,6 +123,14 @@
 	<servlet-mapping>
 		<servlet-name>TaskServicesClient</servlet-name>
 		<url-pattern>/tempore/TaskServicesClient</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ProjectStateServicesClient</servlet-name>
+		<servlet-class>ar.fi.uba.tempore.gwt.server.ProjectStateServicesImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProjectStateServicesClient</servlet-name>
+		<url-pattern>/tempore/ProjectStateServicesClient</url-pattern>
 	</servlet-mapping>
 
 
