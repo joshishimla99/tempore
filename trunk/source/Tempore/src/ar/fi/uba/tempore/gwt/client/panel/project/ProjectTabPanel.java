@@ -19,8 +19,7 @@ import ar.fi.uba.tempore.dto.ProjectStateDTO;
 import ar.fi.uba.tempore.gwt.client.ClientServicesClient;
 import ar.fi.uba.tempore.gwt.client.ProjectServicesClient;
 import ar.fi.uba.tempore.gwt.client.ProjectStateServicesClient;
-import ar.fi.uba.tempore.gwt.client.panel.menus.ContextChildPanel;
-import ar.fi.uba.tempore.gwt.server.ProjectStateServicesImpl;
+import ar.fi.uba.tempore.gwt.client.panel.TabsPanelContainer;
 import ar.fi.uba.temporeutils.observer.ProjectObserver;
 
 import com.google.gwt.core.client.GWT;
@@ -30,7 +29,6 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.DateDisplayFormat;
 import com.smartgwt.client.types.MultipleAppearance;
-import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
@@ -44,7 +42,7 @@ import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
-public class ABMProjectPanel extends Canvas implements ContextChildPanel, ProjectObserver {
+public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserver {
 
 	private static final String ID_FIELD = "pId";
 	private static final String NAME_FIELD = "pName";
@@ -57,10 +55,12 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 	private static final String STATE_FIELD = "pState";
 	
 	private DynamicForm form;
+
 	
 	
-	public ABMProjectPanel() {
+	public ProjectTabPanel() {
 		super();
+		updateContent();
 	}
 	
 	@Override
@@ -69,8 +69,6 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 		super.destroy();
 	}
 	
-	
-	@Override
 	public void updateContent() {
 		ProjectPanel.getInstance().addObserver(this);
 		
@@ -156,7 +154,6 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 			}
 		});
 		
-		
 		form.setFields(	idCode, 
 				txtName, 
 				selClient,
@@ -203,48 +200,13 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 		final IButton createProjectButton = new IButton();
 		createProjectButton.setTitle("Nuevo");
 		createProjectButton.setIcon("../images/ico/add.ico");
-		createProjectButton.addClickHandler(new ClickHandler(){
-			@Override
-			public void onClick(ClickEvent event) {
-				if (form.validate(false)) {
-					form.clearValues();
-					//form.reset();
-				}
-			}
-		});
+		createProjectButton.addClickHandler(newProjectEvent);
 		
 		final IButton applyButton = new IButton();
 		applyButton.setTitle("Guardar");
 		applyButton.setIcon("../images/ico/save.ico");
-		applyButton.addClickHandler(new ClickHandler(){
-			public void onClick(ClickEvent event) {
-				if (form.validate()) {
-					ProjectDTO dto = new ProjectDTO();
-					copy (form, dto );
-					ProjectServicesClient.Util.getInstance().add(dto, new AsyncCallback<ProjectDTO>() {
-						@Override
-						public void onSuccess(ProjectDTO result) {
-							//Actualizo panel del proyecto
-							ProjectPanel.getInstance().fetchData();
-						}
-						@Override
-						public void onFailure(Throwable caught) {
-							Window.alert("No se pudo guradar los cambios");						
-						}
-					});
-				}
-			}
-		});
-		
-//		final IButton editProjectButton = new IButton();
-//		editProjectButton.setTitle("Resetear");
-//		editProjectButton.setIcon("../images/ico/reset.ico");
-//		editProjectButton.addClickHandler(new ClickHandler(){
-//			public void onClick(ClickEvent event) {
-//				form.reset();
-//			}			
-//		});
-				
+		applyButton.addClickHandler(saveProjectEvent);
+						
 		//LAYOUTs
 		final HLayout hLayoutButton = new HLayout();
 		hLayoutButton.setMembersMargin(10);
@@ -274,7 +236,43 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 		
 		updateProjectSelected();
 	}
+	
+	/**
+	 * Evento para crear un nuevo proyecto
+	 */
+	private ClickHandler newProjectEvent = new ClickHandler(){
+		@Override
+		public void onClick(ClickEvent event) {
+			if (form.validate(false)) {
+				form.clearValues();
+			}
+		}
+	};
 
+	/**
+	 * Evento para guardar o actualizar un proyecto
+	 */
+	private ClickHandler saveProjectEvent = new ClickHandler(){
+		public void onClick(ClickEvent event) {
+			if (form.validate()) {
+				ProjectDTO dto = new ProjectDTO();
+				copy (form, dto );
+				ProjectServicesClient.Util.getInstance().add(dto, new AsyncCallback<ProjectDTO>() {
+					@Override
+					public void onSuccess(ProjectDTO result) {
+						//Actualizo panel del proyecto
+						ProjectPanel.getInstance().fetchData();
+					}
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("No se pudo guradar los cambios");						
+					}
+				});
+			}
+		}
+	};
+
+	
 	/**
 	 * Metodo del ProjectPanel cuando se selecciona otro Proyecto
 	 */
@@ -287,8 +285,8 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 	}
 	
 	/**
-	 * 
-	 * @param to
+	 * Copia del formulario al DTO
+	 * @param ProjectDTO
 	 */
 	private void copy (DynamicForm from, ProjectDTO to){
 		to.setId((Integer)from.getValue(ID_FIELD));
@@ -303,12 +301,11 @@ public class ABMProjectPanel extends Canvas implements ContextChildPanel, Projec
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Copia del DTO al formulario
+	 * @return DynamicForm
 	 */
 	private void copy (ProjectDTO from, DynamicForm to){
 		form.clearValues();
-		
 		to.setValue(ID_FIELD, from.getId());
 		to.setValue(NAME_FIELD, from.getName());
 		to.setValue(BUDGET_FIELD, from.getBudget());
