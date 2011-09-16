@@ -21,7 +21,7 @@ public class ConteinerMainPanel extends VLayout {
 		//Navegacion / Contenido
 		final HLayout hLayoutData = new HLayout();
 		hLayoutData.addMember(new ExplorerPanel());
-		hLayoutData.addMember(new TabPanel());
+		hLayoutData.addMember(new TabsPanel());
 
 
 		this.addMember(new HeaderPanel());

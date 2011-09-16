@@ -1,6 +1,5 @@
 package ar.fi.uba.tempore.gwt.client.panel.task;
 
-import ar.fi.uba.tempore.gwt.client.panel.menus.ContextChildPanel;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 
 import com.smartgwt.client.widgets.Canvas;
@@ -14,18 +13,17 @@ import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.layout.VLayout;
 
-public class NewTaskPanel extends Canvas implements ContextChildPanel{
+public class NewTaskPanel extends Canvas {
 	
 	private DynamicForm form;
-	private VLayout vPanel;
 	
 	public NewTaskPanel(){
-		super();
-		this.vPanel = new VLayout();
+		super();		
+		updateContent();
 	}
 
-	@Override
 	public void updateContent() {
+		final VLayout vPanel = new VLayout();
 		
 		if (form == null){
 			form = new DynamicForm();
@@ -73,8 +71,8 @@ public class NewTaskPanel extends Canvas implements ContextChildPanel{
 		});
 
 		form.setFields(taskNameLabel, taskDescription, estimatedTimeLabel, taskResponsable, createTaskButton);
-		this.vPanel.addChild(form);
-		this.addChild(this.vPanel);
+		vPanel.addChild(form);
+		this.addChild(vPanel);
 		vPanel.redraw();
 	}
 

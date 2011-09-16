@@ -1,6 +1,5 @@
 package ar.fi.uba.tempore.gwt.client.panel.configuration;
 
-import ar.fi.uba.tempore.gwt.client.panel.menus.ContextChildPanel;
 
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.ListGridEditEvent;
@@ -14,13 +13,13 @@ import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
-public class AlertConfigurationPanel extends Canvas implements ContextChildPanel{
+public class AlertConfigurationPanel extends Canvas{
 
 	public AlertConfigurationPanel() {
 		super();
+		updateContent();
 	}
 
-	@Override
 	public void updateContent() {
 		final VLayout vLayout = new VLayout();
 		vLayout.setMembersMargin(6);
