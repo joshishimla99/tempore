@@ -6,6 +6,7 @@
 	<inherits name='ar.fi.uba.tempore.DTO' />
 	<inherits name='ar.fi.uba.temporeutils.TemporeListGrid' />
 	<inherits name='ar.fi.uba.temporeutils.Observer' />
+	<inherits name='ar.fi.uba.temporeutils.Image' />
 
 	<!-- External library -->	
 	<inherits name="gwtupload.GWTUpload"/>
