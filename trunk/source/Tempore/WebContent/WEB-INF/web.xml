@@ -66,29 +66,31 @@
 	</servlet-mapping>
 
 
-
-
-
-
-
-	<!-- UPLOAD IMAGES SERVLET -->
+	<!-- IMAGES SERVLETS -->
 	<context-param>
 		<param-name>maxSize</param-name>
 		<param-value>3145728</param-value>
 	</context-param>
 	<context-param>
 		<param-name>slowUploads</param-name>
-		<param-value>false</param-value>
+		<param-value>true</param-value>
 	</context-param>
 	<servlet>
-		<servlet-name>gettingStartedServlet</servlet-name>
-		<servlet-class>ar.fi.uba.tempore.gwt.server.UpploadImageServlet</servlet-class>
+		<servlet-name>imageUploadServlet</servlet-name>
+		<servlet-class>ar.fi.uba.tempore.gwt.server.image.UpploadImageServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>gettingStartedServlet</servlet-name>
+		<servlet-name>imageUploadServlet</servlet-name>
 		<url-pattern>*.gupld</url-pattern>
 	</servlet-mapping>
-
+	<servlet>
+		<servlet-name>imageDownloadServlet</servlet-name>
+		<servlet-class>ar.fi.uba.tempore.gwt.server.image.DonwloadImageServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>imageDownloadServlet</servlet-name>
+		<url-pattern>/download.img</url-pattern>
+	</servlet-mapping>
 
 
 
