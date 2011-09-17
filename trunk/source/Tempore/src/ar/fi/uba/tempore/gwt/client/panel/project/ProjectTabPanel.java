@@ -136,8 +136,7 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 //		final UploadItem imageFile = new UploadItem(FILE_FIELD, "Logo");
 //		imageFile.setRequired(false);
 		final SelectItem selState = new SelectItem(STATE_FIELD, "Estado");
-		//TODO hacerlo obligatorio
-		selState.setRequired(false);
+		selState.setRequired(true);
 		ProjectStateServicesClient.Util.getInstance().findAll(new AsyncCallback<List<ProjectStateDTO>>() {
 			@Override
 			public void onSuccess(List<ProjectStateDTO> result) {
@@ -145,7 +144,7 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 				for (ProjectStateDTO dto : result) {
 					valueMap.put(dto.getId().toString(), dto.getName());
 				}
-				selState.setValueMap(valueMap);				
+				selState.setValueMap(valueMap);	
 			}
 			
 			@Override
@@ -298,6 +297,9 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		to.setBudget(new Float(from.getValue(BUDGET_FIELD).toString()));
 		
 		//TODO faltan los clientes
+		ProjectStateDTO projectState = new ProjectStateDTO();
+		projectState.setId(new Integer(form.getValue(STATE_FIELD).toString()));
+		to.setProjectState(projectState);
 	}
 	
 	/**
@@ -318,5 +320,6 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		
 		//to.setValue(CLIENT_FIELD, 2);
 		//TODO falta Client
+		to.setValue(STATE_FIELD, from.getProjectState().getId());
 	}
 }
