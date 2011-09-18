@@ -72,6 +72,7 @@ public class LoginPanel  extends Composite{
             }
 
         });
+        formLogin.focusInItem("login");
 		formLogin.setFields(headerTitle, login,mdp,validateItem);
 		
 		/*
