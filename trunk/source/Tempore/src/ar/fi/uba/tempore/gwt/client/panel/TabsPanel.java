@@ -4,6 +4,7 @@ import ar.fi.uba.tempore.gwt.client.panel.configuration.ConfigurationTabPanel;
 import ar.fi.uba.tempore.gwt.client.panel.help.HelpTabPanel;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectTabPanel;
 import ar.fi.uba.tempore.gwt.client.panel.report.ReportTabPanel;
+import ar.fi.uba.tempore.gwt.client.panel.resource.ResourceTabPanel;
 import ar.fi.uba.tempore.gwt.client.panel.task.TaskTabPanel;
 import ar.fi.uba.tempore.gwt.client.panel.time.TimeTabPanel;
 
@@ -31,9 +32,9 @@ public class TabsPanel extends TabSet {
 		timeTab.setWidth(tabWidth);
 		timeTab.setPane(new TimeTabPanel());
 		
-//		Tab resourceTab = new Tab("Recursos  ", "../images/ico/user_group.ico");
-//		resourceTab.setWidth(tabWidth);   
-//		resourceTab.setPane(new ResourceTabPanel());
+		Tab resourceTab = new Tab("Recursos  ", "../images/ico/user_group.ico");
+		resourceTab.setWidth(tabWidth);   
+		resourceTab.setPane(new ResourceTabPanel());
 		
 		Tab projectTab = new Tab("Proyectos  ", "../images/ico/briefcase.ico");
 		projectTab.setWidth(tabWidth);   
@@ -63,7 +64,7 @@ public class TabsPanel extends TabSet {
 //            }
 //        });
 
-		setTabs(timeTab, projectTab, /*resourceTab,*/ taskTab, reportTab, configurationTab, helpTab);
+		setTabs(timeTab, projectTab, resourceTab, taskTab, reportTab, configurationTab, helpTab);
 		selectTab(5);
 	}
 
