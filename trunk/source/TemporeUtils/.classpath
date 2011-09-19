@@ -6,6 +6,5 @@
 	<classpathentry kind="lib" path="lib/smartgwt-skins.jar"/>
 	<classpathentry kind="lib" path="lib/smartgwt.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DTO"/>
-	<classpathentry kind="lib" path="lib/gwtupload-0.6.3-compat.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
