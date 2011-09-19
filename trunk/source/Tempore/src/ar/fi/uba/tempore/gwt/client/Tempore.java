@@ -14,6 +14,7 @@ public class Tempore implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
+
 //		new LoginPanel();
 		RootPanel.get("Content").add(new ConteinerMainPanel());
 	}

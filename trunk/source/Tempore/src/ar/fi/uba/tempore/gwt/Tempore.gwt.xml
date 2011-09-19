@@ -9,8 +9,6 @@
 	<inherits name='ar.fi.uba.temporeutils.Image' />
 
 	<!-- External library -->	
-	<inherits name="gwtupload.GWTUpload"/>
-	<stylesheet src="Upload.css"/>
 
 	<!-- Inherit the default GWT style sheet. You can change -->
 	<!-- the theme of your GWT application by uncommenting -->
