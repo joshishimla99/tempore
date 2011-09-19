@@ -76,13 +76,14 @@
 		<param-value>true</param-value>
 	</context-param>
 	<servlet>
-		<servlet-name>imageUploadServlet</servlet-name>
-		<servlet-class>ar.fi.uba.tempore.gwt.server.image.UpploadImageServlet</servlet-class>
+		<servlet-name>newImageUploadServlet</servlet-name>
+		<servlet-class>ar.fi.uba.tempore.gwt.server.image.NewUpploadImageServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>imageUploadServlet</servlet-name>
-		<url-pattern>*.gupld</url-pattern>
+		<servlet-name>newImageUploadServlet</servlet-name>
+		<url-pattern>/uploadImage.upld</url-pattern>
 	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>imageDownloadServlet</servlet-name>
 		<servlet-class>ar.fi.uba.tempore.gwt.server.image.DonwloadImageServlet</servlet-class>
