@@ -66,8 +66,7 @@ public class UserConfigurationPanel extends Canvas {
 			}
 		});
 		btnHLayout.addMember(removeButton);
-		
-		
+				
 		vLayout.addMember(title);
 		vLayout.addMember(btnHLayout);
 		vLayout.addMember(grid);

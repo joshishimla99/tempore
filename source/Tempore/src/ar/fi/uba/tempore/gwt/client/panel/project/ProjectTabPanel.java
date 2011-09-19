@@ -1,14 +1,5 @@
 package ar.fi.uba.tempore.gwt.client.panel.project;
 
-import gwtupload.client.IFileInput.FileInputType;
-import gwtupload.client.IUploadStatus.Status;
-import gwtupload.client.IUploader;
-import gwtupload.client.IUploader.OnFinishUploaderHandler;
-import gwtupload.client.IUploader.UploadedInfo;
-import gwtupload.client.MultiUploader;
-import gwtupload.client.PreloadedImage;
-import gwtupload.client.PreloadedImage.OnLoadPreloadedImageHandler;
-
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -22,10 +13,8 @@ import ar.fi.uba.tempore.gwt.client.ProjectStateServicesClient;
 import ar.fi.uba.tempore.gwt.client.panel.TabsPanelContainer;
 import ar.fi.uba.temporeutils.observer.ProjectObserver;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.DateDisplayFormat;
 import com.smartgwt.client.types.MultipleAppearance;
@@ -133,8 +122,6 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		txtDescription.setWidth(250);
 		txtDescription.setRequired(true);
 
-//		final UploadItem imageFile = new UploadItem(FILE_FIELD, "Logo");
-//		imageFile.setRequired(false);
 		final SelectItem selState = new SelectItem(STATE_FIELD, "Estado");
 		selState.setRequired(true);
 		ProjectStateServicesClient.Util.getInstance().findAll(new AsyncCallback<List<ProjectStateDTO>>() {
@@ -160,39 +147,8 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 				endDate, 
 				budget, 
 				txtDescription,
-				selState);
+				selState);		
 
-		final FlowPanel panelImages = new FlowPanel();
-		
-		final MultiUploader uploaderItem = new MultiUploader(FileInputType.BROWSER_INPUT);
-		uploaderItem.setEnabled(true);
-		uploaderItem.addOnFinishUploadHandler(new OnFinishUploaderHandler() {
-			@Override
-			public void onFinish(IUploader uploader) {
-				if (uploader.getStatus() == Status.SUCCESS) {
-					
-					new PreloadedImage(uploader.fileUrl(), new OnLoadPreloadedImageHandler() {
-						public void onLoad(PreloadedImage image) {
-							image.setWidth("150px");
-							panelImages.clear();
-							panelImages.add(image);
-						}
-					});
-
-					// The server sends useful information to the client by default
-					UploadedInfo info = uploader.getServerInfo();
-			        GWT.log("GWTUpload - File name " + info.name);
-			        GWT.log("GWTUpload - File size " + info.size);
-			
-			        // Also, you can send any customized message and parse it 
-			        GWT.log("GWTUpload - Server message " + info.message);
-			        GWT.log("GWTUpload - Respuesta: " + uploader.getServerResponse());
-				} 			
-			}
-		});
-
-		
-		
 		
 		
 		//BOTONERA

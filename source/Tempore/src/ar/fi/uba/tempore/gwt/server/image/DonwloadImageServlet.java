@@ -23,6 +23,7 @@ public class DonwloadImageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String fileSrc = req.getParameter("id");
 		
+		log.info("DOWNLOADING a IMAGE ("+fileSrc+")...");
 		if (fileSrc != null && !fileSrc.isEmpty()){
 			fileSrc = PATH + fileSrc;
 			File file = new File(fileSrc);
