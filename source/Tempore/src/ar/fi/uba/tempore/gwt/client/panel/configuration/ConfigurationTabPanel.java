@@ -19,11 +19,9 @@ public class ConfigurationTabPanel extends TabsPanelContainer {
 		Tab userTab = new Tab("Usuarios");
 		userTab.setPane(new UserConfigurationPanel());
 		Tab alertTab = new Tab("Alertas");
-		alertTab.setPane(new AlertConfigurationPanel());
-				
-		subTabPanel.setTabs(clientTab, userTab, alertTab);
-   						
+		alertTab.setPane(new AlertConfigurationPanel());	
+
+		subTabPanel.setTabs(userTab, clientTab, alertTab);
 		this.addChild(subTabPanel);
 	}
-
 }
