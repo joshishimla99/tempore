@@ -25,6 +25,7 @@ public class Person implements Serializable {
 	private String country;
 	private String zip;
 	private String email;
+	private String imageName;
 	
 	@Id
 	@GeneratedValue
@@ -90,5 +91,13 @@ public class Person implements Serializable {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	@Column(name="imageName")
+	public String getImageName() {
+		return imageName;
+	}
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
 	}
 }
