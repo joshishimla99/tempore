@@ -3,11 +3,14 @@ package ar.fi.uba.tempore.gwt.client.panel.configuration;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.naming.factory.DataSourceLinkFactory.DataSourceHandler;
+
 import ar.fi.uba.tempore.dto.UserDTO;
 import ar.fi.uba.tempore.gwt.client.UserServicesClient;
 import ar.fi.uba.tempore.gwt.client.UserServicesClientAsync;
 import ar.fi.uba.temporeutils.listgrid.GenericGwtRpcDataSource;
 
+import com.google.gwt.user.client.Window;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourcePasswordField;
@@ -16,18 +19,29 @@ import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 public class UserConfigurationDataSource extends GenericGwtRpcDataSource<UserDTO, ListGridRecord, UserServicesClientAsync> {
 
-	private static final String ID = "idCol";
-	private static final String NAME = "nameCol";
-	private static final String LAST_NAME = "lastNameCol";
-	private static final String USER_NAME = "userNameCol";
-	private static final String PASSWORD = "passwordCol";
-	private static final String EMAIL = "emailCol";
-	private static final String ADDRESS = "addressCol";
-	private static final String COMPANY = "companyCol";
-	private static final String COUNTRY = "countryCol";
-	private static final String PHONE = "phoneCol";
-	private static final String ZIP_CODE = "zipCodeCol";
+	private static UserConfigurationDataSource instance;
 
+	public static final String ID = "idCol";
+	public static final String NAME = "nameCol";
+	public static final String LAST_NAME = "lastNameCol";
+	public static final String USER_NAME = "userNameCol";
+	public static final String PASSWORD = "passwordCol";
+	public static final String EMAIL = "emailCol";
+	public static final String ADDRESS = "addressCol";
+	public static final String COMPANY = "companyCol";
+	public static final String COUNTRY = "countryCol";
+	public static final String PHONE = "phoneCol";
+	public static final String ZIP_CODE = "zipCodeCol";
+	public static final String IMAGE_NAME = "imageName";
+	
+
+	public static UserConfigurationDataSource getInstance(){
+		if (instance == null){
+			instance = new UserConfigurationDataSource();
+		}
+		return instance;
+	}
+	
 	@Override
 	public List<DataSourceField> getDataSourceFields() {
 		List<DataSourceField> fields = new ArrayList<DataSourceField>();
@@ -37,37 +51,37 @@ public class UserConfigurationDataSource extends GenericGwtRpcDataSource<UserDTO
 		field.setHidden(true);
 		fields.add(field);
 		
-		DataSourceTextField field1 = new DataSourceTextField(NAME, "Nombre");
-		field1.setRequired(true);
-		fields.add(field1);
-		DataSourceTextField field2 = new DataSourceTextField(LAST_NAME, "Apellido");
-		field2.setRequired(true);
-		fields.add(field2);
-		DataSourceTextField field3 = new DataSourceTextField(USER_NAME, "Usuario");
-		field3.setRequired(true);
-		fields.add(field3);
-		DataSourcePasswordField field4 = new DataSourcePasswordField(PASSWORD, "Contrase&ntilde;a");
-		field4.setRequired(true);
-		fields.add(field4);		
-		DataSourceTextField field7 = new DataSourceTextField(EMAIL, "Email");
-		field7.setRequired(true);
-		fields.add(field7);
-		DataSourceTextField field8 = new DataSourceTextField(ADDRESS, "Direcci&oacute;n");
-		field8.setRequired(true);
-		fields.add(field8);		
-		DataSourceTextField field9 = new DataSourceTextField(COMPANY, "Empresa");
-		field9.setRequired(true);
-		fields.add(field9);
-		DataSourceTextField field10 = new DataSourceTextField(COUNTRY, "Pais");
-		field10.setRequired(true);
-		fields.add(field10);
-		DataSourceTextField field11 = new DataSourceTextField(PHONE, "Tel&eacute;fono");
-		field11.setRequired(true);
-		fields.add(field11);
-		DataSourceTextField field12 = new DataSourceTextField(ZIP_CODE, "C&oacute;digo Postal");
-		field12.setRequired(true);
-		fields.add(field12);
-		
+		DataSourceTextField name = new DataSourceTextField(NAME, "Nombre");
+		name.setRequired(true);
+		fields.add(name);
+		DataSourceTextField lastName = new DataSourceTextField(LAST_NAME, "Apellido");
+		lastName.setRequired(true);
+		fields.add(lastName);
+		DataSourceTextField user = new DataSourceTextField(USER_NAME, "Usuario");
+		user.setRequired(true);
+		fields.add(user);
+		DataSourcePasswordField password = new DataSourcePasswordField(PASSWORD, "Contrase&ntilde;a");
+		password.setRequired(true);
+		fields.add(password);		
+		DataSourceTextField email = new DataSourceTextField(EMAIL, "Email");
+		email.setRequired(true);
+		fields.add(email);
+		DataSourceTextField address = new DataSourceTextField(ADDRESS, "Direcci&oacute;n");
+		address.setRequired(false);
+		fields.add(address);		
+		DataSourceTextField country = new DataSourceTextField(COUNTRY, "Pais");
+		country.setRequired(false);
+		fields.add(country);
+		DataSourceTextField phone = new DataSourceTextField(PHONE, "Tel&eacute;fono");
+		phone.setRequired(false);
+		fields.add(phone);
+		DataSourceTextField zipCode = new DataSourceTextField(ZIP_CODE, "C&oacute;digo Postal");
+		zipCode.setRequired(false);
+		fields.add(zipCode);
+		DataSourceField imageName = new DataSourceTextField(IMAGE_NAME, "Codigo Imagen");
+		imageName.setRequired(false);
+		imageName.setHidden(true);
+		fields.add(imageName);
 		
 		return fields;
 	}
@@ -86,6 +100,9 @@ public class UserConfigurationDataSource extends GenericGwtRpcDataSource<UserDTO
 		dto.setPhone(rec.getAttribute(PHONE));		
 		dto.setUserName(rec.getAttribute(USER_NAME));
 		dto.setZipCode(rec.getAttribute(ZIP_CODE));		
+		dto.setImageName(rec.getAttribute(IMAGE_NAME));
+		
+		Window.alert("Copy values: " + dto.getImageName());
 	}
 
 	@Override
@@ -102,6 +119,7 @@ public class UserConfigurationDataSource extends GenericGwtRpcDataSource<UserDTO
 		rec.setAttribute(PHONE, dto.getPhone());		
 		rec.setAttribute(USER_NAME, dto.getUserName());
 		rec.setAttribute(ZIP_CODE, dto.getZipCode());
+		rec.setAttribute(IMAGE_NAME, dto.getImageName());
 	}
 
 	@Override
