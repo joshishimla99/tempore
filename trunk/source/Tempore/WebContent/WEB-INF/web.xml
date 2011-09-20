@@ -75,25 +75,17 @@
 		<param-name>slowUploads</param-name>
 		<param-value>true</param-value>
 	</context-param>
-	<servlet>
-		<servlet-name>newImageUploadServlet</servlet-name>
-		<servlet-class>ar.fi.uba.tempore.gwt.server.image.NewUpploadImageServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>newImageUploadServlet</servlet-name>
-		<url-pattern>/uploadImage.upld</url-pattern>
-	</servlet-mapping>
+	
 	
 	<servlet>
-		<servlet-name>imageDownloadServlet</servlet-name>
-		<servlet-class>ar.fi.uba.tempore.gwt.server.image.DonwloadImageServlet</servlet-class>
+		<servlet-name>newImageUploadServlet</servlet-name>
+		<servlet-class>ar.fi.uba.tempore.gwt.server.image.ImageServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>imageDownloadServlet</servlet-name>
-		<url-pattern>/download.img</url-pattern>
+		<servlet-name>newImageUploadServlet</servlet-name>
+		<url-pattern>/imageServlet.img</url-pattern>
 	</servlet-mapping>
-
-
+	
 
 	<!-- Default page to serve -->
 	<welcome-file-list>
