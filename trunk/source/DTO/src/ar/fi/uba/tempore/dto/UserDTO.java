@@ -17,6 +17,7 @@ public class UserDTO implements IsSerializable{
 	private String zipCode;
 	private String userName;
 	private String password;
+	private String imageName;
 	
 	public String getName() {
 		return name;
@@ -83,6 +84,12 @@ public class UserDTO implements IsSerializable{
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public String getImageName() {
+		return imageName;
+	}
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
 	}
 	
 }
