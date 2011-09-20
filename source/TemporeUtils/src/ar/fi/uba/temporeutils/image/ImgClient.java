@@ -16,8 +16,8 @@ import com.smartgwt.client.widgets.layout.VLayout;
 
 public class ImgClient extends VLayout implements UpdateImgHandler {
 
-	private static final String DOWNLOAD_URL = "http://localhost:8080/Tempore/download.img?";
-	private static final String UPLOAD_URL = "uploadImage.upld?";
+	private static final String DOWNLOAD_URL = "http://localhost:8080/Tempore/imageServlet.img?";//GET
+	private static final String UPLOAD_URL = "imageServlet.img?";//POST
 	private static final String DEFAULT_IMAGE = "../images/unknownClient.jpg";
 	private static final String FRAME_RESPONSE = "frameResponse";
 	private List<UpdateImgHandler> listeners = new ArrayList<UpdateImgHandler>();
@@ -26,20 +26,10 @@ public class ImgClient extends VLayout implements UpdateImgHandler {
 	private String imgFileName;
 	
 	
-	public ImgClient (String clientId){
+	public ImgClient (String fileName){
 		addUploadJSNIListener(this);
 		
-		updateImage(clientId);
-		
-//		img.setContents("<IFRAME name='"+FRAME_RESPONSE+"'></IFRAME>");
-		img.setHeight100();
-		img.setWidth100();
-		
-		final Canvas canvas = new Canvas();
-		
-		canvas.setWidth(10);
-		canvas.setHeight(10);
-		canvas.setContents("<IFRAME name='"+FRAME_RESPONSE+"' style='width:0;height:0;border:0'></IFRAME>");
+		updateImage(fileName);
 		
 		//Formulario
 		final DynamicForm form = new DynamicForm();
@@ -47,7 +37,7 @@ public class ImgClient extends VLayout implements UpdateImgHandler {
 		form.setMethod(FormMethod.POST);
 		form.setAction(UPLOAD_URL);
 		form.setTarget(FRAME_RESPONSE);
-		
+
 		final UploadItem upload = new UploadItem("Imagen");
 		upload.addChangeHandler(new ChangeHandler() {
 			@Override
@@ -55,15 +45,24 @@ public class ImgClient extends VLayout implements UpdateImgHandler {
 				form.submitForm();
 			}
 		});
-
 		form.setFields(upload);
+		
+		img.setBorder("2px");
+		img.setHeight100();
+		img.setWidth100();
+
+		final Canvas canvas = new Canvas();
+		canvas.setWidth(10);
+		canvas.setHeight(10);
+		canvas.setContents("<IFRAME name='"+FRAME_RESPONSE+"' style='width:0;height:0;border:0'></IFRAME>");
 		
 		
 		this.setAlign(Alignment.CENTER);
 		this.setMembersMargin(10);
 		
-		this.addMember(img);
+		this.setBorder("1px");
 		this.addMember(canvas);
+		this.addMember(img);
 		this.addMember(form);
 	}
 	
@@ -99,6 +98,10 @@ public class ImgClient extends VLayout implements UpdateImgHandler {
 		}
 	}
 	
+	/**
+	 * Codigo nativo de Javascript para que se publique el llamado a un metodo GWT
+	 * @param x: Nombre del archivo creado
+	 */
 	public native void addUploadJSNIListener(ImgClient x)/*-{
 		$wnd.uploadSuccess = function (param) {
 			x.@ar.fi.uba.temporeutils.image.ImgClient::onUpdatedImg(Ljava/lang/String;)(param)
