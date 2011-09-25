@@ -17,5 +17,9 @@
 		<class-a>ar.fi.uba.tempore.dto.ClientDTO</class-a>
 		<class-b>ar.fi.uba.tempore.entity.Client</class-b>
 	</mapping>
+	<mapping>
+		<class-a>ar.fi.uba.tempore.dto.TaskTimeDTO</class-a>
+		<class-b>ar.fi.uba.tempore.entity.Task</class-b>
+	</mapping>
 	
 </mappings>
