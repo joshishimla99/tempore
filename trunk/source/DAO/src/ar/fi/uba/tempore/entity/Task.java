@@ -26,6 +26,7 @@ public class Task implements Serializable {
 	private Integer id;
 	private String name;
 	private String description;
+	private Integer taskId;
 	
 	private TaskType taskType;
 	private Project project;
@@ -87,5 +88,13 @@ public class Task implements Serializable {
 	}
 	public void setTaskUserList(List<TaskUser> taskUserList) {
 		this.taskUserList = taskUserList;
+	}
+	
+	@Column(name="taskId")
+	public void setTaskId(Integer parentId) {
+		this.taskId = parentId;
+	}
+	public Integer getTaskId() {
+		return taskId;
 	}
 }
