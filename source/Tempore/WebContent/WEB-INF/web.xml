@@ -64,6 +64,15 @@
 		<servlet-name>taskServlet</servlet-name>
 		<url-pattern>/tempore/TaskServicesClient</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>taskTimeServlet</servlet-name>
+		<servlet-class>ar.fi.uba.tempore.gwt.server.TaskTimeServicesImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>taskTimeServlet</servlet-name>
+		<url-pattern>/tempore/TaskTimeServicesClient</url-pattern>
+	</servlet-mapping>
 
 
 	<!-- IMAGES SERVLETS -->
@@ -126,6 +135,15 @@
 	<servlet-mapping>
 		<servlet-name>ProjectStateServicesClient</servlet-name>
 		<url-pattern>/tempore/ProjectStateServicesClient</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>TaskTimeServicesClient</servlet-name>
+		<servlet-class>ar.fi.uba.tempore.gwt.server.TaskTimeServicesImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TaskTimeServicesClient</servlet-name>
+		<url-pattern>/tempore/TaskTimeServicesClient</url-pattern>
 	</servlet-mapping>
 
 
