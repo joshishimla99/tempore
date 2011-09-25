@@ -16,16 +16,13 @@ public class WeekGridTime extends VLayout{
 		calendar = new TimeCalendar();                 
 		calendar.addDoubleClickHandler(new DoubleClickHandler() {
 			public void onDoubleClick(DoubleClickEvent event) {
-				new AddTaskWindow(calendar).show();
-				
+				new AddTaskWindow(calendar).show();				
 			}
 		});
 
          this.addChild(calendar);  
         calendar.redraw();  		
-	}
-	
-	
+	}	
 
 	public TimeCalendar getCalendar() {
 		return calendar;

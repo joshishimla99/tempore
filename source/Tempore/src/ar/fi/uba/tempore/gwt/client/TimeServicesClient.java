@@ -1,11 +1,11 @@
 package ar.fi.uba.tempore.gwt.client;
-
+import ar.fi.uba.tempore.dto.TaskUserDTO;
+import ar.fi.uba.temporeutils.listgrid.GenericGwtRpcDataSourceService;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 @RemoteServiceRelativePath("TimeServicesClient")
-public interface TimeServicesClient extends RemoteService {
+public interface TimeServicesClient extends GenericGwtRpcDataSourceService<TaskUserDTO>{
 	/**
 	 * Utility class for simplifying access to the instance of async service.
 	 */
@@ -18,4 +18,5 @@ public interface TimeServicesClient extends RemoteService {
 			return instance;
 		}
 	}
+
 }
