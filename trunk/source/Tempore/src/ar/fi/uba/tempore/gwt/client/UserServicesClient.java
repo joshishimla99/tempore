@@ -17,6 +17,8 @@ public interface UserServicesClient extends GenericGwtRpcDataSourceService<UserD
 			return instance;
 		}
 	}
+	
+	public UserDTO validateUser (String userName, String password);
 }
 
 

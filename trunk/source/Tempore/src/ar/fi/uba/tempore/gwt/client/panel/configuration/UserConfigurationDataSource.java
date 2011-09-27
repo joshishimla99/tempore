@@ -3,8 +3,6 @@ package ar.fi.uba.tempore.gwt.client.panel.configuration;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.naming.factory.DataSourceLinkFactory.DataSourceHandler;
-
 import ar.fi.uba.tempore.dto.UserDTO;
 import ar.fi.uba.tempore.gwt.client.UserServicesClient;
 import ar.fi.uba.tempore.gwt.client.UserServicesClientAsync;
@@ -33,6 +31,7 @@ public class UserConfigurationDataSource extends GenericGwtRpcDataSource<UserDTO
 	public static final String PHONE = "phoneCol";
 	public static final String ZIP_CODE = "zipCodeCol";
 	public static final String IMAGE_NAME = "imageName";
+	//TODO falta saber si es cliente o no
 	
 
 	public static UserConfigurationDataSource getInstance(){
@@ -90,7 +89,6 @@ public class UserConfigurationDataSource extends GenericGwtRpcDataSource<UserDTO
 	public void copyValues(ListGridRecord rec, UserDTO dto) {
 		dto.setId(rec.getAttributeAsInt(ID));
 		dto.setAddress(rec.getAttribute(ADDRESS));
-		//dto.setClient(rec.getAttributeAsBoolean(IS_CLIENT));
 		dto.setCompany(rec.getAttribute(COMPANY));
 		dto.setCountry(rec.getAttribute(COUNTRY));
 		dto.setEmail(rec.getAttribute(EMAIL));
@@ -101,15 +99,12 @@ public class UserConfigurationDataSource extends GenericGwtRpcDataSource<UserDTO
 		dto.setUserName(rec.getAttribute(USER_NAME));
 		dto.setZipCode(rec.getAttribute(ZIP_CODE));		
 		dto.setImageName(rec.getAttribute(IMAGE_NAME));
-		
-		Window.alert("Copy values: " + dto.getImageName());
 	}
 
 	@Override
 	public void copyValues(UserDTO dto, ListGridRecord rec) {
 		rec.setAttribute(ID, dto.getId());
 		rec.setAttribute(ADDRESS, dto.getAddress());
-		//rec.setAttribute(IS_CLIENT, dto.isClient());
 		rec.setAttribute(COMPANY, dto.getCompany());
 		rec.setAttribute(COUNTRY, dto.getCountry());
 		rec.setAttribute(EMAIL, dto.getEmail());

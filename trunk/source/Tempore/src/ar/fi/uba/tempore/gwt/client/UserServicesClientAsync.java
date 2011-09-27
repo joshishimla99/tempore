@@ -1,9 +1,13 @@
 package ar.fi.uba.tempore.gwt.client;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
+
 import ar.fi.uba.tempore.dto.UserDTO;
 import ar.fi.uba.temporeutils.listgrid.GenericGwtRpcDataSourceServiceAsync;
 
 
 public interface UserServicesClientAsync extends GenericGwtRpcDataSourceServiceAsync<UserDTO>{
+
+	void validateUser(String userName, String password, AsyncCallback<UserDTO> callback);
 
 }

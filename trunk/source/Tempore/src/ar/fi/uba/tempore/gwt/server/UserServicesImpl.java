@@ -20,6 +20,17 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 	private final DozerBeanMapper mapper = new DozerBeanMapper();
 	private final UserDAO uDAO = new UserDAO(); 
 
+	
+	public UserDTO validateUser (String userName, String password){
+		UserDTO dto = null;
+		User user = uDAO.validateUser(userName, password);
+		if (user != null) {
+			dto = mapper.map(user, UserDTO.class);
+		}
+		
+		return dto;
+	}
+	
 	@Override
 	public List<UserDTO> fetch() {
 		log.info("FETCH - Users");

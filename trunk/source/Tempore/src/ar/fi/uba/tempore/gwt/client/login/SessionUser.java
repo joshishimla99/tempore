@@ -1,5 +1,11 @@
 package ar.fi.uba.tempore.gwt.client.login;
 
+import ar.fi.uba.tempore.dto.UserDTO;
+import ar.fi.uba.tempore.gwt.client.UserServicesClient;
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.util.SC;
+
 
 /**
  * Clase singleton que contiene la informacion del usuario que esta logeado en la sesion
@@ -10,58 +16,22 @@ public class SessionUser {
 
 	static private SessionUser instance = null;
 	
-	private String username;
-	private String role;
-	private String name;
-	private String lastname;
-	private String id;
+	private UserDTO user;
 	
 	private SessionUser(){}
-
-	public SessionUser getInstance(){
+	public static SessionUser getInstance(){
 		if (instance == null){
-			instance = new SessionUser();
+			instance = new SessionUser();			
 		}
 		return instance;
 	}
+		
+	public UserDTO getUser() {
+		return user;
+	}
+
+	public void setUser(UserDTO user) {
+		this.user = user;
+	}
 	
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 }

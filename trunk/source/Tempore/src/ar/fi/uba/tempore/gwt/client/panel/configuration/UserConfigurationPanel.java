@@ -4,7 +4,6 @@ import ar.fi.uba.temporeutils.image.ImgClient;
 import ar.fi.uba.temporeutils.image.UpdateImgHandler;
 
 import com.smartgwt.client.types.Alignment;
-import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Label;
@@ -61,28 +60,27 @@ public class UserConfigurationPanel extends Canvas {
 				final TextItem n7 = new TextItem(UserConfigurationDataSource.PHONE);
 				final TextItem n8 = new TextItem(UserConfigurationDataSource.ZIP_CODE);				
 				
-				final DynamicForm df = new DynamicForm();  				
-				df.setNumCols(4);  
-				df.setDataSource(dataSource);				
+				final DynamicForm form = new DynamicForm();  				
+				form.setNumCols(4);  
+				form.setDataSource(dataSource);				
 				
-				df.setFields(n0,n1,n2,n3,n4,n5,n6,n7,n8,field);
-				df.addDrawHandler(new DrawHandler() {  
+				form.setFields(n0,n1,n2,n3,n4,n5,n6,n7,n8,field);
+				form.addDrawHandler(new DrawHandler() {  
 					public void onDraw(DrawEvent event) {  
-						df.editRecord(record);  
+						form.editRecord(record);  
 					}  
 				});  
 				
 				
 				
 				final ImgClient image = new ImgClient(record.getAttribute(UserConfigurationDataSource.IMAGE_NAME));
-				image.setWidth(200);
-				image.setHeight(120);
+				image.setWidth(180);
+				image.setHeight(160);
 				image.addUpdateImageHandler(new UpdateImgHandler() {
 					@Override
 					public void onUpdatedImg(String fileName) {
 						//Actualizo el nombre del archivo
 						field.setValue(fileName);
-						SC.say("Actualizo archivo: " + fileName);
 					}
 				});				
 				
@@ -91,7 +89,7 @@ public class UserConfigurationPanel extends Canvas {
 				IButton saveButton = new IButton("Guardar");  
 				saveButton.addClickHandler(new ClickHandler() {  
 					public void onClick(ClickEvent event) {  
-						df.saveData();  
+						form.saveData();  
 					}  
 				});  
 
@@ -105,18 +103,17 @@ public class UserConfigurationPanel extends Canvas {
 				//LAYOUTS 
 				
 				//Botones
-				final HLayout hLayout = new HLayout(10);  
-				hLayout.setAlign(Alignment.CENTER);  
-				hLayout.addMember(saveButton);  
-				hLayout.addMember(cancelButton);  
+				final HLayout hLayoutBtn = new HLayout(10);  
+				hLayoutBtn.setAlign(Alignment.CENTER);  
+				hLayoutBtn.addMember(saveButton);  
+				hLayoutBtn.addMember(cancelButton);  
 
 				
 				final VLayout vLayout = new VLayout(5);
 				vLayout.setWidth("80%");
 				vLayout.setPadding(15);
-				//vLayout.setMargin(20);
-				vLayout.addMember(df);  
-				vLayout.addMember(hLayout);
+				vLayout.addMember(form);  
+				vLayout.addMember(hLayoutBtn);
 				
 				HLayout hLayoutRoot = new HLayout(10);
 				hLayoutRoot.addMember(vLayout);
@@ -129,11 +126,7 @@ public class UserConfigurationPanel extends Canvas {
 		grid.setWidth100();
 		grid.setHeight100();		
 		grid.setAutoFetchData(true);
-		//		grid.setCanEdit(true);
-		//		grid.setEditEvent(ListGridEditEvent.CLICK);		
-		//		grid.setListEndEditAction(RowEndEditAction.NEXT);
 		grid.setAutoSaveEdits(true);
-
 
 		ListGridField user = new ListGridField (UserConfigurationDataSource.USER_NAME);
 		ListGridField name = new ListGridField (UserConfigurationDataSource.NAME);
