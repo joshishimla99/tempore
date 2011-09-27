@@ -1,6 +1,8 @@
 package ar.fi.uba.tempore.dto;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
@@ -19,7 +21,7 @@ public class ProjectDTO implements IsSerializable {
 
 	//private List<Task> taskList = new ArrayList<Task>();
 	//private List<Client> clientList = new ArrayList<Client>();
-	//private List<UserProject> userProjectList = new ArrayList<UserProject>();
+	private List<UserProjectDTO> userProjectList = new ArrayList<UserProjectDTO>();
 
 	public Integer getId() {
 		return id;
@@ -64,15 +66,15 @@ public class ProjectDTO implements IsSerializable {
 	public void addClient(Client client) {
 		this.getClientList().add(client);
 	}
-
-	public List<UserProject> getUserProjectList() {
+*/
+	public List<UserProjectDTO> getUserProjectList() {
 		return userProjectList;
 	}
 
-	public void setUserProjectList(List<UserProject> userProjectList) {
+	public void setUserProjectList(List<UserProjectDTO> userProjectList) {
 		this.userProjectList = userProjectList;
 	}
-*/
+
 	public String getDescription() {
 		return description;
 	}
