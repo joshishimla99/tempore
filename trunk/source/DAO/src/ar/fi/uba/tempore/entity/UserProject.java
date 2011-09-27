@@ -24,6 +24,7 @@ public class UserProject implements Serializable {
 
 	private static final long serialVersionUID = -5123217767892856110L;
 	private Integer id;
+	private Integer owner;
 	private User user;
 	private Project project;
 	private List<Alert> alertList = new ArrayList<Alert>();
@@ -84,5 +85,13 @@ public class UserProject implements Serializable {
 	}
 	public void setRoleList(List<Role> roleList) {
 		this.roleList = roleList;
+	}
+	
+	@Column(name="owner")
+	public Integer getOwner() {
+		return owner;
+	}
+	public void setOwner(Integer owner) {
+		this.owner = owner;
 	}
 }
