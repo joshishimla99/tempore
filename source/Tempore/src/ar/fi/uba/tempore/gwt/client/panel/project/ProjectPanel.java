@@ -13,6 +13,8 @@ import com.smartgwt.client.types.ListGridFieldType;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
+import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
+import com.smartgwt.client.widgets.grid.events.DataArrivedHandler;
 import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
 import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
 
@@ -50,7 +52,7 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 		this.setShowFilterEditor(false);
 		this.setFilterOnKeypress(true);
 		this.setGroupStartOpen(GroupStartOpen.ALL);
-
+	
 		//Columnas a ser visualizadas
 		ListGridField image = new ListGridField("image");
 		image.setType(ListGridFieldType.ICON);
@@ -68,6 +70,14 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 			@Override
 			public void onRecordClick(RecordClickEvent event) {				
 				notifyObservers();				
+			}
+		});
+		
+		//dejo seleccionado el primer elemento
+		this.addDataArrivedHandler(new DataArrivedHandler() {
+			@Override
+			public void onDataArrived(DataArrivedEvent event) {
+				selectSingleRecord(0);
 			}
 		});
 		
