@@ -3,18 +3,19 @@ package ar.fi.uba.tempore.dto;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class TaskDTO implements IsSerializable {
-	private String id;
+	private Integer id;
 	private String name;
 	private String description;
-	private float estimatedHs;
+	private int budget;
 	private float realHs;
-	private String status;
+	private TaskTypeDTO taskTypeDTO;
+	private ProjectDTO project;
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -34,12 +35,12 @@ public class TaskDTO implements IsSerializable {
 		this.description = description;
 	}
 
-	public float getEstimatedHs() {
-		return estimatedHs;
+	public int getBudget() {
+		return budget;
 	}
 
-	public void setEstimatedHs(float estimatedHs) {
-		this.estimatedHs = estimatedHs;
+	public void setBudget(int budget) {
+		this.budget = budget;
 	}
 
 	public float getRealHs() {
@@ -50,12 +51,20 @@ public class TaskDTO implements IsSerializable {
 		this.realHs = realHs;
 	}
 
-	public String getStatus() {
-		return status;
+	public ProjectDTO getProject() {
+		return project;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setProject(ProjectDTO project) {
+		this.project = project;
+	}
+
+	public void setTaskTypeDTO(TaskTypeDTO taskTypeDTO) {
+		this.taskTypeDTO = taskTypeDTO;
+	}
+
+	public TaskTypeDTO getTaskTypeDTO() {
+		return taskTypeDTO;
 	}
 
 }
