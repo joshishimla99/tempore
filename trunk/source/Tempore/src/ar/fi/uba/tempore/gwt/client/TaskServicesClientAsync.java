@@ -8,12 +8,12 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface TaskServicesClientAsync {
 
-	void getChildTask(String id, AsyncCallback<List<TaskDTO>> callback);
+	void getChildTask(Integer idProject, Integer idTask, AsyncCallback<List<TaskDTO>> callback);
 
-	void addTask(TaskDTO task, AsyncCallback<Void> callback);
+	void addTask(TaskDTO task, AsyncCallback<TaskDTO> callback);
 
 	void deleteTask(String id, AsyncCallback<Void> callback);
 
-	void updateTask(TaskDTO task, AsyncCallback<Void> callback);
+	void updateTask(TaskDTO task, AsyncCallback<TaskDTO> callback);
 
 }

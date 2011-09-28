@@ -24,11 +24,11 @@ public interface TaskServicesClient extends RemoteService {
 		}
 	}
 
-	public List<TaskDTO> getChildTask(String id);
+	public List<TaskDTO> getChildTask(Integer idProject, Integer idTask);
 
-	public void addTask(TaskDTO task);
+	public TaskDTO addTask(TaskDTO task);
 
 	public void deleteTask(String id);
 
-	public void updateTask(TaskDTO task);
+	public TaskDTO updateTask(TaskDTO task);
 }
