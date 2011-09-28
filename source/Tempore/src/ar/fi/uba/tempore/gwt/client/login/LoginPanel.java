@@ -46,6 +46,7 @@ public class LoginPanel  extends Composite{
 		login = new TextItem();
 		login.setName("login");
 		login.setTitle("Usuario");
+		login.setSelectOnFocus(true);
 		
 		mdp = new PasswordItem();
 		mdp.setName("mdp");
@@ -72,7 +73,7 @@ public class LoginPanel  extends Composite{
             }
 
         });
-        formLogin.focusInItem("login");
+        formLogin.setAutoFocus(true);
 		formLogin.setFields(headerTitle, login,mdp,validateItem);
 		
 		/*
