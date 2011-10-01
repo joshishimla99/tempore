@@ -1,6 +1,5 @@
 package ar.fi.uba.tempore.gwt.client.panel.task;
 
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class EditTaskModalWindow {
 	public EditTaskModalWindow(final Integer id, String name, String description, String estimation, String type, final Integer projectId){
 		winModal = new Window();  
         winModal.setWidth(360);  
-        winModal.setHeight(265);  
+        winModal.setHeight(305);  
         winModal.setTitle("Editar Tarea");  
         winModal.setShowMinimizeButton(false);  
         winModal.setIsModal(true);  
@@ -50,6 +49,10 @@ public class EditTaskModalWindow {
         form.setWidth100();  
         form.setPadding(5);  
         form.setLayoutAlign(VerticalAlignment.BOTTOM);  
+        
+        final TextItem idLabel = new TextItem("N&uacute;mero");
+        idLabel.setValue(String.valueOf(id));
+        idLabel.setDisabled(true);
         
      // Nombre de la tarea
 		final TextItem taskNameLabel = new TextItem();
@@ -140,14 +143,13 @@ public class EditTaskModalWindow {
 			}
 		});  
 		
-        form.setFields(taskNameLabel,taskDescription, estimatedTimeLabel, taskType);  
+        form.setFields(idLabel, taskNameLabel,taskDescription, estimatedTimeLabel, taskType);  
         VLayout vLayout = new VLayout();
         HLayout buttonLayout = new HLayout();
         buttonLayout.setMembersMargin(10);
         buttonLayout.setAlign(Alignment.CENTER);
         buttonLayout.addMember(editTaskButton);
         buttonLayout.addMember(cancelTaskButton);
-        
         vLayout.addMember(form);
         vLayout.addMember(buttonLayout);
         
