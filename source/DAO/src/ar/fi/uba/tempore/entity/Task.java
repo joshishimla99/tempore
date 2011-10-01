@@ -27,6 +27,7 @@ public class Task implements Serializable {
 	private String name;
 	private String description;
 	private Integer taskId;
+	private Integer budget;
 	
 	private TaskType taskType;
 	private Project project;
@@ -57,6 +58,14 @@ public class Task implements Serializable {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	@Column(name = "budget")
+	public Integer getBudget() {
+		return budget;
+	}
+	public void setBudget(Integer budget) {
+		this.budget = budget;
 	}
 	
 	@ManyToOne
