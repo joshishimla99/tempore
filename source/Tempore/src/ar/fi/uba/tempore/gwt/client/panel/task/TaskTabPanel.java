@@ -1,6 +1,5 @@
 package ar.fi.uba.tempore.gwt.client.panel.task;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -51,7 +50,8 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 	private DynamicForm form;
 	private Integer parentTaskId = null;
 	private BackButton backButton;
-	private SectionItem  titleTask;
+	private int level =0;
+	private SectionItem  titleTask, firstLevelTask, secondLevelTask;
 	private ProjectDTO selectedProjectDTO;
 
 	public TaskTabPanel() {
@@ -71,7 +71,6 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		if (selectedProjectDTO != null) {
 			titleTask.setDefaultValue(selectedProjectDTO.getName());
 			form.showItem("titleTask");
-			portalLayout.cleanLayout();
 			TaskServicesClient.Util.getInstance().getChildTask(selectedProjectDTO.getId(), null, new AsyncCallback<List<TaskDTO>>() {
 
 				@Override
@@ -129,6 +128,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 	}
 
 	public void copy(List<TaskDTO> taskList){
+		portalLayout.cleanLayout();
 		for (TaskDTO taskDTO : taskList) {
 			Task newTask = new Task(taskDTO.getId(), taskDTO.getName(), taskDTO.getBudget(), taskDTO.getDescription(), taskDTO.getTaskTypeDTO().getName());
 			portalLayout.addTask(newTask);
@@ -160,7 +160,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 	 * Boton back
 	 */
 
-	public static class BackButton extends ImgButton {
+	public class BackButton extends ImgButton {
 		public BackButton() {
 			setSrc("../images/32x32/Back.png");
 			setWidth(32);
@@ -172,11 +172,39 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		}
 
 		private void goBack() {
-			// TODO Auto-generated method stub
+			if (level > 0){
+				if (level == 1){
+					parentTaskId = null;
+				}
+				TaskServicesClient.Util.getInstance().getChildTask(selectedProjectDTO.getId(), parentTaskId, new AsyncCallback<List<TaskDTO>>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						SC.say("Ha ocurrido un error al intentar obtener las tareas del nivel superior");
+					}
+
+					@Override
+					public void onSuccess(List<TaskDTO> result) {
+						--level;
+						parentTaskId = result.get(0).getTaskId();
+						copy(result);
+						
+					}
+				});
+			}
 
 		}
 	}
 
+	public SectionItem getSectionItem(){
+		if (this.level == 1){
+			this.firstLevelTask = new SectionItem();
+			return this.firstLevelTask;
+		} 
+		this.secondLevelTask = new SectionItem();
+		return secondLevelTask;
+	}
+	
 	/**
 	 * Handler to create new task
 	 * 
@@ -297,6 +325,9 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 			taskTypeDTO.setName(form.getValueAsString("taskType"));
 			task.setTaskTypeDTO(taskTypeDTO);
 			task.setProject(selectedProjectDTO);
+			if (level > 0){
+				task.setTaskId(parentTaskId);
+			}
 			
 			TaskServicesClient.Util.getInstance().addTask(task , new AsyncCallback<TaskDTO>() {
 
@@ -423,7 +454,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		private Integer id;
 		private String realHs;
 		
-		public Task(Integer taskId, String taskName, int taskEstimation, String taskDescription, String taskType) {
+		public Task(Integer taskId, final String taskName, int taskEstimation, String taskDescription, String taskType) {
 
 			this.id = taskId;
 			this.name = taskName;
@@ -459,6 +490,9 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 						@Override
 						public void onSuccess(List<TaskDTO> result) {
 							parentTaskId = id;
+							SC.say(String.valueOf(id));
+							++level;
+							getSectionItem().setDefaultValue(taskName);
 							copy(result);
 						}
 						

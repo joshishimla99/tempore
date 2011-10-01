@@ -35,6 +35,7 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 			Project project = new Project();
 			project.setId(idProject);
 			exampleInstance.setProject(project);
+			exampleInstance.setTaskId(null);
 			taskList = taskDAO.findByExample(exampleInstance);
 		} else {
 			taskList = taskDAO.getChildTask(idTask);
