@@ -45,17 +45,9 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 	
 	private DynamicForm form;
 
-	
-	
 	public ProjectTabPanel() {
 		super();
 		updateContent();
-	}
-	
-	@Override
-	public void destroy() {
-		ProjectPanel.getInstance().removeObserver(this);
-		super.destroy();
 	}
 	
 	public void updateContent() {
@@ -278,4 +270,6 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		//TODO falta Client
 		to.setValue(STATE_FIELD, from.getProjectState().getId());
 	}
+
+
 }
