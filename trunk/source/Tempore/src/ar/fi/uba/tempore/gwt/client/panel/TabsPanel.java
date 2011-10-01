@@ -10,6 +10,8 @@ import ar.fi.uba.tempore.gwt.client.panel.time.TimeTabPanel;
 
 import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;
+import com.smartgwt.client.widgets.tab.events.TabSelectedEvent;
+import com.smartgwt.client.widgets.tab.events.TabSelectedHandler;
 
 public class TabsPanel extends TabSet {
 	
@@ -28,42 +30,53 @@ public class TabsPanel extends TabSet {
 		
 		int tabWidth = 100;
 		
-		Tab timeTab = new Tab("Tempore  ", "../images/ico/schedule.ico");
+		final Tab timeTab = new Tab("Tempore  ", "../images/ico/schedule.ico");
 		timeTab.setWidth(tabWidth);
 		timeTab.setPane(new TimeTabPanel());
 		
-		Tab resourceTab = new Tab("Recursos  ", "../images/ico/user_group.ico");
+		final Tab resourceTab = new Tab("Recursos  ", "../images/ico/user_group.ico");
 		resourceTab.setWidth(tabWidth);   
 		resourceTab.setPane(new ResourceTabPanel());
 		
-		Tab projectTab = new Tab("Proyectos  ", "../images/ico/briefcase.ico");
+		final Tab projectTab = new Tab("Proyectos  ", "../images/ico/briefcase.ico");
 		projectTab.setWidth(tabWidth);   
 		projectTab.setPane(new ProjectTabPanel());
 		
-		Tab taskTab = new Tab("Tareas  ", "../images/ico/notes.ico");
+		final Tab taskTab = new Tab("Tareas  ", "../images/ico/notes.ico");
 		taskTab.setWidth(tabWidth);
 		taskTab.setPane(new TaskTabPanel());
 		
-		Tab reportTab = new Tab("Reportes  ", "../images/ico/report.ico");
+		final Tab reportTab = new Tab("Reportes  ", "../images/ico/report.ico");
 		reportTab.setWidth(tabWidth);
 		reportTab.setPane(new ReportTabPanel());
 		
-		Tab configurationTab = new Tab("Configuraci&oacute;n  ", "../images/ico/wrench.ico");
+		final Tab configurationTab = new Tab("Configuraci&oacute;n  ", "../images/ico/wrench.ico");
 		configurationTab.setWidth(tabWidth);
 		configurationTab.setPane(new ConfigurationTabPanel());
 		
-		Tab helpTab = new Tab("Ayuda  ", "../images/ico/help1.ico");
+		final Tab helpTab = new Tab("Ayuda  ", "../images/ico/help1.ico");
 		helpTab.setWidth(tabWidth);
 		helpTab.setPane(new HelpTabPanel());
+	
 		
-//		this.addTabSelectedHandler(new TabSelectedHandler() {
-//            public void onTabSelected(TabSelectedEvent event) {
-//                Tab selectedTab = event.getTab();
-//                SubTabPanel subTabPanel = (SubTabPanel) selectedTab.getPane();
-//                subTabPanel.loadChildPanels();
-//            }
-//        });
-
+		//deteccion del select y el unselected de cada Tab
+		addTabSelectedHandler(new TabSelectedHandler() {
+			@Override
+			public void onTabSelected(TabSelectedEvent event) {
+				int tabsCount = getTabs().length;
+				for (int i=0;i<tabsCount;i++){
+					TabsPanelContainer subTabPanel = (TabsPanelContainer) event.getTabPane();					
+					if (event.getTabNum() == i){
+						//seleccionado
+						//subTabPanel.selected();
+					} else {
+						//deseleccionado
+						//subTabPanel.deselected();
+					}
+				}
+			}
+		});
+		
 		setTabs(timeTab, projectTab, resourceTab, taskTab, reportTab, configurationTab, helpTab);
 		selectTab(5);
 	}
