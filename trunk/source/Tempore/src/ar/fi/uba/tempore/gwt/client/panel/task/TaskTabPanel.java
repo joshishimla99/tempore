@@ -479,7 +479,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 				
 				@Override
 				public void onDoubleClick(DoubleClickEvent event) {
-					TaskServicesClient.Util.getInstance().getChildTask(id, selectedProjectDTO.getId(), new AsyncCallback<List<TaskDTO>>(){
+					TaskServicesClient.Util.getInstance().getChildTask(selectedProjectDTO.getId(), id, new AsyncCallback<List<TaskDTO>>(){
 
 						@Override
 						public void onFailure(Throwable caught) {
