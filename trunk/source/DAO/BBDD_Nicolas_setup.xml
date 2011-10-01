@@ -20,8 +20,8 @@
 	<PROJECTSTATE  id='3' name='UAT' description='Proyecto en UAT'/>
 	<PROJECTSTATE  id='4' name='Cerrado' description='Proyecto cerrado'/>
 	
-	<PROJECT id='1' name='Tempore' projectStateId='1' description='Trabajo profesional sobre contador de horas' initDate='2011-02-09'  budget='50000'/>
-	<PROJECT id='2' name='Google+' projectStateId='2' description='Trabajo demo' initDate='2010-05-01'  budget='77000'/>
+	<PROJECT id='1' name='Tempore' projectStateId='1' description='Trabajo profesional sobre contador de horas' initDate='2011-02-09' endDate='2012-07-01' budget='65555'/>
+	<PROJECT id='2' name='Google+' projectStateId='2' description='Trabajo demo' initDate='2010-05-01' endDate='2012-07-01' budget='77000'/>
 	
 	<PROJECTCLIENT clientId='1' projectId='1'/>
 	<PROJECTCLIENT clientId='1' projectId='2'/>
@@ -45,18 +45,25 @@
 	<USERPROJECT id='3' userId='12' projectId='2' owner='1'/>
 	<USERPROJECT id='4' userId='13' projectId='2' owner='0'/>
 	
-	<ALERT id='1' name='Analista' 	description='Analista de Negocios' 	userProjectId='1'/>
-	<ALERT id='2' name='PM' 		description='Project Manager' 		userProjectId='1'/>
-	<ALERT id='3' name='Desarrollador' description='Desarrollador' 		userProjectId='2'/>
+	<ALERT id='1' name='Analista' 		description='Analista de Negocios' 	userProjectId='1'/>
+	<ALERT id='2' name='PM' 			description='Project Manager' 		userProjectId='1'/>
+	<ALERT id='3' name='Desarrollador' 	description='Desarrollador' 		userProjectId='2'/>
 	
-	<TASKTYPE id='1' name='Analisis' description='Analisis '/>
-	<TASKTYPE id='2' name='Desarrollo' description='Desarrollo de la aplicacion'/>
-	<TASKTYPE id='3' name='Soporte' description='Soporte al proyecto'/>
+	<TASKTYPE id='1' name='Analisis' 	description='Analisis '/>
+	<TASKTYPE id='2' name='Desarrollo' 	description='Desarrollo de la aplicacion'/>
+	<TASKTYPE id='3' name='Soporte' 	description='Soporte al proyecto'/>
 	
+		
 	<TASK id='1' projectId='1' taskTypeId='1' name='Analisis Riesgos' description=' asdfsdfasasd ' budget='500000'/>
 	<TASK id='2' projectId='1' taskTypeId='2' name='Implementar servicios' description=' asdff sdaf' budget='3000'/>
 	<TASK id='3' projectId='1' taskTypeId='3' name='Capacitacion de la aplicaion' description=' asdfsdffasd' budget='12322541'/>
 	<TASK id='4' projectId='2' taskTypeId='1' name='Generacion de CUSO' description='asdfasd sdaf sdf' budget='12351'/>
+	
+	<TASK id='11' taskId='1' projectId='1' taskTypeId='1' name='A-Sub Tarea 1' description='asdfasd sdaf sdf' budget='12351' />
+	<TASK id='12' taskId='1' projectId='1' taskTypeId='1' name='A-Sub Tarea 2' description='asdfasd sdaf sdf' budget='12351' />
+	<TASK id='21' taskId='2' projectId='1' taskTypeId='2' name='B-Sub Tarea 1' description='asdfasd sdaf sdf' budget='12351' />
+	<TASK id='22' taskId='2' projectId='1' taskTypeId='1' name='B-Sub Tarea 2' description='asdfasd sdaf sdf' budget='12351' />
+	<TASK id='23' taskId='2' projectId='1' taskTypeId='1' name='B-Sub Tarea 3' description='asdfasd sdaf sdf' budget='12351' />
 	
 	<TASKUSER id='1' userId='11' taskId='1' hourCount='2' date='2011-04-30' comment='-'/>
 	<TASKUSER id='2' userId='11' taskId='1' hourCount='3' date='2010-06-01' comment='-'/>

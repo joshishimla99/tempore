@@ -4,6 +4,12 @@
 	<TASK id='2' projectId='1' taskTypeId='2' name='Implementar servicios' description=' asdff sdaf'/>
 	<TASK id='3' projectId='1' taskTypeId='3' name='Capacitacion de la aplicaion' description=' asdfsdffasd' />
 	<TASK id='4' projectId='2' taskTypeId='1' name='Generacion de CUSO' description='asdfasd sdaf sdf' />
+		
+	<TASK id='21' taskId='2' projectId='1' taskTypeId='2' name='B-Sub Tarea 1' description='asdfasd sdaf sdf' budget='12351'/>
+	<TASK id='22' taskId='2' projectId='1' taskTypeId='1' name='B-Sub Tarea 2' description='asdfasd sdaf sdf' budget='12351'/>
+	<TASK id='23' taskId='2' projectId='1' taskTypeId='1' name='B-Sub Tarea 3' description='asdfasd sdaf sdf' budget='12351'/>
+	
+	
 	
 	<TASKUSER id='3' userId='11' taskId='2' hourCount='5' date='2011-04-25' comment='nfsda'/>
 	<TASKUSER id='4' userId='12' taskId='3' hourCount='1' date='2011-04-18' comment='ddfsad'/>

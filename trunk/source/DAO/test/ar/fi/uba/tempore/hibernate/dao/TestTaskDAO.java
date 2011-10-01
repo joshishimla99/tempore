@@ -18,13 +18,13 @@ import ar.fi.uba.tempore.hibernate.TestDAO;
 
 public class TestTaskDAO extends TestDAO{
 
-	private TaskDAO psDAO = new TaskDAO();
+	private TaskDAO tDAO = new TaskDAO();
 	
 	@Test
 	public void testFindId() {
 		Task actual = null;
 		try {	
-			actual = psDAO.findById(1);
+			actual = tDAO.findById(1);
 			Assert.assertEquals("No se encontro al tipo de contacto", "Analisis Riesgos"  , actual.getName());
 
 			List<TaskUser> tuList = actual.getTaskUserList();
@@ -37,7 +37,7 @@ public class TestTaskDAO extends TestDAO{
 	
 	@Test
 	public void testFindAll (){
-		List<Task> findAll = psDAO.findAll();
+		List<Task> findAll = tDAO.findAll();
 		Assert.assertEquals("La cantidad del metodo FIND-ALL es incorrecta", 4, findAll.size());
 	}
 	
@@ -45,19 +45,19 @@ public class TestTaskDAO extends TestDAO{
 	public void testMakePersistence (){
 		Task newEntity = getDemoTask();						
 
-		newEntity = psDAO.makePersistent(newEntity);		
+		newEntity = tDAO.makePersistent(newEntity);		
 		this.validResult("TASK", "Task_New.xml");
 	}
 	
 	@Test
 	public void testUpdate(){		
-		Task expected = psDAO.findById(1);
+		Task expected = tDAO.findById(1);
 		expected.setName("Tarea");
 		expected.setDescription("Descripcion de la tarea");
 		expected.setTaskType(new TaskTypeDAO().findById(2));
 		expected.setProject(new ProjectDAO().findById(2));	
 		
-		psDAO.makePersistent(expected);
+		tDAO.makePersistent(expected);
 		
 		this.validResult("TASK", "Task_Update.xml");
 	}
@@ -76,16 +76,32 @@ public class TestTaskDAO extends TestDAO{
 		Task entity = new Task();
 		entity.setName("Analisis Riesgos");
 				
-		List<Task> findByExample = psDAO.findByExample(entity);
+		List<Task> findByExample = tDAO.findByExample(entity);
 		for (Task t : findByExample){			
 
 			List<TaskUser> taskUserList = t.getTaskUserList();			
 			for (TaskUser tu : taskUserList) {
 				new TaskUserDAO().delete(tu);
 			}
-			psDAO.delete(t);
+			tDAO.delete(t);
 		}
 		this.validResult("TASK", "Task_Delete.xml");
 		this.validResult("TASKUSER", "Task_Delete.xml");
+	}
+	
+	@Test
+	public void testTaskByProject (){
+		List<Task> allTasksByProject = tDAO.getAllTasksByProject(1);
+		for (Task task : allTasksByProject) {
+			log.info(task.getName());
+		}
+	}
+	
+	@Test
+	public void testChildTask (){
+		List<Task> childTasks = tDAO.getChildTask(1, 2);
+		for (Task task : childTasks) {
+			log.info(task.getName());
+		}
 	}
 }

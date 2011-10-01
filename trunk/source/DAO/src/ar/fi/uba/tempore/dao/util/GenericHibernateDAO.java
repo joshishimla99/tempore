@@ -68,7 +68,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> {
 		crit.add(example);
 		return crit.list();
 	}
-
+	
 	/**
 	 * Guarda o Actualiza
 	 * @param entity

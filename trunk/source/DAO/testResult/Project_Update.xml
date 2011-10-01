@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
-
+	
 	<PROJECT id='1' name='Proyecto 3' projectStateId='1' description='Descripcion a' initDate='2008-12-11' endDate='2008-12-11'  budget='12.23'/>
-	<PROJECT id='2' name='Proyecto 2' projectStateId='2' description='Descripcion del proyecto 2 de TCS' initDate='2010-05-01'  budget='77000'/>
-					
+	<PROJECT id='2' name='Google+' projectStateId='2' description='Trabajo demo' initDate='2010-05-01'  budget='77000'/>
+						
 </dataset>
