@@ -4,6 +4,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class TaskDTO implements IsSerializable {
 	private Integer id;
+	private Integer taskId;
 	private String name;
 	private String description;
 	private int budget;
@@ -65,6 +66,14 @@ public class TaskDTO implements IsSerializable {
 
 	public TaskTypeDTO getTaskTypeDTO() {
 		return taskTypeDTO;
+	}
+
+	public void setTaskId(Integer taskId) {
+		this.taskId = taskId;
+	}
+
+	public Integer getTaskId() {
+		return taskId;
 	}
 
 }
