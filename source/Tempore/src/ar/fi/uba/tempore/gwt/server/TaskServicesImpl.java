@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
 
-import ar.fi.uba.tempore.dao.ProjectDAO;
 import ar.fi.uba.tempore.dao.TaskDAO;
 import ar.fi.uba.tempore.dao.TaskTypeDAO;
 import ar.fi.uba.tempore.dto.TaskDTO;
@@ -23,28 +22,17 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 	private static final long serialVersionUID = -2875888868382111997L;
 	private final TaskDAO taskDAO = new TaskDAO();
 	private final TaskTypeDAO taskTypeDAO = new TaskTypeDAO();
-	private final ProjectDAO projectDAO = new ProjectDAO();
 	private final DozerBeanMapper mapper = new DozerBeanMapper();
 	private final Logger log = Logger.getLogger(this.getClass());
 	
 	public List<TaskDTO> getChildTask(Integer idProject, Integer idTask){
-		List<Task> taskList = new ArrayList<Task>();
 		List<TaskDTO> taskDTOList = new ArrayList<TaskDTO>();
-		if (idTask == null){
-			Task exampleInstance = new Task();
-			Project project = new Project();
-			project.setId(idProject);
-			exampleInstance.setProject(project);
-			exampleInstance.setTaskId(null);
-			taskList = taskDAO.findByExample(exampleInstance);
-		} else {
-			taskList = taskDAO.getChildTask(idTask);
-		}
+		
+		List<Task> taskList = taskDAO.getChildTask(idProject, idTask); 
 		for (Task task : taskList) {
 			TaskDTO map = mapper.map(task, TaskDTO.class);
 			map.setTaskTypeDTO(mapper.map(task.getTaskType(), TaskTypeDTO.class));
 			taskDTOList.add(map);
-			
 		}
 		
 		return taskDTOList;
