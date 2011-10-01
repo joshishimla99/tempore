@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
 
-	<PROJECT id='2' name='Proyecto 2' projectStateId='2' description='Descripcion del proyecto 2 de TCS' initDate='2010-05-01'  budget='77000'/>
-	
+	<PROJECT id='2' name='Google+' projectStateId='2' description='Trabajo demo' initDate='2010-05-01'  budget='77000'/>	
+
 	<PROJECTCLIENT clientId='1' projectId='2'/>
 	
 	<USERPROJECT id='3' userId='12' projectId='2' />

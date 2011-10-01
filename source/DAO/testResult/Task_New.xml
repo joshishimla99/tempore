@@ -6,6 +6,12 @@
 	<TASK projectId='1' taskTypeId='3' name='Capacitacion de la aplicaion' description=' asdfsdffasd' />
 	<TASK projectId='2' taskTypeId='1' name='Generacion de CUSO' description='asdfasd sdaf sdf' />
 	
+	<TASK taskId='1' projectId='1' taskTypeId='1' name='A-Sub Tarea 1' description='asdfasd sdaf sdf' budget='12351'/>
+	<TASK taskId='1' projectId='1' taskTypeId='1' name='A-Sub Tarea 2' description='asdfasd sdaf sdf' budget='12351'/>
+	<TASK taskId='2' projectId='1' taskTypeId='2' name='B-Sub Tarea 1' description='asdfasd sdaf sdf' budget='12351'/>
+	<TASK taskId='2' projectId='1' taskTypeId='1' name='B-Sub Tarea 2' description='asdfasd sdaf sdf' budget='12351'/>
+	<TASK taskId='2' projectId='1' taskTypeId='1' name='B-Sub Tarea 3' description='asdfasd sdaf sdf' budget='12351'/>
+	
 	<TASK projectId='2' taskTypeId='2' name='Tarea' description='Descripcion de la tarea' />
 	
 	<TASKUSER id='1' userId='11' taskId='1' hourCount='2' date='2011-04-30' comment='-'/>

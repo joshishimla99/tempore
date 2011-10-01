@@ -34,7 +34,7 @@ public class TestProjectDAO extends TestDAO{
 		Project actual = null;
 		try {	
 			actual = pDAO.findById(1);
-			Assert.assertEquals("No se encontro al tipo de contacto", "Proyecto 1"  , actual.getName());
+			Assert.assertEquals("No se encontro al tipo de contacto", "Tempore"  , actual.getName());
 
 			List<UserProject> tuList = actual.getUserProjectList();
 			Assert.assertEquals("El tamaño de la lista asociada a la entidad no es correcto 1", 2, tuList.size());
@@ -100,7 +100,7 @@ public class TestProjectDAO extends TestDAO{
 	@Test
 	public void testDelete (){
 		Project entity = new Project();
-		entity.setName("Proyecto 1");
+		entity.setName("Tempore");
 				
 		List<Project> findByExample = pDAO.findByExample(entity);
 		for (Project p : findByExample){			
@@ -141,5 +141,16 @@ public class TestProjectDAO extends TestDAO{
 		this.validResult("USERPROJECT", "Project_Delete.xml");
 		this.validResult("PROJECTCLIENT", "Project_Delete.xml");
 		this.validResult("TASK", "Project_Delete.xml");
+	}
+	
+	
+	@Test
+	public void testProjectsByUser (){
+		List<Project> projectsByUser = pDAO.getProjectsByUser(12);
+		for (Project project : projectsByUser) {
+			log.info(project.getName());
+		}
+		
+		this.validResult("PROJECT", "BBDD_setup.xml");
 	}
 }

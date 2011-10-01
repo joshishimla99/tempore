@@ -14,7 +14,9 @@ import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
+import org.dbunit.dataset.ReplacementDataSet;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
+import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.ext.mysql.MySqlDataTypeFactory;
 import org.dbunit.operation.DatabaseOperation;
@@ -106,6 +108,9 @@ public abstract class TestDAO extends DBTestCase{
 		if (!file.isFile()){
 			Assert.fail("No se encuentra el archivo para iniciar la BBDD ("+file.getAbsolutePath()+")");			
 		}
-		return new FlatXmlDataSetBuilder().build(file);
+		FlatXmlDataSetBuilder builder = new FlatXmlDataSetBuilder();
+		builder.setColumnSensing(true);
+	
+		return builder.build(file);
 	}
 }
