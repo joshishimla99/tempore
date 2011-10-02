@@ -29,11 +29,11 @@ public class TaskTimeDataSource extends GenericGwtRpcDataSourceFilterId<TaskTime
 //		field.setHidden(true);
 		fields.add(field);
 		
-		DataSourceTextField field2 = new DataSourceTextField(COL_NAME, "nameCol");
+		DataSourceTextField field2 = new DataSourceTextField(COL_NAME, "Nombre de la Tarea");
 		field2.setRequired(true);
 		fields.add(field2);
 		
-		DataSourceTextField field3 = new DataSourceTextField(COL_DESCRIPTION, "descriptionCol");
+		DataSourceTextField field3 = new DataSourceTextField(COL_DESCRIPTION, "Descripci&oacuten");
 		field3.setRequired(true);
 		fields.add(field3);
 		

@@ -1,15 +1,19 @@
 package ar.fi.uba.tempore.gwt.server;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
 
 import ar.fi.uba.tempore.dao.TaskUserDAO;
+import ar.fi.uba.tempore.dto.TaskDTO;
 import ar.fi.uba.tempore.dto.TaskUserDTO;
+import ar.fi.uba.tempore.dto.UserDTO;
 import ar.fi.uba.tempore.entity.TaskUser;
 import ar.fi.uba.tempore.gwt.client.TimeServicesClient;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 public class TimeServicesImpl extends RemoteServiceServlet implements TimeServicesClient {
@@ -29,6 +33,7 @@ public class TimeServicesImpl extends RemoteServiceServlet implements TimeServic
 		List<TaskUser> findAll = tuDAO.findAll();
 		for (TaskUser c : findAll) {
 			TaskUserDTO cDTO = mapper.map(c, TaskUserDTO.class);
+			log.info("FETCH DATA - TaskUser");log.info(cDTO.getDate().toString());
 			list.add(cDTO);
 		}
 		
@@ -43,6 +48,18 @@ public class TimeServicesImpl extends RemoteServiceServlet implements TimeServic
 	@Override
 	public TaskUserDTO update(TaskUserDTO taskUserDTO) {
 		log.info("UPDATE - TaskUser");
+//		taskUserDTO.setComment("Comentario harcodeado");
+//		taskUserDTO.setDate(new Date());
+//		taskUserDTO.setHourCount(2);
+//		TaskDTO tarea = new TaskDTO();
+//		tarea.setId(1);
+//		taskUserDTO.setTask(tarea);
+//		UserDTO usuario = new UserDTO();
+//		usuario.setId(1);
+//		taskUserDTO.setUser(usuario);
+		
+		
+		
 		TaskUser userTask = mapper.map(taskUserDTO, TaskUser.class);
 		TaskUser newUserTask = tuDAO.makePersistent(userTask );
 		TaskUserDTO newDTO = mapper.map(newUserTask, TaskUserDTO.class); 
