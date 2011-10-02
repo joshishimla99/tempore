@@ -8,12 +8,15 @@ import org.dozer.DozerBeanMapper;
 
 import ar.fi.uba.tempore.dao.TaskDAO;
 import ar.fi.uba.tempore.dao.TaskTypeDAO;
+import ar.fi.uba.tempore.dao.TaskUserDAO;
 import ar.fi.uba.tempore.dto.TaskDTO;
 import ar.fi.uba.tempore.dto.TaskTypeDTO;
 import ar.fi.uba.tempore.entity.Project;
 import ar.fi.uba.tempore.entity.Task;
 import ar.fi.uba.tempore.entity.TaskType;
+import ar.fi.uba.tempore.entity.TaskUser;
 import ar.fi.uba.tempore.gwt.client.TaskServicesClient;
+import ar.fi.uba.tempore.gwt.client.exception.TaskWithHoursChargedException;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -22,6 +25,7 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 	private static final long serialVersionUID = -2875888868382111997L;
 	private final TaskDAO taskDAO = new TaskDAO();
 	private final TaskTypeDAO taskTypeDAO = new TaskTypeDAO();
+	private final TaskUserDAO taskUserDAO = new TaskUserDAO();
 	private final DozerBeanMapper mapper = new DozerBeanMapper();
 	private final Logger log = Logger.getLogger(this.getClass());
 	
@@ -42,8 +46,31 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 		return updateTask(taskDTO);
 	}
 	
-	public void deleteTask(String id){
-		
+	public String deleteTask(Integer id, Integer idProject) throws TaskWithHoursChargedException{
+		Task taskToDelete = taskDAO.findById(id);
+		// SI LA TAREA NO TIENE TIEMPO CARGADO, ENTONCES VERIFICO SI SUS HIJAS LO TIENEN
+		if (getTimeChargedToTask(taskToDelete.getId()) == 0) {   
+			List<Task> taskList = taskDAO.getChildTask(idProject, id); 
+			for (Task task : taskList) {
+				if (getTimeChargedToTask(task.getId()) > 0){
+					throw new TaskWithHoursChargedException(task.getName());
+				}
+			}
+			// Si ni la tarea padre ni sus hijas tienen horas cargas ==> borro las hijas y la tarea padre
+			for (Task task : taskList) {
+				if (getTimeChargedToTask(task.getId()) > 0){
+					taskDAO.delete(task);
+				}
+			}
+			taskDAO.delete(taskToDelete);
+		} else {
+			throw new TaskWithHoursChargedException(taskToDelete.getName());
+		}
+		return taskToDelete.getName();
+	}
+	
+	private int getTimeChargedToTask(Integer taskId){
+		return taskUserDAO.hoursChargedByTask(taskId);
 	}
 	
 	public TaskDTO updateTask(TaskDTO taskDTO){

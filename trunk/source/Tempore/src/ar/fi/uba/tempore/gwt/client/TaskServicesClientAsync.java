@@ -3,6 +3,7 @@ package ar.fi.uba.tempore.gwt.client;
 import java.util.List;
 
 import ar.fi.uba.tempore.dto.TaskDTO;
+import ar.fi.uba.tempore.gwt.client.exception.TaskWithHoursChargedException;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -12,7 +13,7 @@ public interface TaskServicesClientAsync {
 
 	void addTask(TaskDTO task, AsyncCallback<TaskDTO> callback);
 
-	void deleteTask(String id, AsyncCallback<Void> callback);
+	void deleteTask(Integer id, Integer idProject, AsyncCallback<String> callback) throws TaskWithHoursChargedException;
 
 	void updateTask(TaskDTO task, AsyncCallback<TaskDTO> callback);
 
