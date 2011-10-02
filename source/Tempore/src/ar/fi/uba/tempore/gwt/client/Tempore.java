@@ -18,16 +18,16 @@ public class Tempore implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-
 		//new LoginPanel();
-		RootPanel.get("Content").add(new ConteinerMainPanel());
-		
+
 		//TODO Dummy de loggin
 		UserServicesClient.Util.getInstance().validateUser("ngarcia", "1234", new AsyncCallback<UserDTO>() {
 			@Override
 			public void onSuccess(UserDTO result) {
-				if (result == null) {
+				if (result != null) {
+					//LOGGIN SUCCESS
 					SessionUser.getInstance().setUser(result);
+					RootPanel.get("Content").add(new ConteinerMainPanel());
 				} else {
 					SC.say("Dummy Logging", "El usuario o password hardcodeado son erroneos (ngarcia, 1234)");
 				}

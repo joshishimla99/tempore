@@ -74,8 +74,8 @@ public class UserConfigurationPanel extends Canvas {
 				
 				
 				final ImgClient image = new ImgClient(record.getAttribute(UserConfigurationDataSource.IMAGE_NAME));
-				image.setWidth(180);
-				image.setHeight(160);
+				image.setWidth(150);
+				image.setHeight(150);
 				image.addUpdateImageHandler(new UpdateImgHandler() {
 					@Override
 					public void onUpdatedImg(String fileName) {
