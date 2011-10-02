@@ -7,7 +7,8 @@ import ar.fi.uba.tempore.dto.ProjectDTO;
 import ar.fi.uba.tempore.dto.ProjectStateDTO;
 import ar.fi.uba.tempore.gwt.client.ProjectServicesClient;
 import ar.fi.uba.tempore.gwt.client.ProjectServicesClientAsync;
-import ar.fi.uba.temporeutils.listgrid.GenericGwtRpcDataSource;
+import ar.fi.uba.tempore.gwt.client.login.SessionUser;
+import ar.fi.uba.temporeutils.listgrid.filter.GenericGwtRpcDataSourceFilterId;
 
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceDateField;
@@ -15,7 +16,7 @@ import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
-public class ProjectPanelDataSource extends GenericGwtRpcDataSource<ProjectDTO, ListGridRecord, ProjectServicesClientAsync> {
+public class ProjectPanelDataSource extends GenericGwtRpcDataSourceFilterId<Integer, ProjectDTO, ListGridRecord, ProjectServicesClientAsync> {
 
 	public static final String NAME_FIELD = "nameCol";
 	public static final String ID_FIELD = "idCol";
@@ -25,6 +26,12 @@ public class ProjectPanelDataSource extends GenericGwtRpcDataSource<ProjectDTO, 
 	public static final String INITDATE_FIELD = "iniDate";
 	public static final String STATE_ID_FIELD = "stateIdCol";
 	public static final String STATE_NAME_FIELD = "stateNameCol";
+	
+	public ProjectPanelDataSource(){
+		super();
+		//Agrego id del usaurio que quiero recuperar los proyectos
+		setId(SessionUser.getInstance().getUser().getId());
+	}
 	
 	@Override
 	public List<DataSourceField> getDataSourceFields() {

@@ -13,7 +13,7 @@ import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
-public class TaskTimeDataSource extends GenericGwtRpcDataSourceFilterId<TaskTimeDTO, ListGridRecord, TaskTimeServicesClientAsync> {
+public class TaskTimeDataSource extends GenericGwtRpcDataSourceFilterId<Integer, TaskTimeDTO, ListGridRecord, TaskTimeServicesClientAsync> {
 
 	public static final String COL_ID = "idCol";
 	public static final String COL_NAME = "nameCol";

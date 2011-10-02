@@ -6,7 +6,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 @RemoteServiceRelativePath("TaskTimeServicesClient")
-public interface TaskTimeServicesClient extends GenericGwtRpcDataSourceServiceFilterId<TaskTimeDTO>{
+public interface TaskTimeServicesClient extends GenericGwtRpcDataSourceServiceFilterId<Integer, TaskTimeDTO>{
 	/**
 	 * Utility class for simplifying access to the instance of async service.
 	 */

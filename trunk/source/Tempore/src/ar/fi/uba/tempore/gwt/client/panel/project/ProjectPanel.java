@@ -68,7 +68,7 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 		
 		this.addRecordClickHandler(new RecordClickHandler() {
 			@Override
-			public void onRecordClick(RecordClickEvent event) {				
+			public void onRecordClick(RecordClickEvent event) {
 				notifyObservers();				
 			}
 		});
