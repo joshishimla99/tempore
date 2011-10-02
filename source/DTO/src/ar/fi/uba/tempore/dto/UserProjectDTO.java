@@ -5,11 +5,11 @@ import java.io.Serializable;
 public class UserProjectDTO implements Serializable {
 
 	private static final long serialVersionUID = -5123217767892856110L;
-	private Integer id;
+	private Integer id;	
 	private Integer owner;
 
-//	private List<Alert> alertList = new ArrayList<Alert>();
-//	private List<Role> roleList = new ArrayList<Role>();
+	private UserDTO user;
+	private ProjectDTO project;
 	
 	public Integer getId() {
 		return id;
@@ -23,6 +23,18 @@ public class UserProjectDTO implements Serializable {
 	}
 	public void setOwner(Integer owner) {
 		this.owner = owner;
+	}
+	public UserDTO getUser() {
+		return user;
+	}
+	public void setUser(UserDTO user) {
+		this.user = user;
+	}
+	public ProjectDTO getProject() {
+		return project;
+	}
+	public void setProject(ProjectDTO project) {
+		this.project = project;
 	}
 	
 //	public List<Alert> getAlertList() {
