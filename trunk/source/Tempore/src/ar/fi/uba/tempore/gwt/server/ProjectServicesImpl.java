@@ -77,6 +77,7 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 		ProjectDTO pSavedDTO = mapper.map(pSaved, ProjectDTO.class);
 		
 		return pSavedDTO;
+		
 	}
 
 	@Override

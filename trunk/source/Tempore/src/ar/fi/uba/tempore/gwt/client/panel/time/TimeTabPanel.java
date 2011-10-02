@@ -2,27 +2,11 @@ package ar.fi.uba.tempore.gwt.client.panel.time;
 
 
 import ar.fi.uba.tempore.gwt.client.panel.TabsPanelContainer;
-import ar.fi.uba.tempore.gwt.client.panel.configuration.HourCountDataSource;
-import ar.fi.uba.tempore.gwt.client.panel.configuration.TaskTimeDataSource;
 
-import com.google.gwt.user.client.Window;
-import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.AnimationAcceleration;
-import com.smartgwt.client.types.DragDataAction;
-import com.smartgwt.client.types.ListGridEditEvent;
-import com.smartgwt.client.types.RowEndEditAction;
 import com.smartgwt.client.types.Side;
-import com.smartgwt.client.widgets.DateChooser;
-import com.smartgwt.client.widgets.EdgedCanvas;
-import com.smartgwt.client.widgets.Label;
-import com.smartgwt.client.widgets.events.DropEvent;
-import com.smartgwt.client.widgets.events.DropHandler;
-import com.smartgwt.client.widgets.grid.ListGrid;
-import com.smartgwt.client.widgets.layout.HStack;
-import com.smartgwt.client.widgets.layout.VStack;
 import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;
-import com.smartgwt.client.widgets.tree.TreeGrid;
 
 
 
