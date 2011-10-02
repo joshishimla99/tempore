@@ -1,5 +1,7 @@
 package ar.fi.uba.tempore.dto;
 
+import java.util.Date;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class TaskUserDTO implements IsSerializable{
@@ -9,7 +11,9 @@ public class TaskUserDTO implements IsSerializable{
 //	private Integer taskId;
 	private Integer hourCount;
 	private String comment;
-//	private String date;
+	private Date date;
+	private TaskDTO task;
+	private UserDTO user;
 	
 	public Integer getId() {
 		return id;
@@ -18,21 +22,6 @@ public class TaskUserDTO implements IsSerializable{
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
-//	public Integer getUser() {
-//		return userId;
-//	}
-//	
-//	public void setUser(Integer userId) {
-//		this.userId = userId;
-//	}
-//	
-//	public Integer getTask() {
-//		return taskId;
-//	}
-//	public void setTask(Integer taskId) {
-//		this.taskId = taskId;
-//	}
 	
 	public Integer getHourCount() {
 		return hourCount;
@@ -47,6 +36,30 @@ public class TaskUserDTO implements IsSerializable{
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setTask(TaskDTO task) {
+		this.task = task;
+	}
+
+	public TaskDTO getTask() {
+		return task;
+	}
+
+	public void setUser(UserDTO user) {
+		this.user = user;
+	}
+
+	public UserDTO getUser() {
+		return user;
 	}
 	
 	
