@@ -98,38 +98,46 @@ public class ImageServlet extends HttpServlet {
 		String fileSrc = req.getParameter("id");
 		log.info("DOWNLOADING - "+fileSrc+"...");
 		
+		File file = null;
+		String mimeType = null;
+		
 		if (fileSrc != null && !fileSrc.isEmpty()){
-			File file = new File(destinationDir, fileSrc);
+			file = new File(destinationDir, fileSrc);			
 			if (file != null && file.isFile()){
 				ServletContext sc = getServletContext();
-				String mimeType = sc.getMimeType(fileSrc);
+				 mimeType = sc.getMimeType(fileSrc);
 		        if (mimeType == null) {
-		            sc.log("Could not get MIME type of "+fileSrc);
-		            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		            return;
+	        		sc.log("Could not get MIME type of "+fileSrc);
+	        		resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+	        		return;
 		        }
-		        resp.setContentType(mimeType);
-				
-				FileInputStream in = new FileInputStream(file);
-				OutputStream out = resp.getOutputStream();
-
-				resp.setContentLength((int)file.length());
-		    
-		        // Copy the contents of the file to the output stream
-		        byte[] buf = new byte[1024];
-		        int count = 0;
-		        while ((count = in.read(buf)) >= 0) {
-		            out.write(buf, 0, count);
-		        }
-		        in.close();
-		        out.close();
 			} else {
-				//TODO enviar imagen por defecto
-				log.error("Error al buscar la imagen correspondiente ("+fileSrc+")");
-			}
+	        	//No se encuantra archivo
+				log.warn("Error al buscar la imagen correspondiente ("+fileSrc+")");
+				file = new File(getServletContext().getRealPath("images/unknownUser.jpg"));
+				mimeType = "image/jpg";
+			}	
 		} else {
-			//TODO enviar imagen por defecto
-			log.error("No tiene archivo");
+			//No se tiene archivo
+			log.warn("No se posee imagen, se muestra archivo por defecto...");
+			file = new File(getServletContext().getRealPath("images/unknownUser.jpg"));
+			mimeType = "image/jpg";
 		}
+       
+		resp.setContentType(mimeType);
+		
+		FileInputStream in = new FileInputStream(file);
+		OutputStream out = resp.getOutputStream();
+
+		resp.setContentLength((int)file.length());
+    
+        // Copy the contents of the file to the output stream
+        byte[] buf = new byte[1024];
+        int count = 0;
+        while ((count = in.read(buf)) >= 0) {
+            out.write(buf, 0, count);
+        }
+        in.close();
+        out.close();
 	}
 }
