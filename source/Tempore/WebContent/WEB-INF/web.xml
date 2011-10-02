@@ -145,6 +145,14 @@
 		<servlet-name>TaskTimeServicesClient</servlet-name>
 		<url-pattern>/tempore/TaskTimeServicesClient</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>UserProjectServicesClient</servlet-name>
+		<servlet-class>ar.fi.uba.tempore.gwt.server.UserProjectServicesClientImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UserProjectServicesClient</servlet-name>
+		<url-pattern>/tempore/UserProjectServicesClient</url-pattern>
+	</servlet-mapping>
 
 
 </web-app>
