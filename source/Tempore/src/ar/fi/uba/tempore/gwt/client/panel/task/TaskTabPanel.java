@@ -8,6 +8,7 @@ import ar.fi.uba.tempore.dto.TaskDTO;
 import ar.fi.uba.tempore.dto.TaskTypeDTO;
 import ar.fi.uba.tempore.gwt.client.TaskServicesClient;
 import ar.fi.uba.tempore.gwt.client.TaskTypeServicesClient;
+import ar.fi.uba.tempore.gwt.client.exception.TaskWithHoursChargedException;
 import ar.fi.uba.tempore.gwt.client.panel.TabsPanelContainer;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 import ar.fi.uba.temporeutils.observer.ProjectObserver;
@@ -19,6 +20,7 @@ import com.smartgwt.client.types.HeaderControls;
 import com.smartgwt.client.types.LayoutPolicy;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.types.VerticalAlignment;
+import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.AnimationCallback;
 import com.smartgwt.client.widgets.Canvas;
@@ -90,10 +92,17 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 
 	public void updateContent() {
 		ProjectPanel.getInstance().addObserver(this);
-		titleTask = new SectionItem("titleTask");
-		portalLayout = new TaskLayout(3);
-		portalLayout.setWidth100();
-		portalLayout.setHeight100();
+		this.titleTask = new SectionItem("titleTask");
+		this.titleTask.setWidth(900);
+		this.firstLevelTask = new SectionItem("firstLevelTask");
+		this.firstLevelTask.setAlign(Alignment.RIGHT);
+		this.firstLevelTask.setWidth(880);
+		this.secondLevelTask = new SectionItem("secondLevelTask");
+		this.secondLevelTask.setAlign(Alignment.RIGHT);
+		this.secondLevelTask.setWidth(860);
+		this.portalLayout = new TaskLayout(3);
+		this.portalLayout.setWidth100();
+		this.portalLayout.setHeight100();
 
 		final VLayout vLayout = new VLayout(15);
 		vLayout.setMargin(10);
@@ -113,8 +122,10 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 
 		final ButtonItem addTask = createAddTaskButton();
 		
-		form.setItems(addTask, titleTask);
+		form.setItems(addTask, titleTask, firstLevelTask, secondLevelTask);
 		form.hideItem("titleTask");
+		form.hideItem("firstLevelTask");
+		form.hideItem("secondLevelTask");
 
 		HLayout hLayout = new HLayout();
 		hLayout.addMember(form);
@@ -130,7 +141,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 	public void copy(List<TaskDTO> taskList){
 		portalLayout.cleanLayout();
 		for (TaskDTO taskDTO : taskList) {
-			Task newTask = new Task(taskDTO.getId(), taskDTO.getName(), taskDTO.getBudget(), taskDTO.getDescription(), taskDTO.getTaskTypeDTO().getName());
+			Task newTask = new Task(taskDTO.getId(), taskDTO.getName(), taskDTO.getBudget(), taskDTO.getDescription(), taskDTO.getTaskTypeDTO().getName(), taskDTO.getProject().getId());
 			portalLayout.addTask(newTask);
 			
 		}
@@ -185,6 +196,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 
 					@Override
 					public void onSuccess(List<TaskDTO> result) {
+						hideSection();
 						--level;
 						parentTaskId = result.get(0).getTaskId();
 						copy(result);
@@ -196,12 +208,22 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		}
 	}
 
+	public void hideSection(){
+		if (this.level == 1){
+			this.form.hideItem("firstLevelTask");
+		} else {
+			if (this.level == 2){
+				this.form.hideItem("secondLevelTask");
+			}
+		}
+	}
+	
 	public SectionItem getSectionItem(){
 		if (this.level == 1){
-			this.firstLevelTask = new SectionItem();
+			this.form.showItem("firstLevelTask");
 			return this.firstLevelTask;
 		} 
-		this.secondLevelTask = new SectionItem();
+		this.form.showItem("secondLevelTask");
 		return secondLevelTask;
 	}
 	
@@ -340,7 +362,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 				@Override
 				public void onSuccess(TaskDTO result) {
 					String name = result.getTaskTypeDTO().getName();
-					final Task newTask = new Task(result.getId(), result.getName(), result.getBudget(), result.getDescription(), name);
+					final Task newTask = new Task(result.getId(), result.getName(), result.getBudget(), result.getDescription(), name, result.getProject().getId());
 					newTask.setVisible(false);
 					TaskColumn column = portalLayout.addTask(newTask);
 					
@@ -454,7 +476,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		private Integer id;
 		private String realHs;
 		
-		public Task(Integer taskId, final String taskName, int taskEstimation, String taskDescription, String taskType) {
+		public Task(final Integer taskId, final String taskName, int taskEstimation, String taskDescription, String taskType, final Integer idProject) {
 
 			this.id = taskId;
 			this.name = taskName;
@@ -475,6 +497,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 
 			setVPolicy(LayoutPolicy.NONE);
 			setOverflow(Overflow.VISIBLE);
+			
 			addDoubleClickHandler(new DoubleClickHandler() {
 				
 				@Override
@@ -489,13 +512,50 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 
 						@Override
 						public void onSuccess(List<TaskDTO> result) {
-							parentTaskId = id;
-							SC.say(String.valueOf(id));
+							if (level != 1){
+								parentTaskId = id;
+							}
 							++level;
 							getSectionItem().setDefaultValue(taskName);
 							copy(result);
 						}
 						
+					});
+				}
+			});
+			addCloseClickHandler(new CloseClickHandler() {
+				
+				@Override
+				public void onCloseClick(CloseClientEvent event) {
+					SC.ask("Eliminar Tarea", "Desea eliminar la tarea seleccionada", new BooleanCallback() {
+						
+						@Override
+						public void execute(Boolean value) {
+							if(value) {
+								try {
+									
+									TaskServicesClient.Util.getInstance().deleteTask(taskId, idProject, new AsyncCallback<String>() {
+										
+										@Override
+										public void onFailure(Throwable caught) {
+											SC.warn("Ha ocurrido un error al intentar eliminar la tarea. Intentelo luego");
+											
+										}
+										
+										@Override
+										public void onSuccess(String result) {
+											close();
+											SC.say("Eliminar Tarea", "La tarea " + result + " y sus hijas, si contenia, se han eliminado satisfactoriamente.");
+											
+										}
+										
+									});
+								} catch (TaskWithHoursChargedException e) {
+									SC.say("Eliminar Tarea", "La tarea seleccionada no puede eliminarse dado la tarea " + e.getTaskName() + " tiene horas cargadas");
+								}
+							}
+							
+						}
 					});
 				}
 			});
@@ -509,6 +569,9 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 			this.addItem(content);
 		}
 		
+		public void close(){
+			super.destroy();
+		}
 		
 		private class EditTaskHandler implements ClickHandler {
 

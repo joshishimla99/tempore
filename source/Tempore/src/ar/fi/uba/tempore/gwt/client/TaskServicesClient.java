@@ -3,6 +3,7 @@ package ar.fi.uba.tempore.gwt.client;
 import java.util.List;
 
 import ar.fi.uba.tempore.dto.TaskDTO;
+import ar.fi.uba.tempore.gwt.client.exception.TaskWithHoursChargedException;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -28,7 +29,8 @@ public interface TaskServicesClient extends RemoteService {
 
 	public TaskDTO addTask(TaskDTO task);
 
-	public void deleteTask(String id);
+	// Devuelve el nombre de la tarea eliminada
+	public String deleteTask(Integer id, Integer idProject) throws TaskWithHoursChargedException;
 
 	public TaskDTO updateTask(TaskDTO task);
 }
