@@ -28,7 +28,8 @@ import com.smartgwt.client.widgets.viewer.DetailViewerRecord;
  * In order to use this class, you have to implement both
  * {@link GenericGwtRpcDataSourceServiceFilterId} and {@link GenericGwtRpcDataSourceServiceFilterIdAsync}
  * provided in the same package.
- * 
+ * @Param <F>
+ * 				Filtro para realizar el fetch
  * @param <D>
  *            type of the transfer object holding the data (will most likely be
  *            a simple POJO), must implement {@link Serializable} or {@link IsSerializable}.
@@ -49,10 +50,10 @@ import com.smartgwt.client.widgets.viewer.DetailViewerRecord;
  * @author System Tier
  * @version 1.0
  */
-public abstract class GenericGwtRpcDataSourceFilterId<D, R extends Record, SA extends GenericGwtRpcDataSourceServiceFilterIdAsync<D>>
+public abstract class GenericGwtRpcDataSourceFilterId<F, D, R extends Record, SA extends GenericGwtRpcDataSourceServiceFilterIdAsync<F,D>>
 		extends GwtRpcDataSourceFilterId {
 
-	private Integer id;
+	private F id;
 	
 	public GenericGwtRpcDataSourceFilterId() {
 		super();
@@ -64,11 +65,11 @@ public abstract class GenericGwtRpcDataSourceFilterId<D, R extends Record, SA ex
 		}
 	}
 
-	public Integer getId() {
+	public F getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(F id) {
 		this.id = id;
 	}
 

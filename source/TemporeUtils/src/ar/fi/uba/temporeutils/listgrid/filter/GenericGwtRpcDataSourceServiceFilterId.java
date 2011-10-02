@@ -8,9 +8,9 @@ import com.google.gwt.user.client.rpc.RemoteService;
 /**
  * The client side stub for the RPC service.
  */
-public interface GenericGwtRpcDataSourceServiceFilterId<D> extends RemoteService {
+public interface GenericGwtRpcDataSourceServiceFilterId<F,D> extends RemoteService {
 	
-    List<D> fetch (Integer id);
+    List<D> fetch (F id);
 
     D add (D data);
 
