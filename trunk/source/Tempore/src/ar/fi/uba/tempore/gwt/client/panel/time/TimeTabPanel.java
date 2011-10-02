@@ -14,10 +14,10 @@ public class TimeTabPanel extends TabsPanelContainer {
 
 	public TimeTabPanel(){
 		super();		
-		setSize("95%", "100%");
+		setSize("99%", "99%");
 
 		final TabSet topTabSet = new TabSet();  
-		topTabSet.setSize("96%", "478px");
+		topTabSet.setSize("100%", "100%");
 		topTabSet.setCanDropBefore(true);
 		topTabSet.setCanDragReposition(false);
 		topTabSet.setCanAcceptDrop(false);
@@ -42,8 +42,8 @@ public class TimeTabPanel extends TabsPanelContainer {
 		tTab2.setIconHeight(16);              
 		tTab2.setPane(dragdrop);
 
-		topTabSet.addTab(tTab1);  
 		topTabSet.addTab(tTab2);  
+		topTabSet.addTab(tTab1);  
 		
 		this.addChild(topTabSet);				
 	}
