@@ -55,6 +55,9 @@ public class InitGeneric extends DBTestCase{
 		if (!file.isFile()){
 			Assert.fail("No se encuentra el archivo para iniciar la BBDD ("+file.getAbsolutePath()+")");			
 		}
-		return new FlatXmlDataSetBuilder().build(file);
+		FlatXmlDataSetBuilder builder = new FlatXmlDataSetBuilder();
+		builder.setColumnSensing(true);
+	
+		return builder.build(file);
 	}
 }
