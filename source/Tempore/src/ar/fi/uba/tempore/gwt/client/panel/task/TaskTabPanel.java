@@ -3,6 +3,8 @@ package ar.fi.uba.tempore.gwt.client.panel.task;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import ar.fi.uba.tempore.dto.ProjectDTO;
 import ar.fi.uba.tempore.dto.TaskDTO;
 import ar.fi.uba.tempore.dto.TaskTypeDTO;
@@ -474,7 +476,8 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		private String description;
 		private String type;
 		private Integer id;
-		private String realHs;
+		private Long realHs;
+		private Label content;
 		
 		public Task(final Integer taskId, final String taskName, int taskEstimation, String taskDescription, String taskType, final Integer idProject) {
 
@@ -483,7 +486,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 			this.description = taskDescription;
 			this.estimatedHs = taskEstimation;
 			this.type = taskType;
-			this.realHs = "0";
+			this.realHs = (long) 0;
 			
 			setShowShadow(false);
 			setAnimateMinimize(true);
@@ -497,7 +500,19 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 
 			setVPolicy(LayoutPolicy.NONE);
 			setOverflow(Overflow.VISIBLE);
-			
+			TaskServicesClient.Util.getInstance().getTimeChargedToTask(taskId, new AsyncCallback<Long>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					SC.say("Ha ocurrido un error al intentar recuperar las horas cargadas a la tarea");
+					
+				}
+
+				@Override
+				public void onSuccess(Long result) {
+					realHs = result;
+				}
+			});
 			addDoubleClickHandler(new DoubleClickHandler() {
 				
 				@Override
@@ -561,8 +576,8 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 			});
 			
 			this.setTitle(this.name);
-			Label content = new Label("<span style=\" font-weight: bold;\">Tipo: </span>" + this.type + "<br/>"  
-	                + "<span style=\" font-weight: bold;\">Horas Consumidas: </span>" + this.realHs + "<br/>"  
+			content = new Label("<span style=\" font-weight: bold;\">Tipo: </span>" + this.type + "<br/>"  
+	                + "<span style=\" font-weight: bold;\">Horas Consumidas: </span>" + realHs + "<br/>"  
 	                + "<span style=\" font-weight: bold;\">Horas Estimadas: </span> "+ this.estimatedHs + "</br>"
 	                + "<span style=\" font-weight: bold;\">Descripci&oacute;n: </span> "+ this.description);
 			
@@ -571,6 +586,17 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		
 		public void close(){
 			super.destroy();
+		}
+		
+		private void setNewContent(List<String> newValues){
+			name = newValues.get(0);
+			description = newValues.get(1);
+			estimatedHs = Integer.parseInt(newValues.get(2));
+			type = newValues.get(3);
+			content.setContents("<span style=\" font-weight: bold;\">Tipo: </span>" + type + "<br/>"  
+	                + "<span style=\" font-weight: bold;\">Horas Consumidas: </span>" + realHs + "<br/>"  
+	                + "<span style=\" font-weight: bold;\">Horas Estimadas: </span> "+ estimatedHs + "</br>"
+	                + "<span style=\" font-weight: bold;\">Descripci&oacute;n: </span> "+ description);
 		}
 		
 		private class EditTaskHandler implements ClickHandler {
@@ -583,9 +609,9 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 
 			@Override
 			public void onClick(ClickEvent event) {
-				EditTaskModalWindow editTaskModalWin = new EditTaskModalWindow(this.task.id, this.task.name, this.task.description, String.valueOf(this.task.estimatedHs), this.task.type, selectedProjectDTO.getId());
-				editTaskModalWin.show();
-				portalLayout.redraw();
+				EditTaskModalWindow editTaskModalWin = new EditTaskModalWindow();
+				int result = editTaskModalWin.setValues(this.task.id, this.task.name, this.task.description, String.valueOf(this.task.estimatedHs), this.task.type, selectedProjectDTO.getId());
+				//setNewContent(editTaskModalWin.getNewValues());
 			}
 		}
 	}

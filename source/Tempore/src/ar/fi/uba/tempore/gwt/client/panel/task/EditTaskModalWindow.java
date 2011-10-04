@@ -1,5 +1,6 @@
 package ar.fi.uba.tempore.gwt.client.panel.task;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -29,8 +30,20 @@ import com.smartgwt.client.widgets.layout.VLayout;
 public class EditTaskModalWindow {
 
 	private Window winModal;
+	private TextItem idLabel;
+	private TextItem taskNameLabel;
+	private TextAreaItem taskDescription;
+	private TextItem estimatedTimeLabel ;
+	private SelectItem taskType;
+	private DynamicForm form;
+	private int returnValue=0;
 	
-	public EditTaskModalWindow(final Integer id, String name, String description, String estimation, String type, final Integer projectId){
+	public EditTaskModalWindow(){
+		super();
+	}
+	
+	public int setValues(final Integer id, String name, String description, String estimation, String type, final Integer projectId){
+		
 		winModal = new Window();  
         winModal.setWidth(360);  
         winModal.setHeight(305);  
@@ -44,37 +57,37 @@ public class EditTaskModalWindow {
                 winModal.destroy();  
             }  
         }); 
-        final DynamicForm form = new DynamicForm();  
+        form = new DynamicForm();  
         form.setHeight100();  
         form.setWidth100();  
         form.setPadding(5);  
         form.setLayoutAlign(VerticalAlignment.BOTTOM);  
         
-        final TextItem idLabel = new TextItem("N&uacute;mero");
+        idLabel = new TextItem("N&uacute;mero");
         idLabel.setValue(String.valueOf(id));
         idLabel.setDisabled(true);
         
      // Nombre de la tarea
-		final TextItem taskNameLabel = new TextItem();
+		taskNameLabel = new TextItem();
 		taskNameLabel.setTitle("Nombre");
 		taskNameLabel.setValue(name);
 		taskNameLabel.setLength(30);
 		taskNameLabel.setRequired(true);
 
 		// description
-		final TextAreaItem taskDescription = new TextAreaItem();
+		taskDescription = new TextAreaItem();
 		taskDescription.setTitle("Descripci&oacute;n");
 		taskDescription.setValue(description);
 		taskDescription.setLength(150);
 		taskDescription.setRequired(true);
 		
-		final TextItem estimatedTimeLabel = new TextItem();
+		estimatedTimeLabel = new TextItem();
 		estimatedTimeLabel.setTitle("Tiempo Estimado");
 		estimatedTimeLabel.setValue(estimation);
 		estimatedTimeLabel.setKeyPressFilter("[0-9.]");
 		estimatedTimeLabel.setRequired(true);  
         
-		final SelectItem taskType = new SelectItem("taskType", "Tipo");
+		taskType = new SelectItem("taskType", "Tipo");
 		taskType.setValue(type);
 		TaskTypeServicesClient.Util.getInstance().fetch(new AsyncCallback<List<TaskTypeDTO>>() {			
 			@Override
@@ -117,13 +130,13 @@ public class EditTaskModalWindow {
 						@Override
 						public void onFailure(Throwable caught) {
 							com.google.gwt.user.client.Window.alert("Ha ocurrido un error al intentar actualizar la tarea");
-							
+							returnValue = 2;
 						}
 
 						@Override
 						public void onSuccess(TaskDTO result) {
 							winModal.destroy();
-							
+							returnValue = 1;
 						}
 						
 					});
@@ -154,9 +167,16 @@ public class EditTaskModalWindow {
         vLayout.addMember(buttonLayout);
         
         winModal.addItem(vLayout);
+        winModal.show();
+        return returnValue;
 	}
 	
-	public void show(){
-		this.winModal.show();
+	public List<String> getNewValues(){
+		List<String> values = new ArrayList<String>();
+		values.add(taskNameLabel.getValueAsString()); // VALUE 0 ==> NAME
+		values.add(taskDescription.getValueAsString()); // VALUE 1 ==> DESCRIPTION
+		values.add(estimatedTimeLabel.getValueAsString());  // VALUE 2 ==> TIME ESTIMATED
+		values.add(form.getValueAsString("taskType"));  // VALUE 3 ==> TASK TYPE
+		return values;
 	}
 }
