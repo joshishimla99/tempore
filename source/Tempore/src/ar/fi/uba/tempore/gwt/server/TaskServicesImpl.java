@@ -14,11 +14,11 @@ import ar.fi.uba.tempore.dto.TaskTypeDTO;
 import ar.fi.uba.tempore.entity.Project;
 import ar.fi.uba.tempore.entity.Task;
 import ar.fi.uba.tempore.entity.TaskType;
-import ar.fi.uba.tempore.entity.TaskUser;
 import ar.fi.uba.tempore.gwt.client.TaskServicesClient;
 import ar.fi.uba.tempore.gwt.client.exception.TaskWithHoursChargedException;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.smartgwt.client.util.SC;
 
 public class TaskServicesImpl extends RemoteServiceServlet implements TaskServicesClient {
 
@@ -49,16 +49,16 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 	public String deleteTask(Integer id, Integer idProject) throws TaskWithHoursChargedException{
 		Task taskToDelete = taskDAO.findById(id);
 		// SI LA TAREA NO TIENE TIEMPO CARGADO, ENTONCES VERIFICO SI SUS HIJAS LO TIENEN
-		if (getTimeChargedToTask(taskToDelete.getId()) == 0) {   
+		if (getTimeCharged(taskToDelete.getId()) == 0) {   
 			List<Task> taskList = taskDAO.getChildTask(idProject, id); 
 			for (Task task : taskList) {
-				if (getTimeChargedToTask(task.getId()) > 0){
+				if (getTimeCharged(task.getId()) > 0){
 					throw new TaskWithHoursChargedException(task.getName());
 				}
 			}
 			// Si ni la tarea padre ni sus hijas tienen horas cargas ==> borro las hijas y la tarea padre
 			for (Task task : taskList) {
-				if (getTimeChargedToTask(task.getId()) > 0){
+				if (getTimeCharged(task.getId()) > 0){
 					taskDAO.delete(task);
 				}
 			}
@@ -69,7 +69,7 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 		return taskToDelete.getName();
 	}
 	
-	private int getTimeChargedToTask(Integer taskId){
+	private long getTimeCharged(Integer taskId){
 		return taskUserDAO.hoursChargedByTask(taskId);
 	}
 	
@@ -90,6 +90,11 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 		
 		Task makePersistent = taskDAO.makePersistent(a);
 		return mapper.map(makePersistent, TaskDTO.class);
+	}
+
+	@Override
+	public long getTimeChargedToTask(Integer id) {
+		return getTimeCharged(id);
 	}
 
 }
