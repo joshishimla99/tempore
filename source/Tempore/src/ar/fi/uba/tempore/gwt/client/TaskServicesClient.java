@@ -33,4 +33,6 @@ public interface TaskServicesClient extends RemoteService {
 	public String deleteTask(Integer id, Integer idProject) throws TaskWithHoursChargedException;
 
 	public TaskDTO updateTask(TaskDTO task);
+	
+	public long getTimeChargedToTask(Integer id);
 }

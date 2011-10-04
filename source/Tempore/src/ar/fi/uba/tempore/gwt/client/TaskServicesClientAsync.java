@@ -17,4 +17,6 @@ public interface TaskServicesClientAsync {
 
 	void updateTask(TaskDTO task, AsyncCallback<TaskDTO> callback);
 
+	void getTimeChargedToTask(Integer id, AsyncCallback<Long> callback);
+
 }
