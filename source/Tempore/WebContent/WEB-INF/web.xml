@@ -147,7 +147,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>UserProjectServicesClient</servlet-name>
-		<servlet-class>ar.fi.uba.tempore.gwt.server.UserProjectServicesClientImpl</servlet-class>
+		<servlet-class>ar.fi.uba.tempore.gwt.server.UserProjectServicesImpl</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>UserProjectServicesClient</servlet-name>

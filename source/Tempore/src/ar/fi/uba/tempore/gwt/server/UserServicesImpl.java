@@ -22,6 +22,7 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 
 	
 	public UserDTO validateUser (String userName, String password){
+		log.info("Users - VALIDATE USER");
 		UserDTO dto = null;
 		User user = uDAO.validateUser(userName, password);
 		if (user != null) {

@@ -39,7 +39,7 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 
 	@Override
 	public List<ProjectDTO> fetch(Integer userId) {
-		log.info("FETCH - Proyectos ("+userId+")");
+		log.info("FETCH - Proyectos ");
 		List<ProjectDTO> list = new ArrayList<ProjectDTO>();
 		
 		List<Project> projects = projectDAO.getProjectsByUser(userId);		
