@@ -21,5 +21,9 @@
 		<class-a>ar.fi.uba.tempore.dto.TaskTimeDTO</class-a>
 		<class-b>ar.fi.uba.tempore.entity.Task</class-b>
 	</mapping>
+	<mapping>
+		<class-a>ar.fi.uba.tempore.dto.UserProjectDTO</class-a>
+		<class-b>ar.fi.uba.tempore.entity.UserProject</class-b>
+	</mapping>
 	
 </mappings>
