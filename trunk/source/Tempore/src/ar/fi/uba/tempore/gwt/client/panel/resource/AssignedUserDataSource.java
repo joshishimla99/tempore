@@ -9,21 +9,23 @@ import ar.fi.uba.tempore.dto.UserProjectDTO;
 import ar.fi.uba.tempore.gwt.client.UserProjectServicesClient;
 import ar.fi.uba.tempore.gwt.client.UserProjectServicesClientAsync;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
-import ar.fi.uba.temporeutils.listgrid.GenericGwtRpcDataSource;
+import ar.fi.uba.temporeutils.listgrid.filter.GenericGwtRpcDataSourceFilterId;
 
+import com.google.gwt.core.client.GWT;
+import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceImageField;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
-public class UserProjectDataSource extends GenericGwtRpcDataSource<UserProjectDTO, ListGridRecord, UserProjectServicesClientAsync> {
+public class AssignedUserDataSource extends GenericGwtRpcDataSourceFilterId<Integer, UserProjectDTO, ListGridRecord, UserProjectServicesClientAsync> {
 
-	private static UserProjectDataSource instance = null;
+	private static AssignedUserDataSource instance = null;
 	
-	public static UserProjectDataSource getInstance(){
+	public static AssignedUserDataSource getInstance(){
 		if (instance == null){
-			instance = new UserProjectDataSource();
+			instance = new AssignedUserDataSource();
 		}
 		return instance;
 	}
@@ -41,15 +43,15 @@ public class UserProjectDataSource extends GenericGwtRpcDataSource<UserProjectDT
 		field.setHidden(true);
 		fields.add(userId);
 		
-		DataSourceTextField name = new DataSourceTextField(ResourceTabPanel.NAME, "Nombre");
+		DataSourceTextField name = new DataSourceTextField(ResourceTabPanel.NAME);
 		fields.add(name);
-		DataSourceTextField lastName = new DataSourceTextField(ResourceTabPanel.LAST_NAME, "Apellido");
+		DataSourceTextField lastName = new DataSourceTextField(ResourceTabPanel.LAST_NAME);
 		fields.add(lastName);
-		DataSourceTextField user = new DataSourceTextField(ResourceTabPanel.USER_NAME, "Usuario");
+		DataSourceTextField user = new DataSourceTextField(ResourceTabPanel.USER_NAME);
 		fields.add(user);
-		DataSourceTextField email = new DataSourceTextField(ResourceTabPanel.EMAIL, "Email");
+		DataSourceTextField email = new DataSourceTextField(ResourceTabPanel.EMAIL);
 		fields.add(email);
-		DataSourceImageField imageName = new DataSourceImageField(ResourceTabPanel.IMAGE_NAME, "Codigo Imagen");
+		DataSourceImageField imageName = new DataSourceImageField(ResourceTabPanel.IMAGE_NAME);
 		imageName.setImageURLPrefix("http://localhost:8080/Tempore/imageServlet.img?id=");
 		fields.add(imageName);
 		
@@ -75,6 +77,7 @@ public class UserProjectDataSource extends GenericGwtRpcDataSource<UserProjectDT
 		to.setAttribute(ResourceTabPanel.USER_PROJECT_ID, from.getId());
 		
 		UserDTO user = from.getUser();
+		to.setAttribute(ResourceTabPanel.USER_ID, user.getId());
 		to.setAttribute(ResourceTabPanel.EMAIL, user.getEmail());
 		to.setAttribute(ResourceTabPanel.LAST_NAME, user.getLastName());
 		to.setAttribute(ResourceTabPanel.NAME, user.getName());
@@ -97,4 +100,12 @@ public class UserProjectDataSource extends GenericGwtRpcDataSource<UserProjectDT
 		return new UserProjectDTO();
 	}
 
+	@Override  
+    protected Object transformRequest(DSRequest dsRequest) {
+		GWT.log("Evento de DataSource - " + dsRequest.getOperationType());
+		if (ProjectPanel.getInstance().getSelected() != null){
+			this.setId(ProjectPanel.getInstance().getSelected().getId());		
+		}
+		return super.transformRequest(dsRequest);
+    }  
 }
