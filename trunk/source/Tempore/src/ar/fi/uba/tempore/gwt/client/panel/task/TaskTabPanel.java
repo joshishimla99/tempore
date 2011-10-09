@@ -64,11 +64,15 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 	}
 
 	@Override
-	public void destroy() {
-		ProjectPanel.getInstance().removeObserver(this);
-		super.destroy();
+	public void refreshPanel() {
+		//TODO Lud revisar esto
 	}
 
+	@Override
+	public void freePanel() {
+		ProjectPanel.getInstance().removeObserver(this);
+	}
+	
 	@Override
 	public void updateProjectSelected() {
 		selectedProjectDTO = ProjectPanel.getInstance().getSelected();
@@ -615,7 +619,5 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 			}
 		}
 	}
-	
-	
-	
+
 }

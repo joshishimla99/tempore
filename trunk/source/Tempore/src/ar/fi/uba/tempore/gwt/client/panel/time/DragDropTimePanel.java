@@ -173,10 +173,11 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 	@Override
 	public void updateProjectSelected() {
 		// TODO Auto-generated method stub
-		//		SC.say("Actualizo Proyecto: " + ProjectPanel.getInstance().getSelected().getId().toString());		
-		tasksDataSource.setId(ProjectPanel.getInstance().getSelected().getId());
-		tasksTree.fetchData();
-		hoursCountGrid.fetchData();
-
+		//		SC.say("Actualizo Proyecto: " + ProjectPanel.getInstance().getSelected().getId().toString());
+		if (ProjectPanel.getInstance().getSelected() != null){
+			tasksDataSource.setId(ProjectPanel.getInstance().getSelected().getId());
+			tasksTree.fetchData();
+			hoursCountGrid.fetchData();
+		}
 	}  
 }
