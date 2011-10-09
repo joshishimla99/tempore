@@ -18,7 +18,7 @@ public class ProjectDTO implements IsSerializable {
 	private Date endDate;
 	private Float budget;
 	private ProjectStateDTO projectState;
-	private Integer isOwnser;
+	private Integer isOwner;
 
 	//private List<Task> taskList = new ArrayList<Task>();
 	//private List<Client> clientList = new ArrayList<Client>();
@@ -108,11 +108,11 @@ public class ProjectDTO implements IsSerializable {
 		return budget;
 	}
 
-	public void setIsOwnser(Integer isOwnser) {
-		this.isOwnser = isOwnser;
+	public void setIsOwner(Integer isOwner) {
+		this.isOwner = isOwner;
 	}
 
-	public Integer getIsOwnser() {
+	public Integer getIsOwner() {
 		return 1;
 	}
 
