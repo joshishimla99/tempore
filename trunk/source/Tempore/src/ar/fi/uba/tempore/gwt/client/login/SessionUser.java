@@ -1,10 +1,6 @@
 package ar.fi.uba.tempore.gwt.client.login;
 
 import ar.fi.uba.tempore.dto.UserDTO;
-import ar.fi.uba.tempore.gwt.client.UserServicesClient;
-
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.smartgwt.client.util.SC;
 
 
 /**
