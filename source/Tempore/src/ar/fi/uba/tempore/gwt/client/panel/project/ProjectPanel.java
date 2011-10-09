@@ -31,7 +31,8 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 
 	static public ProjectPanel getInstance() {
 		if (instance == null) {
-			instance = new ProjectPanel();			
+			instance = new ProjectPanel();	
+			
 		}
 		return instance;
 	}
