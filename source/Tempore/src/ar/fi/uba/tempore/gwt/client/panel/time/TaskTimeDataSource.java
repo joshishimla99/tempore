@@ -1,4 +1,4 @@
-package ar.fi.uba.tempore.gwt.client.panel.configuration;
+package ar.fi.uba.tempore.gwt.client.panel.time;
 
 import java.util.ArrayList;
 import java.util.List;
