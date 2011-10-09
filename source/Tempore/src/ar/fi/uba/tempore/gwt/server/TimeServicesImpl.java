@@ -1,16 +1,13 @@
 package ar.fi.uba.tempore.gwt.server;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
 
 import ar.fi.uba.tempore.dao.TaskUserDAO;
-import ar.fi.uba.tempore.dto.TaskDTO;
 import ar.fi.uba.tempore.dto.TaskUserDTO;
-import ar.fi.uba.tempore.dto.UserDTO;
 import ar.fi.uba.tempore.entity.TaskUser;
 import ar.fi.uba.tempore.gwt.client.TimeServicesClient;
 
@@ -61,8 +58,14 @@ public class TimeServicesImpl extends RemoteServiceServlet implements TimeServic
 		
 		
 		TaskUser userTask = mapper.map(taskUserDTO, TaskUser.class);
+		
+		
+		log.info("ID USER: " + userTask.getUser().getId());
+		log.info("Id task: " + userTask.getTask().getId());
+		
 		TaskUser newUserTask = tuDAO.makePersistent(userTask );
 		TaskUserDTO newDTO = mapper.map(newUserTask, TaskUserDTO.class); 
+		newDTO.getTask().setProject(taskUserDTO.getTask().getProject());
 		return newDTO;
 	}
 

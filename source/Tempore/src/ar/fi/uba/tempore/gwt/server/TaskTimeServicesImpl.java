@@ -38,23 +38,18 @@ public class TaskTimeServicesImpl extends RemoteServiceServlet implements TaskTi
 
 	@Override
 	public TaskTimeDTO add(TaskTimeDTO clientDTO) {		
-		return update(clientDTO);
+		
+		throw new UnsupportedOperationException("No soportada...");
 	}
 
 	@Override
 	public TaskTimeDTO update(TaskTimeDTO taskTimeDTO) {
-		log.info("UPDATE - TaskTime");
-		Task userTask = mapper.map(taskTimeDTO, Task.class);
-		Task newUserTask = tuDAO.makePersistent(userTask );
-		TaskTimeDTO newDTO = mapper.map(newUserTask, TaskTimeDTO.class); 
-		return newDTO;
+		throw new UnsupportedOperationException("No soportada...");
 	}
 
 	@Override
 	public void remove(TaskTimeDTO TaskTimeDTO) {
-		log.info("REMOVE - TaskTime");
-		Task entity = mapper.map(TaskTimeDTO, Task.class);
-		tuDAO.delete(entity);		
+		throw new UnsupportedOperationException("No soportada...");		
 	}	
 }
 

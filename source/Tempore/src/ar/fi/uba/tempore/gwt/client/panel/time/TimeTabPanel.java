@@ -2,7 +2,6 @@ package ar.fi.uba.tempore.gwt.client.panel.time;
 
 
 import ar.fi.uba.tempore.gwt.client.panel.TabsPanelContainer;
-import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 
 import com.smartgwt.client.types.AnimationAcceleration;
 import com.smartgwt.client.types.Side;
