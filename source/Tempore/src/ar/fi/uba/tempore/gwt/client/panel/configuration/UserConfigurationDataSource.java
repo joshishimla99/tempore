@@ -8,7 +8,6 @@ import ar.fi.uba.tempore.gwt.client.UserServicesClient;
 import ar.fi.uba.tempore.gwt.client.UserServicesClientAsync;
 import ar.fi.uba.temporeutils.listgrid.GenericGwtRpcDataSource;
 
-import com.google.gwt.user.client.Window;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourcePasswordField;
