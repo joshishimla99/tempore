@@ -35,8 +35,8 @@ public class UserProjectServicesImpl extends RemoteServiceServlet implements Use
 		List<UserProjectDTO> list = new ArrayList<UserProjectDTO>();
 		for (UserProject userProject : userAssignedToProject) {
 			UserProjectDTO map = mapper.map(userProject, UserProjectDTO.class);
+			map.setUser(mapper.map(userProject.getUser(), UserDTO.class));
 			list.add(map);
-			log.info("user" + map.getUser());
 		}
 		
 		return list;

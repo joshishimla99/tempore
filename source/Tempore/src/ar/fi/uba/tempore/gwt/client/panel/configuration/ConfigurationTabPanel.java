@@ -24,4 +24,14 @@ public class ConfigurationTabPanel extends TabsPanelContainer {
 		subTabPanel.setTabs(userTab, clientTab, alertTab);
 		this.addChild(subTabPanel);
 	}
+
+	@Override
+	public void refreshPanel() {
+		//No se hace nada
+	}
+
+	@Override
+	public void freePanel() {
+		//No se hace nada
+	}
 }
