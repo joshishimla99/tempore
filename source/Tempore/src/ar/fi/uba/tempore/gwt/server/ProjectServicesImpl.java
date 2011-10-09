@@ -30,10 +30,13 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 	private final DozerBeanMapper mapper = new DozerBeanMapper();
 		
 
+	/**
+	 * Comentario para juan
+	 */
 	@Override
 	public ProjectDTO getProjectById(Integer id) {
 		Project findById = projectDAO.findById(id);
-		ProjectDTO dto = mapper.map(findById, ProjectDTO.class);
+		ProjectDTO dto = mapper.map(findById, ProjectDTO.class);		
 		return dto;
 	}
 
