@@ -47,11 +47,24 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 
 	public ProjectTabPanel() {
 		super();
+		//creo componente sin actualizar
 		updateContent();
 	}
 	
-	public void updateContent() {
+	@Override
+	public void refreshPanel() {
 		ProjectPanel.getInstance().addObserver(this);
+		updateProjectSelected();
+	}
+
+	@Override
+	public void freePanel() {
+		ProjectPanel.getInstance().removeObserver(this);
+	}
+
+	
+	public void updateContent() {
+		
 		
 		final Label title = new Label("Administraci&oacute;n de Proyectos");
 		title.setWidth(200);
@@ -180,8 +193,6 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		
 		addChild(vLayout);
 		this.redraw();
-		
-		updateProjectSelected();
 	}
 	
 	/**
@@ -270,6 +281,4 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		//TODO falta Client
 		to.setValue(STATE_FIELD, from.getProjectState().getId());
 	}
-
-
 }

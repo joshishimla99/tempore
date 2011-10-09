@@ -15,8 +15,8 @@ import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
 import com.smartgwt.client.widgets.grid.events.DataArrivedHandler;
-import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
-import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
+import com.smartgwt.client.widgets.grid.events.SelectionChangedHandler;
+import com.smartgwt.client.widgets.grid.events.SelectionEvent;
 
 /**
  * Panel con el arbol de proyectos, es singleton
@@ -65,11 +65,11 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 		ListGridField state = new ListGridField(ProjectPanelDataSource.STATE_NAME_FIELD);
 		this.setFields(image,name, state);
 		this.hideField(ProjectPanelDataSource.STATE_NAME_FIELD);
-		
-		this.addRecordClickHandler(new RecordClickHandler() {
+				
+		this.addSelectionChangedHandler(new SelectionChangedHandler() {
 			@Override
-			public void onRecordClick(RecordClickEvent event) {
-				notifyObservers();				
+			public void onSelectionChanged(SelectionEvent event) {
+				notifyObservers();
 			}
 		});
 		
@@ -80,6 +80,9 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 				selectSingleRecord(0);
 			}
 		});
+		
+		//Notificamos la carga final de los proyectos
+		notifyObservers();
 		
 		this.redraw();	
 	}

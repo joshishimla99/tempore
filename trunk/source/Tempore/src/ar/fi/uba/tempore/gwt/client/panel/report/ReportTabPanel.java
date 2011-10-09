@@ -11,4 +11,14 @@ public class ReportTabPanel extends TabsPanelContainer{
 		this.addChild(label);
 	}
 
+	@Override
+	public void refreshPanel() {
+		
+	}
+
+	@Override
+	public void freePanel() {
+		
+	}
+
 }

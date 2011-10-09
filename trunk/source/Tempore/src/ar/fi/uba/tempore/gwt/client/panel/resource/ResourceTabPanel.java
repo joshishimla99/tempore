@@ -9,6 +9,7 @@ import ar.fi.uba.tempore.gwt.client.panel.TabsPanelContainer;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 import ar.fi.uba.temporeutils.observer.ProjectObserver;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.Record;
 import com.smartgwt.client.util.SC;
@@ -33,9 +34,19 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 	private final TileGrid userTileGrid = new TileGrid();
 	private final TileGrid tileGrid = new TileGrid();
 	
-	public ResourceTabPanel(){
+	@Override
+	public void refreshPanel() {
 		ProjectPanel.getInstance().addObserver(this);
-		
+		updateProjectSelected();
+	}
+
+	@Override
+	public void freePanel() {
+		ProjectPanel.getInstance().removeObserver(this);		
+	}	
+	
+	public ResourceTabPanel(){
+		GWT.log("Se crea Tab Resource");
 		userTileGrid.setTileWidth(120);  
 		userTileGrid.setTileHeight(160);  
 		userTileGrid.setHeight("50%");  
@@ -121,16 +132,16 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 
 	@Override
 	public void updateProjectSelected() {
+		GWT.log("Resource - Actualizacion de Proyecto");
 		ProjectDTO selected = ProjectPanel.getInstance().getSelected();
 		if (selected != null) {			
 			tileGrid.invalidateCache();
 			tileGrid.fetchData();
 			
-			
+			userTileGrid.setData(new Record[]{});
 			UserProjectServicesClient.Util.getInstance().getUserNotAssignedToProject(selected.getId(), new AsyncCallback<List<UserDTO>>() {
 				@Override
 				public void onSuccess(List<UserDTO> result) {
-					userTileGrid.setData(new Record[]{});
 					for (UserDTO dto : result) {
 						//GWT.log(dto.getName() + ", " + dto.getImageName());
 						Record t = new Record();
@@ -140,7 +151,7 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 						t.setAttribute(EMAIL, dto.getEmail());
 						t.setAttribute(USER_ID, dto.getId());
 						userTileGrid.addData(t);
-					}	
+					}
 				}
 				@Override
 				public void onFailure(Throwable caught) {
@@ -149,6 +160,5 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 			});
 		}		
 	}
-
 }
 
