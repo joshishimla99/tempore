@@ -19,6 +19,8 @@
 	<PROJECTSTATE  id='2' name='Iniciado' description='El proyecto ya esta iniciado'/>
 	<PROJECTSTATE  id='3' name='UAT' description='Proyecto en UAT'/>
 	<PROJECTSTATE  id='4' name='Cerrado' description='Proyecto cerrado'/>
+	<PROJECTSTATE  id='5' name='Cancelado' description='Proyecto cancelado'/>
+	<PROJECTSTATE  id='6' name='Suspendido' description='Proyecto suspendido'/>
 	
 	<PROJECT id='1' name='Tempore' projectStateId='1' description='Trabajo profesional sobre contador de horas' initDate='2011-02-09' endDate='2012-07-01' budget='65555'/>
 	<PROJECT id='2' name='Google+' projectStateId='2' description='Trabajo demo' initDate='2010-05-01' endDate='2012-07-01' budget='77000'/>
