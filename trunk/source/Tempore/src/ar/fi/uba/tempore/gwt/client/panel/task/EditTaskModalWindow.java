@@ -1,6 +1,5 @@
 package ar.fi.uba.tempore.gwt.client.panel.task;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -9,6 +8,7 @@ import ar.fi.uba.tempore.dto.TaskDTO;
 import ar.fi.uba.tempore.dto.TaskTypeDTO;
 import ar.fi.uba.tempore.gwt.client.TaskServicesClient;
 import ar.fi.uba.tempore.gwt.client.TaskTypeServicesClient;
+import ar.fi.uba.tempore.gwt.client.panel.task.TaskTabPanel.Task;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.Alignment;
@@ -36,14 +36,11 @@ public class EditTaskModalWindow {
 	private TextItem estimatedTimeLabel ;
 	private SelectItem taskType;
 	private DynamicForm form;
-	private int returnValue=0;
+	private Task father;
 	
-	public EditTaskModalWindow(){
+	public EditTaskModalWindow(Task task, final Integer id, String name, String description, Integer estimatedTime, final Integer projectId, final String type){
 		super();
-	}
-	
-	public int setValues(final Integer id, String name, String description, String estimation, String type, final Integer projectId){
-		
+		this.father = task;
 		winModal = new Window();  
         winModal.setWidth(360);  
         winModal.setHeight(305);  
@@ -83,24 +80,26 @@ public class EditTaskModalWindow {
 		
 		estimatedTimeLabel = new TextItem();
 		estimatedTimeLabel.setTitle("Tiempo Estimado");
-		estimatedTimeLabel.setValue(estimation);
+		estimatedTimeLabel.setValue(estimatedTime);
 		estimatedTimeLabel.setKeyPressFilter("[0-9.]");
 		estimatedTimeLabel.setRequired(true);  
         
 		taskType = new SelectItem("taskType", "Tipo");
-		taskType.setValue(type);
 		TaskTypeServicesClient.Util.getInstance().fetch(new AsyncCallback<List<TaskTypeDTO>>() {			
 			@Override
 			public void onSuccess(List<TaskTypeDTO> result) {
 				LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();  
 				for (TaskTypeDTO taskTypeDTO : result) {
 					valueMap.put(taskTypeDTO.getId().toString(), taskTypeDTO.getName());
+					if (taskTypeDTO.getName().equals(type)){
+						taskType.setDefaultValue(taskTypeDTO.getName());
+					}
 				}
 				taskType.setValueMap(valueMap);
 			}
 			@Override
 			public void onFailure(Throwable caught) {
-				SC.say("Fallo la carga del combo 'Clientes'");				
+				SC.say("Fallo la carga del combo de Tipo de Tarea");				
 			}
 		});
 
@@ -122,7 +121,7 @@ public class EditTaskModalWindow {
 					taskDTO.setDescription(taskDescription.getValueAsString());
 					taskDTO.setBudget(Integer.parseInt(estimatedTimeLabel.getValueAsString()));
 					final TaskTypeDTO taskTypeDTO = new TaskTypeDTO();
-					taskTypeDTO.setName(form.getValueAsString("taskType"));
+					taskTypeDTO.setName(taskType.getDisplayValue());
 					taskDTO.setTaskTypeDTO(taskTypeDTO);
 					
 					TaskServicesClient.Util.getInstance().updateTask(taskDTO, new AsyncCallback<TaskDTO>(){
@@ -130,13 +129,15 @@ public class EditTaskModalWindow {
 						@Override
 						public void onFailure(Throwable caught) {
 							com.google.gwt.user.client.Window.alert("Ha ocurrido un error al intentar actualizar la tarea");
-							returnValue = 2;
 						}
 
 						@Override
 						public void onSuccess(TaskDTO result) {
 							winModal.destroy();
-							returnValue = 1;
+							TaskTypeDTO taskTypeDTO = new TaskTypeDTO();
+							taskTypeDTO.setName(taskType.getDisplayValue());
+							result.setTaskTypeDTO(taskTypeDTO);
+							father.refresh(result);
 						}
 						
 					});
@@ -167,16 +168,9 @@ public class EditTaskModalWindow {
         vLayout.addMember(buttonLayout);
         
         winModal.addItem(vLayout);
-        winModal.show();
-        return returnValue;
 	}
 	
-	public List<String> getNewValues(){
-		List<String> values = new ArrayList<String>();
-		values.add(taskNameLabel.getValueAsString()); // VALUE 0 ==> NAME
-		values.add(taskDescription.getValueAsString()); // VALUE 1 ==> DESCRIPTION
-		values.add(estimatedTimeLabel.getValueAsString());  // VALUE 2 ==> TIME ESTIMATED
-		values.add(form.getValueAsString("taskType"));  // VALUE 3 ==> TASK TYPE
-		return values;
+	public void show(){
+		this.winModal.show();
 	}
 }
