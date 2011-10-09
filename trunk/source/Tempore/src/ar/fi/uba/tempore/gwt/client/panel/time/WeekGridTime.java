@@ -1,10 +1,14 @@
 package ar.fi.uba.tempore.gwt.client.panel.time;
 
+import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
+import ar.fi.uba.tempore.gwt.client.panel.project.ProjectTabPanel;
+import ar.fi.uba.temporeutils.observer.ProjectObserver;
+
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.events.DoubleClickHandler;
 import com.smartgwt.client.widgets.events.DoubleClickEvent;
 
-public class WeekGridTime extends VLayout{
+public class WeekGridTime extends VLayout implements ProjectObserver{
 	
 	public TimeCalendar calendar;
 	
@@ -26,6 +30,22 @@ public class WeekGridTime extends VLayout{
 
 	public TimeCalendar getCalendar() {
 		return calendar;
+	}
+
+	@Override
+	public void updateProjectSelected() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void refreshSubTab(){
+		ProjectPanel.getInstance().addObserver(this);
+		updateProjectSelected();
+	}
+
+	public void freeSubTab() {
+		// TODO Auto-generated method stub
+		ProjectPanel.getInstance().removeObserver(this);
 	}
 
 
