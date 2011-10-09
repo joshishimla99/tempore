@@ -1,12 +1,11 @@
 package ar.fi.uba.tempore.gwt.client.panel.time;
 
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
-import ar.fi.uba.tempore.gwt.client.panel.project.ProjectTabPanel;
 import ar.fi.uba.temporeutils.observer.ProjectObserver;
 
-import com.smartgwt.client.widgets.layout.VLayout;
-import com.smartgwt.client.widgets.events.DoubleClickHandler;
 import com.smartgwt.client.widgets.events.DoubleClickEvent;
+import com.smartgwt.client.widgets.events.DoubleClickHandler;
+import com.smartgwt.client.widgets.layout.VLayout;
 
 public class WeekGridTime extends VLayout implements ProjectObserver{
 	

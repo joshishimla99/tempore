@@ -11,7 +11,6 @@ import com.smartgwt.client.widgets.DateChooser;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.DataChangedEvent;
 import com.smartgwt.client.widgets.events.DataChangedHandler;
-import com.smartgwt.client.widgets.events.DropHandler;
 import com.smartgwt.client.widgets.form.fields.DateItem;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
@@ -20,29 +19,43 @@ import com.smartgwt.client.widgets.grid.ListGridEditorContext;
 import com.smartgwt.client.widgets.grid.ListGridEditorCustomizer;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
+import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
+import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
 import com.smartgwt.client.widgets.grid.events.RecordDropEvent;
 import com.smartgwt.client.widgets.grid.events.RecordDropHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tree.TreeGrid;
 import com.smartgwt.client.widgets.tree.TreeGridField;
-import com.smartgwt.client.widgets.events.DragStopHandler;
-import com.smartgwt.client.widgets.events.DragStopEvent;
-import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
-import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
-import com.smartgwt.client.widgets.events.DragMoveHandler;
-import com.smartgwt.client.widgets.events.DragMoveEvent;
 
 public class DragDropTimePanel extends Canvas implements ProjectObserver{
 
+	public static final String COL_ID = "idTaskCol";
+//	private static final String COL_ID_USER = "useridCol";
+//	private static final String COL_ID_TASK = "taskidCol";
+	public static final String COL_HOURS = "hoursCol";
+	public static final String COL_COMMENTS = "commentsCol";
+	public static final String COL_DATE = "dateCol";
+	public static final String COL_NAME = "nameCol";
+	
+	public static final String COL_TASK_ID = "taskId";
+	
+	public static final String COL_DESCRIPTION = "descriptionCol";
+	public static final String COL_PROJECT_NAME = "projectCol";
+	public static final String COL_PROJECT_ID = "projectIdCol";	
+	
+	public static final String COL_PARENT_ID = "idParentCol";
+	
+	
+	
 	final TaskTimeDataSource tasksDataSource;
 	final TreeGrid tasksTree;
 	final ListGrid hoursCountGrid;
-	Integer taskDropped;
+//	Integer taskDropped;
 
 	public DragDropTimePanel(){
 		super();
-		taskDropped = 0;
+//		taskDropped = 0;
 
 		final VLayout vAllPanel = new VLayout();
 		vAllPanel.setHeight100();
@@ -69,13 +82,13 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 
 		hoursCountGrid.setDuplicateDragMessage("Esta tarea ya existe...");
 
-		hoursCountGrid.addRecordDropHandler(new RecordDropHandler() {
-			public void onRecordDrop(RecordDropEvent event) {
-				ListGridRecord[] recs = event.getDropRecords();
-				SC.say("MOVIDA" + taskDropped );
-				recs[0].setAttribute(HourCountDataSource.COL_TASK_ID, taskDropped);
-			}
-		});
+//		hoursCountGrid.addRecordDropHandler(new RecordDropHandler() {
+//			public void onRecordDrop(RecordDropEvent event) {
+//				ListGridRecord[] recs = event.getDropRecords();
+//				SC.say("MOVIDA" + taskDropped );
+//				recs[0].setAttribute(COL_TASK_ID, taskDropped);
+//			}
+//		});
 		
 
 		hoursCountGrid.setHeight100();
@@ -91,30 +104,36 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 		hoursCountGrid.setPreventDuplicates(false);		
 		hoursCountGrid.setAutoSaveEdits(true);		
 
-		ListGridField lfProject = new ListGridField(HourCountDataSource.COL_PROJECT_NAME);
-		ListGridField lfName = new ListGridField(HourCountDataSource.COL_NAME);
-		ListGridField lfDescription = new ListGridField(HourCountDataSource.COL_DESCRIPTION);
-		ListGridField lfDate = new ListGridField(HourCountDataSource.COL_DATE);
-		ListGridField lfHours = new ListGridField(HourCountDataSource.COL_HOURS);
-		ListGridField lfComments = new ListGridField(HourCountDataSource.COL_COMMENTS);
-		ListGridField lfProjectId = new ListGridField(HourCountDataSource.COL_PROJECT_ID);
-//		lfProjectId.setHidden(true);
-
+		ListGridField lfProject = new ListGridField(COL_PROJECT_NAME);
 		
-
+		
+		ListGridField lfName = new ListGridField(COL_NAME);
+		ListGridField lfDescription = new ListGridField(COL_DESCRIPTION);
+		
+		
+		ListGridField lfDate = new ListGridField(COL_DATE);
+		ListGridField lfHours = new ListGridField(COL_HOURS);
+		ListGridField lfComments = new ListGridField(COL_COMMENTS);
+		ListGridField lfProjectId = new ListGridField(COL_PROJECT_ID);
+		ListGridField lfTaskId = new ListGridField(COL_TASK_ID);
+		
+		lfTaskId.setHidden(true);
+		
 		lfProject.setCanEdit(false);
 		lfName.setCanEdit(false);
 		lfDescription.setCanEdit(false);
 
-		hoursCountGrid.setFields(lfProject, lfName, lfDescription, lfDate, lfHours, lfComments, lfProjectId); 
+		hoursCountGrid.setFields(lfTaskId, lfProject, lfName, lfDescription, lfDate, lfHours, lfComments, lfProjectId); 
+		lfProjectId.setHidden(true);
+		
 		
 		hoursCountGrid.setEditorCustomizer(new ListGridEditorCustomizer() {  
 			public FormItem getEditor(ListGridEditorContext context) {  
 				ListGridField field = context.getEditField();  
-				if (field.getName().equals(HourCountDataSource.COL_DATE)) {  
+				if (field.getName().equals(COL_DATE)) {  
 					return new DateItem();
 				}
-				if (field.getName().equals(HourCountDataSource.COL_COMMENTS)) {  
+				if (field.getName().equals(COL_COMMENTS)) {  
 					TextAreaItem textItem = new TextAreaItem();  
 					textItem.setShowHint(true);  
 					textItem.setShowHintInField(true);  
@@ -144,8 +163,8 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 //				+ dateChooser.getData().getMonth() + dateChooser.getData().getDate();
 //				SC.say("Change Data: " + dateChooser.getData(). );		
 
-//				hoursCountGrid.fetchData(new Criteria(HourCountDataSource.COL_DATE, "20111001"));   
-				hoursCountGrid.fetchData(new Criteria(HourCountDataSource.COL_HOURS, "2" ));  
+//				hoursCountGrid.fetchData(new Criteria(COL_DATE, "20111001"));   
+				hoursCountGrid.fetchData(new Criteria(COL_HOURS, "2" ));  
 			}
 		});
 		
@@ -164,16 +183,18 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 		
 		tasksTree.addRecordClickHandler(new RecordClickHandler() {
 			public void onRecordClick(RecordClickEvent event) {
-				taskDropped = event.getRecord().getAttributeAsInt(TaskTimeDataSource.COL_ID);
-				SC.say("TASK IID" + event.getRecord().getAttributeAsInt(TaskTimeDataSource.COL_ID) );
+//				taskDropped = event.getRecord().getAttributeAsInt(COL_TASK_ID);
+				SC.say("TASK IID" + event.getRecord().getAttributeAsInt(COL_TASK_ID) );
 			}
 		});
 		
 
 		
 		tasksTree.setDataSource(tasksDataSource);
-		TreeGridField tfName = new TreeGridField(TaskTimeDataSource.COL_NAME);
-		TreeGridField tfDescription = new TreeGridField(TaskTimeDataSource.COL_DESCRIPTION);
+		TreeGridField tfId = new TreeGridField();
+		tfId.setHidden(true);
+		TreeGridField tfName = new TreeGridField(COL_NAME);
+		TreeGridField tfDescription = new TreeGridField(COL_DESCRIPTION);
 		tasksTree.setShowAllRecords(true);  
 		tasksTree.setCanReorderRecords(false);  
 		tasksTree.setCanDragRecordsOut(true);  
@@ -182,7 +203,7 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 		tasksTree.setNodeIcon("../images/tasks.png");  
 		tasksTree.setFolderIcon("../images/tasks.png");  
 		tasksTree.setEmptyMessage("Seleccion&aacute un proyecto...");  
-		tasksTree.setFields(tfName, tfDescription);  
+		tasksTree.setFields(tfId, tfName, tfDescription);  
 		tasksTree.setShowConnectors(true);   
 		
 
@@ -205,9 +226,9 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 		if (ProjectPanel.getInstance().getSelected() != null){
 			tasksDataSource.setId(ProjectPanel.getInstance().getSelected().getId());
 			tasksTree.fetchData();
-			//		hoursCountGrid.fetchData();
+			hoursCountGrid.fetchData();
 			//		SC.say("ID= " + ProjectPanel.getInstance().getSelected().getId().toString());
-			//		hoursCountGrid.fetchData(new Criteria(HourCountDataSource.COL_ID, "2"));
+			//		hoursCountGrid.fetchData(new Criteria(COL_ID, "2"));
 		}
 
 	}  
