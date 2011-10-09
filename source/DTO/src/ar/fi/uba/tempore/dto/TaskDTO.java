@@ -11,6 +11,11 @@ public class TaskDTO implements IsSerializable {
 	private float realHs;
 	private TaskTypeDTO taskTypeDTO;
 	private ProjectDTO project;
+	
+	public TaskDTO(){
+		super();
+		project = new ProjectDTO();
+	}
 
 	public Integer getId() {
 		return id;
