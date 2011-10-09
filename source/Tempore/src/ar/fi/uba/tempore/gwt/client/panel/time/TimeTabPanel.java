@@ -48,4 +48,16 @@ public class TimeTabPanel extends TabsPanelContainer {
 		this.addChild(topTabSet);				
 	}
 
+	@Override
+	public void refreshPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void freePanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
