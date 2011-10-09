@@ -15,6 +15,12 @@ public class TaskUserDTO implements IsSerializable{
 	private TaskDTO task;
 	private UserDTO user;
 	
+	public TaskUserDTO(){
+		super();
+		task = new TaskDTO();
+		user = new UserDTO();
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -47,7 +53,13 @@ public class TaskUserDTO implements IsSerializable{
 	}
 
 	public void setTask(TaskDTO task) {
+//		this.task.setId(task.getId());
+//		this.task.setDescription(task.getDescription());
+//		this.task.setName(task.getName());
+//		this.task.setProject(task.getProject());
 		this.task = task;
+		
+		
 	}
 
 	public TaskDTO getTask() {
@@ -55,6 +67,7 @@ public class TaskUserDTO implements IsSerializable{
 	}
 
 	public void setUser(UserDTO user) {
+//		this.user.setId(user.getId());
 		this.user = user;
 	}
 
