@@ -11,4 +11,8 @@ public abstract class TabsPanelContainer extends Canvas {
 		this.setWidth100();
 		this.setHeight100();
 	}
+	
+	public abstract void refreshPanel();
+	
+	public abstract void freePanel();
 }

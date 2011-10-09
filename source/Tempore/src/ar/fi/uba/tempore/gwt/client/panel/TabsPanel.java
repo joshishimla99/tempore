@@ -30,55 +30,67 @@ public class TabsPanel extends TabSet {
 		
 		int tabWidth = 100;
 		
+		//Tab 0
 		final Tab timeTab = new Tab("Tempore  ", "../images/ico/schedule.ico");
 		timeTab.setWidth(tabWidth);
 		timeTab.setPane(new TimeTabPanel());
 		
+		//Tab 1
 		final Tab resourceTab = new Tab("Recursos  ", "../images/ico/user_group.ico");
 		resourceTab.setWidth(tabWidth);   
 		resourceTab.setPane(new ResourceTabPanel());
 		
+		//Tab 2
 		final Tab projectTab = new Tab("Proyectos  ", "../images/ico/briefcase.ico");
 		projectTab.setWidth(tabWidth);   
 		projectTab.setPane(new ProjectTabPanel());
 		
+		//Tab 3
 		final Tab taskTab = new Tab("Tareas  ", "../images/ico/notes.ico");
 		taskTab.setWidth(tabWidth);
 		taskTab.setPane(new TaskTabPanel());
 		
+		//Tab 4
 		final Tab reportTab = new Tab("Reportes  ", "../images/ico/report.ico");
 		reportTab.setWidth(tabWidth);
 		reportTab.setPane(new ReportTabPanel());
 		
+		//Tab 5
 		final Tab configurationTab = new Tab("Configuraci&oacute;n  ", "../images/ico/wrench.ico");
 		configurationTab.setWidth(tabWidth);
 		configurationTab.setPane(new ConfigurationTabPanel());
 		
+		//Tab 6
 		final Tab helpTab = new Tab("Ayuda  ", "../images/ico/help1.ico");
 		helpTab.setWidth(tabWidth);
 		helpTab.setPane(new HelpTabPanel());
 	
 		
 		//deteccion del select y el unselected de cada Tab
-		addTabSelectedHandler(new TabSelectedHandler() {
-			@Override
-			public void onTabSelected(TabSelectedEvent event) {
-				int tabsCount = getTabs().length;
-				for (int i=0;i<tabsCount;i++){
-					TabsPanelContainer subTabPanel = (TabsPanelContainer) event.getTabPane();					
-					if (event.getTabNum() == i){
-						//seleccionado
-						//subTabPanel.selected();
-					} else {
-						//deseleccionado
-						//subTabPanel.deselected();
-					}
-				}
-			}
-		});
+		addTabSelectedHandler(new OnTabChange());
 		
 		setTabs(timeTab, projectTab, resourceTab, taskTab, reportTab, configurationTab, helpTab);
 		selectTab(2);
 	}
 
+	/**
+	 * cuando se selecciona un Tab se actualiza y se desactualizan todo el resto
+	 */
+	private class OnTabChange implements TabSelectedHandler {
+		@Override
+		public void onTabSelected(TabSelectedEvent event) {
+			//Tab seleccionado
+			TabsPanelContainer subTabPanel = (TabsPanelContainer) event.getTabPane();
+			subTabPanel.refreshPanel();
+			int tabNum = event.getTabNum();
+			
+			int tabsCount = getTabs().length;
+			for (int i=0; i<tabsCount; i++){	
+				if (i != tabNum){
+					//deseleccionado
+					((TabsPanelContainer)getTab(i).getPane()).freePanel();
+				}
+			}
+		}
+	}
 }
