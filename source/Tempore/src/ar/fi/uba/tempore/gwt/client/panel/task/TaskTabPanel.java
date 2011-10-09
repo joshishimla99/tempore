@@ -56,6 +56,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 	private int level =0;
 	private SectionItem  titleTask, firstLevelTask, secondLevelTask;
 	private ProjectDTO selectedProjectDTO;
+	private final ButtonItem addTask;
 
 	public TaskTabPanel() {
 		super();
@@ -87,13 +88,13 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		form.setAutoWidth();
 		form.setNumCols(5);
 
-		final ButtonItem addTask = createAddTaskButton();
+		addTask = createAddTaskButton();
 		
 		form.setItems(addTask, titleTask, firstLevelTask, secondLevelTask);
 		form.hideItem("titleTask");
 		form.hideItem("firstLevelTask");
 		form.hideItem("secondLevelTask");
-
+		
 		HLayout hLayout = new HLayout();
 		hLayout.addMember(form);
 		hLayout.addMember(buttonsLayout);
@@ -177,10 +178,18 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		addTask.addClickHandler(new com.smartgwt.client.widgets.form.fields.events.ClickHandler() {
 			public void onClick(
 					com.smartgwt.client.widgets.form.fields.events.ClickEvent event) {
-
-				NewTaskModalWindow newTaskModalWin = new NewTaskModalWindow(
-						addTask);
-				newTaskModalWin.show();
+				// Si el proyecto esta cerrado, no se pueden crear nuevas tareas
+				if (selectedProjectDTO.getProjectState().getId() != 4){
+					if (selectedProjectDTO.getIsOwner() == 1 || (selectedProjectDTO.getIsOwner() == 0 && level > 0)){
+						NewTaskModalWindow newTaskModalWin = new NewTaskModalWindow(
+								addTask);
+						newTaskModalWin.show();
+					} else {
+						SC.warn("No eres el due&ntildeo del proyecto para crear tareas primarias");
+					}
+				} else{
+					SC.warn("No es posible crear nuevas tareas dado que el proyecto est&aacute; cerrado");
+				}
 			}
 		});
 		return addTask;
@@ -560,36 +569,42 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 				
 				@Override
 				public void onCloseClick(CloseClientEvent event) {
-					SC.ask("Eliminar Tarea", "Desea eliminar la tarea seleccionada", new BooleanCallback() {
-						
-						@Override
-						public void execute(Boolean value) {
-							if(value) {
-								try {
-									
-									TaskServicesClient.Util.getInstance().deleteTask(taskId, idProject, new AsyncCallback<String>() {
-										
-										@Override
-										public void onFailure(Throwable caught) {
-											SC.warn("Ha ocurrido un error al intentar eliminar la tarea. Intentelo luego");
-											
-										}
-										
-										@Override
-										public void onSuccess(String result) {
-											close();
-											SC.say("Eliminar Tarea", "La tarea " + result + " y sus hijas, si contenia, se han eliminado satisfactoriamente.");
-											
-										}
-										
-									});
-								} catch (TaskWithHoursChargedException e) {
-									SC.say("Eliminar Tarea", "La tarea seleccionada no puede eliminarse dado la tarea " + e.getTaskName() + " tiene horas cargadas");
-								}
-							}
+					// Si el proyecto esta cerrado no es posible eliminar la tarea
+					if (selectedProjectDTO.getProjectState().getId() != 4){
+						SC.ask("Eliminar Tarea", "Desea eliminar la tarea seleccionada", new BooleanCallback() {
 							
-						}
-					});
+							@Override
+							public void execute(Boolean value) {
+								if(value) {
+									try {
+										
+										TaskServicesClient.Util.getInstance().deleteTask(taskId, idProject, new AsyncCallback<String>() {
+											
+											@Override
+											public void onFailure(Throwable caught) {
+												SC.warn("Ha ocurrido un error al intentar eliminar la tarea. Intentelo luego");
+												
+											}
+											
+											@Override
+											public void onSuccess(String result) {
+												close();
+												SC.say("Eliminar Tarea", "La tarea " + result + " y sus hijas, si contenia, se han eliminado satisfactoriamente.");
+												
+											}
+											
+										});
+									} catch (TaskWithHoursChargedException e) {
+										SC.say("Eliminar Tarea", "La tarea seleccionada no puede eliminarse dado la tarea " + e.getTaskName() + " tiene horas cargadas");
+									}
+								}
+								
+							}
+						});
+						
+					} else{
+						SC.warn("No es posible eliminar la tarea dado que el proyecto est&aacute; cerrado");
+					}
 				}
 			});
 			
@@ -617,8 +632,17 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 
 			@Override
 			public void onClick(ClickEvent event) {
-				EditTaskModalWindow editTaskModalWin = new EditTaskModalWindow(task, id, name, description, estimatedHs, selectedProjectDTO.getId(), type);
-				editTaskModalWin.show();
+				// Si el proyecto esta cerrado no es posible editar las tareas
+				if (selectedProjectDTO.getProjectState().getId() != 4){
+					if (selectedProjectDTO.getIsOwner() == 1 || (selectedProjectDTO.getIsOwner() == 0 && level > 0) ){
+						EditTaskModalWindow editTaskModalWin = new EditTaskModalWindow(task, id, name, description, estimatedHs, selectedProjectDTO.getId(), type);
+						editTaskModalWin.show();
+					} else {
+						SC.warn("No eres el due&ntildeo del proyecto para poder editar la tarea primaria");
+					}
+				} else{
+					SC.warn("No es posible crear nuevas tareas dado que el proyecto est&aacute; cerrado");
+				}
 			}
 		}
 
