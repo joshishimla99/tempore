@@ -10,6 +10,8 @@ import ar.fi.uba.tempore.gwt.client.panel.time.TimeTabPanel;
 
 import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;
+import com.smartgwt.client.widgets.tab.events.TabDeselectedEvent;
+import com.smartgwt.client.widgets.tab.events.TabDeselectedHandler;
 import com.smartgwt.client.widgets.tab.events.TabSelectedEvent;
 import com.smartgwt.client.widgets.tab.events.TabSelectedHandler;
 
@@ -67,30 +69,43 @@ public class TabsPanel extends TabSet {
 	
 		
 		//deteccion del select y el unselected de cada Tab
-		addTabSelectedHandler(new OnTabChange());
+		addTabSelectedHandler(new TabSelectedHandler() {
+			@Override
+			public void onTabSelected(TabSelectedEvent event) {
+				//Tab seleccionado
+				TabsPanelContainer subTabPanel = (TabsPanelContainer) event.getTabPane();
+				subTabPanel.refreshPanel();
+			}
+		});
+		addTabDeselectedHandler(new TabDeselectedHandler() {
+			@Override
+			public void onTabDeselected(TabDeselectedEvent event) {
+				//Tab DESseleccionado
+				TabsPanelContainer subTabPanel = (TabsPanelContainer) event.getTabPane();
+				subTabPanel.freePanel();
+			}
+		});
 		
 		setTabs(timeTab, projectTab, resourceTab, taskTab, reportTab, configurationTab, helpTab);
 		selectTab(2);
 	}
 
-	/**
-	 * cuando se selecciona un Tab se actualiza y se desactualizan todo el resto
-	 */
-	private class OnTabChange implements TabSelectedHandler {
-		@Override
-		public void onTabSelected(TabSelectedEvent event) {
-			//Tab seleccionado
-			TabsPanelContainer subTabPanel = (TabsPanelContainer) event.getTabPane();
-			subTabPanel.refreshPanel();
-			int tabNum = event.getTabNum();
-			
-			int tabsCount = getTabs().length;
-			for (int i=0; i<tabsCount; i++){	
-				if (i != tabNum){
-					//deseleccionado
-					((TabsPanelContainer)getTab(i).getPane()).freePanel();
-				}
-			}
-		}
-	}
+//	/**
+//	 * cuando se selecciona un Tab se actualiza y se desactualizan todo el resto
+//	 */
+//	private class OnTabChange implements TabSelectedHandler {
+//		@Override
+//		public void onTabSelected(TabSelectedEvent event) {
+//			
+//			int tabNum = event.getTabNum();
+//			
+//			int tabsCount = getTabs().length;
+//			for (int i=0; i<tabsCount; i++){	
+//				if (i != tabNum){
+//					//deseleccionado
+//					((TabsPanelContainer)getTab(i).getPane()).freePanel();
+//				}
+//			}
+//		}
+//	}
 }

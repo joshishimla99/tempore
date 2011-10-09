@@ -4,6 +4,8 @@ import ar.fi.uba.tempore.gwt.client.panel.TabsPanelContainer;
 
 import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;
+import com.smartgwt.client.widgets.tab.events.TabSelectedEvent;
+import com.smartgwt.client.widgets.tab.events.TabSelectedHandler;
 
 public class ConfigurationTabPanel extends TabsPanelContainer {
 	
@@ -20,18 +22,18 @@ public class ConfigurationTabPanel extends TabsPanelContainer {
 		userTab.setPane(new UserConfigurationPanel());
 		Tab alertTab = new Tab("Alertas");
 		alertTab.setPane(new AlertConfigurationPanel());	
-
+		
 		subTabPanel.setTabs(userTab, clientTab, alertTab);
 		this.addChild(subTabPanel);
 	}
 
 	@Override
 	public void refreshPanel() {
-		//No se hace nada
+		//Por ahora no tienen que hacer nada
 	}
 
 	@Override
 	public void freePanel() {
-		//No se hace nada
+		//Por ahora no tienen que hacer nada
 	}
 }
