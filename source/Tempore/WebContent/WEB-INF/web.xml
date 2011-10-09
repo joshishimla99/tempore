@@ -64,7 +64,7 @@
 		<servlet-name>taskServlet</servlet-name>
 		<url-pattern>/tempore/TaskServicesClient</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>taskTimeServlet</servlet-name>
 		<servlet-class>ar.fi.uba.tempore.gwt.server.TaskTimeServicesImpl</servlet-class>
@@ -73,7 +73,15 @@
 		<servlet-name>taskTimeServlet</servlet-name>
 		<url-pattern>/tempore/TaskTimeServicesClient</url-pattern>
 	</servlet-mapping>
-
+	
+	<servlet>
+		<servlet-name>taskTypeServlet</servlet-name>
+		<servlet-class>ar.fi.uba.tempore.gwt.server.TaskTypeServicesImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>taskTypeServlet</servlet-name>
+		<url-pattern>/tempore/TaskTypeServicesClient</url-pattern>
+	</servlet-mapping>
 
 	<!-- IMAGES SERVLETS -->
 	<context-param>
@@ -84,8 +92,8 @@
 		<param-name>slowUploads</param-name>
 		<param-value>true</param-value>
 	</context-param>
-	
-	
+
+
 	<servlet>
 		<servlet-name>newImageUploadServlet</servlet-name>
 		<servlet-class>ar.fi.uba.tempore.gwt.server.image.ImageServlet</servlet-class>
@@ -94,7 +102,7 @@
 		<servlet-name>newImageUploadServlet</servlet-name>
 		<url-pattern>/imageServlet.img</url-pattern>
 	</servlet-mapping>
-	
+
 
 	<!-- Default page to serve -->
 	<welcome-file-list>
