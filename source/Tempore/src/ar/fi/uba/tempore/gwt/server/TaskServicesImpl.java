@@ -18,7 +18,6 @@ import ar.fi.uba.tempore.gwt.client.TaskServicesClient;
 import ar.fi.uba.tempore.gwt.client.exception.TaskWithHoursChargedException;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.smartgwt.client.util.SC;
 
 public class TaskServicesImpl extends RemoteServiceServlet implements TaskServicesClient {
 
@@ -55,14 +54,28 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 				if (getTimeCharged(task.getId()) > 0){
 					throw new TaskWithHoursChargedException(task.getName());
 				}
+				List<Task> subtask = taskDAO.getChildTask(idProject, task.getId());
+				for (Task subTask : subtask) {
+					if (getTimeCharged(subTask.getId()) > 0){
+						throw new TaskWithHoursChargedException(subTask.getName());
+					}
+				}
 			}
 			// Si ni la tarea padre ni sus hijas tienen horas cargas ==> borro las hijas y la tarea padre
 			for (Task task : taskList) {
-				if (getTimeCharged(task.getId()) > 0){
-					taskDAO.delete(task);
+				List<Task> subTaskList = taskDAO.getChildTask(idProject, task.getId());
+				for (Task subTask : subTaskList) {
+					log.info("Trying to delete task ... " + subTask.getName());
+					taskDAO.delete(subTask);
+					log.info("Delete success task ... " + subTask.getName());
 				}
+				log.info("Trying to delete task ... " + task.getName());
+				taskDAO.delete(task);
+				log.info("Delete success task ... " + task.getName());
 			}
+			log.info("Trying to delete task ... " + taskToDelete.getName());
 			taskDAO.delete(taskToDelete);
+			log.info("Delete success task ... " + taskToDelete.getName());
 		} else {
 			throw new TaskWithHoursChargedException(taskToDelete.getName());
 		}
@@ -78,10 +91,10 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 		List<TaskType> taskList = new ArrayList<TaskType>();
 		TaskType exampleInstance = new TaskType();
 		exampleInstance.setName(taskDTO.getTaskTypeDTO().getName());
+		log("Task Type " + taskDTO.getTaskTypeDTO().getName());
 		taskList = taskTypeDAO.findByExample(exampleInstance);
 		
 		Project project = new Project();
-		log.error("" + taskDTO.getProject().getId());
 		project.setId(taskDTO.getProject().getId());
 		
 		Task a = mapper.map(taskDTO, Task.class);
