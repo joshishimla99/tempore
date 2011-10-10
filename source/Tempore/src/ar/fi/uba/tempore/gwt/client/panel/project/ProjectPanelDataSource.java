@@ -26,6 +26,7 @@ public class ProjectPanelDataSource extends GenericGwtRpcDataSourceFilterId<Inte
 	public static final String INITDATE_FIELD = "iniDate";
 	public static final String STATE_ID_FIELD = "stateIdCol";
 	public static final String STATE_NAME_FIELD = "stateNameCol";
+	public static final String IS_OWNER_FIELD = "isOwnerCol";
 	
 	public ProjectPanelDataSource(){
 		super();
@@ -38,44 +39,40 @@ public class ProjectPanelDataSource extends GenericGwtRpcDataSourceFilterId<Inte
 		List<DataSourceField> list = new ArrayList<DataSourceField>();
 		
 		DataSourceField fId = new DataSourceTextField(ID_FIELD);
-		//fId.setHidden(true);
 		fId.setPrimaryKey(true);
 		list.add(fId);		
 		
 		DataSourceField fName = new DataSourceTextField(NAME_FIELD);
-		fName.setRequired(true);
 		list.add(fName);
 		
 		//Ocultos
 		DataSourceField fh1 = new DataSourceTextField(BUDGET_FIELD);
-		fh1.setHidden(true);
 		list.add(fh1);
 		
 		DataSourceField fh2 = new DataSourceTextField(DESCRIPTION_FIELD);
-		fh2.setHidden(true);
 		list.add(fh2);
 		
 		DataSourceField fh3 = new DataSourceDateField(ENDDATE_FIELD);
-		fh3.setHidden(true);
 		list.add(fh3);
 		
 		DataSourceField fh4 = new DataSourceDateField(INITDATE_FIELD);
-		fh4.setHidden(true);
 		list.add(fh4);
 		
 		DataSourceField fh5 = new DataSourceIntegerField(STATE_ID_FIELD);
-		fh5.setHidden(true);
 		list.add(fh5);
 		
 		DataSourceField fh6 = new DataSourceTextField(STATE_NAME_FIELD);
-		fh6.setHidden(true);
 		list.add(fh6);
+		
+		DataSourceField fh7 = new DataSourceTextField(IS_OWNER_FIELD);
+		list.add(fh7);
 		
 		return list;
 	}
 	
 	@Override
 	public void copyValues(ListGridRecord from, ProjectDTO to) {
+		//No deberia utilizarce
 		to.setId(from.getAttributeAsInt(ID_FIELD));
 		to.setName(from.getAttribute(NAME_FIELD));
 		to.setBudget(from.getAttributeAsFloat(BUDGET_FIELD));
@@ -99,6 +96,7 @@ public class ProjectPanelDataSource extends GenericGwtRpcDataSourceFilterId<Inte
 		to.setAttribute(INITDATE_FIELD, from.getInitDate());
 		to.setAttribute(STATE_ID_FIELD, from.getProjectState().getId());
 		to.setAttribute(STATE_NAME_FIELD, from.getProjectState().getName());
+		to.setAttribute(IS_OWNER_FIELD, from.getIsOwner());
 	}
 	
 	@Override

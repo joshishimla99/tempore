@@ -46,7 +46,6 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 	}	
 	
 	public ResourceTabPanel(){
-		GWT.log("Se crea Tab Resource");
 		userTileGrid.setTileWidth(120);  
 		userTileGrid.setTileHeight(160);  
 		userTileGrid.setHeight("50%");  
@@ -132,7 +131,6 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 
 	@Override
 	public void updateProjectSelected() {
-		GWT.log("Resource - Actualizacion de Proyecto");
 		ProjectDTO selected = ProjectPanel.getInstance().getSelected();
 		if (selected != null) {			
 			tileGrid.invalidateCache();
