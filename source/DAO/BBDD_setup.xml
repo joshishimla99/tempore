@@ -40,10 +40,10 @@
 	<CLIENTCONTACT clientId='1' userId='21'/>
 	<CLIENTCONTACT clientId='2' userId='22'/>
 	
-	<USERPROJECT id='1' userId='11' projectId='1' owner='1'/>
-	<USERPROJECT id='2' userId='12' projectId='1' owner='0'/>
-	<USERPROJECT id='3' userId='12' projectId='2' owner='1'/>
-	<USERPROJECT id='4' userId='13' projectId='2' owner='0'/>
+	<USERPROJECT id='1' userId='1' projectId='1' owner='1'/>
+	<USERPROJECT id='2' userId='2' projectId='1' owner='0'/>
+	<USERPROJECT id='4' userId='1' projectId='2' owner='0'/>
+	<USERPROJECT id='3' userId='2' projectId='2' owner='1'/>
 	
 	<ALERT id='1' name='Analista' 		description='Analista de Negocios' 	userProjectId='1'/>
 	<ALERT id='2' name='PM' 			description='Project Manager' 		userProjectId='1'/>
