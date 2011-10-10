@@ -113,7 +113,7 @@ public class ProjectDTO implements IsSerializable {
 	}
 
 	public Integer getIsOwner() {
-		return 1;
+		return this.isOwner;
 	}
 
 }
