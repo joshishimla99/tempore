@@ -25,7 +25,7 @@ public class ProjectDAO extends GenericHibernateDAO<Project, Integer> {
 	public List<Project> getProjectsByUser (Integer userId){		
 		String hql = "select distinct p " +
 						"from Project as p " +
-						"inner join p.userProjectList as up " +
+						"inner join fetch p.userProjectList as up " +
 						"inner join fetch p.projectState as ps " +
 						"where up.user.id = " + userId;
 		
