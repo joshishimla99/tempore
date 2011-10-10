@@ -96,7 +96,7 @@ public class ImageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		String fileSrc = req.getParameter("id");
-		log.info("DOWNLOADING - "+fileSrc+"...");
+		//log.info("DOWNLOADING - "+fileSrc+"...");
 		
 		File file = null;
 		String mimeType = null;
