@@ -25,20 +25,62 @@ public class TaskUserDAO extends GenericHibernateDAO<TaskUser, Integer> {
 //			}
 //		}
 //
-		String hql = "select sum(tu.hourCount) from TaskUser as tu inner join tu.task as t where t.id=" + idTask;
-
-		Query createQuery = this.getSession().createQuery(hql);
+//		String hql = "select sum(tu.hourCount) from TaskUser as tu inner join tu.task as t where t.id=" + idTask;
+//
+//		Query createQuery = this.getSession().createQuery(hql);
+//		@SuppressWarnings("unchecked")
+//		List<Long> list = createQuery.list();
+//		if (!list.isEmpty()) {
+//			for (Long taskUserResult : list) {
+//				if(taskUserResult != null){
+//					log.error("entro en el servicio");
+//					chargedHour += taskUserResult.longValue();
+//				}
+//			}
+//		}
+		return chargedHour;
+	}
+	
+	public Long getTotalTimeByTask(Integer  taskId){
+		Long result = 0L;
+		log.error("Obtengo el tiempo total para la tarea " + taskId);
+		String hqln1 = "select tu from TaskUser tu where tu.task.id = " + taskId;		
+				
+		Query createQuery1 = this.getSession().createQuery(hqln1);
 		@SuppressWarnings("unchecked")
-		List<Long> list = createQuery.list();
-		if (!list.isEmpty()) {
-			for (Long taskUserResult : list) {
-				if(taskUserResult != null){
-					log.error("entro en el servicio");
-					chargedHour += taskUserResult.longValue();
-				}
+		List<TaskUser> listN1 = createQuery1.list();
+		for (TaskUser taskUser : listN1) {
+			if (taskUser == null){
+				log.error("taskUser es null");
+			}
+			if (taskUser.getHourCount() != null){
+				result += taskUser.getHourCount();
+			}
+			
+		}
+		
+		String hqln2 = "select tu from TaskUser tu inner join tu.task t where t.taskId = " + taskId;
+		Query createQuery2 = this.getSession().createQuery(hqln2);
+		@SuppressWarnings("unchecked")
+		List<TaskUser> listN2 = createQuery2.list();
+		for (TaskUser taskUser : listN2) {
+			if (taskUser.getHourCount() != null){
+				result += taskUser.getHourCount();
 			}
 		}
-		return chargedHour;
+		String subQuery = "select t.id from Task as t where t.taskId=" + taskId;
+		
+		String hqln3 = "select tu from TaskUser tu inner join tu.task t where t.taskId in ("+subQuery+") " ;
+		Query createQuery3 = this.getSession().createQuery(hqln3);
+		@SuppressWarnings("unchecked")
+		List<TaskUser> listN3 = createQuery3.list();
+		for (TaskUser taskUser : listN3) {
+			if (taskUser.getHourCount() != null){
+				result += taskUser.getHourCount();
+			}
+		}
+		
+		return result;
 	}
 
 }
