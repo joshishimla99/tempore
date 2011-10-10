@@ -102,7 +102,7 @@ public class AssignedUserDataSource extends GenericGwtRpcDataSourceFilterId<Inte
 
 	@Override  
     protected Object transformRequest(DSRequest dsRequest) {
-		GWT.log("Evento de DataSource - " + dsRequest.getOperationType());
+		//GWT.log("Evento de DataSource - " + dsRequest.getOperationType());
 		if (ProjectPanel.getInstance().getSelected() != null){
 			this.setId(ProjectPanel.getInstance().getSelected().getId());		
 		}

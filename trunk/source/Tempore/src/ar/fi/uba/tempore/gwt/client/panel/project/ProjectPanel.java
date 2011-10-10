@@ -7,7 +7,7 @@ import ar.fi.uba.tempore.dto.ProjectDTO;
 import ar.fi.uba.temporeutils.observer.ProjectObserved;
 import ar.fi.uba.temporeutils.observer.ProjectObserver;
 
-import com.google.gwt.user.client.Window;
+import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.GroupStartOpen;
 import com.smartgwt.client.types.ListGridFieldType;
 import com.smartgwt.client.widgets.grid.ListGrid;
@@ -55,17 +55,26 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 		this.setGroupStartOpen(GroupStartOpen.ALL);
 	
 		//Columnas a ser visualizadas
-		ListGridField image = new ListGridField("image");
-		image.setType(ListGridFieldType.ICON);
-		image.setIcon("../images/png/24x24/Briefcase.png");
-		image.setIconHeight(16);
+		ListGridField image = new ListGridField(ProjectPanelDataSource.STATE_ID_FIELD);
+		image.setAlign(Alignment.CENTER);
+		image.setType(ListGridFieldType.IMAGE);
+		image.setImageURLPrefix("../images/png/24x24/Briefcase");  
+        image.setImageURLSuffix(".png");
 		image.setWidth(25);
 		image.setCanFilter(false);
 		
+		ListGridField imageOwner = new ListGridField(ProjectPanelDataSource.IS_OWNER_FIELD);
+		imageOwner.setAlign(Alignment.CENTER);
+		imageOwner.setType(ListGridFieldType.IMAGE);
+		image.setImageURLPrefix("../images/png/24x24/Favourites");  
+        image.setImageURLSuffix(".png");
+		imageOwner.setWidth(25);
+		imageOwner.setCanFilter(false);
+		
 		ListGridField name = new ListGridField(ProjectPanelDataSource.NAME_FIELD);
 		ListGridField state = new ListGridField(ProjectPanelDataSource.STATE_NAME_FIELD);
-		this.setFields(image,name, state);
-		this.hideField(ProjectPanelDataSource.STATE_NAME_FIELD);
+		this.setFields(image,imageOwner,name, state);
+		this.hideField(ProjectPanelDataSource.STATE_NAME_FIELD);		
 				
 		this.addSelectionChangedHandler(new SelectionChangedHandler() {
 			@Override
@@ -159,8 +168,7 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 	 * Agrupa por el cliente del proyecto
 	 */
 	public void viewByClientProjectGroup (){
-		//TODO falta implementar
-		Window.alert("Falta agregar el cliente al Proyecto");
+		this.groupBy(ProjectPanelDataSource.IS_OWNER_FIELD);
 	}
 	
 	/**

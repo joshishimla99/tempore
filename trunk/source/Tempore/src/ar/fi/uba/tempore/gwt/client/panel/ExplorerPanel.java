@@ -69,7 +69,7 @@ public class ExplorerPanel extends VLayout {
 		toolStrip.addMember(freeGroupButton);  
 
 		ImgButton clientGroupButton = new ImgButton();
-		clientGroupButton.setTooltip("Agrupar por Cliente");
+		clientGroupButton.setTooltip("Agrupar por Owner");
 		clientGroupButton.setSize(16);  
 		clientGroupButton.setShowRollOver(false);  
 		clientGroupButton.setSrc("../images/png/24x24/Red bookmark.png");  
