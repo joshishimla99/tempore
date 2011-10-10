@@ -49,6 +49,7 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 		for (Project p : projects) {
 			ProjectDTO pDTO = mapper.map(p, ProjectDTO.class);
 			pDTO.setProjectState(mapper.map(p.getProjectState(), ProjectStateDTO.class));
+			pDTO.setIsOwner(p.getUserProjectList().get(0).getOwner());
 			list.add(pDTO);
 		}
 		
