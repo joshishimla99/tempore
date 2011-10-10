@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
 	<PERSON id ='1' name='Nicolás' lastname='García' phone='15-6330-5220' email='ngarcia@gmail.com' zip='1199' country='Argentina' address='Tte JD Peron 4420 5°C' imageName='1317575837812_Nico.jpg'/>
-	<PERSON id ='2' name='Juan Pablo' lastname='Gigante' phone='12132132123' email='juanpablo@gmail.com' zip='ADFAAFSD' country='Argentina' address='direccion'/>
-	<PERSON id ='3' name='Ludmila Liz' lastname='Rinaudo' phone='11321233' email='ludmila@gmail.com' zip='ADFAAFSD' country='Argentina' address='asdfasd'/>
+	<PERSON id ='2' name='Juan Pablo' lastname='Gigante' phone='12132132123' email='juanpablo@gmail.com' zip='ADFAAFSD' country='Argentina' address='direccion' imageName='1318188597703_Juan.png'/>
+	<PERSON id ='3' name='Ludmila Liz' lastname='Rinaudo' phone='11321233' email='ludmila@gmail.com' zip='ADFAAFSD' country='Argentina' address='asdfasd' imageName='1318189046500_LudmilaRinaudo.png'/>
 	
 	<PERSON id ='11' name='Rana' lastname='Rene' phone='15-6789-0123' email='nicolasgarcia@gmail.com' zip='ADFAAFSD' country='Argentina' address='asdf'/>
 	<PERSON id ='12' name='Jose' lastname='Marmol' phone='12132132123' email='juanperez@gmail.com' zip='ADFAAFSD' country='Argentina' address='qret'/>
