@@ -26,7 +26,16 @@ public class User extends Person {
 	private List<TaskUser> taskUserList = new ArrayList<TaskUser>();
 	private List<UserProject> userProjectList = new ArrayList<UserProject>();
 	private List<Client> clientList = new ArrayList<Client>();
-
+	
+	public User(){
+		super();
+	}
+	
+	public User(Integer id){
+		super(id);
+	}
+	
+	
 	@Column(name="state")
 	public String getState() {
 		return state;
