@@ -25,6 +25,11 @@ public class ProjectState implements Serializable {
 	
 	private List<Project> projectList = new ArrayList<Project>();
 	
+	public ProjectState(){}
+	public ProjectState(Integer id){
+		setId(id);
+	}
+	
 	@Id
 	@GeneratedValue
 	@Column(name="id")

@@ -27,6 +27,11 @@ public class Person implements Serializable {
 	private String email;
 	private String imageName;
 	
+	public Person(){}
+	public Person(Integer id) {
+		setId(id);	
+	}
+	
 	@Id
 	@GeneratedValue
 	@Column(name="id")
