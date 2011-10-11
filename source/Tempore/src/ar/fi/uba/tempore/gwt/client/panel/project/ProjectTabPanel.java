@@ -1,5 +1,6 @@
 package ar.fi.uba.tempore.gwt.client.panel.project;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -7,9 +8,11 @@ import java.util.List;
 import ar.fi.uba.tempore.dto.ClientDTO;
 import ar.fi.uba.tempore.dto.ProjectDTO;
 import ar.fi.uba.tempore.dto.ProjectStateDTO;
+import ar.fi.uba.tempore.dto.UserProjectDTO;
 import ar.fi.uba.tempore.gwt.client.ClientServicesClient;
 import ar.fi.uba.tempore.gwt.client.ProjectServicesClient;
 import ar.fi.uba.tempore.gwt.client.ProjectStateServicesClient;
+import ar.fi.uba.tempore.gwt.client.login.SessionUser;
 import ar.fi.uba.tempore.gwt.client.panel.TabsPanelContainer;
 import ar.fi.uba.temporeutils.observer.ProjectObserver;
 
@@ -40,7 +43,6 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 	private static final String START_FIELD = "pStartDate";
 	private static final String END_FIELD = "pEndDate";
 	private static final String CLIENT_FIELD = "pClient";
-	private static final String FILE_FIELD = "pLogo";
 	private static final String STATE_FIELD = "pState";
 	
 	private DynamicForm form;
@@ -83,8 +85,7 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		final SelectItem selClient = new SelectItem(CLIENT_FIELD, "Clientes");
 		selClient.setMultiple(true);
 		selClient.setMultipleAppearance(MultipleAppearance.PICKLIST);
-		//TODO hacerlo obligatorio
-		selClient.setRequired(false);		
+		selClient.setRequired(true);		
 		
 		ClientServicesClient.Util.getInstance().fetch(new AsyncCallback<List<ClientDTO>>() {			
 			@Override
@@ -256,9 +257,18 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		to.setBudget(new Float(from.getValue(BUDGET_FIELD).toString()));
 		
 		//TODO faltan los clientes
+		
+		//Estado del proyecto
 		ProjectStateDTO projectState = new ProjectStateDTO();
 		projectState.setId(new Integer(form.getValue(STATE_FIELD).toString()));
 		to.setProjectState(projectState);
+		
+		//Usuario creador
+		UserProjectDTO upDTO = new UserProjectDTO();
+		upDTO.setUser(SessionUser.getInstance().getUser());
+		List<UserProjectDTO> userProjectList = new ArrayList<UserProjectDTO>();
+		userProjectList.add(upDTO);
+		to.setUserProjectList(userProjectList);
 	}
 	
 	/**
@@ -280,5 +290,7 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		//to.setValue(CLIENT_FIELD, 2);
 		//TODO falta Client
 		to.setValue(STATE_FIELD, from.getProjectState().getId());
+		
+		//TODO falta mostrar el usuario creador
 	}
 }
