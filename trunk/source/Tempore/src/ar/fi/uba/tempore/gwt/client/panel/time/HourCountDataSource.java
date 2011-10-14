@@ -19,6 +19,7 @@ import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceDateField;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
+import com.smartgwt.client.types.SummaryFunctionType;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 public class HourCountDataSource extends GenericGwtRpcDataSource<TaskUserDTO, ListGridRecord, TimeServicesClientAsync> {
@@ -36,6 +37,8 @@ public class HourCountDataSource extends GenericGwtRpcDataSource<TaskUserDTO, Li
 		
 		DataSourceIntegerField field3 = new DataSourceIntegerField(DragDropTimePanel.COL_HOURS, "Horas dedicadas");
 		field3.setRequired(true);
+		field3.setPluralTitle("Horas"); 
+		field3.setSummaryFunction(SummaryFunctionType.SUM); 
 		fields.add(field3);
 		
 		DataSourceTextField field4 = new DataSourceTextField(DragDropTimePanel.COL_COMMENTS, "Comentarios");
@@ -88,7 +91,7 @@ public class HourCountDataSource extends GenericGwtRpcDataSource<TaskUserDTO, Li
 		dto.setTask(taskDTO);
 		dto.setHourCount((rec.getAttributeAsInt(DragDropTimePanel.COL_HOURS)==null)?0:rec.getAttributeAsInt(DragDropTimePanel.COL_HOURS));
 		dto.setComment(rec.getAttribute(DragDropTimePanel.COL_COMMENTS));
-		dto.setDate(new Date());
+		dto.setDate(rec.getAttributeAsDate(DragDropTimePanel.COL_DATE));
 	}
 
 	@Override
