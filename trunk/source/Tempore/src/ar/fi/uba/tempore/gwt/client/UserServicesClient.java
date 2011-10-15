@@ -1,4 +1,6 @@
 package ar.fi.uba.tempore.gwt.client;
+import java.util.List;
+
 import ar.fi.uba.tempore.dto.UserDTO;
 import ar.fi.uba.temporeutils.listgrid.GenericGwtRpcDataSourceService;
 
@@ -19,6 +21,8 @@ public interface UserServicesClient extends GenericGwtRpcDataSourceService<UserD
 	}
 	
 	public UserDTO validateUser (String userName, String password);
+	
+	public List<UserDTO> getUserNotAssignedToProject(Integer projectId);
 }
 
 

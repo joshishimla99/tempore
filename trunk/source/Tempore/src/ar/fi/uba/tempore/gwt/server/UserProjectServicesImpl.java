@@ -6,8 +6,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
 
-import ar.fi.uba.tempore.dao.ProjectDAO;
-import ar.fi.uba.tempore.dao.UserDAO;
 import ar.fi.uba.tempore.dao.UserProjectDAO;
 import ar.fi.uba.tempore.dto.UserDTO;
 import ar.fi.uba.tempore.dto.UserProjectDTO;
@@ -23,8 +21,6 @@ public class UserProjectServicesImpl extends RemoteServiceServlet implements Use
 	private static final long serialVersionUID = 3871015150494046391L;
 	private final Logger log = Logger.getLogger(this.getClass());	
 	private UserProjectDAO upDAO = new UserProjectDAO();
-	private ProjectDAO pDAO = new ProjectDAO();
-	private UserDAO uDAO = new UserDAO();
 	private final DozerBeanMapper mapper = new DozerBeanMapper();
 	
 	@Override
@@ -45,15 +41,8 @@ public class UserProjectServicesImpl extends RemoteServiceServlet implements Use
 	@Override
 	public UserProjectDTO add(UserProjectDTO data) {
 		log.info("UserProject - ADD DATA - " + data.getProject().getId() + ", " + data.getUser().getId());
-		
-		Project project = pDAO.findById(data.getProject().getId());
-		User user = uDAO.findById(data.getUser().getId());
-		
-		UserProject up = new UserProject();
-		up.setOwner(0);
-		up.setProject(project);
-		up.setUser(user);
-		
+
+		UserProject up = mapper.map(data, UserProject.class);
 		UserProject makePersistent = upDAO.makePersistent(up);
 		UserProjectDTO dto = mapper.map(makePersistent, UserProjectDTO.class);
 		return dto;
@@ -75,20 +64,20 @@ public class UserProjectServicesImpl extends RemoteServiceServlet implements Use
 	}
 	
 	
-	/**
-	 * Obtiene el listado de usauarios que no estan asignado al proyecto 
-	 * @param projectId Id del proyecto a observar
-	 * @return Lista de usuarios
-	 */
-	public List<UserDTO> getUserNotAssignedToProject(Integer projectId){
-		log.info("GET USER NOT ASSIGNED TO PROJECT - id=" + projectId);
-		List<User> userNotAssignedToProject = upDAO.getUserNotAssignedToProject(projectId);
+	@Override
+	public void changeOwner(UserProjectDTO dto) {
+		log.info("CHANGE OWNER");
 		
-		List<UserDTO> list = new ArrayList<UserDTO>();
-		for (User user : userNotAssignedToProject) {
-			UserDTO map = mapper.map(user, UserDTO.class);
-			list.add(map);
-		}
-		return list;
+		log.info("CLEAR OWNER - proyecto: " + dto.getProject().getId());
+		upDAO.removeActualOwner(dto.getProject().getId());
+		
+		UserProject up = mapper.map(dto, UserProject.class);
+		up.setOwner(1);
+		User u = mapper.map(dto.getUser(), User.class);
+		Project p = mapper.map(dto.getProject(), Project.class);
+		log.info("SET OWNER - Usuario: " + u.getId() + ", Project: " + p.getId() + ", UP id: " + up.getId());
+		up.setUser(u);
+		up.setProject(p);
+		upDAO.makePersistent(up);
 	}
 }

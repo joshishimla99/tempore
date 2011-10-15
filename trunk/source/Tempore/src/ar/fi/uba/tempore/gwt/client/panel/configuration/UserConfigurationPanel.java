@@ -28,7 +28,7 @@ public class UserConfigurationPanel extends Canvas {
 	}
 
 	public void updateContent() {
-		VLayout vLayout = new VLayout();
+		final VLayout vLayout = new VLayout();
 		vLayout.setWidth100();
 		vLayout.setHeight100();
 		vLayout.setMembersMargin(6);
@@ -130,8 +130,9 @@ public class UserConfigurationPanel extends Canvas {
 
 		ListGridField user = new ListGridField (UserConfigurationDataSource.USER_NAME);
 		ListGridField name = new ListGridField (UserConfigurationDataSource.NAME);
-		ListGridField lastName = new ListGridField (UserConfigurationDataSource.LAST_NAME);		
-		grid.setFields(user, name, lastName);
+		ListGridField lastName = new ListGridField (UserConfigurationDataSource.LAST_NAME);
+		ListGridField email = new ListGridField (UserConfigurationDataSource.EMAIL);
+		grid.setFields(user, name, lastName, email);
 
 		// BOTONERA
 		final HLayout btnHLayout = new HLayout();		

@@ -1,8 +1,5 @@
 package ar.fi.uba.tempore.gwt.client;
 
-import java.util.List;
-
-import ar.fi.uba.tempore.dto.UserDTO;
 import ar.fi.uba.tempore.dto.UserProjectDTO;
 import ar.fi.uba.temporeutils.listgrid.filter.GenericGwtRpcDataSourceServiceFilterId;
 
@@ -23,6 +20,6 @@ public interface UserProjectServicesClient extends GenericGwtRpcDataSourceServic
 			return instance;
 		}
 	}
-	
-	public List<UserDTO> getUserNotAssignedToProject(Integer projectId);
+
+	public void changeOwner(UserProjectDTO data);
 }
