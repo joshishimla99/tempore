@@ -30,7 +30,7 @@ public class ServletFilter implements javax.servlet.Filter {
 		try {
 			if (log.isDebugEnabled()){
 				start = System.currentTimeMillis();
-				log.debug("******* Transaccion Iniciada *********");
+				log.info("******* Transaccion Iniciada *********");
 			}
 			transaction = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();		
 			chain.doFilter(request, response);

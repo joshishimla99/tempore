@@ -10,6 +10,9 @@ import ar.fi.uba.temporeutils.observer.ProjectObserver;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.GroupStartOpen;
 import com.smartgwt.client.types.ListGridFieldType;
+import com.smartgwt.client.util.SC;
+import com.smartgwt.client.widgets.events.FetchDataEvent;
+import com.smartgwt.client.widgets.events.FetchDataHandler;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
@@ -74,7 +77,6 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 		ListGridField state = new ListGridField(ProjectPanelDataSource.STATE_NAME_FIELD);
 		this.setFields(image,imageOwner,name, state);
 		this.hideField(ProjectPanelDataSource.STATE_NAME_FIELD);		
-				
 		this.addSelectionChangedHandler(new SelectionChangedHandler() {
 			@Override
 			public void onSelectionChanged(SelectionEvent event) {

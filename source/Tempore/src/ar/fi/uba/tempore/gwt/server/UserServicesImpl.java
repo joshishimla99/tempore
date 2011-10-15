@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
+import org.hibernate.Query;
 
 import ar.fi.uba.tempore.dao.UserDAO;
 import ar.fi.uba.tempore.dto.UserDTO;
@@ -64,5 +65,23 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 		log.info("REMOVE - User");
 		User user = mapper.map(userDTO, User.class);
 		uDAO.delete(user);
+	}
+	
+	
+	/**
+	 * Obtiene el listado de usauarios que no estan asignado al proyecto 
+	 * @param projectId Id del proyecto a observar
+	 * @return Lista de usuarios
+	 */
+	public List<UserDTO> getUserNotAssignedToProject(Integer projectId){
+		log.info("GET USER NOT ASSIGNED TO PROJECT - id=" + projectId);
+		List<User> userNotAssignedToProject = uDAO.getUserNotAssignedToProject(projectId);
+		
+		List<UserDTO> list = new ArrayList<UserDTO>();
+		for (User user : userNotAssignedToProject) {
+			UserDTO map = mapper.map(user, UserDTO.class);
+			list.add(map);
+		}
+		return list;
 	}
 }

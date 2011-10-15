@@ -90,22 +90,4 @@ public class TabsPanel extends TabSet {
 		selectTab(2);
 	}
 
-//	/**
-//	 * cuando se selecciona un Tab se actualiza y se desactualizan todo el resto
-//	 */
-//	private class OnTabChange implements TabSelectedHandler {
-//		@Override
-//		public void onTabSelected(TabSelectedEvent event) {
-//			
-//			int tabNum = event.getTabNum();
-//			
-//			int tabsCount = getTabs().length;
-//			for (int i=0; i<tabsCount; i++){	
-//				if (i != tabNum){
-//					//deseleccionado
-//					((TabsPanelContainer)getTab(i).getPane()).freePanel();
-//				}
-//			}
-//		}
-//	}
 }

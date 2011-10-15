@@ -11,7 +11,6 @@ import ar.fi.uba.tempore.gwt.client.UserProjectServicesClientAsync;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 import ar.fi.uba.temporeutils.listgrid.filter.GenericGwtRpcDataSourceFilterId;
 
-import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceImageField;
@@ -19,13 +18,13 @@ import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
-public class AssignedUserDataSource extends GenericGwtRpcDataSourceFilterId<Integer, UserProjectDTO, ListGridRecord, UserProjectServicesClientAsync> {
+public class ResourceDataSource extends GenericGwtRpcDataSourceFilterId<Integer, UserProjectDTO, ListGridRecord, UserProjectServicesClientAsync> {
 
-	private static AssignedUserDataSource instance = null;
+	private static ResourceDataSource instance = null;
 	
-	public static AssignedUserDataSource getInstance(){
+	public static ResourceDataSource getInstance(){
 		if (instance == null){
-			instance = new AssignedUserDataSource();
+			instance = new ResourceDataSource();
 		}
 		return instance;
 	}
@@ -51,9 +50,13 @@ public class AssignedUserDataSource extends GenericGwtRpcDataSourceFilterId<Inte
 		fields.add(user);
 		DataSourceTextField email = new DataSourceTextField(ResourceTabPanel.EMAIL);
 		fields.add(email);
+		
 		DataSourceImageField imageName = new DataSourceImageField(ResourceTabPanel.IMAGE_NAME);
 		imageName.setImageURLPrefix("http://localhost:8080/Tempore/imageServlet.img?id=");
 		fields.add(imageName);
+		
+		DataSourceTextField owner = new DataSourceTextField(ResourceTabPanel.IS_OWNER);
+		fields.add(owner);
 		
 		return fields;
 
@@ -70,11 +73,16 @@ public class AssignedUserDataSource extends GenericGwtRpcDataSourceFilterId<Inte
 		ProjectDTO project = new ProjectDTO();
 		project.setId(ProjectPanel.getInstance().getSelected().getId());
 		dto.setProject(project);
+		
+		//Coloco los que no son owner
+		//TODO si el que se arrastra es el owner decir que no
+		dto.setOwner(0);
 	}
 
 	@Override
 	public void copyValues(UserProjectDTO from, ListGridRecord to) {
 		to.setAttribute(ResourceTabPanel.USER_PROJECT_ID, from.getId());
+		to.setAttribute(ResourceTabPanel.IS_OWNER, from.getOwner());
 		
 		UserDTO user = from.getUser();
 		to.setAttribute(ResourceTabPanel.USER_ID, user.getId());
@@ -82,7 +90,7 @@ public class AssignedUserDataSource extends GenericGwtRpcDataSourceFilterId<Inte
 		to.setAttribute(ResourceTabPanel.LAST_NAME, user.getLastName());
 		to.setAttribute(ResourceTabPanel.NAME, user.getName());
 		to.setAttribute(ResourceTabPanel.USER_NAME, user.getUserName());
-		to.setAttribute(ResourceTabPanel.IMAGE_NAME, user.getImageName());		
+		to.setAttribute(ResourceTabPanel.IMAGE_NAME, user.getImageName());
 	}
 
 	@Override
