@@ -38,7 +38,8 @@ public class ImgClient extends VLayout implements UpdateImgHandler {
 		form.setAction(UPLOAD_URL);
 		form.setTarget(FRAME_RESPONSE);
 
-		final UploadItem upload = new UploadItem("Imagen");
+		final UploadItem upload = new UploadItem("Src");
+		upload.setType("");
 		upload.addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(ChangeEvent event) {
@@ -48,8 +49,8 @@ public class ImgClient extends VLayout implements UpdateImgHandler {
 		form.setFields(upload);
 		
 		img.setBorder("2px");
-		img.setHeight100();
-		img.setWidth100();
+		img.setHeight(120);
+		img.setWidth(120);
 
 		final Canvas canvas = new Canvas();
 		canvas.setWidth(10);
