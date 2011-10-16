@@ -15,7 +15,9 @@ import com.smartgwt.client.widgets.form.fields.events.ChangeHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 public class ImgClient extends VLayout implements UpdateImgHandler {
-
+	
+	public static final String URL_PREFIX = "http://localhost:8080/Tempore/imageServlet.img?id=";
+	
 	private static final String DOWNLOAD_URL = "http://localhost:8080/Tempore/imageServlet.img?";//GET
 	private static final String UPLOAD_URL = "imageServlet.img?";//POST
 	private static final String DEFAULT_IMAGE = "../images/unknownClient.jpg";
