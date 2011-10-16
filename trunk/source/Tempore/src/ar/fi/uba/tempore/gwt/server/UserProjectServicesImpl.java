@@ -42,6 +42,8 @@ public class UserProjectServicesImpl extends RemoteServiceServlet implements Use
 	public UserProjectDTO add(UserProjectDTO data) {
 		log.info("UserProject - ADD DATA - " + data.getProject().getId() + ", " + data.getUser().getId());
 
+		//TODO validar si usuario que lo esta realizando es owner para poder realizar esta operacion
+		
 		UserProject up = mapper.map(data, UserProject.class);
 		UserProject makePersistent = upDAO.makePersistent(up);
 		UserProjectDTO dto = mapper.map(makePersistent, UserProjectDTO.class);
