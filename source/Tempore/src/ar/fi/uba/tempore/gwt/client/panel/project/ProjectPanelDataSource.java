@@ -79,10 +79,11 @@ public class ProjectPanelDataSource extends GenericGwtRpcDataSourceFilterId<Inte
 		to.setDescription(from.getAttribute(DESCRIPTION_FIELD));
 		to.setEndDate(from.getAttributeAsDate(ENDDATE_FIELD));
 		to.setInitDate(from.getAttributeAsDate(INITDATE_FIELD));
-
+		to.setIsOwner(from.getAttributeAsInt(IS_OWNER_FIELD));
+		
 		ProjectStateDTO projectState = new ProjectStateDTO();
 		projectState.setId(from.getAttributeAsInt(STATE_ID_FIELD));
-		projectState.setName(from.getAttribute(STATE_NAME_FIELD));
+		projectState.setName(from.getAttribute(STATE_NAME_FIELD));		
 		to.setProjectState(projectState );
 	}
 	

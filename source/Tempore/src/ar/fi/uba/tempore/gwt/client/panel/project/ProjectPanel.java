@@ -10,9 +10,6 @@ import ar.fi.uba.temporeutils.observer.ProjectObserver;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.GroupStartOpen;
 import com.smartgwt.client.types.ListGridFieldType;
-import com.smartgwt.client.util.SC;
-import com.smartgwt.client.widgets.events.FetchDataEvent;
-import com.smartgwt.client.widgets.events.FetchDataHandler;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
@@ -103,6 +100,15 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
         return "font-weight:bold;";  
     }  
 
+	
+	/**
+	 * Fuerza a que se refresque la pantalla
+	 */
+	public void forceToFetchData(){
+		dataSource.invalidateCache();
+		fetchData();
+	}
+	
 	/**
 	 * Obtiene el Proyecto DTO seleccionado
 	 * @return Si hay seleccionado devuelve el DTO. De lo contrario devuelve null.
@@ -147,7 +153,7 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 				po.updateProjectSelected();
 			}
 		}
-	}
+	}	
 	
 	/**
 	 * Habilita el filtro de la grilla
@@ -177,5 +183,5 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 	 */
 	public void viewWithoutGroup (){
 		this.ungroup();
-	}
+	}	
 }

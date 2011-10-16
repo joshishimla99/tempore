@@ -9,7 +9,7 @@ import ar.fi.uba.tempore.gwt.client.UserProjectServicesClient;
 import ar.fi.uba.tempore.gwt.client.UserServicesClient;
 import ar.fi.uba.tempore.gwt.client.panel.TabsPanelContainer;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
-import ar.fi.uba.tempore.gwt.server.image.ImageServlet;
+import ar.fi.uba.temporeutils.image.ImgClient;
 import ar.fi.uba.temporeutils.observer.ProjectObserver;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -41,7 +41,9 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 
 	private final TileGrid userTileGrid = new TileGrid();
 	private final TileGrid tileGrid = new TileGrid();
-	private boolean changeOwner = false;	
+	private final Button changeOwnerBtn = new Button("Cambiar Lider del Proyecto");
+	private boolean changeOwner = false;
+
 
 	@Override
 	public void refreshPanel() {
@@ -58,18 +60,14 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 		userTileGrid.setTileWidth(120);  
 		userTileGrid.setTileHeight(160);  
 		userTileGrid.setHeight("50%");  
-		userTileGrid.setCanDrag(true);
-		userTileGrid.setCanAcceptDrop(true);
 		userTileGrid.setShowAllRecords(true);  
 		userTileGrid.setAnimateTileChange(true);
-
-		//userTileGrid.addDoubleClickHandler(asignByDoubleClick);
 		
 		final DetailViewerField pictureField = new DetailViewerField(IMAGE_NAME);
 		pictureField.setType("image");
 		pictureField.setImageWidth(100);
 		pictureField.setImageHeight(100);
-		pictureField.setImageURLPrefix(ImageServlet.URL_PREFIX);
+		pictureField.setImageURLPrefix(ImgClient.URL_PREFIX);
 		final DetailViewerField nameField = new DetailViewerField(NAME);
 		nameField.setCellStyle("resourceUserName");
 		final DetailViewerField userField = new DetailViewerField(USER_NAME);  
@@ -77,23 +75,19 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 		userTileGrid.setFields(pictureField, nameField, userField, emailField);
 		userTileGrid.setData(new Record[]{});
 
-
 		//BOTON HABILITADOR PARA CAMBIAR OWNER
-		final Button changeOwnerBtn = new Button("Cambiar Lider del Proyecto");  
+		  
 		changeOwnerBtn.setShowRollOver(false);
 		changeOwnerBtn.setWidth100();
 		changeOwnerBtn.setActionType(SelectionType.CHECKBOX);
 		changeOwnerBtn.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				if (changeOwnerBtn.getSelected()){
-					userTileGrid.setVisibility(Visibility.HIDDEN);
-					changeOwner = true;
-					tileGrid.setBackgroundColor("#FFFF99");
+				changeOwner = !changeOwner;
+				if (changeOwner){
+					userTileGrid.setVisibility(Visibility.HIDDEN);					
 				} else {
 					userTileGrid.setVisibility(Visibility.VISIBLE);
-					changeOwner = false;
-					tileGrid.setBackgroundColor("#FFFFFF");
 				}
 			}
 		});
@@ -102,30 +96,9 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 		tileGrid.setHeight("50%");  
 		tileGrid.setTileWidth(120);  
 		tileGrid.setTileHeight(180);  
-		tileGrid.setCanAcceptDrop(true);
-		tileGrid.setCanDrag(true);
 		tileGrid.setShowAllRecords(true);
 		tileGrid.setAutoFetchData(true);
-		tileGrid.addSelectionChangedHandler(new SelectionChangedHandler() {
-			@Override
-			public void onSelectionChanged(SelectionChangedEvent event) {
-				if (changeOwner){
-					UserProjectDTO data = new UserProjectDTO();
-					ResourceDataSource.getInstance().copyValues((ListGridRecord)event.getRecord(), data);
-					UserProjectServicesClient.Util.getInstance().changeOwner(data, new AsyncCallback<Void>() {
-						@Override
-						public void onSuccess(Void result) {
-							tileGrid.fetchData();
-							ProjectPanel.getInstance().fetchData();
-						}
-						@Override
-						public void onFailure(Throwable caught) {
-							SC.say("No se pudo actualizar el Owner del proyecto");
-						}
-					});
-				}
-			}
-		});
+		tileGrid.addSelectionChangedHandler(changeProjectOwner);
 		tileGrid.setDataSource(ResourceDataSource.getInstance());
 		
 		//USUARIOS ASIGANDOS
@@ -133,7 +106,7 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 		pictureField2.setType("image");
 		pictureField2.setImageWidth(100);
 		pictureField2.setImageHeight(100);
-		pictureField2.setImageURLPrefix(ImageServlet.URL_PREFIX);
+		pictureField2.setImageURLPrefix(ImgClient.URL_PREFIX);
 		final DetailViewerField nameField2 = new DetailViewerField(NAME);
 		nameField2.setCellStyle("resourceUserName");
 		final DetailViewerField userField2 = new DetailViewerField(USER_NAME);  
@@ -164,7 +137,27 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 	@Override
 	public void updateProjectSelected() {
 		ProjectDTO selected = ProjectPanel.getInstance().getSelected();
-		if (selected != null) {			
+		
+		if (selected != null) {
+			boolean isProjectOwner = selected.getIsOwner()==1;
+			
+			//Permisos dentro de la pantalla
+			changeOwnerBtn.setVisible(isProjectOwner);
+			userTileGrid.setCanDrag(isProjectOwner);
+			userTileGrid.setCanAcceptDrop(isProjectOwner);
+			tileGrid.setCanAcceptDrop(isProjectOwner);
+			tileGrid.setCanDrag(isProjectOwner);
+
+			if (isProjectOwner){				
+				userTileGrid.setBackgroundColor("rgb(255,255,255)");
+				tileGrid.setBackgroundColor("rgb(255,255,255)");
+			} else {
+				userTileGrid.setVisibility(Visibility.VISIBLE);		
+				userTileGrid.setBackgroundColor("rgb(220,220,220)");
+				tileGrid.setBackgroundColor("rgb(220,220,220)");
+			}
+			
+			//Tiene permisos para realizar la operacion
 			tileGrid.invalidateCache();
 			tileGrid.fetchData();
 
@@ -187,19 +180,36 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 				public void onFailure(Throwable caught) {
 					SC.say("Error al cargar los usaurio para asignar");
 				}
-			});
+			});			
 		}		
 	}
 
-	
-//	private DoubleClickHandler asignByDoubleClick = new DoubleClickHandler() {
-//		@Override
-//		public void onDoubleClick(DoubleClickEvent event) {
-//			TileRecord selectedRecord = userTileGrid.getSelectedRecord();
-//			userTileGrid.removeData(selectedRecord);
-//			
-//			tileGrid.addData(selectedRecord);
-//		}
-//	};
+	/**
+	 * Metodo para cambiar el usuario creador del proyecto
+	 */
+	private SelectionChangedHandler changeProjectOwner = new SelectionChangedHandler() {
+		@Override
+		public void onSelectionChanged(SelectionChangedEvent event) {
+			if (changeOwner){
+				UserProjectDTO data = new UserProjectDTO();
+				ResourceDataSource.getInstance().copyValues((ListGridRecord)event.getRecord(), data);
+				UserProjectServicesClient.Util.getInstance().changeOwner(data, new AsyncCallback<Void>() {
+					@Override
+					public void onSuccess(Void result) {
+						tileGrid.fetchData();
+						ProjectPanel.getInstance().forceToFetchData();
+						
+						//vuelvo a la normalidad
+						changeOwner = false;
+						userTileGrid.setVisibility(Visibility.VISIBLE);
+					}
+					@Override
+					public void onFailure(Throwable caught) {
+						SC.say("No se pudo actualizar el Owner del proyecto");
+					}
+				});
+			}
+		}
+	};
 }
 

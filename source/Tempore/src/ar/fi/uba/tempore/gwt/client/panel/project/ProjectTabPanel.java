@@ -16,11 +16,13 @@ import ar.fi.uba.tempore.gwt.client.login.SessionUser;
 import ar.fi.uba.tempore.gwt.client.panel.TabsPanelContainer;
 import ar.fi.uba.temporeutils.observer.ProjectObserver;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.DateDisplayFormat;
 import com.smartgwt.client.types.MultipleAppearance;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
@@ -46,6 +48,7 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 	private static final String STATE_FIELD = "pState";
 	
 	private DynamicForm form;
+	private Label mesageError = new Label();
 
 	public ProjectTabPanel() {
 		super();
@@ -71,6 +74,10 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		final Label title = new Label("Administraci&oacute;n de Proyectos");
 		title.setWidth(200);
 		title.setHeight(15);
+		
+		mesageError.setVisible(false);
+		mesageError.setWidth(200);
+		mesageError.setHeight(15);
 		
 		//FORM
 		form = new DynamicForm();		
@@ -158,6 +165,11 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		
 		
 		//BOTONERA
+		final IButton cancelProjectButton = new IButton();
+		cancelProjectButton.setTitle("Cancelar");
+		cancelProjectButton.setIcon("../images/ico/back.ico");
+		cancelProjectButton.addClickHandler(cancelProjectEvent);
+		
 		final IButton createProjectButton = new IButton();
 		createProjectButton.setTitle("Nuevo");
 		createProjectButton.setIcon("../images/ico/add.ico");
@@ -173,28 +185,32 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		hLayoutButton.setMembersMargin(10);
 		hLayoutButton.setWidth(340);
 		hLayoutButton.setAlign(Alignment.RIGHT);
+		hLayoutButton.addMember(cancelProjectButton);
 	    hLayoutButton.addMember(createProjectButton);
 	    hLayoutButton.addMember(applyButton);
 
-	    final VLayout vLayoutInfo = new VLayout();
-//	    vLayoutInfo.setMembersMargin(30);
-	    vLayoutInfo.addMember(form);
-//	    vLayoutInfo.addMember(uploaderItem);
-	    
+	    final VLayout vLayoutForm = new VLayout(10);
+	    vLayoutForm.addMember(form);
 	    final HLayout hLayoutBody = new HLayout();
-//	    hLayoutBody.setMembersMargin(50);
-	    hLayoutBody.addMember(vLayoutInfo);
-//	    hLayoutBody.addMember(panelImages);
+	    hLayoutBody.addMember(vLayoutForm);
 	    
 		final VLayout vLayout = new VLayout();		
 		vLayout.setMembersMargin(20);
 		vLayout.addMember(title);
+		vLayout.addMember(mesageError);
 		vLayout.addMember(hLayoutBody);
 		vLayout.addMember(hLayoutButton);
 		
 		addChild(vLayout);
 		this.redraw();
 	}
+	
+	private ClickHandler cancelProjectEvent = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			form.reset();
+		}
+	};
 	
 	/**
 	 * Evento para crear un nuevo proyecto
@@ -215,18 +231,26 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		public void onClick(ClickEvent event) {
 			if (form.validate()) {
 				ProjectDTO dto = new ProjectDTO();
-				copy (form, dto );
-				ProjectServicesClient.Util.getInstance().add(dto, new AsyncCallback<ProjectDTO>() {
-					@Override
-					public void onSuccess(ProjectDTO result) {
-						//Actualizo panel del proyecto
-						ProjectPanel.getInstance().fetchData();
-					}
-					@Override
-					public void onFailure(Throwable caught) {
-						Window.alert("No se pudo guradar los cambios");						
-					}
-				});
+				copy (form, dto);
+				boolean isProjectOwner = ProjectPanel.getInstance().getSelected().getIsOwner()==1;
+				if (dto.getId()!= null && isProjectOwner){
+					ProjectServicesClient.Util.getInstance().add(dto, new AsyncCallback<ProjectDTO>() {
+						@Override
+						public void onSuccess(ProjectDTO result) {
+							//Actualizo panel del proyecto
+							ProjectPanel.getInstance().forceToFetchData();
+						}
+						@Override
+						public void onFailure(Throwable caught) {
+							SC.warn("No se pudo guradar los cambios del Proyecto");						
+						}
+					});
+				} else {
+					SC.warn("Usted no es due&ntilde;o del Proyecto " + dto.getName() + 
+							". Solamente el usuario due&ntilde;o puede editar el proyecto.");					
+				}
+			} else {
+				SC.warn("Completar todos los campos obligatorios");
 			}
 		}
 	};
@@ -237,9 +261,10 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 	 */
 	@Override
 	public void updateProjectSelected() {
-		ProjectDTO selected = ProjectPanel.getInstance().getSelected();
+		ProjectDTO selected = ProjectPanel.getInstance().getSelected();		
 		if (selected != null){
 			copy(selected, form);
+			form.rememberValues();
 		}
 	}
 	
@@ -289,8 +314,6 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		
 		//to.setValue(CLIENT_FIELD, 2);
 		//TODO falta Client
-		to.setValue(STATE_FIELD, from.getProjectState().getId());
-		
-		//TODO falta mostrar el usuario creador
+		to.setValue(STATE_FIELD, from.getProjectState().getId());		
 	}
 }

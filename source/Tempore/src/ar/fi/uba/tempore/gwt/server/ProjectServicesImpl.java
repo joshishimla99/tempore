@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
 
 import ar.fi.uba.tempore.dao.ProjectDAO;
-import ar.fi.uba.tempore.dao.ProjectStateDAO;
 import ar.fi.uba.tempore.dao.UserProjectDAO;
 import ar.fi.uba.tempore.dto.ProjectDTO;
 import ar.fi.uba.tempore.dto.ProjectStateDTO;
@@ -25,7 +24,7 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 	private final Logger log = Logger.getLogger(this.getClass());
 	
 	private final ProjectDAO pDAO = new ProjectDAO();
-	private final ProjectStateDAO psDAO = new ProjectStateDAO();
+	//private final ProjectStateDAO psDAO = new ProjectStateDAO();
 	private final UserProjectDAO upDAO = new UserProjectDAO();
 	private final DozerBeanMapper mapper = new DozerBeanMapper();
 		
@@ -58,9 +57,13 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 
 	@Override
 	public ProjectDTO add(ProjectDTO pDTO) {
-		log.info("NEW - Proyectos");
+		if (pDTO.getId() != null){
+			//Solo tengo que actualizar
+			return update(pDTO);
+		}
 
-		//TODO Validar informacion
+		log.info("NEW - Proyectos");		
+
 		
 		//Guardo el proyecto
 		Project p = mapper.map(pDTO, Project.class);
@@ -87,22 +90,23 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 
 	@Override
 	public ProjectDTO update(ProjectDTO projectDTO) {
-		log.info("UPDATE - Proyectos");
+		log.info("UPDATE - Proyectos , state=" + projectDTO.getProjectState().getId());
+		//TODO validar si el usuario es el dueño del proyecto
+		
+		//Actualizo el proyecto
 		Project p = mapper.map(projectDTO, Project.class);
-		
-		//estado del Proyecto
-		ProjectState state = psDAO.findById(projectDTO.getProjectState().getId());
-		p.setProjectState(state);
-		
-		//TODO clientes del proyecto
-		
+		p.setProjectState(new ProjectState(projectDTO.getProjectState().getId()));
 		Project pSaved = pDAO.makePersistent(p);
-		ProjectDTO pSavedDTO = mapper.map(pSaved, ProjectDTO.class);
+		
+		//preparo la info para el retorno
+		ProjectDTO pSavedDTO = mapper.map(pSaved, ProjectDTO.class);		
+		pSavedDTO.setUserProjectList(projectDTO.getUserProjectList());
 		return pSavedDTO;
 	}
 
 	@Override
-	public void remove(ProjectDTO data) {
-		// TODO Auto-generated method stub
+	public void remove(ProjectDTO projectDTO) {
+		Project p = mapper.map(projectDTO, Project.class);
+		pDAO.delete(p);
 	}
 }

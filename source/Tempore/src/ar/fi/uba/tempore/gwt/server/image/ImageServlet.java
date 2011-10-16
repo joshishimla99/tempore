@@ -27,9 +27,7 @@ public class ImageServlet extends HttpServlet {
 	private static final String DESTINATION_DIR_PATH = "C:/Tempore/Workspace/ImageRepository/";
 	private static final String TMP_DIR_PATH = DESTINATION_DIR_PATH + "temp/";
 	private File tmpDir;
-	private File destinationDir;
-	
-	public static final String URL_PREFIX = "http://localhost:8080/Tempore/imageServlet.img?id="; 
+	private File destinationDir; 
 
 	private static final String UPDATE_RESPONSE =	"<script type='text/javascript' language='javascript'>" +
 														"top.uploadSuccess('%%PARAMETRO%%');" +
