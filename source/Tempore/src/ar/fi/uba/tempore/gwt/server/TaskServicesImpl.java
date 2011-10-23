@@ -47,7 +47,7 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 	
 	public String deleteTask(Integer id, Integer idProject) throws TaskWithHoursChargedException{
 		Task taskToDelete = taskDAO.findById(id);
-		// SI LA TAREA NO TIENE TIEMPO CARGADO, ENTONCES VERIFICO SI SUS HIJAS LO TIENEN
+		// REGLA DE NEGOCIO -> SI LA TAREA NO TIENE TIEMPO CARGADO, ENTONCES VERIFICO SI SUS HIJAS LO TIENEN
 		if (getTimeCharged(taskToDelete.getId()) == 0) {   
 			List<Task> taskList = taskDAO.getChildTask(idProject, id); 
 			for (Task task : taskList) {
@@ -108,6 +108,11 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 	@Override
 	public long getTimeChargedToTask(Integer id) {
 		return getTimeCharged(id);
+	}
+
+	@Override
+	public long getTotalTimeChargedToTask(Integer id) {
+		return taskUserDAO.getTotalTimeByTask(id);
 	}
 
 }
