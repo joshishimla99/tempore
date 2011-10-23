@@ -82,7 +82,8 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 				Integer horas = null;
 				HourCountWindow win = new HourCountWindow();
 				event.getDropRecords()[0].setAttribute(COL_DATE, dateChooser.getData());	
-				win.showModal(hoursCountGrid, event.getDropRecords()[0]);
+//				event.getDropRecords()[0].setAttribute(COL_HOURS, 4);
+//				win.showModal(hoursCountGrid, event.getDropRecords()[0]);
 			}
 		});
 
@@ -92,7 +93,7 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 		hoursCountGrid.setDataSource(dataSource);  
 		hoursCountGrid.setShowAllRecords(true);  
 		hoursCountGrid.setEmptyMessage("Arrastr&aacute las tareas ac&aacute");  
-		hoursCountGrid.setCanAcceptDroppedRecords(false);  
+		hoursCountGrid.setCanAcceptDroppedRecords(true);  
 		hoursCountGrid.setDragDataAction(DragDataAction.MOVE);  
 		hoursCountGrid.setCanEdit(true);
 		hoursCountGrid.setCanRemoveRecords(true); 
@@ -102,7 +103,7 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 		hoursCountGrid.setShowGridSummary(true);  
 		hoursCountGrid.setShowGroupSummary(true);  	
 		hoursCountGrid.setGroupStartOpen(GroupStartOpen.ALL);
-		hoursCountGrid.setCanAcceptDrop(false);
+		hoursCountGrid.setCanAcceptDrop(true);
 
 		ListGridField lfProject = new ListGridField(COL_PROJECT_NAME);		
 		
@@ -110,6 +111,7 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 		ListGridField lfDescription = new ListGridField(COL_DESCRIPTION);
 		ListGridField lfDate = new ListGridField(COL_DATE);
 		ListGridField lfHours = new ListGridField(COL_HOURS);
+		lfHours.setIncludeInRecordSummary(false); 
 		ListGridField lfComments = new ListGridField(COL_COMMENTS);
 		ListGridField lfProjectId = new ListGridField(COL_PROJECT_ID);
 		ListGridField lfTaskId = new ListGridField(COL_TASK_ID);
