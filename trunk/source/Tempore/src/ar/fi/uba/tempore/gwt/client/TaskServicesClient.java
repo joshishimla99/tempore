@@ -35,4 +35,6 @@ public interface TaskServicesClient extends RemoteService {
 	public TaskDTO updateTask(TaskDTO task);
 	
 	public long getTimeChargedToTask(Integer id);
+	
+	public long getTotalTimeChargedToTask(Integer id);
 }
