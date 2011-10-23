@@ -57,6 +57,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 	private SectionItem  titleTask, firstLevelTask, secondLevelTask;
 	private ProjectDTO selectedProjectDTO;
 	private final ButtonItem addTask;
+//	private TaskTreePanel taskTreePanel;
 
 	public TaskTabPanel() {
 		super();
@@ -71,7 +72,8 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		this.portalLayout = new TaskLayout(3);
 		this.portalLayout.setWidth100();
 		this.portalLayout.setHeight100();
-
+//		this.taskTreePanel = new TaskTreePanel();
+		
 		final VLayout vLayout = new VLayout(15);
 		vLayout.setMargin(10);
 		vLayout.setWidth100();
@@ -95,13 +97,18 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		form.hideItem("firstLevelTask");
 		form.hideItem("secondLevelTask");
 		
-		HLayout hLayout = new HLayout();
-		hLayout.addMember(form);
-		hLayout.addMember(buttonsLayout);
+		HLayout upLayout = new HLayout();
+		upLayout.addMember(form);
+		upLayout.addMember(buttonsLayout);
 		
-		vLayout.addMember(hLayout);
+		vLayout.addMember(upLayout);
 		vLayout.addMember(portalLayout);
-		addChild(vLayout);
+		
+		final HLayout hLayout = new HLayout();
+		hLayout.setWidth100();
+//		hLayout.addMember(this.taskTreePanel);
+		hLayout.addMember(vLayout);
+		addChild(hLayout);
 	}
 
 	@Override
@@ -114,7 +121,6 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 	@Override
 	public void freePanel() {
 		ProjectPanel.getInstance().removeObserver(this);
-		
 	}
 	
 	@Override
@@ -126,6 +132,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		parentTaskId = null;
 		level =0;
 		if (selectedProjectDTO != null) {
+//			taskTreePanel.updateTaskTree(selectedProjectDTO);
 			titleTask.setDefaultValue(selectedProjectDTO.getName());
 			form.showItem("titleTask");
 			TaskServicesClient.Util.getInstance().getChildTask(selectedProjectDTO.getId(), null, new AsyncCallback<List<TaskDTO>>() {
@@ -157,9 +164,23 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 				}
 
 				@Override
-				public void onSuccess(Long result) {
-					Task newTask = new Task(taskDTO.getId(), taskDTO.getName(), taskDTO.getBudget(), taskDTO.getDescription(), taskDTO.getTaskTypeDTO().getName(), taskDTO.getProject().getId(), result);
-					portalLayout.addTask(newTask);
+				public void onSuccess(final Long taskHours) {
+					TaskServicesClient.Util.getInstance().getTotalTimeChargedToTask(taskDTO.getId(), new AsyncCallback<Long>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+							SC.say("Ha ocurrido un error al intentar recuperar las horas totales cargadas a la tarea");
+							
+						}
+
+						@Override
+						public void onSuccess(Long totalTaskHours) {
+							GWT.log("Horas totales " + totalTaskHours + " para IdTask " + taskDTO.getId());
+							Task newTask = new Task(taskDTO.getId(), taskDTO.getName(), taskDTO.getBudget(), taskDTO.getDescription(), taskDTO.getTaskTypeDTO().getName(), taskDTO.getProject().getId(), taskHours, totalTaskHours);
+							portalLayout.addTask(newTask);
+							
+						}
+					});
 				}
 			});
 			
@@ -178,8 +199,8 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		addTask.addClickHandler(new com.smartgwt.client.widgets.form.fields.events.ClickHandler() {
 			public void onClick(
 					com.smartgwt.client.widgets.form.fields.events.ClickEvent event) {
-				// Si el proyecto esta cerrado, no se pueden crear nuevas tareas
-				if (selectedProjectDTO.getProjectState().getId() != 4){
+				// Si el proyecto esta cerrado,cancelado o suspendido no se pueden crear nuevas tareas - Regla de negocio
+				if (selectedProjectDTO.getProjectState().getId() != 4 && selectedProjectDTO.getProjectState().getId() != 5 && selectedProjectDTO.getProjectState().getId() != 6){
 					if (selectedProjectDTO.getIsOwner() == 1 || (selectedProjectDTO.getIsOwner() == 0 && level > 0)){
 						NewTaskModalWindow newTaskModalWin = new NewTaskModalWindow(
 								addTask);
@@ -398,34 +419,49 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 						}
 
 						@Override
-						public void onSuccess(Long result) {
-							final Task newTask = new Task(taskDTO.getId(), taskDTO.getName(), taskDTO.getBudget(), taskDTO.getDescription(), type, taskDTO.getProject().getId(), result);
-							newTask.setVisible(false);
-							TaskColumn column = portalLayout.addTask(newTask);
-							
-							final LayoutSpacer placeHolder = new LayoutSpacer();
-							placeHolder.setRect(newTask.getRect());
-							column.addMember(placeHolder, 0); // add to top
-							
-							// create an outline around the clicked button
-							final Canvas outline = new Canvas();
-							outline.setLeft(form.getAbsoluteLeft() + addTask.getLeft());
-							outline.setTop(form.getAbsoluteTop());
-							outline.setWidth(addTask.getWidth());
-							outline.setHeight(addTask.getHeight());
-							outline.setBorder("2px solid #8289A6");
-							outline.draw();
-							outline.bringToFront();
-							
-							outline.animateRect(newTask.getPageLeft(), newTask.getPageTop(),
-									newTask.getVisibleWidth(), newTask.getViewportHeight(),
-									new AnimationCallback() {
-								public void execute(boolean earlyFinish) {
-									placeHolder.destroy();
-									outline.destroy();
-									newTask.show();
+						public void onSuccess(final Long taskHs) {
+							GWT.log("envio id para calcular hs totales " + taskDTO.getId());
+							TaskServicesClient.Util.getInstance().getTotalTimeChargedToTask(taskDTO.getId(), new AsyncCallback<Long>() {
+
+								@Override
+								public void onFailure(Throwable caught) {
+									SC.say("Ha ocurrido un error al intentar recuperar las horas totales cargadas a la tarea");
+									
 								}
-							}, 750);
+
+								@Override
+								public void onSuccess(Long totalHs) {
+									// TODO Auto-generated method stub
+									
+									final Task newTask = new Task(taskDTO.getId(), taskDTO.getName(), taskDTO.getBudget(), taskDTO.getDescription(), type, taskDTO.getProject().getId(), taskHs, totalHs);
+									newTask.setVisible(false);
+									TaskColumn column = portalLayout.addTask(newTask);
+									
+									final LayoutSpacer placeHolder = new LayoutSpacer();
+									placeHolder.setRect(newTask.getRect());
+									column.addMember(placeHolder, 0); // add to top
+									
+									// create an outline around the clicked button
+									final Canvas outline = new Canvas();
+									outline.setLeft(form.getAbsoluteLeft() + addTask.getLeft());
+									outline.setTop(form.getAbsoluteTop());
+									outline.setWidth(addTask.getWidth());
+									outline.setHeight(addTask.getHeight());
+									outline.setBorder("2px solid #8289A6");
+									outline.draw();
+									outline.bringToFront();
+									
+									outline.animateRect(newTask.getPageLeft(), newTask.getPageTop(),
+											newTask.getVisibleWidth(), newTask.getViewportHeight(),
+											new AnimationCallback() {
+										public void execute(boolean earlyFinish) {
+											placeHolder.destroy();
+											outline.destroy();
+											newTask.show();
+										}
+									}, 750);
+								}
+							});
 						}
 					});
 					
@@ -516,8 +552,9 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		private Integer id;
 		private Long realHs;
 		private Label content;
+		private Long totalHs;
 		
-		public Task(final Integer taskId, final String taskName, int taskEstimation, String taskDescription, String taskType, final Integer idProject, final long realHs) {
+		public Task(final Integer taskId, final String taskName, int taskEstimation, String taskDescription, String taskType, final Integer idProject, final long realHs, final long totalRealHs) {
 
 			this.id = taskId;
 			this.name = taskName;
@@ -525,6 +562,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 			this.estimatedHs = taskEstimation;
 			this.type = taskType;
 			this.realHs = realHs;
+			this.totalHs = totalRealHs;
 			
 			setShowShadow(false);
 			setAnimateMinimize(true);
@@ -569,8 +607,8 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 				
 				@Override
 				public void onCloseClick(CloseClientEvent event) {
-					// Si el proyecto esta cerrado no es posible eliminar la tarea
-					if (selectedProjectDTO.getProjectState().getId() != 4){
+					// Si el proyecto esta cerrado, suspendido o cancelado no es posible eliminar la tarea -- Regla de negocio
+					if (selectedProjectDTO.getProjectState().getId() != 4 && selectedProjectDTO.getProjectState().getId() != 5 && selectedProjectDTO.getProjectState().getId() != 6){
 						SC.ask("Eliminar Tarea", "Desea eliminar la tarea seleccionada", new BooleanCallback() {
 							
 							@Override
@@ -610,7 +648,8 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 			
 			setTitle(name);
 			content = new Label("<span style=\" font-weight: bold;\">Tipo: </span>" + type + "<br/>"  
-	                + "<span style=\" font-weight: bold;\">Horas Consumidas: </span>" + realHs + "<br/>"  
+	                + "<span style=\" font-weight: bold;\">Horas Consumidas de la tarea: </span>" + realHs + "<br/>"
+	                + "<span style=\" font-weight: bold;\">Horas Consumidas totales: </span>" + totalHs + "<br/>"
 	                + "<span style=\" font-weight: bold;\">Horas Estimadas: </span> "+ estimatedHs + "</br>"
 	                + "<span style=\" font-weight: bold;\">Descripci&oacute;n: </span> "+ description);
 			
@@ -632,7 +671,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 
 			@Override
 			public void onClick(ClickEvent event) {
-				// Si el proyecto esta cerrado no es posible editar las tareas
+				// Si el proyecto esta cerrado no es posible editar las tareas (si es posible editar cuando el proyecto este canccelado o suspendido) - Regla de negocio
 				if (selectedProjectDTO.getProjectState().getId() != 4){
 					if (selectedProjectDTO.getIsOwner() == 1 || (selectedProjectDTO.getIsOwner() == 0 && level > 0) ){
 						EditTaskModalWindow editTaskModalWin = new EditTaskModalWindow(task, id, name, description, estimatedHs, selectedProjectDTO.getId(), type);
@@ -652,9 +691,10 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 			this.description = taskDTO.getDescription();
 			this.estimatedHs = taskDTO.getBudget();
 			this.type = taskDTO.getTaskTypeDTO().getName();
-			this.setTitle(taskDTO.getName());
+			this.setTitle(taskDTO.getName()); 
 			content.setContents("<span style=\" font-weight: bold;\">Tipo: </span>" + type + "<br/>"  
-	                + "<span style=\" font-weight: bold;\">Horas Consumidas: </span>" + realHs + "<br/>"  
+	                + "<span style=\" font-weight: bold;\">Horas Consumidas de la tarea: </span>" + realHs + "<br/>" 
+	                + "<span style=\" font-weight: bold;\">Horas Consumidas totales: </span>" + totalHs + "<br/>"
 	                + "<span style=\" font-weight: bold;\">Horas Estimadas: </span> "+ taskDTO.getBudget() + "</br>"
 	                + "<span style=\" font-weight: bold;\">Descripci&oacute;n: </span> "+ taskDTO.getDescription());
 			
