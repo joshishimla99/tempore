@@ -19,4 +19,8 @@ public interface TaskServicesClientAsync {
 
 	void getTimeChargedToTask(Integer id, AsyncCallback<Long> callback);
 
+	void getTotalTimeChargedToTask(Integer id, AsyncCallback<Long> callback);
+	
+	
+
 }
