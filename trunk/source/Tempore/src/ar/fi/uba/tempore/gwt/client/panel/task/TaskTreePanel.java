@@ -37,7 +37,7 @@ public class TaskTreePanel extends TreeGrid{
 
 		
 		this.setDataSource(tasksDataSource);
-		TreeGridField tfName = new TreeGridField(TaskTimeDataSource.COL_NAME);
+//		TreeGridField tfName = new TreeGridField(TaskTimeDataSource.COL_NAME);
 //		TreeGridField tfDescription = new TreeGridField(TaskTimeDataSource.COL_DESCRIPTION);
 		this.setShowAllRecords(true);  
 		this.setCanReorderRecords(false);  
@@ -47,7 +47,7 @@ public class TaskTreePanel extends TreeGrid{
 		this.setNodeIcon("../images/tasks.png");  
 		this.setFolderIcon("../images/tasks.png");  
 		this.setEmptyMessage("Seleccion&aacute un proyecto...");  
-		this.setFields(tfName);  
+//		this.setFields(tfName);  
 		this.setShowConnectors(true);
 	}
 	
