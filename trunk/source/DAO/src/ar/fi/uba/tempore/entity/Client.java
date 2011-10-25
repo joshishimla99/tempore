@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.LazyCollection;
@@ -33,6 +34,11 @@ public class Client implements Serializable {
 	private List<Project> projectList = new ArrayList<Project>();
 	private List<User> userList = new ArrayList<User>();
 	
+	public Client() {}
+	public Client(Integer id) {
+		setId(id);
+	}
+
 	@Id
 	@GeneratedValue
 	@Column(name="id")
@@ -52,9 +58,9 @@ public class Client implements Serializable {
 		this.name = name;
 	}
 	
-	@ManyToMany(
+	@OneToMany(
 			targetEntity=Project.class,
-			mappedBy="clientList"
+			mappedBy="client"
 			)			
 	@LazyCollection(LazyCollectionOption.TRUE)	
 	public List<Project> getProjectList() {
@@ -63,9 +69,7 @@ public class Client implements Serializable {
 	public void setProjectList(List<Project> projectList) {
 		this.projectList = projectList;
 	}
-	public void addProject(Project project) {
-		this.getProjectList().add(project);
-	}
+
 
 	@ManyToMany(
 			targetEntity=User.class
@@ -129,6 +133,5 @@ public class Client implements Serializable {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-	
+	}	
 }
