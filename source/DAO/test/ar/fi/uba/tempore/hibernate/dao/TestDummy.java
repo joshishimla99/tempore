@@ -20,6 +20,14 @@ public class TestDummy extends TestDAO{
 	private ProjectDAO pDAO = new ProjectDAO();
 	
 	@Test
+	public void testGetProjectsByUser() {
+		List<Project> listProject = pDAO.getProjectsByUser(1);
+		for (Project p : listProject) {
+			log.info("Usuario no asignado: " + p.getName()); 
+		}
+	}
+	
+	@Test
 	public void testGetUserNotAssignedToProject() {
 		List<User> userNotAssignedToProject = uDAO.getUserNotAssignedToProject(1);
 		for (User user : userNotAssignedToProject) {
