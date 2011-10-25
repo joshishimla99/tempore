@@ -16,12 +16,10 @@ import ar.fi.uba.tempore.gwt.client.login.SessionUser;
 import ar.fi.uba.tempore.gwt.client.panel.TabsPanelContainer;
 import ar.fi.uba.temporeutils.observer.ProjectObserver;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.DateDisplayFormat;
-import com.smartgwt.client.types.MultipleAppearance;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Label;
@@ -29,7 +27,6 @@ import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.DateItem;
-import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
@@ -69,8 +66,6 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 
 	
 	public void updateContent() {
-		
-		
 		final Label title = new Label("Administraci&oacute;n de Proyectos");
 		title.setWidth(200);
 		title.setHeight(15);
@@ -89,26 +84,43 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		txtName.setHint("<nobr>30 caracteres m&aacute;ximo</nobr>");
 		txtName.setRequired(true);
 
-		final SelectItem selClient = new SelectItem(CLIENT_FIELD, "Clientes");
-		selClient.setMultiple(true);
-		selClient.setMultipleAppearance(MultipleAppearance.PICKLIST);
-		selClient.setRequired(true);		
-		
-		ClientServicesClient.Util.getInstance().fetch(new AsyncCallback<List<ClientDTO>>() {			
+		final SelectItem selClient = new SelectItem(CLIENT_FIELD, "Cliente");
+		selClient.setRequired(true);
+		ClientServicesClient.Util.getInstance().fetch(new AsyncCallback<List<ClientDTO>>() {
 			@Override
 			public void onSuccess(List<ClientDTO> result) {
-				FormItem item = form.getItem(CLIENT_FIELD);
 				LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();  
-				for (ClientDTO clientDTO : result) {
-					valueMap.put(clientDTO.getId().toString(), clientDTO.getName());
+				for (ClientDTO dto : result) {
+					valueMap.put(dto.getId().toString(), dto.getName());
 				}
-				item.setValueMap(valueMap);
+				selClient.setValueMap(valueMap);	
 			}
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Fallo la carga del combo 'Clientes'");				
+				Window.alert("Error al cargar los Estados del Proyecto");
 			}
 		});
+		
+//		final SelectItem selClient = new SelectItem(CLIENT_FIELD, "Clientes");
+//		selClient.setMultiple(true);
+//		selClient.setMultipleAppearance(MultipleAppearance.PICKLIST);
+//		selClient.setRequired(true);		
+//		
+//		ClientServicesClient.Util.getInstance().fetch(new AsyncCallback<List<ClientDTO>>() {			
+//			@Override
+//			public void onSuccess(List<ClientDTO> result) {
+//				FormItem item = form.getItem(CLIENT_FIELD);
+//				LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();  
+//				for (ClientDTO clientDTO : result) {
+//					valueMap.put(clientDTO.getId().toString(), clientDTO.getName());
+//				}
+//				item.setValueMap(valueMap);
+//			}
+//			@Override
+//			public void onFailure(Throwable caught) {
+//				Window.alert("Fallo la carga del combo 'Clientes'");				
+//			}
+//		});
 
 		final DateItem startDate = new DateItem(START_FIELD, "Fecha Inicio");
 		startDate.setUseTextField(true);
@@ -281,7 +293,10 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		
 		to.setBudget(new Float(from.getValue(BUDGET_FIELD).toString()));
 		
-		//TODO faltan los clientes
+		//Cliente del proyecto
+		ClientDTO client = new ClientDTO();
+		client.setId(new Integer(form.getValue(CLIENT_FIELD).toString()));
+		to.setClient(client);
 		
 		//Estado del proyecto
 		ProjectStateDTO projectState = new ProjectStateDTO();
@@ -312,8 +327,7 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		if (from.getInitDate() != null)
 			to.setValue(START_FIELD, from.getInitDate());
 		
-		//to.setValue(CLIENT_FIELD, 2);
-		//TODO falta Client
+		to.setValue(CLIENT_FIELD, from.getClient().getId());
 		to.setValue(STATE_FIELD, from.getProjectState().getId());		
 	}
 }
