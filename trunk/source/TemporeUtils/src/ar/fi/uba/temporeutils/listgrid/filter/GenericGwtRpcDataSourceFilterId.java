@@ -15,7 +15,6 @@ import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.Record;
 import com.smartgwt.client.rpc.RPCResponse;
 import com.smartgwt.client.util.JSOHelper;
-import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.tree.TreeNode;
 import com.smartgwt.client.widgets.viewer.DetailViewerRecord;
@@ -25,11 +24,11 @@ import com.smartgwt.client.widgets.viewer.DetailViewerRecord;
  * {@link GwtRpcDataSourceFilterId} example provided in the smartgwt-extensions. Extend this
  * class if you want to create a GwtRpcDataSource for SmartGWT.
  * 
- * In order to use this class, you have to implement both
+ * Para poder utilizar esta clase se debe implementar ambas interfaces 
  * {@link GenericGwtRpcDataSourceServiceFilterId} and {@link GenericGwtRpcDataSourceServiceFilterIdAsync}
- * provided in the same package.
+ * provistas en el mismo paquete.
  * @Param <F>
- * 				Filtro para realizar el fetch
+ * 			  Filtro para realizar el fetch (comunmente Integer para poder filtra el id de usuario o el id del proyecto)
  * @param <D>
  *            type of the transfer object holding the data (will most likely be
  *            a simple POJO), must implement {@link Serializable} or {@link IsSerializable}.
@@ -44,11 +43,7 @@ import com.smartgwt.client.widgets.viewer.DetailViewerRecord;
  * @see GwtRpcDataSourceFilterId
  * @see GenericGwtRpcDataSourceServiceFilterId
  * @see GenericGwtRpcDataSourceServiceFilterIdAsync
- * 
- * @author Francois Marbot
- * @author Aleksandras Novikovas
- * @author System Tier
- * @version 1.0
+ *
  */
 public abstract class GenericGwtRpcDataSourceFilterId<F, D, R extends Record, SA extends GenericGwtRpcDataSourceServiceFilterIdAsync<F,D>>
 		extends GwtRpcDataSourceFilterId {
