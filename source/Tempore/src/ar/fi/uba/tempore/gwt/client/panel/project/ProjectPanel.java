@@ -72,8 +72,11 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 		
 		ListGridField name = new ListGridField(ProjectPanelDataSource.NAME_FIELD);
 		ListGridField state = new ListGridField(ProjectPanelDataSource.STATE_NAME_FIELD);
-		this.setFields(image,imageOwner,name, state);
-		this.hideField(ProjectPanelDataSource.STATE_NAME_FIELD);		
+		ListGridField client = new ListGridField(ProjectPanelDataSource.CLIENT_NAME_FIELD);
+		this.setFields(image,imageOwner,name, state, client);
+		this.hideField(ProjectPanelDataSource.STATE_NAME_FIELD);
+		this.hideField(ProjectPanelDataSource.CLIENT_NAME_FIELD);
+		
 		this.addSelectionChangedHandler(new SelectionChangedHandler() {
 			@Override
 			public void onSelectionChanged(SelectionEvent event) {

@@ -3,6 +3,7 @@ package ar.fi.uba.tempore.gwt.client.panel.project;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.fi.uba.tempore.dto.ClientDTO;
 import ar.fi.uba.tempore.dto.ProjectDTO;
 import ar.fi.uba.tempore.dto.ProjectStateDTO;
 import ar.fi.uba.tempore.gwt.client.ProjectServicesClient;
@@ -24,8 +25,13 @@ public class ProjectPanelDataSource extends GenericGwtRpcDataSourceFilterId<Inte
 	public static final String DESCRIPTION_FIELD = "descCol";
 	public static final String ENDDATE_FIELD = "endCol";
 	public static final String INITDATE_FIELD = "iniDate";
+	
+	public static final String CLIENT_ID_FIELD = "clientIdCol";
+	public static final String CLIENT_NAME_FIELD = "clientNameCol";
+	
 	public static final String STATE_ID_FIELD = "stateIdCol";
 	public static final String STATE_NAME_FIELD = "stateNameCol";
+	
 	public static final String IS_OWNER_FIELD = "isOwnerCol";
 	
 	public ProjectPanelDataSource(){
@@ -67,6 +73,12 @@ public class ProjectPanelDataSource extends GenericGwtRpcDataSourceFilterId<Inte
 		DataSourceField fh7 = new DataSourceTextField(IS_OWNER_FIELD);
 		list.add(fh7);
 		
+		DataSourceField fh8 = new DataSourceTextField(CLIENT_ID_FIELD);
+		list.add(fh8);
+		
+		DataSourceField fh9 = new DataSourceTextField(CLIENT_NAME_FIELD);
+		list.add(fh9);
+		
 		return list;
 	}
 	
@@ -83,7 +95,12 @@ public class ProjectPanelDataSource extends GenericGwtRpcDataSourceFilterId<Inte
 		
 		ProjectStateDTO projectState = new ProjectStateDTO();
 		projectState.setId(from.getAttributeAsInt(STATE_ID_FIELD));
-		projectState.setName(from.getAttribute(STATE_NAME_FIELD));		
+		projectState.setName(from.getAttribute(STATE_NAME_FIELD));
+		
+		ClientDTO client = new ClientDTO();
+		client.setId(from.getAttributeAsInt(CLIENT_ID_FIELD));
+		client.setName(from.getAttribute(CLIENT_NAME_FIELD));
+		
 		to.setProjectState(projectState );
 	}
 	
@@ -95,8 +112,13 @@ public class ProjectPanelDataSource extends GenericGwtRpcDataSourceFilterId<Inte
 		to.setAttribute(DESCRIPTION_FIELD, from.getDescription());
 		to.setAttribute(ENDDATE_FIELD, from.getEndDate());
 		to.setAttribute(INITDATE_FIELD, from.getInitDate());
+		
 		to.setAttribute(STATE_ID_FIELD, from.getProjectState().getId());
 		to.setAttribute(STATE_NAME_FIELD, from.getProjectState().getName());
+		
+		to.setAttribute(CLIENT_ID_FIELD, from.getClient().getId());
+		to.setAttribute(CLIENT_NAME_FIELD, from.getClient().getName());
+		
 		to.setAttribute(IS_OWNER_FIELD, from.getIsOwner());
 	}
 	
