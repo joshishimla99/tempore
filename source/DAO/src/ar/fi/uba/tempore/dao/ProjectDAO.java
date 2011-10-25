@@ -14,6 +14,7 @@ public class ProjectDAO extends GenericHibernateDAO<Project, Integer> {
 						"from Project as p " +
 						"inner join fetch p.userProjectList as up " +
 						"inner join fetch p.projectState as ps " +
+						//"inner join fetch p.client as c " +
 						"where up.user.id = " + userId;
 		
 		Query createQuery = this.getSession().createQuery(hql);

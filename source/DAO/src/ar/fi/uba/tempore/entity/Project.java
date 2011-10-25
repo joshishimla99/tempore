@@ -11,8 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
@@ -33,9 +31,9 @@ public class Project implements Serializable {
 	private Date endDate;
 	private Float budget;
 	private ProjectState projectState;
+	private Client client;
 	
 	private List<Task> taskList = new ArrayList<Task>();
-	private List<Client> clientList = new ArrayList<Client>();
 	private List<UserProject> userProjectList = new ArrayList<UserProject>();
 	
 	
@@ -80,25 +78,6 @@ public class Project implements Serializable {
 		this.taskList = taskList;
 	}	
 	
-	@ManyToMany(
-			targetEntity=Client.class
-	)
-	@JoinTable(
-			name="PROJECTCLIENT",
-			joinColumns=@JoinColumn(name="projectId"), 
-			inverseJoinColumns=@JoinColumn(name="clientId")
-	)
-	@LazyCollection(LazyCollectionOption.TRUE)
-	public List<Client> getClientList() {
-		return clientList;
-	}
-	public void setClientList(List<Client> clientList) {
-		this.clientList = clientList;
-	}
-	public void addClient(Client client) {
-		this.getClientList().add(client);
-	}
-
 	@OneToMany(
 			targetEntity=UserProject.class, 
 			mappedBy="project"
@@ -141,5 +120,14 @@ public class Project implements Serializable {
 	}
 	public Float getBudget() {
 		return budget;
+	}
+	
+	@ManyToOne
+	@JoinColumn(name="clientId")
+	public void setClient(Client client) {
+		this.client = client;
+	}
+	public Client getClient() {
+		return client;
 	}
 }
