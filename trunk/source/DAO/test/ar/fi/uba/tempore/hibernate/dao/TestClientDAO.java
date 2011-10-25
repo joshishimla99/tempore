@@ -8,7 +8,6 @@ import org.hibernate.ObjectNotFoundException;
 import org.junit.Test;
 
 import ar.fi.uba.tempore.dao.ClientDAO;
-import ar.fi.uba.tempore.dao.ProjectDAO;
 import ar.fi.uba.tempore.dao.UserDAO;
 import ar.fi.uba.tempore.entity.Client;
 import ar.fi.uba.tempore.entity.Project;
@@ -97,13 +96,7 @@ public class TestClientDAO extends TestDAO{
 			for (User user : userList) {
 				user.getClientList().remove(cl);
 				new UserDAO().makePersistent(user);
-			}
-			
-			List<Project> projectList = cl.getProjectList();
-			for (Project project : projectList) {
-				project.getClientList().remove(cl);
-				new ProjectDAO().makePersistent(project);
-			}
+			}			
 			
 			cDAO.delete(cl);
 			

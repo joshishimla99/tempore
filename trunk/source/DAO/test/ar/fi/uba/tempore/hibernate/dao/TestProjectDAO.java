@@ -11,14 +11,12 @@ import org.hibernate.ObjectNotFoundException;
 import org.junit.Test;
 
 import ar.fi.uba.tempore.dao.AlertDAO;
-import ar.fi.uba.tempore.dao.ClientDAO;
 import ar.fi.uba.tempore.dao.ProjectDAO;
 import ar.fi.uba.tempore.dao.ProjectStateDAO;
 import ar.fi.uba.tempore.dao.TaskDAO;
 import ar.fi.uba.tempore.dao.TaskUserDAO;
 import ar.fi.uba.tempore.dao.UserProjectDAO;
 import ar.fi.uba.tempore.entity.Alert;
-import ar.fi.uba.tempore.entity.Client;
 import ar.fi.uba.tempore.entity.Project;
 import ar.fi.uba.tempore.entity.Task;
 import ar.fi.uba.tempore.entity.TaskUser;
@@ -103,14 +101,7 @@ public class TestProjectDAO extends TestDAO{
 		entity.setName("Tempore");
 				
 		List<Project> findByExample = pDAO.findByExample(entity);
-		for (Project p : findByExample){			
-			//remove client
-			List<Client> clientList = p.getClientList();
-			for (Client client : clientList) {
-				client.getProjectList().remove(p);
-				new ClientDAO().makePersistent(client);
-			}
-			
+		for (Project p : findByExample){						
 			//Elimino las tareas que tenia asociada
 			List<Task> taskList = p.getTaskList();
 			for (Task task : taskList) {
