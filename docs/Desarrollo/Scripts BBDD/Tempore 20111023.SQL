@@ -1,9 +1,9 @@
 CREATE TABLE Report
 (
 	id BIGINT NOT NULL AUTO_INCREMENT,
-	name BIGINT NULL,
-	x BIGINT NULL,
-	y BIGINT NULL,
+	name BIGINT,
+	x BIGINT,
+	y BIGINT,
 	PRIMARY KEY (id)
 ) 
 ;
@@ -12,8 +12,8 @@ CREATE TABLE Report
 CREATE TABLE ConfigAlert
 (
 	id BIGINT NOT NULL,
-	name BIGINT NULL,
-	projectId BIGINT NULL,
+	name BIGINT,
+	projectId BIGINT,
 	PRIMARY KEY (id),
 	KEY (projectId)
 ) 
@@ -36,7 +36,7 @@ CREATE TABLE ReportProject
 	id BIGINT NOT NULL AUTO_INCREMENT,
 	projectId BIGINT NOT NULL,
 	reportId BIGINT NOT NULL,
-	title VARCHAR(50) NULL,
+	title VARCHAR(50),
 	PRIMARY KEY (id),
 	KEY (projectId),
 	KEY (reportId)
@@ -48,7 +48,7 @@ CREATE TABLE ProjectState
 (
 	id BIGINT NOT NULL AUTO_INCREMENT,
 	name VARCHAR(25) NOT NULL,
-	description VARCHAR(100) NULL,
+	description VARCHAR(100),
 	PRIMARY KEY (id)
 ) 
 ;
@@ -78,8 +78,8 @@ CREATE TABLE Role
 CREATE TABLE TaskType
 (
 	id BIGINT NOT NULL AUTO_INCREMENT,
-	name VARCHAR(25) NULL,
-	description VARCHAR(100) NULL,
+	name VARCHAR(25),
+	description VARCHAR(100),
 	PRIMARY KEY (id)
 ) 
 ;
@@ -92,21 +92,10 @@ CREATE TABLE TaskUser
 	taskId BIGINT NOT NULL,
 	hourCount INTEGER NOT NULL,
 	date DATE NOT NULL,
-	comment VARCHAR(150) NULL,
+	comment VARCHAR(150),
 	PRIMARY KEY (id),
 	KEY (taskId),
 	KEY (userId)
-) 
-;
-
-
-CREATE TABLE ProjectClient
-(
-	projectId BIGINT NOT NULL,
-	clientId BIGINT NOT NULL,
-	PRIMARY KEY (projectId, clientId),
-	KEY (clientId),
-	KEY (projectId)
 ) 
 ;
 
@@ -125,14 +114,14 @@ CREATE TABLE ClientContact
 CREATE TABLE Client
 (
 	id BIGINT NOT NULL AUTO_INCREMENT,
-	name VARCHAR(50) NULL,
-	address VARCHAR(100) NULL,
-	country VARCHAR(50) NULL,
-	state VARCHAR(50) NULL,
-	zip VARCHAR(15) NULL,
-	fiscalNumber VARCHAR(50) NULL,
-	phone VARCHAR(50) NULL,
-	imageName VARCHAR(100) NULL,
+	name VARCHAR(50),
+	address VARCHAR(100),
+	country VARCHAR(50),
+	state VARCHAR(50),
+	zip VARCHAR(15),
+	fiscalNumber VARCHAR(50),
+	phone VARCHAR(50),
+	imageName VARCHAR(100),
 	PRIMARY KEY (id),
 	UNIQUE UQ_Client_imageName(imageName)
 ) 
@@ -142,14 +131,14 @@ CREATE TABLE Client
 CREATE TABLE Person
 (
 	id BIGINT NOT NULL AUTO_INCREMENT,
-	name VARCHAR(50) NULL,
-	lastname VARCHAR(50) NULL,
-	phone VARCHAR(20) NULL,
-	email VARCHAR(100) NULL,
-	country VARCHAR(50) NULL,
-	address VARCHAR(100) NULL,
-	zip VARCHAR(25) NULL,
-	imageName VARCHAR(100) NULL,
+	name VARCHAR(50),
+	lastname VARCHAR(50),
+	phone VARCHAR(20),
+	email VARCHAR(100),
+	country VARCHAR(50),
+	address VARCHAR(100),
+	zip VARCHAR(25),
+	imageName VARCHAR(100),
 	PRIMARY KEY (id),
 	UNIQUE UQ_Person_imageName(imageName)
 ) 
@@ -160,8 +149,8 @@ CREATE TABLE Alert
 (
 	id BIGINT NOT NULL AUTO_INCREMENT,
 	name VARCHAR(25) NOT NULL,
-	description VARCHAR(100) NULL,
-	userProjectId BIGINT NULL,
+	description VARCHAR(100),
+	userProjectId BIGINT,
 	PRIMARY KEY (id),
 	KEY (userProjectId)
 ) 
@@ -171,9 +160,9 @@ CREATE TABLE Alert
 CREATE TABLE User
 (
 	personId BIGINT NOT NULL,
-	state CHAR(1) NULL,
-	username VARCHAR(50) NULL,
-	password VARCHAR(50) NULL,
+	state CHAR(1),
+	username VARCHAR(50),
+	password VARCHAR(50),
 	PRIMARY KEY (personId),
 	KEY (personId)
 ) 
@@ -185,7 +174,7 @@ CREATE TABLE UserProject
 	id BIGINT NOT NULL AUTO_INCREMENT,
 	userId BIGINT NOT NULL,
 	projectId BIGINT NOT NULL,
-	owner INTEGER NOT NULL,
+	owner INTEGER DEFAULT 0,
 	PRIMARY KEY (id),
 	KEY (projectId),
 	KEY (userId)
@@ -199,9 +188,9 @@ CREATE TABLE Task
 	projectId BIGINT NOT NULL,
 	taskTypeId BIGINT NOT NULL,
 	name VARCHAR(50) NOT NULL,
-	description VARCHAR(250) NULL,
-	taskId BIGINT NULL,
-	budget INTEGER NULL,
+	description VARCHAR(250),
+	taskId BIGINT,
+	budget INTEGER,
 	PRIMARY KEY (id),
 	KEY (taskTypeId),
 	KEY (projectId),
@@ -213,14 +202,15 @@ CREATE TABLE Task
 CREATE TABLE Project
 (
 	id BIGINT NOT NULL AUTO_INCREMENT,
-	name VARCHAR(25) NULL,
-	projectStateId BIGINT NULL,
-	description VARCHAR(250) NULL,
-	initDate DATE NULL,
-	endDate DATE NULL,
-	budget FLOAT(0) NULL,
+	name VARCHAR(25),
+	projectStateId BIGINT,
+	description VARCHAR(250),
+	initDate DATE,
+	endDate DATE,
+	budget FLOAT(0),
+	clientId BIGINT NOT NULL,
 	PRIMARY KEY (id),
-	UNIQUE UQ_Project_name(name),
+	KEY (clientId),
 	KEY (projectStateId)
 ) 
 ;
@@ -265,14 +255,6 @@ ALTER TABLE TaskUser ADD CONSTRAINT FK_TaskUser_User
 	FOREIGN KEY (userId) REFERENCES User (personId)
 ;
 
-ALTER TABLE ProjectClient ADD CONSTRAINT FK_ProyectoCliente_Cliente 
-	FOREIGN KEY (clientId) REFERENCES Client (id)
-;
-
-ALTER TABLE ProjectClient ADD CONSTRAINT FK_ProyectoCliente_Proyecto 
-	FOREIGN KEY (projectId) REFERENCES Project (id)
-;
-
 ALTER TABLE ClientContact ADD CONSTRAINT FK_ClientContact_User 
 	FOREIGN KEY (userId) REFERENCES User (personId)
 ;
@@ -307,6 +289,10 @@ ALTER TABLE Task ADD CONSTRAINT FK_Task_Project
 
 ALTER TABLE Task ADD CONSTRAINT FK_Task_Task 
 	FOREIGN KEY (taskId) REFERENCES Task (id)
+;
+
+ALTER TABLE Project ADD CONSTRAINT FK_Project_Client 
+	FOREIGN KEY (clientId) REFERENCES Client (id)
 ;
 
 ALTER TABLE Project ADD CONSTRAINT FK_Project_ProjectState 
