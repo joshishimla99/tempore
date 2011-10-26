@@ -47,6 +47,7 @@ public class UserProjectServicesImpl extends RemoteServiceServlet implements Use
 		UserProject up = mapper.map(data, UserProject.class);
 		UserProject makePersistent = upDAO.makePersistent(up);
 		UserProjectDTO dto = mapper.map(makePersistent, UserProjectDTO.class);
+		dto.setUser(mapper.map(makePersistent.getUser(), UserDTO.class));
 		return dto;
 	}
 
