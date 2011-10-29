@@ -42,6 +42,7 @@ public class InitGeneric extends DBTestCase{
         
 		IDataSet dataSet = this.getDataSet();
 		DatabaseOperation.CLEAN_INSERT.execute(connection, dataSet);
+		//DatabaseOperation.DELETE_ALL.execute(connection, dataSet);
 		
 		transaction = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 		if (transaction.isActive()){
