@@ -5,4 +5,5 @@ import ar.fi.uba.tempore.entity.Alert;
 
 public class AlertDAO extends GenericHibernateDAO<Alert, Integer> {
 
+	
 }
