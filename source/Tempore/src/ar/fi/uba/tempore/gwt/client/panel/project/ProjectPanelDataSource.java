@@ -117,8 +117,8 @@ public class ProjectPanelDataSource extends GenericGwtRpcDataSourceFilterId<Inte
 		to.setAttribute(STATE_ID_FIELD, from.getProjectState().getId());
 		to.setAttribute(STATE_NAME_FIELD, from.getProjectState().getName());
 		
-//		to.setAttribute(CLIENT_ID_FIELD, from.getClient().getId());
-//		to.setAttribute(CLIENT_NAME_FIELD, from.getClient().getName());
+		to.setAttribute(CLIENT_ID_FIELD, from.getClient().getId());
+		to.setAttribute(CLIENT_NAME_FIELD, from.getClient().getName());
 		
 		to.setAttribute(IS_OWNER_FIELD, from.getIsOwner());
 	}
