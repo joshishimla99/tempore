@@ -82,44 +82,6 @@
 		<servlet-name>taskTypeServlet</servlet-name>
 		<url-pattern>/tempore/TaskTypeServicesClient</url-pattern>
 	</servlet-mapping>
-
-	<!-- IMAGES SERVLETS -->
-	<context-param>
-		<param-name>maxSize</param-name>
-		<param-value>3145728</param-value>
-	</context-param>
-	<context-param>
-		<param-name>slowUploads</param-name>
-		<param-value>true</param-value>
-	</context-param>
-
-
-	<servlet>
-		<servlet-name>newImageUploadServlet</servlet-name>
-		<servlet-class>ar.fi.uba.tempore.gwt.server.image.ImageServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>newImageUploadServlet</servlet-name>
-		<url-pattern>/imageServlet.img</url-pattern>
-	</servlet-mapping>
-
-
-	<!-- Default page to serve -->
-	<welcome-file-list>
-		<welcome-file>Tempore.html</welcome-file>
-	</welcome-file-list>
-
-
-
-	<!-- FILTRO de todos las pedidos al servidor -->
-	<filter>
-		<filter-name>Filter</filter-name>
-		<filter-class>ar.fi.uba.tempore.gwt.server.filter.ServletFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>Filter</filter-name>
-		<url-pattern>/tempore/*</url-pattern>
-	</filter-mapping>
 	<servlet>
 		<servlet-name>TimeServicesClient</servlet-name>
 		<servlet-class>ar.fi.uba.tempore.gwt.server.TimeServicesImpl</servlet-class>
@@ -162,5 +124,42 @@
 		<url-pattern>/tempore/UserProjectServicesClient</url-pattern>
 	</servlet-mapping>
 
+	<!-- IMAGES SERVLETS -->
+	<context-param>
+		<param-name>maxSize</param-name>
+		<param-value>3145728</param-value>
+	</context-param>
+	<context-param>
+		<param-name>slowUploads</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+
+	<servlet>
+		<servlet-name>newImageUploadServlet</servlet-name>
+		<servlet-class>ar.fi.uba.tempore.gwt.server.image.ImageServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>newImageUploadServlet</servlet-name>
+		<url-pattern>/imageServlet.img</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>Tempore.html</welcome-file>
+	</welcome-file-list>
+
+
+
+	<!-- FILTRO de todos las pedidos al servidor -->
+	<filter>
+		<filter-name>Filter</filter-name>
+		<filter-class>ar.fi.uba.tempore.gwt.server.filter.ServletFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>Filter</filter-name>
+		<url-pattern>/tempore/*</url-pattern>
+	</filter-mapping>
 
 </web-app>
