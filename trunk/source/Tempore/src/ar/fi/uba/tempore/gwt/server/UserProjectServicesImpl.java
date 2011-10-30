@@ -28,13 +28,14 @@ public class UserProjectServicesImpl extends RemoteServiceServlet implements Use
 		log.info("UserProject - FETCH id=" + projectId);
 		List<UserProject> userAssignedToProject = upDAO.getUserAssignedToProject(projectId);
 
+		
 		List<UserProjectDTO> list = new ArrayList<UserProjectDTO>();
 		for (UserProject userProject : userAssignedToProject) {
 			UserProjectDTO map = mapper.map(userProject, UserProjectDTO.class);
 			map.setUser(mapper.map(userProject.getUser(), UserDTO.class));
 			list.add(map);
 		}
-		
+		log.info("### " + userAssignedToProject.size());
 		return list;
 	}
 

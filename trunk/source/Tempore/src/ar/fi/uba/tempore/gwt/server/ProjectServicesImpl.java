@@ -8,11 +8,9 @@ import org.dozer.DozerBeanMapper;
 
 import ar.fi.uba.tempore.dao.ProjectDAO;
 import ar.fi.uba.tempore.dao.UserProjectDAO;
-import ar.fi.uba.tempore.dto.ClientDTO;
 import ar.fi.uba.tempore.dto.ProjectDTO;
 import ar.fi.uba.tempore.dto.ProjectStateDTO;
 import ar.fi.uba.tempore.dto.UserProjectDTO;
-import ar.fi.uba.tempore.entity.Client;
 import ar.fi.uba.tempore.entity.Project;
 import ar.fi.uba.tempore.entity.ProjectState;
 import ar.fi.uba.tempore.entity.User;
@@ -31,9 +29,6 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 	private final DozerBeanMapper mapper = new DozerBeanMapper();
 		
 
-	/**
-	 * Comentario para juan
-	 */
 	@Override
 	public ProjectDTO getProjectById(Integer id) {
 		Project findById = pDAO.findById(id);
@@ -43,14 +38,14 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 
 	@Override
 	public List<ProjectDTO> fetch(Integer userId) {
-		log.info("FETCH - Proyectos ");
+		log.info("FETCH - Proyectos " + userId);
 		List<ProjectDTO> list = new ArrayList<ProjectDTO>();
 		
 		List<Project> projects = pDAO.getProjectsByUser(userId);		
 		for (Project p : projects) {
 			ProjectDTO pDTO = mapper.map(p, ProjectDTO.class);
 			pDTO.setProjectState(mapper.map(p.getProjectState(), ProjectStateDTO.class));
-			pDTO.setClient(mapper.map(p.getClient(), ClientDTO.class));
+//			pDTO.setClient(mapper.map(p.getClient(), ClientDTO.class));
 			pDTO.setIsOwner(p.getUserProjectList().get(0).getOwner());
 			list.add(pDTO);
 		}
@@ -71,7 +66,7 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 		//Guardo el proyecto
 		Project p = mapper.map(pDTO, Project.class);
 		p.setProjectState(new ProjectState(pDTO.getProjectState().getId()));
-		p.setClient(new Client(pDTO.getClient().getId()));
+//		p.setClient(new Client(pDTO.getClient().getId()));
 		Project pSaved = pDAO.makePersistent(p);
 
 		//Guardo el usuario creador del proyecto
@@ -100,7 +95,7 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 		//Actualizo el proyecto
 		Project p = mapper.map(projectDTO, Project.class);
 		p.setProjectState(new ProjectState(projectDTO.getProjectState().getId()));
-		p.setClient(new Client(projectDTO.getClient().getId()));
+//		p.setClient(new Client(projectDTO.getClient().getId()));
 		Project pSaved = pDAO.makePersistent(p);
 		
 		//preparo la info para el retorno
