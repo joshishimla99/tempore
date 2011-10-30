@@ -31,6 +31,7 @@ public class Project implements Serializable {
 	private Date endDate;
 	private Float budget;
 	private ProjectState projectState;
+	private Client client;
 	
 	private List<Task> taskList = new ArrayList<Task>();
 	private List<UserProject> userProjectList = new ArrayList<UserProject>();
@@ -121,12 +122,12 @@ public class Project implements Serializable {
 		return budget;
 	}
 	
-//	@ManyToOne
-//	@JoinColumn(name="clientId")
-//	public void setClient(Client client) {
-//		this.client = client;
-//	}
-//	public Client getClient() {
-//		return client;
-//	}
+	@ManyToOne
+	@JoinColumn(name="clientId")
+	public Client getClient() {
+		return client;
+	}
+	public void setClient(Client client) {
+		this.client = client;
+	}
 }

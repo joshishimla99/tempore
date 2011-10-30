@@ -33,12 +33,12 @@ public class Client implements Serializable {
 	
 	private List<Project> projectList = new ArrayList<Project>();
 	private List<User> userList = new ArrayList<User>();
-	
+
 	public Client() {}
 	public Client(Integer id) {
 		setId(id);
 	}
-
+	
 	@Id
 	@GeneratedValue
 	@Column(name="id")
@@ -58,17 +58,17 @@ public class Client implements Serializable {
 		this.name = name;
 	}
 	
-//	@OneToMany(
-//			targetEntity=Project.class,
-//			mappedBy="client"
-//			)			
-//	@LazyCollection(LazyCollectionOption.TRUE)	
-//	public List<Project> getProjectList() {
-//		return projectList;
-//	}
-//	public void setProjectList(List<Project> projectList) {
-//		this.projectList = projectList;
-//	}
+	@OneToMany(
+			targetEntity=Project.class,
+			mappedBy="client"
+			)			
+	@LazyCollection(LazyCollectionOption.TRUE)	
+	public List<Project> getProjectList() {
+		return projectList;
+	}
+	public void setProjectList(List<Project> projectList) {
+		this.projectList = projectList;
+	}
 
 
 	@ManyToMany(

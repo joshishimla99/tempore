@@ -23,7 +23,7 @@ public class TestDummy extends TestDAO{
 	public void testGetProjectsByUser() {
 		List<Project> listProject = pDAO.getProjectsByUser(1);
 		for (Project p : listProject) {
-			log.info("Usuario no asignado: " + p.getName()); 
+			log.info("Proyecto: " + p.getName()); 
 		}
 	}
 	
