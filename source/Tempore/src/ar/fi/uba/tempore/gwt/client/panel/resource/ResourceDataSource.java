@@ -85,6 +85,7 @@ public class ResourceDataSource extends GenericGwtRpcDataSourceFilterId<Integer,
 		to.setAttribute(ResourceTabPanel.IS_OWNER, from.getOwner());
 		
 		UserDTO user = from.getUser();
+		
 		to.setAttribute(ResourceTabPanel.USER_ID, user.getId());
 		to.setAttribute(ResourceTabPanel.EMAIL, user.getEmail());
 		to.setAttribute(ResourceTabPanel.LAST_NAME, user.getLastName());

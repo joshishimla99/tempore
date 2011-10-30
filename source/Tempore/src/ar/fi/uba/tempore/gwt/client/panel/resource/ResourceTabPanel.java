@@ -62,6 +62,8 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 		userTileGrid.setHeight("50%");  
 		userTileGrid.setShowAllRecords(true);  
 		userTileGrid.setAnimateTileChange(true);
+		userTileGrid.setCanDrag(true);
+		userTileGrid.setCanAcceptDrop(true);
 		
 		final DetailViewerField pictureField = new DetailViewerField(IMAGE_NAME);
 		pictureField.setType("image");
@@ -99,7 +101,10 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 		tileGrid.setShowAllRecords(true);
 		tileGrid.setAutoFetchData(true);
 		tileGrid.addSelectionChangedHandler(changeProjectOwner);
+		tileGrid.setCanAcceptDrop(true);
+		tileGrid.setCanDrag(true);
 		tileGrid.setDataSource(ResourceDataSource.getInstance());
+		
 		
 		//USUARIOS ASIGANDOS
 		final DetailViewerField pictureField2 = new DetailViewerField(IMAGE_NAME);
@@ -143,11 +148,6 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 			
 			//Permisos dentro de la pantalla
 			changeOwnerBtn.setVisible(isProjectOwner);
-			userTileGrid.setCanDrag(isProjectOwner);
-			userTileGrid.setCanAcceptDrop(isProjectOwner);
-			tileGrid.setCanAcceptDrop(isProjectOwner);
-			tileGrid.setCanDrag(isProjectOwner);
-
 			if (isProjectOwner){				
 				userTileGrid.setBackgroundColor("rgb(255,255,255)");
 				tileGrid.setBackgroundColor("rgb(255,255,255)");
@@ -160,7 +160,8 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 			//Tiene permisos para realizar la operacion
 			tileGrid.invalidateCache();
 			tileGrid.fetchData();
-
+			tileGrid.redraw();
+			
 			userTileGrid.setData(new Record[]{});
 			UserServicesClient.Util.getInstance().getUserNotAssignedToProject(selected.getId(), new AsyncCallback<List<UserDTO>>() {
 				@Override
@@ -175,6 +176,7 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 						t.setAttribute(USER_ID, dto.getId());
 						userTileGrid.addData(t);
 					}
+					userTileGrid.redraw();
 				}
 				@Override
 				public void onFailure(Throwable caught) {
