@@ -1,12 +1,13 @@
 package ar.fi.uba.tempore.dao;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
 
 import ar.fi.uba.tempore.dao.util.GenericHibernateDAO;
-import ar.fi.uba.tempore.entity.Task;
 import ar.fi.uba.tempore.entity.TaskUser;
 
 public class TaskUserDAO extends GenericHibernateDAO<TaskUser, Integer> {
@@ -81,6 +82,32 @@ public class TaskUserDAO extends GenericHibernateDAO<TaskUser, Integer> {
 		}
 		
 		return result;
+	}
+
+	//TODO Cambiar por el filtro correcto
+	@SuppressWarnings("unchecked")
+	public List<TaskUser> findByDate(Integer userId, Date dateFilter) {
+		log.info("HorasDelUsuario - FETCH - " + dateFilter);
+		List<TaskUser> list = null;
+		
+		if (dateFilter != null) {
+//			dateFilter.setHours(0);
+//			dateFilter.setMinutes(0);
+//			dateFilter.setSeconds(0);
+			
+			String hql = 	"from TaskUser ut " +
+							"where ut.date = :dateFilter " +
+							"and " +
+							"ut.user.id = :userId";
+		
+			Query query = this.getSession().createQuery(hql);
+			query = query.setDate("dateFilter", dateFilter).setInteger("userId", userId);
+			list = query.list();
+		} else {
+			list = new ArrayList<TaskUser>();
+		}
+		
+		return list;
 	}
 
 }
