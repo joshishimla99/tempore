@@ -26,7 +26,7 @@ public class TaskTreePanel extends TreeGrid{
 		this.setWidth("100%");
 		this.setHeight("100%");
 
-		tasksDataSource = new TaskTimeDataSource(); 
+		tasksDataSource = TaskTimeDataSource.getInstance(); 
 
 		
 		this.addRecordClickHandler(new RecordClickHandler() {
