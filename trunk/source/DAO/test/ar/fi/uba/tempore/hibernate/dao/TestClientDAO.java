@@ -10,7 +10,6 @@ import org.junit.Test;
 import ar.fi.uba.tempore.dao.ClientDAO;
 import ar.fi.uba.tempore.dao.UserDAO;
 import ar.fi.uba.tempore.entity.Client;
-import ar.fi.uba.tempore.entity.Project;
 import ar.fi.uba.tempore.entity.User;
 import ar.fi.uba.tempore.hibernate.TestDAO;
 
@@ -26,8 +25,8 @@ public class TestClientDAO extends TestDAO{
 			
 			Assert.assertEquals("No se encontro al cliente", "TCS Tata Consulting Services"  , actual.getName());
 
-			List<Project> actualProjectList = actual.getProjectList();
-			Assert.assertEquals("La cantidad de proyectos del clientes no es correcta", 2, actualProjectList.size());
+//			List<Project> actualProjectList = actual.getProjectList();
+//			Assert.assertEquals("La cantidad de proyectos del clientes no es correcta", 2, actualProjectList.size());
 			
 			List<User> actualContactList = actual.getUserList();
 			Assert.assertEquals("La cantidad de usuarios del clientes no es correcta", 2, actualContactList.size());
