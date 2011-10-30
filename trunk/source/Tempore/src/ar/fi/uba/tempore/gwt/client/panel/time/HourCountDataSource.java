@@ -7,14 +7,16 @@ import java.util.List;
 import ar.fi.uba.tempore.dto.ProjectDTO;
 import ar.fi.uba.tempore.dto.TaskDTO;
 import ar.fi.uba.tempore.dto.TaskUserDTO;
+import ar.fi.uba.tempore.dto.TimeFilterDTO;
 import ar.fi.uba.tempore.dto.UserDTO;
 import ar.fi.uba.tempore.gwt.client.TimeServicesClient;
 import ar.fi.uba.tempore.gwt.client.TimeServicesClientAsync;
 import ar.fi.uba.tempore.gwt.client.login.SessionUser;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
-import ar.fi.uba.temporeutils.listgrid.GenericGwtRpcDataSource;
+import ar.fi.uba.temporeutils.listgrid.filter.GenericGwtRpcDataSourceFilterId;
 
 import com.google.gwt.core.client.GWT;
+import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceDateField;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
@@ -22,8 +24,16 @@ import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.types.SummaryFunctionType;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
-public class HourCountDataSource extends GenericGwtRpcDataSource<TaskUserDTO, ListGridRecord, TimeServicesClientAsync> {
+public class HourCountDataSource extends GenericGwtRpcDataSourceFilterId<TimeFilterDTO, TaskUserDTO, ListGridRecord, TimeServicesClientAsync> {
 
+	private static HourCountDataSource instance = null;
+	
+	public static HourCountDataSource getInstance(){
+		if (instance == null){
+			instance = new HourCountDataSource();
+		}
+		return instance;
+	}
 
 
 	@Override
@@ -122,5 +132,5 @@ public class HourCountDataSource extends GenericGwtRpcDataSource<TaskUserDTO, Li
 	@Override
 	public TaskUserDTO getNewDataObjectInstance() {
 		return new TaskUserDTO();
-	}
+	}	
 }

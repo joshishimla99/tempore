@@ -14,8 +14,16 @@ import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 public class TaskTimeDataSource extends GenericGwtRpcDataSourceFilterId<Integer, TaskTimeDTO, ListGridRecord, TaskTimeServicesClientAsync> {
+	private static TaskTimeDataSource instance = null;
 
-
+	public static TaskTimeDataSource getInstance(){
+		if (instance == null){
+			instance = new TaskTimeDataSource();
+		}
+		return instance;
+	}
+	
+	private TaskTimeDataSource(){}
 
 	@Override
 	public List<DataSourceField> getDataSourceFields() {
