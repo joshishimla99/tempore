@@ -96,12 +96,13 @@ public class ProjectPanelDataSource extends GenericGwtRpcDataSourceFilterId<Inte
 		ProjectStateDTO projectState = new ProjectStateDTO();
 		projectState.setId(from.getAttributeAsInt(STATE_ID_FIELD));
 		projectState.setName(from.getAttribute(STATE_NAME_FIELD));
+		to.setProjectState(projectState );
 		
 		ClientDTO client = new ClientDTO();
 		client.setId(from.getAttributeAsInt(CLIENT_ID_FIELD));
 		client.setName(from.getAttribute(CLIENT_NAME_FIELD));
+		to.setClient(client);
 		
-		to.setProjectState(projectState );
 	}
 	
 	@Override
@@ -116,8 +117,8 @@ public class ProjectPanelDataSource extends GenericGwtRpcDataSourceFilterId<Inte
 		to.setAttribute(STATE_ID_FIELD, from.getProjectState().getId());
 		to.setAttribute(STATE_NAME_FIELD, from.getProjectState().getName());
 		
-		to.setAttribute(CLIENT_ID_FIELD, from.getClient().getId());
-		to.setAttribute(CLIENT_NAME_FIELD, from.getClient().getName());
+//		to.setAttribute(CLIENT_ID_FIELD, from.getClient().getId());
+//		to.setAttribute(CLIENT_NAME_FIELD, from.getClient().getName());
 		
 		to.setAttribute(IS_OWNER_FIELD, from.getIsOwner());
 	}
