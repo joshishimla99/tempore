@@ -1,28 +1,19 @@
 package ar.fi.uba.tempore.gwt.client.panel.time;
 
-import java.util.Date;
-
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.AnimationAcceleration;
 import com.smartgwt.client.types.TitleOrientation;
 import com.smartgwt.client.types.VerticalAlignment;
-import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.ButtonItem;
-import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
 import com.smartgwt.client.widgets.form.fields.RowSpacerItem;
-import com.smartgwt.client.widgets.form.fields.SpinnerItem;
+import com.smartgwt.client.widgets.form.fields.SliderItem;
 import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
 import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
-import com.smartgwt.client.widgets.form.fields.SliderItem;
-import com.smartgwt.client.widgets.form.fields.MiniDateRangeItem;
-import com.smartgwt.client.widgets.form.fields.DateItem;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
-
-import ar.fi.uba.tempore.gwt.client.panel.time.HourCountDataSource;
 
 public class HourCountWindow extends Window{
 	

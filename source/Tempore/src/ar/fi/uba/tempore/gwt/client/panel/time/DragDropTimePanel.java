@@ -1,8 +1,11 @@
 package ar.fi.uba.tempore.gwt.client.panel.time;
 
+import ar.fi.uba.tempore.dto.TimeFilterDTO;
+import ar.fi.uba.tempore.gwt.client.login.SessionUser;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 import ar.fi.uba.temporeutils.observer.ProjectObserver;
 
+import com.google.gwt.dev.ModuleTabPanel.Session;
 import com.smartgwt.client.data.Criteria;
 import com.smartgwt.client.types.DragDataAction;
 import com.smartgwt.client.types.GroupStartOpen;
@@ -42,55 +45,69 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 	
 	public static final String COL_PARENT_ID = "idParentCol";
 	
-	final TaskTimeDataSource tasksDataSource;
-	final TreeGrid tasksTree;
-	final ListGrid hoursCountGrid;
-//	Integer taskDropped;
+	private final TreeGrid tasksTree = new TreeGrid();
+	private final ListGrid hoursCountGrid = new ListGrid();
+	private final DateChooser dateChooser = new DateChooser();
 
 	public DragDropTimePanel(){
 		super();
-//		taskDropped = 0;
 
-		final DateChooser dateChooser = new DateChooser();
-		dateChooser.setHeight("190");
-		
-		final VLayout vAllPanel = new VLayout();
-		vAllPanel.setHeight100();
-		vAllPanel.setWidth100();
-	
 		//TITULO
 		final Label title = new Label("Asignaci&oacute;n de horas trabajadas a tareas");
 		title.setWidth(200);
 		title.setHeight(30);
-
-		final HLayout hDateTasks = new HLayout();
-		hDateTasks.setHeight("197");
-		hDateTasks.setWidth100();
 		
-		final HLayout hHoursCount = new HLayout();
-		hHoursCount.setHeight("60%");
-		hHoursCount.setWidth100();			
-
-		tasksDataSource = new TaskTimeDataSource(); 
-		HourCountDataSource dataSource = new HourCountDataSource(); 			
-
-		hoursCountGrid = new ListGrid();
+		//FECHA PARA CARGA DE HORAS		
+		dateChooser.setHeight("190");
+		dateChooser.setShowTodayButton(false);
+		dateChooser.addDataChangedHandler(new DataChangedHandler() {
+			public void onDataChanged(DataChangedEvent event) {
+				refreshTimeGrid();
+			}
+		});
+		
+			
+		//LISTADO DE TAREAS
+		tasksTree.setShowDropIcons(true);
+		tasksTree.setHeight100();
+		tasksTree.setWidth("80%");
+		tasksTree.setHeight("100%");		
+		tasksTree.setShowDragShadow(true);
+		tasksTree.setAutoShowParent(true);
+		tasksTree.setAutoFetchData(true);
+		tasksTree.setAddDropValues(false);
+		tasksTree.setLoadingDataMessage("${loadingImage}&nbsp;Cargando...");
+		tasksTree.setDataSource(TaskTimeDataSource.getInstance());
+		TreeGridField tfId = new TreeGridField();
+		tfId.setHidden(true);
+		TreeGridField tfName = new TreeGridField(COL_NAME);
+		TreeGridField tfDescription = new TreeGridField(COL_DESCRIPTION);
+		tasksTree.setShowAllRecords(true);  
+		tasksTree.setCanReorderRecords(false);  
+		tasksTree.setCanDragRecordsOut(true);  
+		tasksTree.setCanAcceptDroppedRecords(false);  
+		tasksTree.setDragDataAction(DragDataAction.COPY);
+		tasksTree.setNodeIcon("../images/tasks.png");  
+		tasksTree.setFolderIcon("../images/tasks.png");  
+		tasksTree.setEmptyMessage("Seleccion&aacute un proyecto...");  
+		tasksTree.setFields(tfId, tfName, tfDescription);  
+		tasksTree.setShowConnectors(true);
+		
+		
+		//TABLA DE CARGA DE HORAS
+		
 		hoursCountGrid.setAddDropValues(false);
 		hoursCountGrid.setLoadingDataMessage("${loadingImage}&nbsp;Cargando...");
 		hoursCountGrid.addRecordDropHandler(new RecordDropHandler() {
 			public void onRecordDrop(RecordDropEvent event) {
-				Integer horas = null;
-				HourCountWindow win = new HourCountWindow();
 				event.getDropRecords()[0].setAttribute(COL_DATE, dateChooser.getData());	
-//				event.getDropRecords()[0].setAttribute(COL_HOURS, 4);
-//				win.showModal(hoursCountGrid, event.getDropRecords()[0]);
 			}
 		});
 
 		hoursCountGrid.setDuplicateDragMessage("Esta tarea ya existe...");
 
 		hoursCountGrid.setHeight100();
-		hoursCountGrid.setDataSource(dataSource);  
+		hoursCountGrid.setDataSource(HourCountDataSource.getInstance());  
 		hoursCountGrid.setShowAllRecords(true);  
 		hoursCountGrid.setEmptyMessage("Arrastr&aacute las tareas ac&aacute");  
 		hoursCountGrid.setCanAcceptDroppedRecords(true);  
@@ -105,26 +122,22 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 		hoursCountGrid.setGroupStartOpen(GroupStartOpen.ALL);
 		hoursCountGrid.setCanAcceptDrop(true);
 
-		ListGridField lfProject = new ListGridField(COL_PROJECT_NAME);		
-		
-		ListGridField lfName = new ListGridField(COL_NAME);
-		ListGridField lfDescription = new ListGridField(COL_DESCRIPTION);
-		ListGridField lfDate = new ListGridField(COL_DATE);
-		ListGridField lfHours = new ListGridField(COL_HOURS);
-		lfHours.setIncludeInRecordSummary(false); 
-		ListGridField lfComments = new ListGridField(COL_COMMENTS);
-		ListGridField lfProjectId = new ListGridField(COL_PROJECT_ID);
-		ListGridField lfTaskId = new ListGridField(COL_TASK_ID);
-		
-		lfTaskId.setHidden(true);
-		
+		final ListGridField lfProject = new ListGridField(COL_PROJECT_NAME);		
 		lfProject.setCanEdit(false);
+		final ListGridField lfName = new ListGridField(COL_NAME);
 		lfName.setCanEdit(false);
+		final ListGridField lfDescription = new ListGridField(COL_DESCRIPTION);
 		lfDescription.setCanEdit(false);
+		final ListGridField lfDate = new ListGridField(COL_DATE);
+		final ListGridField lfHours = new ListGridField(COL_HOURS);
+		lfHours.setIncludeInRecordSummary(false); 
+		final ListGridField lfComments = new ListGridField(COL_COMMENTS);
+		final ListGridField lfProjectId = new ListGridField(COL_PROJECT_ID);
+		lfProjectId.setHidden(true);
+		final ListGridField lfTaskId = new ListGridField(COL_TASK_ID);		
+		lfTaskId.setHidden(true);
 
 		hoursCountGrid.setFields(lfTaskId, lfProject, lfName, lfDescription, lfDate, lfHours, lfComments, lfProjectId); 
-		lfProjectId.setHidden(true);
-		
 		
 		hoursCountGrid.setEditorCustomizer(new ListGridEditorCustomizer() {  
 			public FormItem getEditor(ListGridEditorContext context) {  
@@ -142,49 +155,45 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 				return context.getDefaultProperties();}
 		});
 		
+		//LAYOUTs
+		
+		final HLayout hHoursCount = new HLayout();
+		hHoursCount.setHeight("60%");
+		hHoursCount.setWidth100();	
 		hHoursCount.addMember(hoursCountGrid);
 		
-		dateChooser.addDataChangedHandler(new DataChangedHandler() {
-			public void onDataChanged(DataChangedEvent event) {
-				hoursCountGrid.fetchData(new Criteria(COL_DATE, "01/10/2011" ));  
-			}
-		});
-		
-		dateChooser.setShowTodayButton(false);
-
-		tasksTree = new TreeGrid();
-		tasksTree.setShowDropIcons(true);
-		tasksTree.setHeight100();
-		tasksTree.setWidth("80%");
-		tasksTree.setHeight("100%");		
-		tasksTree.setShowDragShadow(true);
-		tasksTree.setAutoShowParent(true);
-		tasksTree.setAutoFetchData(true);
-		tasksTree.setAddDropValues(false);
-		tasksTree.setLoadingDataMessage("${loadingImage}&nbsp;Cargando...");
-		tasksTree.setDataSource(tasksDataSource);
-		TreeGridField tfId = new TreeGridField();
-		tfId.setHidden(true);
-		TreeGridField tfName = new TreeGridField(COL_NAME);
-		TreeGridField tfDescription = new TreeGridField(COL_DESCRIPTION);
-		tasksTree.setShowAllRecords(true);  
-		tasksTree.setCanReorderRecords(false);  
-		tasksTree.setCanDragRecordsOut(true);  
-		tasksTree.setCanAcceptDroppedRecords(false);  
-		tasksTree.setDragDataAction(DragDataAction.COPY);
-		tasksTree.setNodeIcon("../images/tasks.png");  
-		tasksTree.setFolderIcon("../images/tasks.png");  
-		tasksTree.setEmptyMessage("Seleccion&aacute un proyecto...");  
-		tasksTree.setFields(tfId, tfName, tfDescription);  
-		tasksTree.setShowConnectors(true);   
+		final HLayout hDateTasks = new HLayout();
+		hDateTasks.setHeight("197");
+		hDateTasks.setWidth100();
 		hDateTasks.addMember(dateChooser);
 		hDateTasks.addMember(tasksTree);
+		
 		//Agrego los Componentes al Panel
+		final VLayout vAllPanel = new VLayout();
+		vAllPanel.setHeight100();
+		vAllPanel.setWidth100();
 		vAllPanel.addMember(title);
 		vAllPanel.addMember(hDateTasks);
 		vAllPanel.addMember(hHoursCount);
 
+		//refresco panel de Horas
+		refreshTimeGrid();
 		this.addChild(vAllPanel);		
+	}
+
+
+	/**
+	 * Va ha buscar la informacion de la grilla de las horas con los filtros elegidos en la pantalla
+	 * Los filtros son la fecha y el usuaior logueado
+	 */
+	private void refreshTimeGrid() {
+		TimeFilterDTO filter = new TimeFilterDTO();
+		filter.setDateFilter(dateChooser.getData());
+		filter.setUserId(SessionUser.getInstance().getUser().getId());
+		
+		HourCountDataSource.getInstance().setId(filter);
+		hoursCountGrid.invalidateCache();
+		hoursCountGrid.fetchData();
 	}
 
 
@@ -192,9 +201,9 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 	public void updateProjectSelected() {
 		//		SC.say("Actualizo Proyecto: " + ProjectPanel.getInstance().getSelected().getId().toString());		
 		if (ProjectPanel.getInstance().getSelected() != null){
-			tasksDataSource.setId(ProjectPanel.getInstance().getSelected().getId());
+			TaskTimeDataSource.getInstance().setId(ProjectPanel.getInstance().getSelected().getId());
 			tasksTree.fetchData();
-			hoursCountGrid.fetchData();
+//			hoursCountGrid.fetchData();
 			//		SC.say("ID= " + ProjectPanel.getInstance().getSelected().getId().toString());
 			//		hoursCountGrid.fetchData(new Criteria(COL_ID, "2"));
 		}
