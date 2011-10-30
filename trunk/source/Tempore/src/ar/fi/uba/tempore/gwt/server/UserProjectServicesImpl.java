@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
 
+import ar.fi.uba.tempore.dao.UserDAO;
 import ar.fi.uba.tempore.dao.UserProjectDAO;
 import ar.fi.uba.tempore.dto.UserDTO;
 import ar.fi.uba.tempore.dto.UserProjectDTO;
@@ -21,6 +22,7 @@ public class UserProjectServicesImpl extends RemoteServiceServlet implements Use
 	private static final long serialVersionUID = 3871015150494046391L;
 	private final Logger log = Logger.getLogger(this.getClass());	
 	private UserProjectDAO upDAO = new UserProjectDAO();
+	private UserDAO uDAO = new UserDAO();
 	private final DozerBeanMapper mapper = new DozerBeanMapper();
 	
 	@Override
@@ -48,7 +50,8 @@ public class UserProjectServicesImpl extends RemoteServiceServlet implements Use
 		UserProject up = mapper.map(data, UserProject.class);
 		UserProject makePersistent = upDAO.makePersistent(up);
 		UserProjectDTO dto = mapper.map(makePersistent, UserProjectDTO.class);
-		dto.setUser(mapper.map(makePersistent.getUser(), UserDTO.class));
+		User user = uDAO.findById(data.getUser().getId());
+		dto.setUser(mapper.map(user, UserDTO.class));
 		return dto;
 	}
 

@@ -8,6 +8,7 @@ import org.dozer.DozerBeanMapper;
 
 import ar.fi.uba.tempore.dao.TaskUserDAO;
 import ar.fi.uba.tempore.dto.TaskUserDTO;
+import ar.fi.uba.tempore.dto.TimeFilterDTO;
 import ar.fi.uba.tempore.entity.TaskUser;
 import ar.fi.uba.tempore.gwt.client.TimeServicesClient;
 
@@ -23,14 +24,14 @@ public class TimeServicesImpl extends RemoteServiceServlet implements TimeServic
 
 
 	@Override
-	public List<TaskUserDTO> fetch() {	
+	public List<TaskUserDTO> fetch(TimeFilterDTO filter) {	
 		log.info("FETCH - TaskUser");
 		List<TaskUserDTO> list = new ArrayList<TaskUserDTO>();
 		
-		List<TaskUser> findAll = tuDAO.findAll();
+		List<TaskUser> findAll = tuDAO.findByDate(filter.getUserId(), filter.getDateFilter());
 		for (TaskUser c : findAll) {
 			TaskUserDTO cDTO = mapper.map(c, TaskUserDTO.class);
-			log.info("FETCH DATA - TaskUser");log.info(cDTO.getDate().toString());
+			log.info(cDTO.getDate().toString());
 			list.add(cDTO);
 		}
 		
