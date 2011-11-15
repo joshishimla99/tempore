@@ -556,6 +556,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		
 		public Task(final Integer taskId, final String taskName, int taskEstimation, String taskDescription, String taskType, final Integer idProject, final long realHs, final long totalRealHs) {
 
+			String color = "00FF00";
 			this.id = taskId;
 			this.name = taskName;
 			this.description = taskDescription;
@@ -563,6 +564,14 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 			this.type = taskType;
 			this.realHs = realHs;
 			this.totalHs = totalRealHs;
+			
+			if (this.type.equals("Analisis")){
+				color = "#CCFFCC";
+			} else if (this.type.equals("Desarrollo")){
+				color = "#C0C0C0";
+			} else {
+				color = "#FFFF99";
+			}
 			
 			setShowShadow(false);
 			setAnimateMinimize(true);
@@ -652,7 +661,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 	                + "<span style=\" font-weight: bold;\">Horas Consumidas totales: </span>" + totalHs + "<br/>"
 	                + "<span style=\" font-weight: bold;\">Horas Estimadas: </span> "+ estimatedHs + "</br>"
 	                + "<span style=\" font-weight: bold;\">Descripci&oacute;n: </span> "+ description);
-			
+			content.setBackgroundColor(color);
 			addItem(content);
 			
 		}
@@ -697,6 +706,14 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 	                + "<span style=\" font-weight: bold;\">Horas Consumidas totales: </span>" + totalHs + "<br/>"
 	                + "<span style=\" font-weight: bold;\">Horas Estimadas: </span> "+ taskDTO.getBudget() + "</br>"
 	                + "<span style=\" font-weight: bold;\">Descripci&oacute;n: </span> "+ taskDTO.getDescription());
+			
+			if (this.type.equals("Analisis")){
+				content.setBackgroundColor("#CCFFCC");
+			} else if (this.type.equals("Desarrollo")){
+				content.setBackgroundColor("#C0C0C0");
+			} else {
+				content.setBackgroundColor("#FFFF99");
+			}
 			
 		}
 	}
