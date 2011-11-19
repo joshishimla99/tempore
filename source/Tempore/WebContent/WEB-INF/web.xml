@@ -10,6 +10,14 @@
 		<servlet-name>projectServlet</servlet-name>
 		<url-pattern>/tempore/ProjectServices</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>reportServlet</servlet-name>
+		<servlet-class>ar.fi.uba.tempore.gwt.server.ReportServicesImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>reportServlet</servlet-name>
+		<url-pattern>/tempore/ReportServices</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>projectStateServlet</servlet-name>
