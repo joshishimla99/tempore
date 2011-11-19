@@ -22,7 +22,7 @@ public abstract class GenericGrafic extends VLayout {
 	private static String html = "<div id=\"grafic_nested_div\" style=\"position: absolute; z-index: 1000000\"> </div>\n";
 	private Options options;
 
-	public GenericGrafic(int graficType) {
+	public GenericGrafic(String title, int graficType) {
 		setGraficType(graficType);
 
 		final HTMLFlow htmlFlow = new HTMLFlow(html); 
@@ -30,6 +30,7 @@ public abstract class GenericGrafic extends VLayout {
 		options = Options.create();
 		options.setWidth(700);
 		options.setHeight(400);
+		options.setTitle(title);
 
 		this.setHeight100();
 		this.setWidth100();
