@@ -25,5 +25,8 @@
 		<class-a>ar.fi.uba.tempore.dto.UserProjectDTO</class-a>
 		<class-b>ar.fi.uba.tempore.entity.UserProject</class-b>
 	</mapping>
-	
+	<mapping>
+		<class-a>ar.fi.uba.tempore.dto.reports.ProjectsTimesDTO</class-a>
+		<class-b>ar.fi.uba.tempore.entity.reports.ProjectsTimes</class-b>
+	</mapping>
 </mappings>
