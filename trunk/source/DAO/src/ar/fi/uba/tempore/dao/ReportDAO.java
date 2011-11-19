@@ -7,7 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.classic.Session;
 
 import ar.fi.uba.tempore.dao.util.HibernateUtil;
-import ar.fi.uba.tempore.entity.Project;
+import ar.fi.uba.tempore.entity.reports.ProjectsTimes;
 
 public class ReportDAO {
 
@@ -37,19 +37,21 @@ public class ReportDAO {
 	}
 	
 	
-	public List getProjectTimes (Date ini, Date end){	
-		List<Project> list = null;
+	@SuppressWarnings("unchecked")
+	public List<ProjectsTimes> getProjectsTimes (Date ini, Date end){	
+		List<ProjectsTimes> list = null;
 		
-		String hql = "select new map(p.id as id,p.name as name, sum(tu.hourCount) as total)" +
-						"from Task as t " +
-						"inner join t.project as p " +
-						"inner join t.taskUserList as tu " +
-						"group by p";
-		
-		System.out.println(hql);
+		String hql = "select new ar.fi.uba.tempore.entity.reports.ProjectsTimes(p.name as name, sum(tu.hourCount) as total)" +
+				"from Project as p " +
+				"inner join p.taskList as t " +
+				"left outer join t.taskUserList as tu " +
+				"with (tu.date >= :iniDate " +
+				"and tu.date <= :endDate) " +
+				"group by p " +
+				"order by total desc";
 		
 		Query query = this.getSession().createQuery(hql);
-//		query = query.setDate("ini", ini).setDate("end", end);
+		query = query.setDate("iniDate", ini).setDate("endDate", end);
 		list = query.list();
 		
 		return list;
