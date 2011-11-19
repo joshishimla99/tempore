@@ -1,9 +1,15 @@
 package ar.fi.uba.tempore.gwt.client;
+import java.util.Date;
+import java.util.List;
+
+import ar.fi.uba.tempore.dto.reports.ProjectsTimesDTO;
+
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 @RemoteServiceRelativePath("ReportServices")
-public interface ReportServicesClient {
+public interface ReportServicesClient extends RemoteService {
 	/**
 	 * Utility class for simplifying access to the instance of async service.
 	 */
@@ -17,5 +23,6 @@ public interface ReportServicesClient {
 		}
 	}
 	
-	
+	public List<ProjectsTimesDTO> getProjectsTimes (Date dateIni, Date dateEnd);
+
 }

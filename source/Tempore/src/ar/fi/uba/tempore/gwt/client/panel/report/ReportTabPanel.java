@@ -1,64 +1,44 @@
 package ar.fi.uba.tempore.gwt.client.panel.report;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
 
+import ar.fi.uba.tempore.dto.reports.ProjectsTimesDTO;
+import ar.fi.uba.tempore.gwt.client.ReportServicesClient;
 import ar.fi.uba.tempore.gwt.client.panel.TabsPanelContainer;
 
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
 import com.google.gwt.visualization.client.DataTable;
-import com.google.gwt.visualization.client.VisualizationUtils;
-import com.google.gwt.visualization.client.visualizations.Gauge;
-import com.google.gwt.visualization.client.visualizations.corechart.AreaChart;
-import com.google.gwt.visualization.client.visualizations.corechart.ColumnChart;
-import com.google.gwt.visualization.client.visualizations.corechart.CoreChart.Type;
-import com.google.gwt.visualization.client.visualizations.corechart.LineChart;
-import com.google.gwt.visualization.client.visualizations.corechart.Options;
-import com.google.gwt.visualization.client.visualizations.corechart.PieChart;
-import com.smartgwt.client.types.Overflow;
-import com.smartgwt.client.widgets.HTMLFlow;
-import com.smartgwt.client.widgets.events.ResizedEvent;
-import com.smartgwt.client.widgets.events.ResizedHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.ButtonItem;
+import com.smartgwt.client.widgets.form.fields.DateItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
+import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
+import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 public class ReportTabPanel extends TabsPanelContainer{
 
+	protected static final String DESDE_FIELD = "DesdeItem";
+	protected static final String HASTA_FIELD = "HastaItem";
 	private VLayout vLayout = new VLayout();
-
+	private VLayout reportLayout = new VLayout();
+	private GenericGrafic gg = null;
+	private final DynamicForm form = new DynamicForm();
+	
 	public ReportTabPanel() {
 		super();
 
 		vLayout.setHeight100();
 		vLayout.setWidth100();
 
-		final GenericGrafic gg = new GenericGrafic(GenericGrafic.AREA) {
-			@Override
-			public DataTable createTable() {
-				DataTable data = DataTable.create();
-				data.addColumn(ColumnType.STRING, "Tareas");
-				data.addColumn(ColumnType.NUMBER, "Horas por dias");
-				data.addRows(6);
-				data.setValue(0, 0, "Trabajar");
-				data.setValue(0, 1, 9);
-				data.setValue(1, 0, "Dormir");
-				data.setValue(1, 1, 7);
-				data.setValue(2, 0, "Comer");
-				data.setValue(2, 1, 2);
-				data.setValue(3, 0, "Deportes");
-				data.setValue(3, 1, 1);
-				data.setValue(4, 0, "Viajar");
-				data.setValue(4, 1, 2);
-				data.setValue(5, 0, "Estudiar");
-				data.setValue(5, 1, 3);
-				return data;
-			}
-		};
 		
 		
-		final DynamicForm form = new DynamicForm();
 		final SelectItem selState = new SelectItem("Estado", "Tipo de Grafico");
 		LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>(5);  
 		valueMap.put("0", "Torta");
@@ -68,13 +48,19 @@ public class ReportTabPanel extends TabsPanelContainer{
 //		valueMap.put("4", "Relojes");
 		selState.setValueMap(valueMap);
 		
-		form.setFields(selState);
+		final DateItem ini = new DateItem(DESDE_FIELD,"Desde");
+		ini.setValue(new Date(System.currentTimeMillis() + (3600000*24*30) ));
+		final DateItem end = new DateItem(HASTA_FIELD, "Hasta");
+		
+		final ButtonItem btn = new ButtonItem("Reporte");
+		btn.addClickHandler(onClickReport);
+		
+		form.setFields(ini,end,selState, btn);
 		
 		vLayout.addMember(form);
-		vLayout.addMember(gg);
+		vLayout.addMember(reportLayout);
 		
 		this.addChild(vLayout);
-		
 		
 		selState.addChangedHandler(new ChangedHandler() {
 			@Override
@@ -86,6 +72,55 @@ public class ReportTabPanel extends TabsPanelContainer{
 		});
 	}
 
+	private ClickHandler onClickReport = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			final Date ini = (Date) form.getValue(DESDE_FIELD);
+			final Date end = (Date) form.getValue(HASTA_FIELD);
+			
+			ReportServicesClient.Util.getInstance().getProjectsTimes(ini, end, new AsyncCallback<List<ProjectsTimesDTO>>() {
+
+				@Override
+				public void onSuccess(final List<ProjectsTimesDTO> result) {
+//					Window.alert("Reporte - Proyectos/HorasCargadas OK!!!! " + result.size());
+					gg =  new GenericGrafic("Horas Cargadas a Proyectos desde " + ini + ", hasta " + end,GenericGrafic.AREA) {
+						@Override
+						public DataTable createTable() {
+							final DataTable data = DataTable.create();
+							data.addColumn(ColumnType.STRING, "Proyectos");
+							data.addColumn(ColumnType.NUMBER, "Horas Cargadas");
+					
+							int i = 0;
+							data.addRows(result.size());
+							for (ProjectsTimesDTO reg : result) {
+								data.setValue(i, 0, (String)reg.getProjectName());
+								data.setValue(i, 1, reg.getHourCounted());
+								i++;
+							}
+							return data;
+						}
+					};
+					reportLayout = new VLayout();
+					reportLayout.setWidth100();
+					reportLayout.setHeight100();
+					
+					reportLayout.addMember(gg);
+					
+					vLayout.addMember(reportLayout);
+					
+					gg.setGraficType(GenericGrafic.COLUMNS);
+					gg.draw();
+				}
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert("Error al buscar datos para reporte - Proyectos/HorasCargadas");
+				}
+				
+			});	
+		}
+	};
+	
 
 	@Override
 	public void refreshPanel() {
