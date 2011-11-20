@@ -8,10 +8,14 @@ import ar.fi.uba.tempore.dto.reports.ProjectsTimesDTO;
 import ar.fi.uba.tempore.gwt.client.ReportServicesClient;
 import ar.fi.uba.tempore.gwt.client.panel.TabsPanelContainer;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
 import com.google.gwt.visualization.client.DataTable;
+import com.smartgwt.client.types.AnimationEffect;
+import com.smartgwt.client.util.SC;
+import com.smartgwt.client.widgets.Window;
+import com.smartgwt.client.widgets.events.CloseClickHandler;
+import com.smartgwt.client.widgets.events.CloseClientEvent;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.ButtonItem;
 import com.smartgwt.client.widgets.form.fields.DateItem;
@@ -36,11 +40,10 @@ public class ReportTabPanel extends TabsPanelContainer{
 
 		vLayout.setHeight100();
 		vLayout.setWidth100();
-
 		
 		
 		final SelectItem selState = new SelectItem("Estado", "Tipo de Grafico");
-		LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>(5);  
+		LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>(4);  
 		valueMap.put("0", "Torta");
 		valueMap.put("1", "Linea");
 		valueMap.put("2", "Areas");
@@ -76,14 +79,28 @@ public class ReportTabPanel extends TabsPanelContainer{
 		@Override
 		public void onClick(ClickEvent event) {
 			
-			final Date ini = (Date) form.getValue(DESDE_FIELD);
-			final Date end = (Date) form.getValue(HASTA_FIELD);
+			final Window winModal = new Window();  
+            winModal.setWidth(700);  
+            winModal.setHeight(400);  
+            winModal.setTitle("Reportes");  
+            winModal.setShowMinimizeButton(false);  
+            winModal.setIsModal(true);  
+            winModal.setShowModalMask(true);  
+            winModal.centerInPage();
+            winModal.animateShow(AnimationEffect.FLY);
+            winModal.setAnimateTime(1000);
+            winModal.addCloseClickHandler(new CloseClickHandler() {  
+                public void onCloseClick(CloseClientEvent event) {
+                    winModal.destroy();  
+                }  
+            });  
 			
+            final Date ini = (Date) form.getValue(DESDE_FIELD);
+			final Date end = (Date) form.getValue(HASTA_FIELD);
 			ReportServicesClient.Util.getInstance().getProjectsTimes(ini, end, new AsyncCallback<List<ProjectsTimesDTO>>() {
 
 				@Override
 				public void onSuccess(final List<ProjectsTimesDTO> result) {
-//					Window.alert("Reporte - Proyectos/HorasCargadas OK!!!! " + result.size());
 					gg =  new GenericGrafic("Horas Cargadas a Proyectos desde " + ini + ", hasta " + end,GenericGrafic.AREA) {
 						@Override
 						public DataTable createTable() {
@@ -101,20 +118,15 @@ public class ReportTabPanel extends TabsPanelContainer{
 							return data;
 						}
 					};
-					reportLayout = new VLayout();
-					reportLayout.setWidth100();
-					reportLayout.setHeight100();
-					
-					reportLayout.addMember(gg);
-					
-					vLayout.addMember(reportLayout);
-					
 					gg.setGraficType(GenericGrafic.COLUMNS);
 					gg.draw();
+
+					winModal.addMember(gg);
+					winModal.show(); 
 				}
 				@Override
 				public void onFailure(Throwable caught) {
-					Window.alert("Error al buscar datos para reporte - Proyectos/HorasCargadas");
+					SC.warn("Error al buscar datos para reporte - Proyectos/HorasCargadas");
 				}
 				
 			});	
