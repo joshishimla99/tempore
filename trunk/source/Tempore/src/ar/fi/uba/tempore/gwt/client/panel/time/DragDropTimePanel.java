@@ -1,14 +1,18 @@
 package ar.fi.uba.tempore.gwt.client.panel.time;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import ar.fi.uba.tempore.dto.TimeFilterDTO;
 import ar.fi.uba.tempore.gwt.client.login.SessionUser;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 import ar.fi.uba.temporeutils.observer.ProjectObserver;
 
-import com.google.gwt.dev.ModuleTabPanel.Session;
-import com.smartgwt.client.data.Criteria;
+import com.google.gwt.i18n.client.NumberFormat;
+import com.smartgwt.client.data.Record;
 import com.smartgwt.client.types.DragDataAction;
 import com.smartgwt.client.types.GroupStartOpen;
+import com.smartgwt.client.types.ListGridFieldType;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.DateChooser;
@@ -17,11 +21,15 @@ import com.smartgwt.client.widgets.events.DataChangedEvent;
 import com.smartgwt.client.widgets.events.DataChangedHandler;
 import com.smartgwt.client.widgets.form.fields.DateItem;
 import com.smartgwt.client.widgets.form.fields.FormItem;
+import com.smartgwt.client.widgets.form.fields.SliderItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
+import com.smartgwt.client.widgets.grid.CellFormatter;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridEditorContext;
 import com.smartgwt.client.widgets.grid.ListGridEditorCustomizer;
 import com.smartgwt.client.widgets.grid.ListGridField;
+import com.smartgwt.client.widgets.grid.ListGridRecord;
+import com.smartgwt.client.widgets.grid.SummaryFunction;
 import com.smartgwt.client.widgets.grid.events.RecordDropEvent;
 import com.smartgwt.client.widgets.grid.events.RecordDropHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
@@ -119,18 +127,46 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 		hoursCountGrid.setGroupByField(COL_PROJECT_NAME);  
 		hoursCountGrid.setShowGridSummary(true);  
 		hoursCountGrid.setShowGroupSummary(true);  	
+		hoursCountGrid.setShowGroupSummaryInHeader(true); 
 		hoursCountGrid.setGroupStartOpen(GroupStartOpen.ALL);
 		hoursCountGrid.setCanAcceptDrop(true);
 
 		final ListGridField lfProject = new ListGridField(COL_PROJECT_NAME);		
 		lfProject.setCanEdit(false);
+		lfProject.setHidden(true);
 		final ListGridField lfName = new ListGridField(COL_NAME);
 		lfName.setCanEdit(false);
+		lfName.setSummaryFunction(new SummaryFunction() {  
+            public Object getSummaryValue(Record[] records, ListGridField field) {  
+                Set<String> uniqueCategories = new HashSet<String>();  
+  
+                for (int i = 0; i < records.length; i++) {  
+                    Record record = records[i];  
+                    uniqueCategories.add(record.getAttribute(COL_NAME)); 
+                    SC.say(record.getAttribute(COL_NAME));
+                }  
+                return uniqueCategories.size() + " Tareas";  
+            }  
+        });
 		final ListGridField lfDescription = new ListGridField(COL_DESCRIPTION);
 		lfDescription.setCanEdit(false);
 		final ListGridField lfDate = new ListGridField(COL_DATE);
 		final ListGridField lfHours = new ListGridField(COL_HOURS);
 		lfHours.setIncludeInRecordSummary(false); 
+		lfHours.setType(ListGridFieldType.FLOAT);
+		lfHours.setCellFormatter(new CellFormatter() {  
+            public String format(Object value, ListGridRecord record, int rowNum, int colNum) {  
+                if (value == null) return null;  
+                try {  
+                    NumberFormat nf = NumberFormat.getFormat("#,##0.0");  
+                    return  nf.format(((Number) value).doubleValue()) + " hs.";  
+                } catch (Exception e) {  
+                    return value.toString();  
+                }  
+            }
+        });
+		
+		
 		final ListGridField lfComments = new ListGridField(COL_COMMENTS);
 		final ListGridField lfProjectId = new ListGridField(COL_PROJECT_ID);
 		lfProjectId.setHidden(true);
@@ -151,6 +187,16 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 					textItem.setShowHintInField(true);  
 					textItem.setHint("comentarios...");  
 					return textItem; 
+				}
+				if (field.getName().equals(COL_HOURS)) {  
+                    SliderItem slider = new SliderItem();  
+            		slider.setWidth(130);
+            		slider.setShowTitle(false);
+            		slider.setRoundValues(false);
+            		slider.setMaxValue(12.0f);
+            		slider.setMinValue(0.5f);
+            		slider.setDefaultValue(4.0f);
+                    return slider; 
 				}
 				return context.getDefaultProperties();}
 		});
