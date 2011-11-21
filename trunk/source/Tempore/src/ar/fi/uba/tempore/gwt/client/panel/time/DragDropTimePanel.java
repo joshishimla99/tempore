@@ -115,6 +115,7 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 		hoursCountGrid.setDuplicateDragMessage("Esta tarea ya existe...");
 
 		hoursCountGrid.setHeight100();
+		hoursCountGrid.setWidth100();  
 		hoursCountGrid.setDataSource(HourCountDataSource.getInstance());  
 		hoursCountGrid.setShowAllRecords(true);  
 		hoursCountGrid.setEmptyMessage("Arrastr&aacute las tareas ac&aacute");  
@@ -143,7 +144,6 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
                 for (int i = 0; i < records.length; i++) {  
                     Record record = records[i];  
                     uniqueCategories.add(record.getAttribute(COL_NAME)); 
-                    SC.say(record.getAttribute(COL_NAME));
                 }  
                 return uniqueCategories.size() + " Tareas";  
             }  
