@@ -32,7 +32,7 @@ public class ReportTabPanel extends TabsPanelContainer{
 	protected static final String HASTA_FIELD = "HastaItem";
 	private VLayout vLayout = new VLayout();
 	private VLayout reportLayout = new VLayout();
-	private GenericGrafic gg = null;
+//	private GenericGrafic gg = null;
 	private final DynamicForm form = new DynamicForm();
 	
 	public ReportTabPanel() {
@@ -48,92 +48,85 @@ public class ReportTabPanel extends TabsPanelContainer{
 		valueMap.put("1", "Linea");
 		valueMap.put("2", "Areas");
 		valueMap.put("3", "Columnas");
-//		valueMap.put("4", "Relojes");
 		selState.setValueMap(valueMap);
 		
 		final DateItem ini = new DateItem(DESDE_FIELD,"Desde");
 		ini.setValue(new Date(System.currentTimeMillis() + (3600000*24*30) ));
 		final DateItem end = new DateItem(HASTA_FIELD, "Hasta");
 		
-		final ButtonItem btn = new ButtonItem("Reporte");
-		btn.addClickHandler(onClickReport);
+		final ButtonItem btnReporte1 = new ButtonItem("Proyectos-Horas");
+		btnReporte1.addClickHandler(onClickReport1);
 		
-		form.setFields(ini,end,selState, btn);
+		final ButtonItem btnReporte2 = new ButtonItem("Usuarios-Horas");
+		btnReporte2.addClickHandler(onClickReport2);
+		
+		final ButtonItem btnReporte3 = new ButtonItem("Tareas-Horas");
+		btnReporte3.addClickHandler(onClickReport3);
+		
+		final ButtonItem btnReporte4 = new ButtonItem("Usuario-Proyecto");
+		btnReporte4.addClickHandler(onClickReport4);
+		
+		form.setFields(
+					ini,
+					end,
+					//selState,
+					btnReporte1,
+					btnReporte2,
+					btnReporte3,
+					btnReporte4);
 		
 		vLayout.addMember(form);
 		vLayout.addMember(reportLayout);
 		
 		this.addChild(vLayout);
-		
-		selState.addChangedHandler(new ChangedHandler() {
-			@Override
-			public void onChanged(ChangedEvent event) {
-				int typeGrafic = new Integer((String)event.getValue());
-				gg.setGraficType(typeGrafic);
-				gg.draw();
-			}
-		});
 	}
 
-	private ClickHandler onClickReport = new ClickHandler() {
+	private ClickHandler onClickReport1 = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			
-			final Window winModal = new Window();  
-            winModal.setWidth(700);  
-            winModal.setHeight(400);  
-            winModal.setTitle("Reportes");  
-            winModal.setShowMinimizeButton(false);  
-            winModal.setIsModal(true);  
-            winModal.setShowModalMask(true);  
-            winModal.centerInPage();
-            winModal.animateShow(AnimationEffect.FLY);
-            winModal.setAnimateTime(1000);
-            winModal.addCloseClickHandler(new CloseClickHandler() {  
-                public void onCloseClick(CloseClientEvent event) {
-                    winModal.destroy();  
-                }  
-            });  
-			
-            final Date ini = (Date) form.getValue(DESDE_FIELD);
+			final Date ini = (Date) form.getValue(DESDE_FIELD);
 			final Date end = (Date) form.getValue(HASTA_FIELD);
-			ReportServicesClient.Util.getInstance().getProjectsTimes(ini, end, new AsyncCallback<List<ProjectsTimesDTO>>() {
+			
+			new Report1().draw(ini, end);			
+		}
+	};
 
-				@Override
-				public void onSuccess(final List<ProjectsTimesDTO> result) {
-					gg =  new GenericGrafic("Horas Cargadas a Proyectos desde " + ini + ", hasta " + end,GenericGrafic.AREA) {
-						@Override
-						public DataTable createTable() {
-							final DataTable data = DataTable.create();
-							data.addColumn(ColumnType.STRING, "Proyectos");
-							data.addColumn(ColumnType.NUMBER, "Horas Cargadas");
-					
-							int i = 0;
-							data.addRows(result.size());
-							for (ProjectsTimesDTO reg : result) {
-								data.setValue(i, 0, (String)reg.getProjectName());
-								data.setValue(i, 1, reg.getHourCounted());
-								i++;
-							}
-							return data;
-						}
-					};
-					gg.setGraficType(GenericGrafic.COLUMNS);
-					gg.draw();
+	private ClickHandler onClickReport2 = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			final Date ini = (Date) form.getValue(DESDE_FIELD);
+			final Date end = (Date) form.getValue(HASTA_FIELD);
+			
+			new Report2().draw(ini, end);			
+		}
+	};
 
-					winModal.addMember(gg);
-					winModal.show(); 
-				}
-				@Override
-				public void onFailure(Throwable caught) {
-					SC.warn("Error al buscar datos para reporte - Proyectos/HorasCargadas");
-				}
-				
-			});	
+	private ClickHandler onClickReport3 = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			final Date ini = (Date) form.getValue(DESDE_FIELD);
+			final Date end = (Date) form.getValue(HASTA_FIELD);
+			
+			new Report3().draw(ini, end);			
 		}
 	};
 	
-
+	private ClickHandler onClickReport4 = new ClickHandler() {
+		@Override
+		public void onClick(ClickEvent event) {
+			final Date ini = (Date) form.getValue(DESDE_FIELD);
+			final Date end = (Date) form.getValue(HASTA_FIELD);
+			
+			new Report4().draw(ini, end);			
+		}
+	};
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public void refreshPanel() {
 		//NADA

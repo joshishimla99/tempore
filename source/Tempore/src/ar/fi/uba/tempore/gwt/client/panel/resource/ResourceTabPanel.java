@@ -40,7 +40,7 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 	public static final String IS_OWNER = "ownerCol";
 
 	private final TileGrid userTileGrid = new TileGrid();
-	private final TileGrid tileGrid = new TileGrid();
+	private final TileGrid assignedTileGrid = new TileGrid();
 	private final Button changeOwnerBtn = new Button("Cambiar Lider del Proyecto");
 	private boolean changeOwner = false;
 
@@ -53,10 +53,14 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 
 	@Override
 	public void freePanel() {
-		ProjectPanel.getInstance().removeObserver(this);		
+		ProjectPanel.getInstance().removeObserver(this);
+//		userTileGrid.clear();
+//		assignedTileGrid.clear();
 	}	
 
 	public ResourceTabPanel(){
+		super();
+	
 		userTileGrid.setTileWidth(120);  
 		userTileGrid.setTileHeight(160);  
 		userTileGrid.setHeight("50%");  
@@ -94,16 +98,16 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 			}
 		});
 
-		tileGrid.setWidth100();  
-		tileGrid.setHeight("50%");  
-		tileGrid.setTileWidth(120);  
-		tileGrid.setTileHeight(180);  
-		tileGrid.setShowAllRecords(true);
-		tileGrid.setAutoFetchData(true);
-		tileGrid.addSelectionChangedHandler(changeProjectOwner);
-		tileGrid.setCanAcceptDrop(true);
-		tileGrid.setCanDrag(true);
-		tileGrid.setDataSource(ResourceDataSource.getInstance());
+		assignedTileGrid.setWidth100();  
+		assignedTileGrid.setHeight("50%");  
+		assignedTileGrid.setTileWidth(120);  
+		assignedTileGrid.setTileHeight(180);  
+		assignedTileGrid.setShowAllRecords(true);
+		assignedTileGrid.setAutoFetchData(true);
+		assignedTileGrid.addSelectionChangedHandler(changeProjectOwner);
+		assignedTileGrid.setCanAcceptDrop(true);
+		assignedTileGrid.setCanDrag(true);
+		assignedTileGrid.setDataSource(ResourceDataSource.getInstance());
 		
 		
 		//USUARIOS ASIGANDOS
@@ -126,7 +130,7 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 				return "";
 			}  
 		});
-		tileGrid.setFields(pictureField2, nameField2, userField2, emailField2, ownerField2);
+		assignedTileGrid.setFields(pictureField2, nameField2, userField2, emailField2, ownerField2);
 		
 		VLayout vLayout = new VLayout();
 		vLayout.setWidth100();
@@ -134,7 +138,7 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 
 		vLayout.addMember(userTileGrid);
 		vLayout.addMember(changeOwnerBtn);
-		vLayout.addMember(tileGrid);
+		vLayout.addMember(assignedTileGrid);
 
 		this.addChild(vLayout);
 	}
@@ -150,17 +154,17 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 			changeOwnerBtn.setVisible(isProjectOwner);
 			if (isProjectOwner){				
 				userTileGrid.setBackgroundColor("rgb(255,255,255)");
-				tileGrid.setBackgroundColor("rgb(255,255,255)");
+				assignedTileGrid.setBackgroundColor("rgb(255,255,255)");
 			} else {
 				userTileGrid.setVisibility(Visibility.VISIBLE);		
 				userTileGrid.setBackgroundColor("rgb(220,220,220)");
-				tileGrid.setBackgroundColor("rgb(220,220,220)");
+				assignedTileGrid.setBackgroundColor("rgb(220,220,220)");
 			}
 			
 			//Tiene permisos para realizar la operacion
-			tileGrid.invalidateCache();
-			tileGrid.fetchData();
-			tileGrid.redraw();
+			assignedTileGrid.invalidateCache();
+			assignedTileGrid.fetchData();
+			assignedTileGrid.redraw();
 			
 			userTileGrid.setData(new Record[]{});
 			UserServicesClient.Util.getInstance().getUserNotAssignedToProject(selected.getId(), new AsyncCallback<List<UserDTO>>() {
@@ -198,7 +202,7 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 				UserProjectServicesClient.Util.getInstance().changeOwner(data, new AsyncCallback<Void>() {
 					@Override
 					public void onSuccess(Void result) {
-						tileGrid.fetchData();
+						assignedTileGrid.fetchData();
 						ProjectPanel.getInstance().forceToFetchData();
 						
 						//vuelvo a la normalidad
