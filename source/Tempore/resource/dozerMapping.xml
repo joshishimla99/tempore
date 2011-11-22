@@ -29,4 +29,12 @@
 		<class-a>ar.fi.uba.tempore.dto.reports.ProjectsTimesDTO</class-a>
 		<class-b>ar.fi.uba.tempore.entity.reports.ProjectsTimes</class-b>
 	</mapping>
+	<mapping>
+		<class-a>ar.fi.uba.tempore.dto.reports.UsersTimesDTO</class-a>
+		<class-b>ar.fi.uba.tempore.entity.reports.UsersTimes</class-b>
+	</mapping>
+	<mapping>
+		<class-a>ar.fi.uba.tempore.dto.reports.TasksTimesDTO</class-a>
+		<class-b>ar.fi.uba.tempore.entity.reports.TasksTimes</class-b>
+	</mapping>
 </mappings>
