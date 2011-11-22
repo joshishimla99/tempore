@@ -3,6 +3,8 @@ import java.util.Date;
 import java.util.List;
 
 import ar.fi.uba.tempore.dto.reports.ProjectsTimesDTO;
+import ar.fi.uba.tempore.dto.reports.TasksTimesDTO;
+import ar.fi.uba.tempore.dto.reports.UsersTimesDTO;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -25,4 +27,9 @@ public interface ReportServicesClient extends RemoteService {
 	
 	public List<ProjectsTimesDTO> getProjectsTimes (Date dateIni, Date dateEnd);
 
+	public List<UsersTimesDTO> getUsersTimes(Date dateIni, Date dateEnd);
+	
+	public List<TasksTimesDTO> getPrimaryTaskTimes (Integer projectId ,Date from, Date to);
+	
+	public List<ProjectsTimesDTO> getUserActivity (Integer userId, Date ini, Date end);
 }
