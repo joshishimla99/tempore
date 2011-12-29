@@ -2,26 +2,13 @@ package ar.fi.uba.tempore.gwt.client.panel.report;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.List;
 
-import ar.fi.uba.tempore.dto.reports.ProjectsTimesDTO;
-import ar.fi.uba.tempore.gwt.client.ReportServicesClient;
 import ar.fi.uba.tempore.gwt.client.panel.TabsPanelContainer;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
-import com.google.gwt.visualization.client.DataTable;
-import com.smartgwt.client.types.AnimationEffect;
-import com.smartgwt.client.util.SC;
-import com.smartgwt.client.widgets.Window;
-import com.smartgwt.client.widgets.events.CloseClickHandler;
-import com.smartgwt.client.widgets.events.CloseClientEvent;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.ButtonItem;
 import com.smartgwt.client.widgets.form.fields.DateItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
-import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
-import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
 import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -86,7 +73,7 @@ public class ReportTabPanel extends TabsPanelContainer{
 		public void onClick(ClickEvent event) {
 			final Date ini = (Date) form.getValue(DESDE_FIELD);
 			final Date end = (Date) form.getValue(HASTA_FIELD);
-			
+
 			new Report1().draw(ini, end);			
 		}
 	};
