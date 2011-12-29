@@ -52,7 +52,7 @@ public class ReportDAO {
 				"with (tu.date >= :iniDate " +
 				"and tu.date <= :endDate) " +
 				"group by p " +
-				"order by total desc";
+				"order by total desc ";
 		
 		Query query = this.getSession().createQuery(hql);
 		query = query.setDate("iniDate", ini).setDate("endDate", end);
@@ -157,7 +157,8 @@ public class ReportDAO {
 				"order by total desc";
 		
 		Query query = this.getSession().createQuery(hql);
-		query = query.setInteger("userId", userId).setDate("iniDate", ini).setDate("endDate", end);
+		query = query.setInteger("userId", userId);
+		query = query.setDate("iniDate", ini).setDate("endDate", end);
 		list = query.list();
 		
 		return list;
