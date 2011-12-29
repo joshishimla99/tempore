@@ -56,7 +56,7 @@ public class ReportServicesImpl extends RemoteServiceServlet implements ReportSe
 	@Override
 	public List<TasksTimesDTO> getPrimaryTaskTimes(Integer projectId,
 			Date from, Date to) {
-		log.info("REPORTE - getUsersTimes ["+from+"],["+to+"]");
+		log.info("REPORTE - getPrimaryTaskTimes "+projectId+" ["+from+" ,"+to+"]");
 
 		List<TasksTimes> primaryTaskTimes = report.getPrimaryTaskTimes(projectId, from, to);
 		List<TasksTimesDTO> result = new ArrayList<TasksTimesDTO>(primaryTaskTimes.size());
@@ -70,7 +70,7 @@ public class ReportServicesImpl extends RemoteServiceServlet implements ReportSe
 	@Override
 	public List<ProjectsTimesDTO> getUserActivity(Integer userId, Date ini,
 			Date end) {
-		log.info("REPORTE - getUsersTimes ["+ini+"],["+end+"]");
+		log.info("REPORTE - getUserActivity "+ userId +" ["+ini+" ,"+end+"]");
 
 		List<ProjectsTimes> userActivity = report.getUserActivity(userId, ini, end);
 		List<ProjectsTimesDTO> result = new ArrayList<ProjectsTimesDTO>(userActivity.size());
