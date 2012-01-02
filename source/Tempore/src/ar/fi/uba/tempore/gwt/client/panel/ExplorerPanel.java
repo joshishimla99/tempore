@@ -2,19 +2,20 @@ package ar.fi.uba.tempore.gwt.client.panel;
 
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 
-import com.google.gwt.user.client.Window;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.DragAppearance;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.types.SelectionType;
-import com.smartgwt.client.types.VerticalAlignment;
+import com.smartgwt.client.types.VisibilityMode;
+import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.ImgButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
-import com.smartgwt.client.widgets.layout.VLayout;
+import com.smartgwt.client.widgets.layout.SectionStack;
+import com.smartgwt.client.widgets.layout.SectionStackSection;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 
-public class ExplorerPanel extends VLayout {
+public class ExplorerPanel extends SectionStack {
 
 	private static final String RADIO_GROUP = "view";
 
@@ -31,6 +32,11 @@ public class ExplorerPanel extends VLayout {
 		this.setResizeFrom("R");  
 		this.setMinWidth(100);  
 		this.setMinHeight(50);
+		this.setVisibilityMode(VisibilityMode.MULTIPLE);  
+
+		SectionStackSection sectionProject = new SectionStackSection("Proyectos");  
+		sectionProject.setExpanded(true);  
+        sectionProject.setCanCollapse(false);  
 
 		//Botonera de Vistas
 		ToolStrip toolStrip = new ToolStrip();
@@ -52,7 +58,7 @@ public class ExplorerPanel extends VLayout {
 			}
 		});
 		toolStrip.addMember(filterButton);  
-		
+
 		ImgButton freeGroupButton = new ImgButton();
 		freeGroupButton.setTooltip("Desagrupar");
 		freeGroupButton.setSize(16);  
@@ -98,10 +104,29 @@ public class ExplorerPanel extends VLayout {
 		});
 		toolStrip.addMember(stateGroupButton);  
 
-		
+
 		//Agrego los paneles al explorador
-		this.addMember(toolStrip);
-		this.addMember(ProjectPanel.getInstance());
+		sectionProject.addItem(toolStrip);
+		sectionProject.addItem(ProjectPanel.getInstance());
+		this.addSection(sectionProject);
 		
+		SectionStackSection sectionCounter = new SectionStackSection("Contador Online");  
+        sectionCounter.setExpanded(false);
+        sectionCounter.setCanCollapse(true);
+        
+        HTMLFlow htmlFlow = new HTMLFlow();   
+        htmlFlow.setPadding(10);  
+        String contents = "<b>Severity 1</b> - Critical problem<br>System is unavailable in production or " +  
+                "is corrupting data, and the error severely impacts the user's operations." +  
+                "<br><br><b>Severity 2</b> - Major problem<br>An important function of the system " +  
+                "is not available in production, and the user's operations are restricted." +  
+                "<br><br><b>Severity 3</b> - Minor problem<br>Inability to use a function of the " +  
+                "system occurs, but it does not seriously affect the user's operations.";  
+  
+        htmlFlow.setContents(contents);  
+        
+        sectionCounter.addItem(htmlFlow);  
+        this.addSection(sectionCounter);  
+
 	}		
 }
