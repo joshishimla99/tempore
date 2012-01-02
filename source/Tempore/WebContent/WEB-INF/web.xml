@@ -131,6 +131,17 @@
 		<servlet-name>UserProjectServicesClient</servlet-name>
 		<url-pattern>/tempore/UserProjectServicesClient</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>counterServlet</servlet-name>
+		<servlet-class>ar.fi.uba.tempore.gwt.server.TempCounterServicesImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>counterServlet</servlet-name>
+		<url-pattern>/tempore/TempCounterServicesClient</url-pattern>
+	</servlet-mapping>
+	
+	
 
 	<!-- IMAGES SERVLETS -->
 	<context-param>
