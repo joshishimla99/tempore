@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+	
+	<TEMPCOUNTER userId="1" taskId="1" timeIni="998192233" timeAcumulated="23" control="1" />
+	<TEMPCOUNTER userId="2" taskId="2" timeIni="1234567890" timeAcumulated="54321" control="0" />
+	
+	
+</dataset>

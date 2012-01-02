@@ -82,5 +82,7 @@
 	<ROLEUSERPROJECT roleId='2' userProjectId='1'/>
 	<ROLEUSERPROJECT roleId='1' userProjectId='2'/>
 	<ROLEUSERPROJECT roleId='3' userProjectId='3'/>
-
+	
+	<TEMPCOUNTER userId="1" taskId="1" timeIni="998192233" timeAcumulated="23" control="1" />
+ 
 </dataset>

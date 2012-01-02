@@ -44,6 +44,6 @@
   
   <mapping class="ar.fi.uba.tempore.entity.Alert"/>
   <mapping class="ar.fi.uba.tempore.entity.Person"/>  
-  
+  <mapping class="ar.fi.uba.tempore.entity.TempCounter"/>
  </session-factory>
 </hibernate-configuration>

@@ -18,6 +18,7 @@ public class AllTests {
 		suite.addTestSuite(TestTaskDAO.class);
 		suite.addTestSuite(TestUserProjectDAO.class);
 		suite.addTestSuite(TestProjectDAO.class);
+		suite.addTestSuite(TestTempCounterDAO.class);
 		//$JUnit-END$
 		return suite;
 	}

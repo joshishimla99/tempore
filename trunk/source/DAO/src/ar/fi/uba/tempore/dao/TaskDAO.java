@@ -21,6 +21,7 @@ public class TaskDAO extends GenericHibernateDAO<Task, Integer> {
 				" inner join fetch t.taskType as tt" +
 				" where " +
 				" p.id = " + projectId;
+//				" order by t.taskId";
 
 		Query createQuery = this.getSession().createQuery(hql);
 		@SuppressWarnings("unchecked")

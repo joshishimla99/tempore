@@ -33,6 +33,12 @@ public class Task implements Serializable {
 	private Project project;
 	private List<TaskUser> taskUserList;
 	
+	public Task (){}
+	
+	public Task (Integer taskId){
+		super();
+		setId(taskId);
+	}
 	
 	@Id
 	@GeneratedValue
