@@ -11,9 +11,10 @@ import ar.fi.uba.temporeutils.listgrid.filter.GenericGwtRpcDataSourceFilterId;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
-import com.smartgwt.client.widgets.grid.ListGridRecord;
+import com.smartgwt.client.widgets.tree.TreeNode;
 
-public class TaskTimeDataSource extends GenericGwtRpcDataSourceFilterId<Integer, TaskTimeDTO, ListGridRecord, TaskTimeServicesClientAsync> {
+public class TaskTimeDataSource extends GenericGwtRpcDataSourceFilterId<Integer, TaskTimeDTO, TreeNode, TaskTimeServicesClientAsync> {
+	private static final Integer ROOT_ID = 0;
 	private static TaskTimeDataSource instance = null;
 
 	public static TaskTimeDataSource getInstance(){
@@ -23,36 +24,37 @@ public class TaskTimeDataSource extends GenericGwtRpcDataSourceFilterId<Integer,
 		return instance;
 	}
 	
-	private TaskTimeDataSource(){}
+	private TaskTimeDataSource(){
+		super();
+	}
 
 	@Override
 	public List<DataSourceField> getDataSourceFields() {
+		setID("TreeTask");
 		List<DataSourceField> fields = new ArrayList<DataSourceField>();
 		
-		DataSourceIntegerField field = new DataSourceIntegerField(DragDropTimePanel.COL_TASK_ID);
-		field.setPrimaryKey(true);
-//		field.setHidden(true);
-		fields.add(field);
+		DataSourceIntegerField key = new DataSourceIntegerField(DragDropTimePanel.COL_TASK_ID, "Key");
+		key.setPrimaryKey(true);
+		fields.add(key);
 		
-		DataSourceTextField field2 = new DataSourceTextField(DragDropTimePanel.COL_NAME, "Nombre de la Tarea");
-		field2.setRequired(true);
-		fields.add(field2);
+		DataSourceIntegerField reportTo = new DataSourceIntegerField(DragDropTimePanel.COL_PARENT_ID,"ReportTo");
+		reportTo.setForeignKey(getID() + "." + DragDropTimePanel.COL_TASK_ID);
+		reportTo.setRootValue(ROOT_ID);
+		fields.add(reportTo);
+
+		DataSourceTextField nameField = new DataSourceTextField(DragDropTimePanel.COL_NAME, "Tarea");
+		nameField.setRequired(true);
+		fields.add(nameField);
 		
-		DataSourceTextField field3 = new DataSourceTextField(DragDropTimePanel.COL_DESCRIPTION, "Descripci&oacuten");
-		field3.setRequired(true);
-		fields.add(field3);
-		
-		DataSourceIntegerField field4 = new DataSourceIntegerField(DragDropTimePanel.COL_PARENT_ID);
-		field4.setForeignKey(getID() + "." + DragDropTimePanel.COL_TASK_ID);
-		field4.setRootValue(-1);
-//		field.setHidden(true);
-		fields.add(field4);
+		DataSourceTextField descriptionField = new DataSourceTextField(DragDropTimePanel.COL_DESCRIPTION, "Descripci&oacuten");
+		descriptionField.setRequired(true);
+		fields.add(descriptionField);
 		
 		return fields;
 	}
 
 	@Override
-	public void copyValues(ListGridRecord rec, TaskTimeDTO dto) {
+	public void copyValues(TreeNode rec, TaskTimeDTO dto) {
 		dto.setId(rec.getAttributeAsInt(DragDropTimePanel.COL_TASK_ID));
 		dto.setName(rec.getAttribute(DragDropTimePanel.COL_NAME));
 		dto.setDescription(rec.getAttribute(DragDropTimePanel.COL_DESCRIPTION));	
@@ -60,13 +62,13 @@ public class TaskTimeDataSource extends GenericGwtRpcDataSourceFilterId<Integer,
 	}
 
 	@Override
-	public void copyValues(TaskTimeDTO dto, ListGridRecord rec) {
+	public void copyValues(TaskTimeDTO dto, TreeNode rec) {
+//		GWT.log("Id="+dto.getId() + " - report = " + dto.getTaskId());
 		rec.setAttribute(DragDropTimePanel.COL_TASK_ID, dto.getId());
+		rec.setAttribute(DragDropTimePanel.COL_PARENT_ID, dto.getTaskId()==null?ROOT_ID:dto.getTaskId());
+
 		rec.setAttribute(DragDropTimePanel.COL_NAME, dto.getName());
 		rec.setAttribute(DragDropTimePanel.COL_DESCRIPTION, dto.getDescription());
-		rec.setAttribute(DragDropTimePanel.COL_PARENT_ID, dto.getTaskId()==null?-1:dto.getTaskId());
-
-		
 	}
 
 	@Override
@@ -75,8 +77,8 @@ public class TaskTimeDataSource extends GenericGwtRpcDataSourceFilterId<Integer,
 	}
 
 	@Override
-	public ListGridRecord getNewRecordInstance() {
-		return new ListGridRecord();
+	public TreeNode getNewRecordInstance() {
+		return new TreeNode();
 	}
 
 	@Override
