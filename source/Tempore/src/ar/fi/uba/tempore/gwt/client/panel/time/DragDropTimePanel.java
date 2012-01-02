@@ -13,7 +13,6 @@ import com.smartgwt.client.data.Record;
 import com.smartgwt.client.types.DragDataAction;
 import com.smartgwt.client.types.GroupStartOpen;
 import com.smartgwt.client.types.ListGridFieldType;
-import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.DateChooser;
 import com.smartgwt.client.widgets.Label;
@@ -44,14 +43,14 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 	public static final String COL_COMMENTS = "commentsCol";
 	public static final String COL_DATE = "dateCol";
 	public static final String COL_NAME = "nameCol";
+	public static final String COL_DESCRIPTION = "descriptionCol";
 	
 	public static final String COL_TASK_ID = "taskId";
 	
-	public static final String COL_DESCRIPTION = "descriptionCol";
 	public static final String COL_PROJECT_NAME = "projectCol";
 	public static final String COL_PROJECT_ID = "projectIdCol";	
 	
-	public static final String COL_PARENT_ID = "idParentCol";
+	public static final String COL_PARENT_ID = "ReportsTo";
 	
 	private final TreeGrid tasksTree = new TreeGrid();
 	private final ListGrid hoursCountGrid = new ListGrid();
@@ -123,7 +122,7 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 		hoursCountGrid.setDragDataAction(DragDataAction.MOVE);  
 		hoursCountGrid.setCanEdit(true);
 		hoursCountGrid.setCanRemoveRecords(true); 
-//		hoursCountGrid.setPreventDuplicates(true);		
+		hoursCountGrid.setPreventDuplicates(true);		
 		hoursCountGrid.setAutoSaveEdits(true);		
 		hoursCountGrid.setGroupByField(COL_PROJECT_NAME);  
 		hoursCountGrid.setShowGridSummary(true);  
@@ -253,7 +252,6 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 			//		SC.say("ID= " + ProjectPanel.getInstance().getSelected().getId().toString());
 			//		hoursCountGrid.fetchData(new Criteria(COL_ID, "2"));
 		}
-
 	}  
 	
 	public void refreshSubTab(){
