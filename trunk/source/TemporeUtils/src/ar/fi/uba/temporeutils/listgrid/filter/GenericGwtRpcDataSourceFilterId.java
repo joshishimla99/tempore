@@ -135,7 +135,6 @@ public abstract class GenericGwtRpcDataSourceFilterId<F, D, R extends Record, SA
 		// request.getStartRow ();
 		// request.getEndRow ();
 		// request.getSortBy ();
-		//SC.say(getId().toString());
 		getServiceAsync().fetch(getId(), new AsyncCallback<List<D>>() {
 			
 			public void onFailure(Throwable caught) {
