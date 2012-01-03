@@ -5,7 +5,7 @@ import ar.fi.uba.tempore.gwt.client.panel.TabsPanelContainer;
 
 import com.smartgwt.client.types.AnimationAcceleration;
 import com.smartgwt.client.types.Side;
-import com.smartgwt.client.widgets.tab.Tab;
+import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tab.TabSet;
 import com.smartgwt.client.widgets.tab.events.TabDeselectedEvent;
 import com.smartgwt.client.widgets.tab.events.TabDeselectedHandler;
@@ -33,23 +33,19 @@ public class TimeTabPanel extends TabsPanelContainer {
 		topTabSet.setCanCloseTabs(false);
 		topTabSet.setTabBarPosition(Side.TOP);
 
-		final Tab tTab1 = new Tab("Calendario", "../images/32x32/Calender.png");  
-		tTab1.setIconWidth(16);
-		tTab1.setIconHeight(16);
-		tTab1.setWidth(100);
 
-		final WeekGridTime calendario = new WeekGridTime();
 		final DragDropTimePanel dragdrop = new DragDropTimePanel();
-
-		tTab1.setPane(calendario);  
 		
-		final Tab tTab2 = new Tab("D&D", "../images/32x32/Refresh.png");  
-		tTab2.setIconWidth(16);
-		tTab2.setIconHeight(16);              
-		tTab2.setPane(dragdrop);
-
-		topTabSet.addTab(tTab2);  
-		topTabSet.addTab(tTab1);  
+		final VLayout vLayout = new VLayout();
+		vLayout.setWidth100();
+		vLayout.setHeight100();
+		vLayout.setMembersMargin(6);
+		
+		
+		vLayout.addMember(dragdrop);
+		
+		
+		topTabSet.addChild(vLayout); 	
 		
 		topTabSet.addTabDeselectedHandler(new TabDeselectedHandler() {
 			
@@ -57,7 +53,6 @@ public class TimeTabPanel extends TabsPanelContainer {
 			public void onTabDeselected(TabDeselectedEvent event) {
 				// TODO Auto-generated method stub
 				dragdrop.freeSubTab();
-				calendario.freeSubTab();
 			}
 		});
 		
@@ -67,7 +62,6 @@ public class TimeTabPanel extends TabsPanelContainer {
 			public void onTabSelected(TabSelectedEvent event) {
 				// TODO Auto-generated method stub
 				dragdrop.refreshSubTab();
-				calendario.refreshSubTab();
 			}
 		});
 		
