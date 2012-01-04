@@ -63,7 +63,7 @@ public class TestProjectDAO extends TestDAO{
 	public void testUpdate(){
 		Project expected = pDAO.findById(1);
 		expected.setName("Proyecto 3");
-		expected.setBudget(12.23f);
+		expected.setBudget(12000);
 		expected.setDescription("Descripcion a");
 		try {
 			expected.setInitDate(new DateFormatManager("dd-MM-yyyy").parse("11-12-2008"));
@@ -82,7 +82,7 @@ public class TestProjectDAO extends TestDAO{
 	private Project getDemoProject(){
 		Project t = new Project();
 		t.setName("Proyecto 3");
-		t.setBudget(12.23f);
+		t.setBudget(123);
 		t.setDescription("Descripcion a");
 		try {
 			t.setInitDate(new DateFormatManager("dd-MM-yyyy").parse("11-12-2008"));
