@@ -291,7 +291,7 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		to.setInitDate((Date) from.getValue(START_FIELD));
 		to.setName(from.getValue(NAME_FIELD).toString());
 		
-		to.setBudget(new Float(from.getValue(BUDGET_FIELD).toString()));
+		to.setBudget(new Integer(from.getValue(BUDGET_FIELD).toString()));
 		
 		//Cliente del proyecto
 		ClientDTO client = new ClientDTO();

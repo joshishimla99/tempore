@@ -111,7 +111,7 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 			}
 		});
 
-		hoursCountGrid.setDuplicateDragMessage("Esta tarea ya existe...");
+//		hoursCountGrid.setDuplicateDragMessage("Esta tarea ya existe...");
 
 		hoursCountGrid.setHeight100();
 		hoursCountGrid.setWidth100();  
@@ -122,7 +122,7 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 		hoursCountGrid.setDragDataAction(DragDataAction.MOVE);  
 		hoursCountGrid.setCanEdit(true);
 		hoursCountGrid.setCanRemoveRecords(true); 
-		hoursCountGrid.setPreventDuplicates(true);		
+		hoursCountGrid.setPreventDuplicates(false);		
 		hoursCountGrid.setAutoSaveEdits(true);		
 		hoursCountGrid.setGroupByField(COL_PROJECT_NAME);  
 		hoursCountGrid.setShowGridSummary(true);  
