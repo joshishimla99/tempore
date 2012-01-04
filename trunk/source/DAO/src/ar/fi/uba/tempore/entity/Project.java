@@ -29,7 +29,7 @@ public class Project implements Serializable {
 	private String description;
 	private Date initDate;
 	private Date endDate;
-	private Float budget;
+	private Integer budget;
 	private ProjectState projectState;
 	private Client client;
 	
@@ -115,10 +115,10 @@ public class Project implements Serializable {
 	}
 	
 	@Column(name="budget")
-	public void setBudget(Float budget) {
+	public void setBudget(Integer budget) {
 		this.budget = budget;
 	}
-	public Float getBudget() {
+	public Integer getBudget() {
 		return budget;
 	}
 	
