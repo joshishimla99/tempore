@@ -87,7 +87,7 @@ public class ProjectPanelDataSource extends GenericGwtRpcDataSourceFilterId<Inte
 		//No deberia utilizarce
 		to.setId(from.getAttributeAsInt(ID_FIELD));
 		to.setName(from.getAttribute(NAME_FIELD));
-		to.setBudget(from.getAttributeAsFloat(BUDGET_FIELD));
+		to.setBudget(from.getAttributeAsInt(BUDGET_FIELD));
 		to.setDescription(from.getAttribute(DESCRIPTION_FIELD));
 		to.setEndDate(from.getAttributeAsDate(ENDDATE_FIELD));
 		to.setInitDate(from.getAttributeAsDate(INITDATE_FIELD));
