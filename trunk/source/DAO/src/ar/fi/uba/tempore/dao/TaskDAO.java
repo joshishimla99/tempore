@@ -49,5 +49,5 @@ public class TaskDAO extends GenericHibernateDAO<Task, Integer> {
 		@SuppressWarnings("unchecked")
 		List<Task> list = createQuery.list();
 		return list;
-	}	
+	}
 }
