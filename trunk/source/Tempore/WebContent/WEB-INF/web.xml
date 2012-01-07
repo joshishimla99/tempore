@@ -140,7 +140,14 @@
 		<servlet-name>counterServlet</servlet-name>
 		<url-pattern>/tempore/TempCounterServicesClient</url-pattern>
 	</servlet-mapping>
-	
+	<servlet>
+		<servlet-name>taskCounterServlet</servlet-name>
+		<servlet-class>ar.fi.uba.tempore.gwt.server.TaskCounterServicesImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>taskCounterServlet</servlet-name>
+		<url-pattern>/tempore/TaskCounterServicesClient</url-pattern>
+	</servlet-mapping>	
 	
 
 	<!-- IMAGES SERVLETS -->
