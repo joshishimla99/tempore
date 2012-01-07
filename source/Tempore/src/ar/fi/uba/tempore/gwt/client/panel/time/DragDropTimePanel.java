@@ -5,6 +5,7 @@ import java.util.Set;
 
 import ar.fi.uba.tempore.dto.TimeFilterDTO;
 import ar.fi.uba.tempore.gwt.client.login.SessionUser;
+import ar.fi.uba.tempore.gwt.client.panel.TabsPanelContainer;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 import ar.fi.uba.temporeutils.observer.ProjectObserver;
 
@@ -13,7 +14,7 @@ import com.smartgwt.client.data.Record;
 import com.smartgwt.client.types.DragDataAction;
 import com.smartgwt.client.types.GroupStartOpen;
 import com.smartgwt.client.types.ListGridFieldType;
-import com.smartgwt.client.widgets.Canvas;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.DateChooser;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.DataChangedEvent;
@@ -36,7 +37,7 @@ import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tree.TreeGrid;
 import com.smartgwt.client.widgets.tree.TreeGridField;
 
-public class DragDropTimePanel extends Canvas implements ProjectObserver{
+public class DragDropTimePanel extends TabsPanelContainer implements ProjectObserver{
 
 	public static final String COL_ID = "idTaskCol";
 	public static final String COL_HOURS = "hoursCol";
@@ -244,22 +245,20 @@ public class DragDropTimePanel extends Canvas implements ProjectObserver{
 
 	@Override
 	public void updateProjectSelected() {
-		//		SC.say("Actualizo Proyecto: " + ProjectPanel.getInstance().getSelected().getId().toString());		
 		if (ProjectPanel.getInstance().getSelected() != null){
-			TaskTimeDataSource.getInstance().setId(ProjectPanel.getInstance().getSelected().getId());
 			tasksTree.fetchData();
-//			hoursCountGrid.fetchData();
-			//		SC.say("ID= " + ProjectPanel.getInstance().getSelected().getId().toString());
-			//		hoursCountGrid.fetchData(new Criteria(COL_ID, "2"));
 		}
 	}  
 	
-	public void refreshSubTab(){
+	@Override
+	public void refreshPanel() {
 		ProjectPanel.getInstance().addObserver(this);
-		updateProjectSelected();
+		updateProjectSelected();		
 	}
 
-	public void freeSubTab() {
+
+	@Override
+	public void freePanel() {
 		ProjectPanel.getInstance().removeObserver(this);
 	}
 }
