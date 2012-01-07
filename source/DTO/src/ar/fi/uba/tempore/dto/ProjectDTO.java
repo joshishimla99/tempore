@@ -16,7 +16,7 @@ public class ProjectDTO implements IsSerializable {
 	private String description;
 	private Date initDate;
 	private Date endDate;
-	private Float budget;
+	private Integer budget;
 	private ProjectStateDTO projectState;
 	private ClientDTO client;
 	private Integer isOwner;
@@ -101,11 +101,11 @@ public class ProjectDTO implements IsSerializable {
 		this.endDate = endDate;
 	}
 
-	public void setBudget(Float budget) {
+	public void setBudget(Integer budget) {
 		this.budget = budget;
 	}
 
-	public Float getBudget() {
+	public Integer getBudget() {
 		return budget;
 	}
 
