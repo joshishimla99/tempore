@@ -52,7 +52,7 @@ public class TimeTabPanel extends TabsPanelContainer {
 			@Override
 			public void onTabDeselected(TabDeselectedEvent event) {
 				// TODO Auto-generated method stub
-				dragdrop.freeSubTab();
+//				dragdrop.freeSubTab();
 			}
 		});
 		
@@ -61,7 +61,7 @@ public class TimeTabPanel extends TabsPanelContainer {
 			@Override
 			public void onTabSelected(TabSelectedEvent event) {
 				// TODO Auto-generated method stub
-				dragdrop.refreshSubTab();
+//				dragdrop.refreshSubTab();
 			}
 		});
 		

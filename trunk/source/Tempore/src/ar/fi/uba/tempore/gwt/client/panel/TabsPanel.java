@@ -6,6 +6,7 @@ import ar.fi.uba.tempore.gwt.client.panel.project.ProjectTabPanel;
 import ar.fi.uba.tempore.gwt.client.panel.report.ReportTabPanel;
 import ar.fi.uba.tempore.gwt.client.panel.resource.ResourceTabPanel;
 import ar.fi.uba.tempore.gwt.client.panel.task.TaskTabPanel;
+import ar.fi.uba.tempore.gwt.client.panel.time.DragDropTimePanel;
 import ar.fi.uba.tempore.gwt.client.panel.time.TimeTabPanel;
 
 import com.smartgwt.client.widgets.tab.Tab;
@@ -35,7 +36,8 @@ public class TabsPanel extends TabSet {
 		//Tab 0
 		final Tab timeTab = new Tab("Tempore  ", "../images/ico/schedule.ico");
 		timeTab.setWidth(tabWidth);
-		timeTab.setPane(new TimeTabPanel());
+//		timeTab.setPane(new TimeTabPanel());
+		timeTab.setPane(new DragDropTimePanel());
 		
 		//Tab 1
 		final Tab resourceTab = new Tab("Recursos  ", "../images/ico/user_group.ico");

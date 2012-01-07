@@ -4,19 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.fi.uba.tempore.dto.TaskTimeDTO;
-import ar.fi.uba.tempore.gwt.client.TaskTimeServicesClient;
-import ar.fi.uba.tempore.gwt.client.TaskTimeServicesClientAsync;
-import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
+import ar.fi.uba.tempore.gwt.client.TaskCounterServicesClient;
+import ar.fi.uba.tempore.gwt.client.TaskCounterServicesClientAsync;
+import ar.fi.uba.tempore.gwt.client.login.SessionUser;
 import ar.fi.uba.temporeutils.listgrid.filter.GenericGwtRpcDataSourceFilterId;
 
-import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.widgets.tree.TreeNode;
 
-public class TaskListDS extends GenericGwtRpcDataSourceFilterId<Integer, TaskTimeDTO, TreeNode, TaskTimeServicesClientAsync>  {
+public class TaskListDS extends GenericGwtRpcDataSourceFilterId<Integer, TaskTimeDTO, TreeNode, TaskCounterServicesClientAsync>  {
 	private static TaskListDS instance = null;  
 	private static final Integer ROOT_VALUE = 0;
 	
@@ -64,8 +63,8 @@ public class TaskListDS extends GenericGwtRpcDataSourceFilterId<Integer, TaskTim
 	}
 
 	@Override
-	public TaskTimeServicesClientAsync getServiceAsync() {
-		return TaskTimeServicesClient.Util.getInstance();
+	public TaskCounterServicesClientAsync getServiceAsync() {
+		return TaskCounterServicesClient.Util.getInstance();
 	}
 
 	@Override
@@ -80,12 +79,7 @@ public class TaskListDS extends GenericGwtRpcDataSourceFilterId<Integer, TaskTim
 
 	@Override  
     protected Object transformRequest(DSRequest dsRequest) {
-		if (ProjectPanel.getInstance().getSelected() != null){
-			this.setId(ProjectPanel.getInstance().getSelected().getId());		
-		} else {
-			GWT.log("Contador de Horas - No se logra leer Id del proyecto");
-			this.setId(1);
-		}
+		this.setId(SessionUser.getInstance().getUser().getId());
 		return super.transformRequest(dsRequest);
     }  
 }

@@ -6,8 +6,10 @@ import java.util.List;
 import ar.fi.uba.tempore.dto.TaskTimeDTO;
 import ar.fi.uba.tempore.gwt.client.TaskTimeServicesClient;
 import ar.fi.uba.tempore.gwt.client.TaskTimeServicesClientAsync;
+import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 import ar.fi.uba.temporeutils.listgrid.filter.GenericGwtRpcDataSourceFilterId;
 
+import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
@@ -85,4 +87,10 @@ public class TaskTimeDataSource extends GenericGwtRpcDataSourceFilterId<Integer,
 	public TaskTimeDTO getNewDataObjectInstance() {
 		return new TaskTimeDTO();
 	}
+	
+	@Override  
+    protected Object transformRequest(DSRequest dsRequest) {
+		this.setId(ProjectPanel.getInstance().getSelected().getId());
+		return super.transformRequest(dsRequest);
+    }  
 }

@@ -29,6 +29,8 @@ public class TaskTimeServicesImpl extends RemoteServiceServlet implements TaskTi
 		
 		List<Task> findAll = tuDAO.getAllTasksByProject(id);
 		for (Task c : findAll) {
+			
+			
 			TaskTimeDTO cDTO = mapper.map(c, TaskTimeDTO.class);
 			list.add(cDTO);
 		}
