@@ -49,7 +49,8 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> {
 	 */
 	@SuppressWarnings("unchecked")
 	public T findById(ID id) {
-		T entity = (T) this.getSession().load(getPersistentClass(), id);
+//		T entity = (T) this.getSession().load(getPersistentClass(), id);
+		T entity = (T) this.getSession().get(getPersistentClass(), id);
 		return entity;
 	}
 
