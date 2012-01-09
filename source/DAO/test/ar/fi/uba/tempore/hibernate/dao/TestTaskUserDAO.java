@@ -51,7 +51,7 @@ public class TestTaskUserDAO extends TestDAO{
 	public void testUpdate(){
 		TaskUser expected = tuDAO.findById(1);
 		expected.setComment("comentario de la tarea");
-		expected.setHourCount(9);
+		expected.setHourCount(9L);
 		try {
 			expected.setDate(new SimpleDateFormat("dd-MM-yyyy").parse("18-09-2011"));
 		} catch (ParseException e) {			
@@ -71,7 +71,7 @@ public class TestTaskUserDAO extends TestDAO{
 	private TaskUser getDemoTaskUser(){
 		TaskUser u = new TaskUser();
 		u.setComment("comentario de la tarea");
-		u.setHourCount(9);
+		u.setHourCount(9L);
 		try {
 			u.setDate(new SimpleDateFormat("dd-MM-yyyy").parse("18-09-2011"));
 		} catch (ParseException e) {			
