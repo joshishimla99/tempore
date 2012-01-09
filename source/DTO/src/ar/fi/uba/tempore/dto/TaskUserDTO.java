@@ -9,7 +9,7 @@ public class TaskUserDTO implements IsSerializable{
 	private Integer id;
 //	private Integer userId;
 //	private Integer taskId;
-	private Integer hourCount;
+	private Long hourCount;
 	private String comment;
 	private Date date;
 	private TaskDTO task;
@@ -29,10 +29,10 @@ public class TaskUserDTO implements IsSerializable{
 		this.id = id;
 	}
 	
-	public Integer getHourCount() {
+	public Long getHourCount() {
 		return hourCount;
 	}
-	public void setHourCount(Integer hourCount) {
+	public void setHourCount(Long hourCount) {
 		this.hourCount = hourCount;
 	}
 	
