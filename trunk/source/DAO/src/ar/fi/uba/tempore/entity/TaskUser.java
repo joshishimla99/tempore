@@ -19,7 +19,7 @@ public class TaskUser implements Serializable{
 	private Integer id;
 	private User user;
 	private Task task;
-	private Integer hourCount;
+	private Long hourCount;
 	private Date date;
 	private String comment;
 	
@@ -52,10 +52,10 @@ public class TaskUser implements Serializable{
 	}
 	
 	@Column(name="hourCount")
-	public Integer getHourCount() {
+	public Long getHourCount() {
 		return hourCount;
 	}
-	public void setHourCount(Integer hourCount) {
+	public void setHourCount(Long hourCount) {
 		this.hourCount = hourCount;
 	}
 	
