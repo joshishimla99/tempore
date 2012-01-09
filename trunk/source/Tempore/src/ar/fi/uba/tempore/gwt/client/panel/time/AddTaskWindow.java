@@ -1,26 +1,20 @@
 package ar.fi.uba.tempore.gwt.client.panel.time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.smartgwt.client.widgets.Window;
-import com.smartgwt.client.widgets.form.DynamicForm;
-
-import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
-
-import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.types.Alignment;
-import com.smartgwt.client.widgets.form.fields.SpinnerItem;
-
-import com.smartgwt.client.widgets.form.fields.ButtonItem;
-import com.smartgwt.client.widgets.form.fields.TextAreaItem;
-import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
-import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
-
-import com.smartgwt.client.widgets.form.fields.RowSpacerItem;
 import com.smartgwt.client.types.AnimationAcceleration;
 import com.smartgwt.client.types.TitleOrientation;
 import com.smartgwt.client.types.VerticalAlignment;
+import com.smartgwt.client.widgets.Label;
+import com.smartgwt.client.widgets.Window;
+import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.ButtonItem;
+import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
+import com.smartgwt.client.widgets.form.fields.RowSpacerItem;
+import com.smartgwt.client.widgets.form.fields.SpinnerItem;
+import com.smartgwt.client.widgets.form.fields.TextAreaItem;
+import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
+import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
 
 
 public class AddTaskWindow extends Window{

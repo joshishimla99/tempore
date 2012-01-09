@@ -1,8 +1,6 @@
 package ar.fi.uba.tempore.gwt.server;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
@@ -31,14 +29,17 @@ public class TempCounterServicesImpl extends RemoteServiceServlet implements Tem
 
 	@Override
 	public TempCounterDTO getActualState(Integer userId){
+		log.info("STATE COUNTER - " + userId);
 		TempCounter tc = tcDAO.findById(userId);
-		TempCounterDTO tcDTO = mapper.map(tc, TempCounterDTO.class);
+
+		TempCounterDTO tcDTO = tc==null?null:mapper.map(tc, TempCounterDTO.class);
 
 		return tcDTO;
 	}
 
 	@Override
 	public TempCounterDTO start (Integer userId, Integer taskId){
+		log.info("START COUNTER - " + userId + " - " + taskId);
 		TempCounter tc = tcDAO.findById(userId);
 		
 		if (tc != null && tc.getControl() == PLAY){
@@ -46,12 +47,14 @@ public class TempCounterServicesImpl extends RemoteServiceServlet implements Tem
 		} else {
 			if (tc == null){
 				//Contador nuevo
+				log.info("Nuevo conteo");
 				tc = new TempCounter();
 				tc.setUserId(userId);
 				tc.setTimeAcumulated(0L);
 			} else {
 				//contador existe (reinicio)
 				//TODO ver si requiere hacerce algo
+				log.info("Continuo conteo existente");
 			}
 			tc.setTask(new Task(taskId));		
 			tc.setTimeIni(System.currentTimeMillis());
@@ -68,12 +71,12 @@ public class TempCounterServicesImpl extends RemoteServiceServlet implements Tem
 	@Override
 	public TempCounterDTO pause (Integer userId){
 		TempCounter tc = tcDAO.findById(userId);
-		
+
 		if (tc == null){
 			log.error("El contador no existe, no puede realizarce la puasa a un contador inexistente");
 		} else {
-			if (tc.getControl() == NONE){
-				log.error("El ocntador no cuanta con el estado PLAY para poder pausarlo");
+			if (tc.getControl() != PLAY){
+				log.error("El contador no cuenta con el estado PLAY para poder pausarlo");
 			} else {
 				tc.setTimeAcumulated(tc.getTimeAcumulated() +  System.currentTimeMillis() - tc.getTimeIni());
 				tc.setTimeIni(0L);
@@ -92,13 +95,15 @@ public class TempCounterServicesImpl extends RemoteServiceServlet implements Tem
 		if (tc == null){
 			log.error("No existe contador para guardar");
 		} else {
-			timeSaved = tc.getTimeAcumulated() + System.currentTimeMillis() - tc.getTimeIni();
+			timeSaved = tc.getTimeAcumulated();
+			if (tc.getTimeIni() != 0L){
+				timeSaved +=  System.currentTimeMillis() - tc.getTimeIni();
+			}
 			
 			TaskUser tu = new TaskUser();
 			tu.setUser(new User(tc.getUserId()));
 			tu.setTask(new Task(tc.getTask().getId()));
-			//TODO ver el formateo de la variable guardada
-			tu.setHourCount((int) (tc.getTimeAcumulated()/1000));
+			tu.setHourCount(timeSaved);
 			tu.setDate(new Date());
 			tu.setComment("Horas cargadas desde el contador de horas");
 			tuDAO.makePersistent(tu);

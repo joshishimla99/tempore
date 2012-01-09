@@ -3,7 +3,6 @@ package ar.fi.uba.tempore.gwt.client.panel.report;
 import java.util.Date;
 import java.util.List;
 
-import ar.fi.uba.tempore.dto.reports.ProjectsTimesDTO;
 import ar.fi.uba.tempore.dto.reports.UsersTimesDTO;
 import ar.fi.uba.tempore.gwt.client.ReportServicesClient;
 

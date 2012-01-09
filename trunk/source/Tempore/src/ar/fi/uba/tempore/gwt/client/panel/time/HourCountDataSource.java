@@ -16,9 +16,9 @@ import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 import ar.fi.uba.temporeutils.listgrid.filter.GenericGwtRpcDataSourceFilterId;
 
 import com.google.gwt.core.client.GWT;
-import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceDateField;
+import com.smartgwt.client.data.fields.DataSourceDateTimeField;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.types.SummaryFunctionType;
@@ -26,6 +26,7 @@ import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 public class HourCountDataSource extends GenericGwtRpcDataSourceFilterId<TimeFilterDTO, TaskUserDTO, ListGridRecord, TimeServicesClientAsync> {
 
+	private static final Long GMT_3 = 10800000L;
 	private static HourCountDataSource instance = null;
 	
 	public static HourCountDataSource getInstance(){
@@ -45,7 +46,7 @@ public class HourCountDataSource extends GenericGwtRpcDataSourceFilterId<TimeFil
 		field.setHidden(true);
 		fields.add(field);
 		
-		DataSourceIntegerField field3 = new DataSourceIntegerField(DragDropTimePanel.COL_HOURS, "Horas dedicadas");
+		DataSourceDateTimeField field3 = new DataSourceDateTimeField(DragDropTimePanel.COL_HOURS, "Horas dedicadas");
 		field3.setRequired(true);
 		field3.setPluralTitle("Horas"); 
 		field3.setSummaryFunction(SummaryFunctionType.SUM); 
@@ -99,7 +100,14 @@ public class HourCountDataSource extends GenericGwtRpcDataSourceFilterId<TimeFil
 		userDTO.setId(SessionUser.getInstance().getUser().getId());
 		dto.setUser(userDTO);
 		dto.setTask(taskDTO);
-		dto.setHourCount((rec.getAttributeAsInt(DragDropTimePanel.COL_HOURS)==null)?0:rec.getAttributeAsInt(DragDropTimePanel.COL_HOURS));
+		
+		Long milis = rec.getAttributeAsDate(DragDropTimePanel.COL_HOURS)==null?0:rec.getAttributeAsDate(DragDropTimePanel.COL_HOURS).getTime();
+		if (milis > GMT_3){
+			dto.setHourCount(milis-GMT_3);
+		} else {
+			dto.setHourCount(milis);
+		}
+		
 		dto.setComment(rec.getAttribute(DragDropTimePanel.COL_COMMENTS));
 		dto.setDate(rec.getAttributeAsDate(DragDropTimePanel.COL_DATE));
 	}
@@ -110,7 +118,7 @@ public class HourCountDataSource extends GenericGwtRpcDataSourceFilterId<TimeFil
 //		rec.setAttribute(COL_ID_USER, dto.getUser());
 		rec.setAttribute(DragDropTimePanel.COL_TASK_ID, dto.getTask().getId());
 //		SC.say("ID TASK: " + dto.getTask().getId());
-		rec.setAttribute(DragDropTimePanel.COL_HOURS, dto.getHourCount());
+		rec.setAttribute(DragDropTimePanel.COL_HOURS, new Date(dto.getHourCount()+GMT_3));
 		rec.setAttribute(DragDropTimePanel.COL_COMMENTS, dto.getComment());
 		rec.setAttribute(DragDropTimePanel.COL_DATE, dto.getDate());
 		rec.setAttribute(DragDropTimePanel.COL_NAME, dto.getTask().getName());

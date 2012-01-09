@@ -7,7 +7,6 @@ import ar.fi.uba.tempore.gwt.client.panel.report.ReportTabPanel;
 import ar.fi.uba.tempore.gwt.client.panel.resource.ResourceTabPanel;
 import ar.fi.uba.tempore.gwt.client.panel.task.TaskTabPanel;
 import ar.fi.uba.tempore.gwt.client.panel.time.DragDropTimePanel;
-import ar.fi.uba.tempore.gwt.client.panel.time.TimeTabPanel;
 
 import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;

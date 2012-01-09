@@ -4,8 +4,6 @@ import ar.fi.uba.tempore.gwt.client.panel.TabsPanelContainer;
 
 import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;
-import com.smartgwt.client.widgets.tab.events.TabSelectedEvent;
-import com.smartgwt.client.widgets.tab.events.TabSelectedHandler;
 
 public class ConfigurationTabPanel extends TabsPanelContainer {
 	

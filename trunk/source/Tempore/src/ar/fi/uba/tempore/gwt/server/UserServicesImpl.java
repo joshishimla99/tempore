@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
-import org.hibernate.Query;
 
 import ar.fi.uba.tempore.dao.UserDAO;
 import ar.fi.uba.tempore.dto.UserDTO;
