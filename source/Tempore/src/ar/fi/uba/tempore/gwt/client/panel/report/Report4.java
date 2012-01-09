@@ -4,8 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import ar.fi.uba.tempore.dto.reports.ProjectsTimesDTO;
-import ar.fi.uba.tempore.dto.reports.TasksTimesDTO;
-import ar.fi.uba.tempore.dto.reports.UsersTimesDTO;
 import ar.fi.uba.tempore.gwt.client.ReportServicesClient;
 
 import com.google.gwt.i18n.client.DateTimeFormat;

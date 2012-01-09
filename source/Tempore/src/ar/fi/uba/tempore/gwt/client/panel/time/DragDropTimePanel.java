@@ -1,5 +1,6 @@
 package ar.fi.uba.tempore.gwt.client.panel.time;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,26 +10,25 @@ import ar.fi.uba.tempore.gwt.client.panel.TabsPanelContainer;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 import ar.fi.uba.temporeutils.observer.ProjectObserver;
 
-import com.google.gwt.i18n.client.NumberFormat;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.smartgwt.client.data.Record;
 import com.smartgwt.client.types.DragDataAction;
 import com.smartgwt.client.types.GroupStartOpen;
 import com.smartgwt.client.types.ListGridFieldType;
-import com.smartgwt.client.util.SC;
+import com.smartgwt.client.types.TimeDisplayFormat;
 import com.smartgwt.client.widgets.DateChooser;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.DataChangedEvent;
 import com.smartgwt.client.widgets.events.DataChangedHandler;
 import com.smartgwt.client.widgets.form.fields.DateItem;
 import com.smartgwt.client.widgets.form.fields.FormItem;
-import com.smartgwt.client.widgets.form.fields.SliderItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
-import com.smartgwt.client.widgets.grid.CellFormatter;
+import com.smartgwt.client.widgets.form.fields.TimeItem;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridEditorContext;
 import com.smartgwt.client.widgets.grid.ListGridEditorCustomizer;
 import com.smartgwt.client.widgets.grid.ListGridField;
-import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.grid.SummaryFunction;
 import com.smartgwt.client.widgets.grid.events.RecordDropEvent;
 import com.smartgwt.client.widgets.grid.events.RecordDropHandler;
@@ -112,7 +112,8 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 			}
 		});
 
-//		hoursCountGrid.setDuplicateDragMessage("Esta tarea ya existe...");
+		hoursCountGrid.setDuplicateDragMessage("Esta tarea ya existe...");
+		hoursCountGrid.setPreventDuplicates(false);		
 
 		hoursCountGrid.setHeight100();
 		hoursCountGrid.setWidth100();  
@@ -123,14 +124,13 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		hoursCountGrid.setDragDataAction(DragDataAction.MOVE);  
 		hoursCountGrid.setCanEdit(true);
 		hoursCountGrid.setCanRemoveRecords(true); 
-		hoursCountGrid.setPreventDuplicates(false);		
+		hoursCountGrid.setCanAcceptDrop(true);
 		hoursCountGrid.setAutoSaveEdits(true);		
-		hoursCountGrid.setGroupByField(COL_PROJECT_NAME);  
-		hoursCountGrid.setShowGridSummary(true);  
-		hoursCountGrid.setShowGroupSummary(true);  	
+		hoursCountGrid.setGroupByField(COL_PROJECT_NAME); 
+		hoursCountGrid.setShowGridSummary(true);
+		hoursCountGrid.setShowGroupSummary(true);
 		hoursCountGrid.setShowGroupSummaryInHeader(true); 
 		hoursCountGrid.setGroupStartOpen(GroupStartOpen.ALL);
-		hoursCountGrid.setCanAcceptDrop(true);
 
 		final ListGridField lfProject = new ListGridField(COL_PROJECT_NAME);		
 		lfProject.setCanEdit(false);
@@ -151,20 +151,32 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		final ListGridField lfDescription = new ListGridField(COL_DESCRIPTION);
 		lfDescription.setCanEdit(false);
 		final ListGridField lfDate = new ListGridField(COL_DATE);
+		
 		final ListGridField lfHours = new ListGridField(COL_HOURS);
 		lfHours.setIncludeInRecordSummary(false); 
-		lfHours.setType(ListGridFieldType.FLOAT);
-		lfHours.setCellFormatter(new CellFormatter() {  
-            public String format(Object value, ListGridRecord record, int rowNum, int colNum) {  
-                if (value == null) return null;  
-                try {  
-                    NumberFormat nf = NumberFormat.getFormat("#,##0.0");  
-                    return  nf.format(((Number) value).doubleValue()) + " hs.";  
-                } catch (Exception e) {  
-                    return value.toString();  
-                }  
-            }
+		lfHours.setType(ListGridFieldType.TIME);
+		lfHours.setTimeFormatter(TimeDisplayFormat.TOSHORT24HOURTIME);
+		lfHours.setSummaryFunction(new SummaryFunction() {  
+            public Object getSummaryValue(Record[] records, ListGridField field) {  
+            	Long acum = 0L;
+                for (int i = 0; i < records.length; i++) {  
+                    Record record = records[i];  
+                    acum += record.getAttributeAsDate(COL_HOURS).getTime(); 
+                }
+                return DateTimeFormat.getFormat(PredefinedFormat.HOUR_MINUTE).format(new Date(acum - ((records.length-1) * 10800000)));
+            }   
         });
+//		lfHours.setCellFormatter(new CellFormatter() {  
+//            public String format(Object value, ListGridRecord record, int rowNum, int colNum) {  
+//                if (value == null) return null;  
+//                try {  
+//                    NumberFormat nf = NumberFormat.getFormat("#,##0.0");  
+//                    return  nf.format(((Number) value).doubleValue()) + " hs.";  
+//                } catch (Exception e) {  
+//                    return value.toString();  
+//                }  
+//            }
+//        });
 		
 		
 		final ListGridField lfComments = new ListGridField(COL_COMMENTS);
@@ -181,22 +193,17 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 				if (field.getName().equals(COL_DATE)) {  
 					return new DateItem();
 				}
+				if (field.getName().equals(COL_HOURS)) {
+					TimeItem time = new TimeItem(COL_HOURS);
+					time.setTimeFormatter(TimeDisplayFormat.TOSHORT24HOURTIME);
+					time.setUseMask(true);
+				}
 				if (field.getName().equals(COL_COMMENTS)) {  
-					TextAreaItem textItem = new TextAreaItem();  
+					TextAreaItem textItem = new TextAreaItem(COL_COMMENTS);  
 					textItem.setShowHint(true);  
 					textItem.setShowHintInField(true);  
 					textItem.setHint("comentarios...");  
 					return textItem; 
-				}
-				if (field.getName().equals(COL_HOURS)) {  
-                    SliderItem slider = new SliderItem();  
-            		slider.setWidth(130);
-            		slider.setShowTitle(false);
-            		slider.setRoundValues(false);
-            		slider.setMaxValue(12.0f);
-            		slider.setMinValue(0.5f);
-            		slider.setDefaultValue(4.0f);
-                    return slider; 
 				}
 				return context.getDefaultProperties();}
 		});

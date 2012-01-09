@@ -7,7 +7,6 @@ import com.smartgwt.client.types.DragDataAction;
 import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
 import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
 import com.smartgwt.client.widgets.tree.TreeGrid;
-import com.smartgwt.client.widgets.tree.TreeGridField;
 
 /**
  * Arbol con las tareas del proyecto
