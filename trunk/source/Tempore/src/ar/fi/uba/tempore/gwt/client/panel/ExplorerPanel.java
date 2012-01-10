@@ -1,5 +1,6 @@
 package ar.fi.uba.tempore.gwt.client.panel;
 
+import ar.fi.uba.tempore.gwt.client.panel.counter.CounterTimePanel;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 
 import com.smartgwt.client.types.Alignment;
@@ -7,7 +8,6 @@ import com.smartgwt.client.types.DragAppearance;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.types.SelectionType;
 import com.smartgwt.client.types.VisibilityMode;
-import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.ImgButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
@@ -108,25 +108,17 @@ public class ExplorerPanel extends SectionStack {
 		//Agrego los paneles al explorador
 		sectionProject.addItem(toolStrip);
 		sectionProject.addItem(ProjectPanel.getInstance());
-		this.addSection(sectionProject);
 		
+		
+		//SECTION COUNTER
 		SectionStackSection sectionCounter = new SectionStackSection("Contador Online");  
-        sectionCounter.setExpanded(false);
+        sectionCounter.setExpanded(true);
         sectionCounter.setCanCollapse(true);
+        sectionCounter.setResizeable(false);
         
-        HTMLFlow htmlFlow = new HTMLFlow();   
-        htmlFlow.setPadding(10);  
-        String contents = "<b>Severity 1</b> - Critical problem<br>System is unavailable in production or " +  
-                "is corrupting data, and the error severely impacts the user's operations." +  
-                "<br><br><b>Severity 2</b> - Major problem<br>An important function of the system " +  
-                "is not available in production, and the user's operations are restricted." +  
-                "<br><br><b>Severity 3</b> - Minor problem<br>Inability to use a function of the " +  
-                "system occurs, but it does not seriously affect the user's operations.";  
-  
-        htmlFlow.setContents(contents);  
+        sectionCounter.addItem(new CounterTimePanel());
         
-        sectionCounter.addItem(htmlFlow);  
-        this.addSection(sectionCounter);  
-
+        this.addSection(sectionProject);
+        this.addSection(sectionCounter); 
 	}		
 }
