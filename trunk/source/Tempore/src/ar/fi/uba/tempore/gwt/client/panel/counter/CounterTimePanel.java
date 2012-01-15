@@ -1,15 +1,18 @@
 package ar.fi.uba.tempore.gwt.client.panel.counter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import ar.fi.uba.tempore.dto.TempCounterDTO;
 import ar.fi.uba.tempore.gwt.client.TempCounterServicesClient;
 import ar.fi.uba.tempore.gwt.client.login.SessionUser;
+import ar.fi.uba.temporeutils.observer.TimeCounterObserved;
+import ar.fi.uba.temporeutils.observer.TimeCounterObserver;
 
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.Alignment;
-import com.smartgwt.client.types.SelectionType;
 import com.smartgwt.client.types.TimeDisplayFormat;
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
@@ -25,8 +28,9 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 
-public class CounterTimePanel extends VLayout {
+public class CounterTimePanel extends VLayout implements TimeCounterObserved{
 
+	private static final String DEFAULT_TASK_VALUE = "Seleccionar Tarea...";
 	public static final String COL_TASK_ID = "taskId";
 	public static final String COL_NAME = "nameCol";
 	public static final String COL_DESCRIPTION = "descriptionCol";
@@ -40,49 +44,49 @@ public class CounterTimePanel extends VLayout {
 	private final IPickTreeItem selectTaskTree = new IPickTreeItem("tareas");
 	private long contador = GMT_3;
 
-	public CounterTimePanel(){
+	private final ImgButton start = new ImgButton();
+	private final ImgButton pause = new ImgButton();
+	private final ImgButton cancel = new ImgButton();
+	private final ImgButton save = new ImgButton();
+	
+	private static CounterTimePanel instance = null;
+	private List<TimeCounterObserver> listObserver = new ArrayList<TimeCounterObserver>();
+	
+	public static CounterTimePanel getInstance(){
+		if (instance == null){
+			instance = new CounterTimePanel();
+		}
+		return instance;
+	}
+	
+	private CounterTimePanel(){
 		super();
 		this.setWidth100();
 		this.setHeight100();
 
-
-
 		Integer IMAGE_SIZE = 32;
-		final ImgButton start = new ImgButton();
+		
 		start.setSize(IMAGE_SIZE);
-		start.setSrc("../images/png/counter/play.png");
-		start.setShowRollOver(false);
-		start.setActionType(SelectionType.RADIO);
-		start.setShowSelectedIcon(false);
-		start.setShowDisabledIcon(false);
-		start.setShowDown(false);
-		start.setShowDownIcon(true);
-		start.setRadioGroup("textTimer");	
-		start.addClickHandler(startEvent );
+		start.setSrc("../images/png/counter/ok.png");
+		start.addClickHandler(startEvent);
+		start.setDisabled(false);
 
-		final ImgButton cancel = new ImgButton();
-		cancel.setSize(IMAGE_SIZE);
-		cancel.setSrc("../images/png/counter/cancel.png");
-		cancel.setShowRollOver(false);
-		cancel.setActionType(SelectionType.RADIO);  
-		cancel.setRadioGroup("textTimer");
-		cancel.addClickHandler(cancelEvent );
-
-		final ImgButton pause = new ImgButton();
+		
 		pause.setSize(IMAGE_SIZE);
 		pause.setSrc("../images/png/counter/pause.png");
-		pause.setShowRollOver(false);
-		pause.setActionType(SelectionType.RADIO);  
-		pause.setRadioGroup("textTimer");
-		pause.addClickHandler(pauseEvent);	
+		pause.addClickHandler(pauseEvent);
+		pause.setDisabled(true);
 
-		final ImgButton save = new ImgButton();
+		
+		cancel.setSize(IMAGE_SIZE);
+		cancel.setSrc("../images/png/counter/trash.png");
+		cancel.addClickHandler(cancelEvent );
+		cancel.setDisabled(true);
+
 		save.setSize(IMAGE_SIZE);
 		save.setSrc("../images/png/counter/save.png");
-		save.setShowRollOver(false);
-		save.setActionType(SelectionType.RADIO);  
-		save.setRadioGroup("textTimer");
-		save.addClickHandler(saveEvent);		
+		save.addClickHandler(saveEvent);
+		save.setDisabled(true);
 
 		HLayout buttonsLayout = new HLayout();
 		buttonsLayout.setWidth100();
@@ -92,14 +96,12 @@ public class CounterTimePanel extends VLayout {
 		buttonsLayout.setMembers(start, pause, cancel, save);
 
 		
-		
-		
 
 		selectTaskTree.setTitle("Tareas");  
-		//			selectTaskTree.setLoadDataOnDemand(true);
+//		selectTaskTree.setLoadDataOnDemand(true);
 		selectTaskTree.setDataSource(TaskListDataSource.getInstance());  
 		selectTaskTree.setEmptyMenuMessage("No Existe Sub-Tarea");
-		selectTaskTree.setDefaultValue("Seleccione Tarea...");
+		selectTaskTree.setDefaultValue(DEFAULT_TASK_VALUE);
 		selectTaskTree.setCanSelectParentItems(true);
 		selectTaskTree.setDisplayField(COL_NAME);
 		selectTaskTree.addChangedHandler(new ChangedHandler() {
@@ -111,17 +113,19 @@ public class CounterTimePanel extends VLayout {
 					selectTaskTree.redraw();
 					SC.warn("La seleccion corresponde al nombre del Proyecto. Debe seleccionar una Tarea del Proyecto");
 				} else {
-					//TODO habilitar botonera para poner play
+					//VISTA
+					start.setDisabled(false);
+					pause.setDisabled(true);
+					cancel.setDisabled(true);
+					save.setDisabled(true);
 				}
 
 			}
 		});
 
-		//			timerLabel.setValue(new Date(GMT_3));
 		timerLabel.setTextAlign(Alignment.CENTER);
 		timerLabel.setTimeFormatter(TimeDisplayFormat.TOPADDED24HOURTIME);
-//		timerLabel.setEmptyDisplayValue("--:--");
-		timerLabel.setUseMask(true);
+//		timerLabel.setUseMask(true);
 		timerLabel.setHeight(50);
 		timerLabel.setWidth(200);
 		timerLabel.setHint("");
@@ -161,12 +165,18 @@ public class CounterTimePanel extends VLayout {
 		public void onClick(ClickEvent event) {
 			Integer userId = SessionUser.getInstance().getUser().getId();
 			Integer taskId = (Integer) selectTaskTree.getValue();
+			//TODO no funciona la validacion
 			if (taskId != null && taskId > 0) {
 				TempCounterServicesClient.Util.getInstance().start(userId, taskId, new AsyncCallback<TempCounterDTO>() {
 					@Override
 					public void onSuccess(TempCounterDTO result) {
-						//Vista
 						timer.scheduleRepeating(TIME_INTERVAL);
+						//Vista
+						selectTaskTree.setDisabled(true);
+						start.setDisabled(true);
+						pause.setDisabled(false);
+						cancel.setDisabled(false);
+						save.setDisabled(false);						
 					}
 					@Override
 					public void onFailure(Throwable caught) {
@@ -189,7 +199,15 @@ public class CounterTimePanel extends VLayout {
 				public void onSuccess(Long result) {
 					timer.cancel();
 					contador = GMT_3;
-					timerLabel.setValue(new Date(contador));
+					timerLabel.setValue(contador);
+					selectTaskTree.setValue(DEFAULT_TASK_VALUE);
+					
+					//Vista
+					selectTaskTree.setDisabled(false);
+					start.setDisabled(false);
+					pause.setDisabled(true);
+					cancel.setDisabled(true);
+					save.setDisabled(true);
 				}
 				@Override
 				public void onFailure(Throwable caught) {
@@ -202,14 +220,19 @@ public class CounterTimePanel extends VLayout {
 	};
 
 	ClickHandler pauseEvent = new ClickHandler() {
+		Integer userId = SessionUser.getInstance().getUser().getId();
 		@Override
 		public void onClick(ClickEvent event) {
-			Integer userId = SessionUser.getInstance().getUser().getId();
 			TempCounterServicesClient.Util.getInstance().pause(userId, new AsyncCallback<TempCounterDTO>() {
 				@Override
 				public void onSuccess(TempCounterDTO result) {
-					//Vista
 					timer.cancel();
+					//Vista
+					selectTaskTree.setDisabled(true);
+					start.setDisabled(false);
+					pause.setDisabled(true);
+					cancel.setDisabled(false);
+					save.setDisabled(false);
 				}
 				@Override
 				public void onFailure(Throwable caught) {
@@ -224,20 +247,28 @@ public class CounterTimePanel extends VLayout {
 	ClickHandler saveEvent = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			SC.ask("Guardar", "¿Esta seguro que desea guardar la carga de horas?", new BooleanCallback() {
+			SC.ask("Guardar", "Esta seguro que desea guardar la carga de horas?", new BooleanCallback() {
 				@Override
 				public void execute(Boolean yes) {
 					if (yes) {
-
 						Integer userId = SessionUser.getInstance().getUser().getId();
 						TempCounterServicesClient.Util.getInstance().save(userId , new AsyncCallback<Long>() {
 							@Override
 							public void onSuccess(Long result) {
+//								SC.say("Horas cargadas exitosamente! ("+timerLabel.getValueAsString()+")");
+								notifyObservers();
+
 								timer.cancel();
 								contador = GMT_3;
-								timerLabel.setValue(new Date(contador));
-
-								SC.say("Horas cargadas exitosamente! ("+result+" ms)");
+								timerLabel.setValue(contador);
+								selectTaskTree.setValue(DEFAULT_TASK_VALUE);
+								
+								//Vista
+								selectTaskTree.setDisabled(false);
+								start.setDisabled(false);
+								pause.setDisabled(true);
+								cancel.setDisabled(true);
+								save.setDisabled(true);
 							}
 
 							@Override
@@ -263,15 +294,41 @@ public class CounterTimePanel extends VLayout {
 					selectTaskTree.setValue(result.getTask().getId());
 					contador = result.getTimeAcumulated() + GMT_3;
 					timerLabel.setValue(new Date(contador));
-//					SC.say("Estado " + result.getControl());
+
 					switch (result.getControl()){
 					case 0:
+						//None
+						//Vista
+						selectTaskTree.setDisabled(false);
+						start.setDisabled(false);
+						pause.setDisabled(true);
+						cancel.setDisabled(true);
+						save.setDisabled(true);
 						break;
 					case 1:
+						//PLAY
+						timer.scheduleRepeating(TIME_INTERVAL);
+						//Vista
+						selectTaskTree.setDisabled(true);
+						start.setDisabled(true);
+						pause.setDisabled(false);
+						cancel.setDisabled(false);
+						save.setDisabled(false);
+						
 						break;
 					case 2:
+						//PAUSE
+						
+						//Vista
+						selectTaskTree.setDisabled(true);
+						start.setDisabled(false);
+						pause.setDisabled(true);
+						cancel.setDisabled(false);
+						save.setDisabled(false);
 						break;
 					default:
+						//DESCONOCIDO
+						SC.warn("Se recibe un estado del contador de horas no admitido");
 						break;
 					}
 				}
@@ -283,5 +340,21 @@ public class CounterTimePanel extends VLayout {
 			}
 		});
 	}
-}
 
+	@Override
+	public void addObserver(TimeCounterObserver observer) {
+		listObserver.add(observer);
+	}
+
+	@Override
+	public void removeObserver(TimeCounterObserver observer) {
+		listObserver.remove(observer);
+	}
+
+	@Override
+	public void notifyObservers() {
+		for (TimeCounterObserver o : listObserver){
+			o.updateTimesCounted();
+		}
+	}
+}
