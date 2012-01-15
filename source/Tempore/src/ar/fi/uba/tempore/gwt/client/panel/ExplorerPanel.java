@@ -116,7 +116,7 @@ public class ExplorerPanel extends SectionStack {
         sectionCounter.setCanCollapse(true);
         sectionCounter.setResizeable(false);
         
-        sectionCounter.addItem(new CounterTimePanel());
+        sectionCounter.addItem(CounterTimePanel.getInstance());
         
         this.addSection(sectionProject);
         this.addSection(sectionCounter); 
