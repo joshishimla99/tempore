@@ -15,15 +15,14 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 public class ProjectStateServicesImpl extends RemoteServiceServlet implements ProjectStateServicesClient {
 
-
-	private final Logger log = Logger.getLogger(this.getClass());
 	private static final long serialVersionUID = 1319210883924396388L;
-	
-	private final ProjectStateDAO psDAO = new ProjectStateDAO();
+
+	private final Logger log = Logger.getLogger(this.getClass());	
 	private final DozerBeanMapper mapper = new DozerBeanMapper();
 	
 	@Override
 	public List<ProjectStateDTO> findAll() {
+		ProjectStateDAO psDAO = new ProjectStateDAO();
 		log.info("FIND ALL - ProjectState");
 		List<ProjectStateDTO> list = new ArrayList<ProjectStateDTO>();
 		

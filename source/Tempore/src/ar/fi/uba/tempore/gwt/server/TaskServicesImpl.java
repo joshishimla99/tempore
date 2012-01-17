@@ -22,13 +22,11 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class TaskServicesImpl extends RemoteServiceServlet implements TaskServicesClient {
 
 	private static final long serialVersionUID = -2875888868382111997L;
-	private final TaskDAO taskDAO = new TaskDAO();
-	private final TaskTypeDAO taskTypeDAO = new TaskTypeDAO();
-	private final TaskUserDAO taskUserDAO = new TaskUserDAO();
 	private final DozerBeanMapper mapper = new DozerBeanMapper();
 	private final Logger log = Logger.getLogger(this.getClass());
 	
 	public List<TaskDTO> getChildTask(Integer idProject, Integer idTask){
+		TaskDAO taskDAO = new TaskDAO();
 		List<TaskDTO> taskDTOList = new ArrayList<TaskDTO>();
 		
 		List<Task> taskList = taskDAO.getChildTask(idProject, idTask); 
@@ -41,11 +39,10 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 		return taskDTOList;
 	}
 	
-	public TaskDTO addTask(TaskDTO taskDTO){
-		return updateTask(taskDTO);
-	}
+	
 	
 	public String deleteTask(Integer id, Integer idProject) throws TaskWithHoursChargedException{
+		TaskDAO taskDAO = new TaskDAO();
 		Task taskToDelete = taskDAO.findById(id);
 		// REGLA DE NEGOCIO -> SI LA TAREA NO TIENE TIEMPO CARGADO, ENTONCES VERIFICO SI SUS HIJAS LO TIENEN
 		if (getTimeCharged(taskToDelete.getId()) == 0) {   
@@ -83,10 +80,25 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 	}
 	
 	private long getTimeCharged(Integer taskId){
+		TaskUserDAO taskUserDAO = new TaskUserDAO();
 		return taskUserDAO.hoursChargedByTask(taskId);
 	}
 	
+	/**
+	 * Agrega una nueva tarea
+	 */
+	public TaskDTO addTask(TaskDTO taskDTO){
+		return this.updateTask(taskDTO);
+	}
+
+	/**
+	 * Actualiza o Agrega una nueva tarea, dependiendo si el taskDTO viene con ID o no. 
+	 * Sino viene el ID se crea la tarea. Si viene y existe ese ID se actualiza con los datos que viene.
+	 */
 	public TaskDTO updateTask(TaskDTO taskDTO){
+		TaskDAO taskDAO = new TaskDAO();
+		TaskTypeDAO taskTypeDAO = new TaskTypeDAO();
+		
 		log.info("UPDATE - TASK");
 		List<TaskType> taskList = new ArrayList<TaskType>();
 		TaskType exampleInstance = new TaskType();
@@ -105,14 +117,18 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 		return mapper.map(makePersistent, TaskDTO.class);
 	}
 
+	/**
+	 * 
+	 */
 	@Override
-	public long getTimeChargedToTask(Integer id) {
-		return getTimeCharged(id);
+	public long getTimeChargedToTask(Integer taskId) {
+		return getTimeCharged(taskId);
 	}
 
 	@Override
-	public long getTotalTimeChargedToTask(Integer id) {
-		return taskUserDAO.getTotalTimeByTask(id);
+	public long getTotalTimeChargedToChildsTask(Integer taskId) {
+		TaskUserDAO taskUserDAO = new TaskUserDAO();
+		return taskUserDAO.getTotalTimeByTask(taskId);
 	}
 
 }

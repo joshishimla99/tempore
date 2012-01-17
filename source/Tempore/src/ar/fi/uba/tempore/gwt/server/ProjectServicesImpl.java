@@ -23,16 +23,13 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 public class ProjectServicesImpl extends RemoteServiceServlet implements ProjectServicesClient {	
 	private static final long serialVersionUID = -6786157718346471647L;
-	private final Logger log = Logger.getLogger(this.getClass());
 	
-	private final ProjectDAO pDAO = new ProjectDAO();
-	//private final ProjectStateDAO psDAO = new ProjectStateDAO();
-	private final UserProjectDAO upDAO = new UserProjectDAO();
+	private final Logger log = Logger.getLogger(this.getClass());
 	private final DozerBeanMapper mapper = new DozerBeanMapper();
-		
 
 	@Override
 	public ProjectDTO getProjectById(Integer id) {
+		ProjectDAO pDAO = new ProjectDAO();
 		Project findById = pDAO.findById(id);
 		ProjectDTO dto = mapper.map(findById, ProjectDTO.class);		
 		return dto;
@@ -40,6 +37,7 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 
 	@Override
 	public List<ProjectDTO> fetch(Integer userId) {
+		ProjectDAO pDAO = new ProjectDAO();
 		log.info("FETCH - Proyectos " + userId);
 		List<ProjectDTO> list = new ArrayList<ProjectDTO>();
 		
@@ -61,7 +59,9 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 			//Solo tengo que actualizar
 			return update(pDTO);
 		}
-
+		
+		ProjectDAO pDAO = new ProjectDAO();
+		UserProjectDAO upDAO = new UserProjectDAO();
 		log.info("NEW - Proyectos");		
 
 		
@@ -94,6 +94,7 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 
 	@Override
 	public ProjectDTO update(ProjectDTO projectDTO) {
+		ProjectDAO pDAO = new ProjectDAO();
 		log.info("UPDATE - Proyectos , state=" + projectDTO.getProjectState().getId());
 		//TODO validar si el usuario es el dueño del proyecto
 		
@@ -113,6 +114,7 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 
 	@Override
 	public void remove(ProjectDTO projectDTO) {
+		ProjectDAO pDAO = new ProjectDAO();
 		Project p = mapper.map(projectDTO, Project.class);
 		pDAO.delete(p);
 	}

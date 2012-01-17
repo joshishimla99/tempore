@@ -18,10 +18,10 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 	
 	private static final long serialVersionUID = -6786157718346471647L;
 	private final DozerBeanMapper mapper = new DozerBeanMapper();
-	private final UserDAO uDAO = new UserDAO(); 
 
 	
 	public UserDTO validateUser (String userName, String password){
+		UserDAO uDAO = new UserDAO(); 
 		log.info("Users - VALIDATE USER");
 		UserDTO dto = null;
 		User user = uDAO.validateUser(userName, password);
@@ -34,6 +34,7 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 	
 	@Override
 	public List<UserDTO> fetch() {
+		UserDAO uDAO = new UserDAO(); 
 		log.info("FETCH - Users");
 		List<UserDTO> userList = new ArrayList<UserDTO>();
 		
@@ -52,6 +53,7 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 
 	@Override
 	public UserDTO update(UserDTO userDTO) {
+		UserDAO uDAO = new UserDAO(); 
 		log.info("UPDATE - User");
 		User user = mapper.map(userDTO, User.class);
 		User newUser = uDAO.makePersistent(user);
@@ -61,6 +63,7 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 
 	@Override
 	public void remove(UserDTO userDTO) {
+		UserDAO uDAO = new UserDAO(); 
 		log.info("REMOVE - User");
 		User user = mapper.map(userDTO, User.class);
 		uDAO.delete(user);
@@ -73,6 +76,7 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 	 * @return Lista de usuarios
 	 */
 	public List<UserDTO> getUserNotAssignedToProject(Integer projectId){
+		UserDAO uDAO = new UserDAO(); 
 		log.info("GET USER NOT ASSIGNED TO PROJECT - id=" + projectId);
 		List<User> userNotAssignedToProject = uDAO.getUserNotAssignedToProject(projectId);
 		

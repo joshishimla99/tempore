@@ -24,10 +24,9 @@ public class ReportServicesImpl extends RemoteServiceServlet implements ReportSe
 	private final Logger log = Logger.getLogger(this.getClass());
 	private final DozerBeanMapper mapper = new DozerBeanMapper();
 	
-	private final ReportDAO report = new ReportDAO();
-	
 	@Override
 	public List<ProjectsTimesDTO> getProjectsTimes(Date dateIni, Date dateEnd) {
+		ReportDAO report = new ReportDAO();
 		log.info("REPORTE - GetProjectsTimes ["+dateIni+"],["+dateEnd+"]");
 		
 		List<ProjectsTimes> projectsTimesList = report.getProjectsTimes(dateIni, dateEnd);
@@ -42,6 +41,7 @@ public class ReportServicesImpl extends RemoteServiceServlet implements ReportSe
 
 	@Override
 	public List<UsersTimesDTO> getUsersTimes(Date dateIni, Date dateEnd) {
+		ReportDAO report = new ReportDAO();
 		log.info("REPORTE - getUsersTimes ["+dateIni+"],["+dateEnd+"]");
 
 		List<UsersTimes> usersTimes = report.getUsersTimes(dateIni, dateEnd);
@@ -54,8 +54,8 @@ public class ReportServicesImpl extends RemoteServiceServlet implements ReportSe
 	}
 
 	@Override
-	public List<TasksTimesDTO> getPrimaryTaskTimes(Integer projectId,
-			Date from, Date to) {
+	public List<TasksTimesDTO> getPrimaryTaskTimes(Integer projectId, Date from, Date to) {
+		ReportDAO report = new ReportDAO();
 		log.info("REPORTE - getPrimaryTaskTimes "+projectId+" ["+from+" ,"+to+"]");
 
 		List<TasksTimes> primaryTaskTimes = report.getPrimaryTaskTimes(projectId, from, to);
@@ -68,8 +68,8 @@ public class ReportServicesImpl extends RemoteServiceServlet implements ReportSe
 	}
 
 	@Override
-	public List<ProjectsTimesDTO> getUserActivity(Integer userId, Date ini,
-			Date end) {
+	public List<ProjectsTimesDTO> getUserActivity(Integer userId, Date ini, Date end) {
+		ReportDAO report = new ReportDAO();
 		log.info("REPORTE - getUserActivity "+ userId +" ["+ini+" ,"+end+"]");
 
 		List<ProjectsTimes> userActivity = report.getUserActivity(userId, ini, end);

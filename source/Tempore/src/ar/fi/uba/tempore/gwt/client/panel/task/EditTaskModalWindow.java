@@ -8,7 +8,7 @@ import ar.fi.uba.tempore.dto.TaskDTO;
 import ar.fi.uba.tempore.dto.TaskTypeDTO;
 import ar.fi.uba.tempore.gwt.client.TaskServicesClient;
 import ar.fi.uba.tempore.gwt.client.TaskTypeServicesClient;
-import ar.fi.uba.tempore.gwt.client.panel.task.TaskTabPanel.Task;
+import ar.fi.uba.tempore.gwt.client.panel.task.TaskTabPanel.TaskBox;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.Alignment;
@@ -28,7 +28,6 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 public class EditTaskModalWindow {
-
 	private Window winModal;
 	private TextItem idLabel;
 	private TextItem taskNameLabel;
@@ -36,9 +35,9 @@ public class EditTaskModalWindow {
 	private TextItem estimatedTimeLabel ;
 	private SelectItem taskType;
 	private DynamicForm form;
-	private Task father;
+	private TaskBox father;
 	
-	public EditTaskModalWindow(Task task, final Integer id, String name, String description, Integer estimatedTime, final Integer projectId, final String type){
+	public EditTaskModalWindow(TaskBox task, final Integer id, String name, String description, Integer estimatedTime, final Integer projectId, final String type){
 		super();
 		this.father = task;
 		winModal = new Window();  
@@ -125,7 +124,6 @@ public class EditTaskModalWindow {
 					taskDTO.setTaskTypeDTO(taskTypeDTO);
 					
 					TaskServicesClient.Util.getInstance().updateTask(taskDTO, new AsyncCallback<TaskDTO>(){
-
 						@Override
 						public void onFailure(Throwable caught) {
 							com.google.gwt.user.client.Window.alert("Ha ocurrido un error al intentar actualizar la tarea");
@@ -142,10 +140,7 @@ public class EditTaskModalWindow {
 						
 					});
 				}
-				
-				
 			}
-			
 		});    			
 
 		IButton cancelTaskButton = new IButton();

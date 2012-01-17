@@ -34,7 +34,7 @@ public class UserConfigurationPanel extends Canvas {
 		vLayout.setMembersMargin(6);
 
 		//TITULO
-		Label title = new Label("Configuraci&oacute;n de Alertas");
+		Label title = new Label("Configuraci&oacute;n de Usuarios");
 		title.setWidth(200);
 		title.setHeight(15);
 

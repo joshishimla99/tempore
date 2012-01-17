@@ -17,12 +17,12 @@ public class AlertServicesImpl extends RemoteServiceServlet implements AlertServ
 	private static final long serialVersionUID = 7476117264486326360L;
 	private final Logger log = Logger.getLogger(this.getClass());
 
-	private final AlertDAO aDAO = new AlertDAO();
 	private final DozerBeanMapper mapper = new DozerBeanMapper();
 		
 
 	@Override
 	public List<AlertDTO> fetch() {
+		AlertDAO aDAO = new AlertDAO();
 		log.info("FETCH - ALERTS");
 		List<AlertDTO> list = new ArrayList<AlertDTO>();
 		List<Alert> findAll = aDAO.findAll();
@@ -41,6 +41,7 @@ public class AlertServicesImpl extends RemoteServiceServlet implements AlertServ
 
 	@Override
 	public AlertDTO update(AlertDTO alertDTO) {
+		AlertDAO aDAO = new AlertDAO();
 		log.info("UPDATE - ALERT");
 		Alert a = mapper.map(alertDTO, Alert.class);
 		Alert makePersistent = aDAO.makePersistent(a);
@@ -49,6 +50,7 @@ public class AlertServicesImpl extends RemoteServiceServlet implements AlertServ
 
 	@Override
 	public void remove(AlertDTO alertDTO) {
+		AlertDAO aDAO = new AlertDAO();
 		log.info("REMOVE - ALERT");
 		Alert a = mapper.map(alertDTO, Alert.class);
 		aDAO.delete(a);	

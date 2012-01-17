@@ -20,11 +20,13 @@ public class TaskCounterServicesImpl extends RemoteServiceServlet implements Tas
 	private static final long serialVersionUID = -4658076506558299918L;
 	private final Logger log = Logger.getLogger(this.getClass());	
 	private final DozerBeanMapper mapper = new DozerBeanMapper();
-	private final TaskDAO tuDAO = new TaskDAO(); 
-	private final ProjectDAO pDAO = new ProjectDAO();
+ 
 
 	@Override
-	public List<TaskTimeDTO> fetch(Integer userId) {	
+	public List<TaskTimeDTO> fetch(Integer userId) {
+		TaskDAO tuDAO = new TaskDAO();
+		ProjectDAO pDAO = new ProjectDAO();
+		
 		log.info("FETCH - TaskCounter ");
 		List<TaskTimeDTO> list = new ArrayList<TaskTimeDTO>();
 		
@@ -56,7 +58,6 @@ public class TaskCounterServicesImpl extends RemoteServiceServlet implements Tas
 
 	@Override
 	public TaskTimeDTO add(TaskTimeDTO clientDTO) {		
-		
 		throw new UnsupportedOperationException("No soportada...");
 	}
 
