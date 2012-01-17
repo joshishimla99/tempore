@@ -96,4 +96,11 @@ public class TestTaskUserDAO extends TestDAO{
 		}
 		this.validResult("TASKUSER", "TaskUser_Delete.xml");
 	}
+	
+	@Test
+	public void testGetTotalTimeByTask (){
+		Integer taskId = 2;
+		Long totalTimeByTask = tuDAO.getTotalTimeByTask(taskId);
+		System.out.println("Total de Horas: " + totalTimeByTask);
+	}
 }
