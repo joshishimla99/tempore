@@ -17,12 +17,12 @@ public class TaskTimeServicesImpl extends RemoteServiceServlet implements TaskTi
 
 	private static final long serialVersionUID = 276652775164047439L;
 	private final Logger log = Logger.getLogger(this.getClass());	
-	private final DozerBeanMapper mapper = new DozerBeanMapper();
-	private final TaskDAO tuDAO = new TaskDAO(); 
+	private final DozerBeanMapper mapper = new DozerBeanMapper(); 
 
 
 	@Override
 	public List<TaskTimeDTO> fetch(Integer id) {	
+		TaskDAO tuDAO = new TaskDAO();
 		log.info("FETCH - TaskTime");
 		List<TaskTimeDTO> list = new ArrayList<TaskTimeDTO>();
 		log.info("Id Projecto: " + id);
@@ -40,7 +40,6 @@ public class TaskTimeServicesImpl extends RemoteServiceServlet implements TaskTi
 
 	@Override
 	public TaskTimeDTO add(TaskTimeDTO clientDTO) {		
-		
 		throw new UnsupportedOperationException("No soportada...");
 	}
 

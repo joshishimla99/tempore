@@ -19,12 +19,12 @@ public class TimeServicesImpl extends RemoteServiceServlet implements TimeServic
 	private static final long serialVersionUID = -7296572794226418672L;
 
 	private final Logger log = Logger.getLogger(this.getClass());	
-	private final DozerBeanMapper mapper = new DozerBeanMapper();
-	private final TaskUserDAO tuDAO = new TaskUserDAO(); 
+	private final DozerBeanMapper mapper = new DozerBeanMapper(); 
 
 
 	@Override
 	public List<TaskUserDTO> fetch(TimeFilterDTO filter) {	
+		TaskUserDAO tuDAO = new TaskUserDAO();
 		log.info("FETCH - TaskUser");
 		List<TaskUserDTO> list = new ArrayList<TaskUserDTO>();
 		
@@ -45,6 +45,7 @@ public class TimeServicesImpl extends RemoteServiceServlet implements TimeServic
 
 	@Override
 	public TaskUserDTO update(TaskUserDTO taskUserDTO) {
+		TaskUserDAO tuDAO = new TaskUserDAO();
 		log.info("UPDATE - TaskUser");
 //		taskUserDTO.setComment("Comentario harcodeado");
 //		taskUserDTO.setDate(new Date());
@@ -72,6 +73,7 @@ public class TimeServicesImpl extends RemoteServiceServlet implements TimeServic
 
 	@Override
 	public void remove(TaskUserDTO taskUserDTO) {
+		TaskUserDAO tuDAO = new TaskUserDAO();
 		log.info("REMOVE - TaskUser");
 		TaskUser entity = mapper.map(taskUserDTO, TaskUser.class);
 		tuDAO.delete(entity);		

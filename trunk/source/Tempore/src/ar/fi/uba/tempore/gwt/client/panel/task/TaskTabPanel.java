@@ -55,52 +55,56 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 	private BackButton backButton;
 	private int level =0;
 	private SectionItem  titleTask, firstLevelTask, secondLevelTask;
-	private ProjectDTO selectedProjectDTO;
+	private ProjectDTO projectSelected;
 	private final ButtonItem addTask;
 //	private TaskTreePanel taskTreePanel;
 
 	public TaskTabPanel() {
 		super();
-		this.titleTask = new SectionItem("titleTask");
-		this.titleTask.setWidth(900);
-		this.firstLevelTask = new SectionItem("firstLevelTask");
-		this.firstLevelTask.setAlign(Alignment.RIGHT);
-		this.firstLevelTask.setWidth(880);
-		this.secondLevelTask = new SectionItem("secondLevelTask");
-		this.secondLevelTask.setAlign(Alignment.RIGHT);
-		this.secondLevelTask.setWidth(860);
-		this.portalLayout = new TaskLayout(3);
-		this.portalLayout.setWidth100();
-		this.portalLayout.setHeight100();
-//		this.taskTreePanel = new TaskTreePanel();
-		
-		final VLayout vLayout = new VLayout(15);
-		vLayout.setMargin(10);
-		vLayout.setWidth100();
-		final HLayout buttonsLayout = new HLayout();
-		buttonsLayout.setAlign(Alignment.LEFT);
-
-		this.backButton = new BackButton();
-
-		buttonsLayout.setHeight(40);
-		buttonsLayout.setMembers(backButton);
-		buttonsLayout.setAlign(Alignment.RIGHT);
-
 		form = new DynamicForm();
 		form.setAutoWidth();
 		form.setNumCols(5);
-
+		
 		addTask = createAddTaskButton();
 		
+		titleTask = new SectionItem("titleTask");
+		titleTask.setWidth(900);
+		
+		firstLevelTask = new SectionItem("firstLevelTask");
+		firstLevelTask.setAlign(Alignment.RIGHT);
+		firstLevelTask.setWidth(880);
+		
+		secondLevelTask = new SectionItem("secondLevelTask");
+		secondLevelTask.setAlign(Alignment.RIGHT);
+		secondLevelTask.setWidth(860);
+
 		form.setItems(addTask, titleTask, firstLevelTask, secondLevelTask);
 		form.hideItem("titleTask");
 		form.hideItem("firstLevelTask");
 		form.hideItem("secondLevelTask");
+
 		
-		HLayout upLayout = new HLayout();
+		
+		portalLayout = new TaskLayout(3);
+		portalLayout.setWidth100();
+		portalLayout.setHeight100();
+//		this.taskTreePanel = new TaskTreePanel();
+		
+		backButton = new BackButton();
+
+		final HLayout buttonsLayout = new HLayout();
+		buttonsLayout.setAlign(Alignment.LEFT);
+		buttonsLayout.setHeight(40);
+		buttonsLayout.setAlign(Alignment.RIGHT);
+		buttonsLayout.setMembers(backButton);
+
+		final HLayout upLayout = new HLayout();
 		upLayout.addMember(form);
 		upLayout.addMember(buttonsLayout);
 		
+		final VLayout vLayout = new VLayout(15);
+		vLayout.setMargin(10);
+		vLayout.setWidth100();
 		vLayout.addMember(upLayout);
 		vLayout.addMember(portalLayout);
 		
@@ -115,7 +119,6 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 	public void refreshPanel() {
 		ProjectPanel.getInstance().addObserver(this);
 		updateProjectSelected();
-		GWT.log("Updating TaskTabPanel");
 	}
 
 	@Override
@@ -125,62 +128,62 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 	
 	@Override
 	public void updateProjectSelected() {
-		selectedProjectDTO = ProjectPanel.getInstance().getSelected();
+		projectSelected = ProjectPanel.getInstance().getSelected();
 		form.hideItem("firstLevelTask");
 		form.hideItem("secondLevelTask");
+		
 		parentTaskIdForBackButton = null;
 		parentTaskId = null;
 		level =0;
-		if (selectedProjectDTO != null) {
-//			taskTreePanel.updateTaskTree(selectedProjectDTO);
-			titleTask.setDefaultValue(selectedProjectDTO.getName());
+		if (projectSelected != null) {
+//			taskTreePanel.updateTaskTree(projectSelected);
+			titleTask.setDefaultValue(projectSelected.getName());
 			form.showItem("titleTask");
-			TaskServicesClient.Util.getInstance().getChildTask(selectedProjectDTO.getId(), null, new AsyncCallback<List<TaskDTO>>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					SC.say("Ha ocurrido un error al intentar recuperar el listado de las tareas del proyecto seleccionado");
-					
-				}
-
+			TaskServicesClient.Util.getInstance().getChildTask(projectSelected.getId(), null, new AsyncCallback<List<TaskDTO>>() {
 				@Override
 				public void onSuccess(List<TaskDTO> result) {
-					copy(result);
+					createAllTasksLevel(result);
+				}
+				@Override
+				public void onFailure(Throwable caught) {
+					SC.say("Ha ocurrido un error al intentar recuperar el listado de las tareas del proyecto seleccionado");				
 				}
 			});
 		}
 
 	}
 
-	public void copy(List<TaskDTO> taskList){
+	
+	
+	/**
+	 * Encargado de crear todas los BOX de las tareas 
+	 * @param taskList Lista de tareas del mismo nivel
+	 */
+	public void createAllTasksLevel (List<TaskDTO> taskList){
 		portalLayout.cleanLayout();
 		for (final TaskDTO taskDTO : taskList) {
+			//Horas cargadas a la tarea (sin las subhijas)
 			TaskServicesClient.Util.getInstance().getTimeChargedToTask(taskDTO.getId(), new AsyncCallback<Long>() {
-
+				@Override
+				public void onSuccess(final Long taskHours) {
+					//Horas cargada a las tareas hijas y subhijas del id de la tarea 
+					TaskServicesClient.Util.getInstance().getTotalTimeChargedToChildsTask(taskDTO.getId(), new AsyncCallback<Long>() {
+						@Override
+						public void onSuccess(Long totalTaskHours) {
+							GWT.log("Horas totales " + totalTaskHours + " para IdTask " + taskDTO.getId());
+							TaskBox newTaskBox = new TaskBox(taskDTO.getId(), taskDTO.getName(), taskDTO.getBudget(), taskDTO.getDescription(), taskDTO.getTaskTypeDTO().getName(), taskDTO.getProject().getId(), taskHours, totalTaskHours);
+							portalLayout.addTask(newTaskBox);
+						}
+						@Override
+						public void onFailure(Throwable caught) {
+							SC.say("Ha ocurrido un error al intentar recuperar las horas totales cargadas a la tarea");
+						}
+					});
+				}
 				@Override
 				public void onFailure(Throwable caught) {
 					SC.say("Ha ocurrido un error al intentar recuperar las horas cargadas a la tarea");
 					
-				}
-
-				@Override
-				public void onSuccess(final Long taskHours) {
-					TaskServicesClient.Util.getInstance().getTotalTimeChargedToTask(taskDTO.getId(), new AsyncCallback<Long>() {
-
-						@Override
-						public void onFailure(Throwable caught) {
-							SC.say("Ha ocurrido un error al intentar recuperar las horas totales cargadas a la tarea");
-							
-						}
-
-						@Override
-						public void onSuccess(Long totalTaskHours) {
-							GWT.log("Horas totales " + totalTaskHours + " para IdTask " + taskDTO.getId());
-							Task newTask = new Task(taskDTO.getId(), taskDTO.getName(), taskDTO.getBudget(), taskDTO.getDescription(), taskDTO.getTaskTypeDTO().getName(), taskDTO.getProject().getId(), taskHours, totalTaskHours);
-							portalLayout.addTask(newTask);
-							
-						}
-					});
 				}
 			});
 			
@@ -200,10 +203,9 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 			public void onClick(
 					com.smartgwt.client.widgets.form.fields.events.ClickEvent event) {
 				// Si el proyecto esta cerrado,cancelado o suspendido no se pueden crear nuevas tareas - Regla de negocio
-				if (selectedProjectDTO.getProjectState().getId() != 4 && selectedProjectDTO.getProjectState().getId() != 5 && selectedProjectDTO.getProjectState().getId() != 6){
-					if (selectedProjectDTO.getIsOwner() == 1 || (selectedProjectDTO.getIsOwner() == 0 && level > 0)){
-						NewTaskModalWindow newTaskModalWin = new NewTaskModalWindow(
-								addTask);
+				if (projectSelected.getProjectState().getId() != 4 && projectSelected.getProjectState().getId() != 5 && projectSelected.getProjectState().getId() != 6){
+					if (projectSelected.getIsOwner() == 1 || (projectSelected.getIsOwner() == 0 && level > 0)){
+						NewTaskModalWindow newTaskModalWin = new NewTaskModalWindow(addTask);
 						newTaskModalWin.show();
 					} else {
 						SC.warn("No eres el due&ntildeo del proyecto para crear tareas primarias");
@@ -216,10 +218,28 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		return addTask;
 	}
 
-	/**
-	 * Boton back
-	 */
+	private void hideSection(){
+		if (this.level == 1){
+			this.form.hideItem("firstLevelTask");
+		} else {
+			if (this.level == 2){
+				this.form.hideItem("secondLevelTask");
+			}
+		}
+	}
 
+	private SectionItem getSectionItem(){
+		if (this.level == 1){
+			this.form.showItem("firstLevelTask");
+			return this.firstLevelTask;
+		} 
+		this.form.showItem("secondLevelTask");
+		return secondLevelTask;
+	}
+
+	/**
+	 * CLASS: Boton para retroceder en el nivel de las tareas
+	 */
 	public class BackButton extends ImgButton {
 		public BackButton() {
 			setSrc("../images/32x32/Back.png");
@@ -237,54 +257,201 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 					parentTaskIdForBackButton = null;
 					parentTaskId = null;
 				}
-				TaskServicesClient.Util.getInstance().getChildTask(selectedProjectDTO.getId(), parentTaskIdForBackButton, new AsyncCallback<List<TaskDTO>>() {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						SC.say("Ha ocurrido un error al intentar obtener las tareas del nivel superior");
-					}
-
+				TaskServicesClient.Util.getInstance().getChildTask(projectSelected.getId(), parentTaskIdForBackButton, new AsyncCallback<List<TaskDTO>>() {
 					@Override
 					public void onSuccess(List<TaskDTO> result) {
 						hideSection();
 						--level;
 						parentTaskIdForBackButton = result.get(0).getTaskId();
 						parentTaskId = parentTaskIdForBackButton ;
-						copy(result);
-						
+						createAllTasksLevel(result);
+					}
+					@Override
+					public void onFailure(Throwable caught) {
+						SC.say("Ha ocurrido un error al intentar obtener las tareas del nivel superior");
 					}
 				});
 			}
-
 		}
 	}
 
-	public void hideSection(){
-		if (this.level == 1){
-			this.form.hideItem("firstLevelTask");
-		} else {
-			if (this.level == 2){
-				this.form.hideItem("secondLevelTask");
+	/**
+	 * CLASS 
+	 */
+	public class TaskBox extends Window {
+		private int estimatedHs;
+		private String name;
+		private String description;
+		private String type;
+		private Integer id;
+		private Long realHs;
+		private Label content;
+		private Long totalHs;
+		
+		public TaskBox(final Integer taskId, final String taskName, int taskEstimation, String taskDescription, String taskType, final Integer idProject, final long realHs, final long totalRealHs) {
+			String color = "00FF00";
+			this.id = taskId;
+			this.name = taskName;
+			this.description = taskDescription;
+			this.estimatedHs = taskEstimation;
+			this.type = taskType;
+			this.realHs = realHs;
+			this.totalHs = totalRealHs;
+			
+			if (this.type.equals("Analisis")){
+				color = "#CCFFCC";
+			} else if (this.type.equals("Desarrollo")){
+				color = "#C0C0C0";
+			} else {
+				color = "#FFFF99";
+			}
+			
+			setShowShadow(false);
+			setAnimateMinimize(true);
+			
+			setDragAppearance(DragAppearance.OUTLINE);
+			setCanDrop(true);
+			setHeaderControls(HeaderControls.MINIMIZE_BUTTON,
+					HeaderControls.HEADER_LABEL, new HeaderControl(
+							HeaderControl.SETTINGS, new EditTaskHandler(this)), HeaderControls.CLOSE_BUTTON);
+			setDragOpacity(30);
+
+			setVPolicy(LayoutPolicy.NONE);
+			setOverflow(Overflow.VISIBLE);
+			
+			addDoubleClickHandler(new DoubleClickHandler() {
+				
+				@Override
+				public void onDoubleClick(DoubleClickEvent event) {
+					TaskServicesClient.Util.getInstance().getChildTask(projectSelected.getId(), id, new AsyncCallback<List<TaskDTO>>(){
+
+						@Override
+						public void onFailure(Throwable caught) {
+							SC.say("Ha ocurrido un error al intentar recuperar las tareas");
+						}
+
+						@Override
+						public void onSuccess(List<TaskDTO> result) {
+							parentTaskId = id;
+							if (level != 1){
+								parentTaskIdForBackButton = id;
+							}
+							++level;
+							getSectionItem().setDefaultValue(taskName);
+							createAllTasksLevel(result);
+						}
+					});
+				}
+			});
+			addCloseClickHandler(new CloseClickHandler() {
+				
+				@Override
+				public void onCloseClick(CloseClientEvent event) {
+					// Si el proyecto esta cerrado, suspendido o cancelado no es posible eliminar la tarea -- Regla de negocio
+					if (projectSelected.getProjectState().getId() != 4 && projectSelected.getProjectState().getId() != 5 && projectSelected.getProjectState().getId() != 6){
+						SC.ask("Eliminar Tarea", "Desea eliminar la tarea seleccionada", new BooleanCallback() {
+							
+							@Override
+							public void execute(Boolean value) {
+								if(value) {
+									try {
+										
+										TaskServicesClient.Util.getInstance().deleteTask(taskId, idProject, new AsyncCallback<String>() {
+											
+											@Override
+											public void onFailure(Throwable caught) {
+												SC.warn("Ha ocurrido un error al intentar eliminar la tarea. Intentelo luego");
+												
+											}
+											
+											@Override
+											public void onSuccess(String result) {
+												close();
+												SC.say("Eliminar Tarea", "La tarea " + result + " y sus hijas, si contenia, se han eliminado satisfactoriamente.");
+												
+											}
+											
+										});
+									} catch (TaskWithHoursChargedException e) {
+										SC.say("Eliminar Tarea", "La tarea seleccionada no puede eliminarse dado la tarea " + e.getTaskName() + " tiene horas cargadas");
+									}
+								}
+								
+							}
+						});
+						
+					} else{
+						SC.warn("No es posible eliminar la tarea dado que el proyecto est&aacute; cerrado");
+					}
+				}
+			});
+			
+			setTitle(name);
+			content = new Label("<span style=\" font-weight: bold;\">Tipo: </span>" + type + "<br/>"  
+	                + "<span style=\" font-weight: bold;\">Horas Consumidas de la tarea: </span>" + realHs + "<br/>"
+	                + "<span style=\" font-weight: bold;\">Horas Consumidas totales: </span>" + totalHs + "<br/>"
+	                + "<span style=\" font-weight: bold;\">Horas Estimadas: </span> "+ estimatedHs + "</br>"
+	                + "<span style=\" font-weight: bold;\">Descripci&oacute;n: </span> "+ description);
+			content.setBackgroundColor(color);
+			addItem(content);
+			
+		}
+		
+		public void close(){
+			super.destroy();
+		}
+		
+		private class EditTaskHandler implements ClickHandler {
+			private TaskBox task;
+			
+			public EditTaskHandler(TaskBox task) {
+				this.task = task;
+			}
+
+			@Override
+			public void onClick(ClickEvent event) {
+				// Si el proyecto esta cerrado no es posible editar las tareas (si es posible editar cuando el proyecto este canccelado o suspendido) - Regla de negocio
+				if (projectSelected.getProjectState().getId() != 4){
+					if (projectSelected.getIsOwner() == 1 || (projectSelected.getIsOwner() == 0 && level > 0) ){
+						EditTaskModalWindow editTaskModalWin = new EditTaskModalWindow(task, id, name, description, estimatedHs, projectSelected.getId(), type);
+						editTaskModalWin.show();
+					} else {
+						SC.warn("No eres el due&ntildeo del proyecto para poder editar la tarea primaria");
+					}
+				} else{
+					SC.warn("No es posible crear nuevas tareas dado que el proyecto est&aacute; cerrado");
+				}
 			}
 		}
+
+		public void refresh(TaskDTO taskDTO) {
+			this.id = taskDTO.getId();
+			this.name = taskDTO.getName();
+			this.description = taskDTO.getDescription();
+			this.estimatedHs = taskDTO.getBudget();
+			this.type = taskDTO.getTaskTypeDTO().getName();
+			this.setTitle(taskDTO.getName()); 
+			content.setContents("<span style=\" font-weight: bold;\">Tipo: </span>" + type + "<br/>"  
+	                + "<span style=\" font-weight: bold;\">Horas Consumidas de la tarea: </span>" + realHs + "<br/>" 
+	                + "<span style=\" font-weight: bold;\">Horas Consumidas totales: </span>" + totalHs + "<br/>"
+	                + "<span style=\" font-weight: bold;\">Horas Estimadas: </span> "+ taskDTO.getBudget() + "</br>"
+	                + "<span style=\" font-weight: bold;\">Descripci&oacute;n: </span> "+ taskDTO.getDescription());
+			
+			if (this.type.equals("Analisis")){
+				content.setBackgroundColor("#CCFFCC");
+			} else if (this.type.equals("Desarrollo")){
+				content.setBackgroundColor("#C0C0C0");
+			} else {
+				content.setBackgroundColor("#FFFF99");
+			}
+			
+		}
 	}
-	
-	public SectionItem getSectionItem(){
-		if (this.level == 1){
-			this.form.showItem("firstLevelTask");
-			return this.firstLevelTask;
-		} 
-		this.form.showItem("secondLevelTask");
-		return secondLevelTask;
-	}
-	
+
 	/**
-	 * Handler to create new task
-	 * 
-	 * @author Ludmila
-	 * 
+	 * CLASS
 	 */
-	private class NewTaskModalWindow {
+	public class NewTaskModalWindow {
 		private Window winModal;
 
 		public NewTaskModalWindow(final ButtonItem addTask) {
@@ -340,15 +507,13 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 			estimatedTimeLabel.setTitle("Tiempo Estimado");
 			estimatedTimeLabel.setKeyPressFilter("[0-9.]");
 			estimatedTimeLabel.setRequired(true);
-
-			IButton editTaskButton = new IButton();
+			
+			final IButton editTaskButton = new IButton();
 			editTaskButton.setTitle("Guardar");
 			editTaskButton.setIcon("../images/ico/save.ico");
 			editTaskButton.addClickHandler(new ClickHandler() {
-
 				@Override
 				public void onClick(ClickEvent event) {
-
 					if (form.validate()) {
 						winModal.destroy();
 						updateTaskList(addTask,
@@ -358,10 +523,9 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 								taskDescription.getValueAsString());
 					}
 				}
-
 			});
 
-			IButton cancelTaskButton = new IButton();
+			final IButton cancelTaskButton = new IButton();
 			cancelTaskButton.setTitle("Cerrar");
 			cancelTaskButton.setIcon("../images/ico/close.ico");
 			cancelTaskButton.addClickHandler(new ClickHandler() {
@@ -385,9 +549,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 			winModal.addItem(vLayout);
 		}
 
-		private void updateTaskList(final ButtonItem addTask, String name,
-				final String type, int estimation, String description) {
-			
+		private void updateTaskList(final ButtonItem addTask, String name, final String type, int estimation, String description) {
 			TaskDTO task = new TaskDTO();
 			task.setDescription(description);
 			task.setName(name);
@@ -395,45 +557,26 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 			TaskTypeDTO taskTypeDTO = new TaskTypeDTO();
 			taskTypeDTO.setName(form.getValueAsString("taskType"));
 			task.setTaskTypeDTO(taskTypeDTO);
-			task.setProject(selectedProjectDTO);
+			task.setProject(projectSelected);
 			if (level > 0){
 				task.setTaskId(parentTaskId);
 			}
-			
-			TaskServicesClient.Util.getInstance().addTask(task , new AsyncCallback<TaskDTO>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					SC.say("Ha ocurrido un error al intentar actualizar la tarea");
-					
-				}
-
+			//Agregar o Actualiza una tarea 
+			TaskServicesClient.Util.getInstance().updateTask(task , new AsyncCallback<TaskDTO>() {
 				@Override
 				public void onSuccess(final TaskDTO taskDTO) {
+					//Obtengo las horas de las tareas
+					
 					TaskServicesClient.Util.getInstance().getTimeChargedToTask(taskDTO.getId(), new AsyncCallback<Long>() {
-
-						@Override
-						public void onFailure(Throwable caught) {
-							SC.say("Ha ocurrido un error al intentar recuperar las horas cargadas a la tarea");
-							
-						}
-
 						@Override
 						public void onSuccess(final Long taskHs) {
-							GWT.log("envio id para calcular hs totales " + taskDTO.getId());
-							TaskServicesClient.Util.getInstance().getTotalTimeChargedToTask(taskDTO.getId(), new AsyncCallback<Long>() {
-
-								@Override
-								public void onFailure(Throwable caught) {
-									SC.say("Ha ocurrido un error al intentar recuperar las horas totales cargadas a la tarea");
-									
-								}
+					
+							//Calular las horas totales de la tarea
+							TaskServicesClient.Util.getInstance().getTotalTimeChargedToChildsTask(taskDTO.getId(), new AsyncCallback<Long>() {
 
 								@Override
 								public void onSuccess(Long totalHs) {
-									// TODO Auto-generated method stub
-									
-									final Task newTask = new Task(taskDTO.getId(), taskDTO.getName(), taskDTO.getBudget(), taskDTO.getDescription(), type, taskDTO.getProject().getId(), taskHs, totalHs);
+									final TaskBox newTask = new TaskBox(taskDTO.getId(), taskDTO.getName(), taskDTO.getBudget(), taskDTO.getDescription(), type, taskDTO.getProject().getId(), taskHs, totalHs);
 									newTask.setVisible(false);
 									TaskColumn column = portalLayout.addTask(newTask);
 									
@@ -461,10 +604,23 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 										}
 									}, 750);
 								}
+								@Override
+								public void onFailure(Throwable caught) {
+									SC.say("Ha ocurrido un error al intentar recuperar las horas totales cargadas a la tarea");
+								}
+
 							});
+						}
+						@Override
+						public void onFailure(Throwable caught) {
+							SC.say("Ha ocurrido un error al intentar recuperar las horas cargadas a la tarea");
 						}
 					});
 					
+				}
+				@Override
+				public void onFailure(Throwable caught) {
+					SC.say("Ha ocurrido un error al intentar actualizar la tarea");					
 				}
 			});
 			
@@ -476,10 +632,11 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 
 	}
 
+	
 	/**
-	 * TaskColumn class definition
+	 * CLASS TaskColumn class definition
 	 */
-	private class TaskColumn extends VStack {
+	public class TaskColumn extends VStack {
 
 		public TaskColumn() {
 
@@ -505,9 +662,9 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 	}
 
 	/**
-	 * TaskLayout class definition
+	 * CLASS TaskLayout class definition
 	 */
-	private class TaskLayout extends HLayout {
+	public class TaskLayout extends HLayout {
 		
 		public TaskLayout(int numColumns) {
 			setMembersMargin(6);
@@ -516,7 +673,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 			}
 		}
 
-		public TaskColumn addTask(Task task) {
+		public TaskColumn addTask(TaskBox task) {
 			// find the column with the fewest portlets
 			int fewestPortlets = Integer.MAX_VALUE;
 			TaskColumn fewestTasksColumn = null;
@@ -539,182 +696,6 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 					canvas.destroy();
 				}
 			}
-		}
-	}
-
-	
-	public class Task extends Window {
-
-		private int estimatedHs;
-		private String name;
-		private String description;
-		private String type;
-		private Integer id;
-		private Long realHs;
-		private Label content;
-		private Long totalHs;
-		
-		public Task(final Integer taskId, final String taskName, int taskEstimation, String taskDescription, String taskType, final Integer idProject, final long realHs, final long totalRealHs) {
-
-			String color = "00FF00";
-			this.id = taskId;
-			this.name = taskName;
-			this.description = taskDescription;
-			this.estimatedHs = taskEstimation;
-			this.type = taskType;
-			this.realHs = realHs;
-			this.totalHs = totalRealHs;
-			
-			if (this.type.equals("Analisis")){
-				color = "#CCFFCC";
-			} else if (this.type.equals("Desarrollo")){
-				color = "#C0C0C0";
-			} else {
-				color = "#FFFF99";
-			}
-			
-			setShowShadow(false);
-			setAnimateMinimize(true);
-			
-			setDragAppearance(DragAppearance.OUTLINE);
-			setCanDrop(true);
-			setHeaderControls(HeaderControls.MINIMIZE_BUTTON,
-					HeaderControls.HEADER_LABEL, new HeaderControl(
-							HeaderControl.SETTINGS, new EditTaskHandler(this)), HeaderControls.CLOSE_BUTTON);
-			setDragOpacity(30);
-
-			setVPolicy(LayoutPolicy.NONE);
-			setOverflow(Overflow.VISIBLE);
-			
-			addDoubleClickHandler(new DoubleClickHandler() {
-				
-				@Override
-				public void onDoubleClick(DoubleClickEvent event) {
-					TaskServicesClient.Util.getInstance().getChildTask(selectedProjectDTO.getId(), id, new AsyncCallback<List<TaskDTO>>(){
-
-						@Override
-						public void onFailure(Throwable caught) {
-							SC.say("Ha ocurrido un error al intentar recuperar las tareas");
-							
-						}
-
-						@Override
-						public void onSuccess(List<TaskDTO> result) {
-							parentTaskId = id;
-							if (level != 1){
-								parentTaskIdForBackButton = id;
-							}
-							++level;
-							getSectionItem().setDefaultValue(taskName);
-							copy(result);
-						}
-						
-					});
-				}
-			});
-			addCloseClickHandler(new CloseClickHandler() {
-				
-				@Override
-				public void onCloseClick(CloseClientEvent event) {
-					// Si el proyecto esta cerrado, suspendido o cancelado no es posible eliminar la tarea -- Regla de negocio
-					if (selectedProjectDTO.getProjectState().getId() != 4 && selectedProjectDTO.getProjectState().getId() != 5 && selectedProjectDTO.getProjectState().getId() != 6){
-						SC.ask("Eliminar Tarea", "Desea eliminar la tarea seleccionada", new BooleanCallback() {
-							
-							@Override
-							public void execute(Boolean value) {
-								if(value) {
-									try {
-										
-										TaskServicesClient.Util.getInstance().deleteTask(taskId, idProject, new AsyncCallback<String>() {
-											
-											@Override
-											public void onFailure(Throwable caught) {
-												SC.warn("Ha ocurrido un error al intentar eliminar la tarea. Intentelo luego");
-												
-											}
-											
-											@Override
-											public void onSuccess(String result) {
-												close();
-												SC.say("Eliminar Tarea", "La tarea " + result + " y sus hijas, si contenia, se han eliminado satisfactoriamente.");
-												
-											}
-											
-										});
-									} catch (TaskWithHoursChargedException e) {
-										SC.say("Eliminar Tarea", "La tarea seleccionada no puede eliminarse dado la tarea " + e.getTaskName() + " tiene horas cargadas");
-									}
-								}
-								
-							}
-						});
-						
-					} else{
-						SC.warn("No es posible eliminar la tarea dado que el proyecto est&aacute; cerrado");
-					}
-				}
-			});
-			
-			setTitle(name);
-			content = new Label("<span style=\" font-weight: bold;\">Tipo: </span>" + type + "<br/>"  
-	                + "<span style=\" font-weight: bold;\">Horas Consumidas de la tarea: </span>" + realHs + "<br/>"
-	                + "<span style=\" font-weight: bold;\">Horas Consumidas totales: </span>" + totalHs + "<br/>"
-	                + "<span style=\" font-weight: bold;\">Horas Estimadas: </span> "+ estimatedHs + "</br>"
-	                + "<span style=\" font-weight: bold;\">Descripci&oacute;n: </span> "+ description);
-			content.setBackgroundColor(color);
-			addItem(content);
-			
-		}
-		
-		public void close(){
-			super.destroy();
-		}
-		
-		private class EditTaskHandler implements ClickHandler {
-
-			private Task task;
-			
-			public EditTaskHandler(Task task) {
-				this.task = task;
-			}
-
-			@Override
-			public void onClick(ClickEvent event) {
-				// Si el proyecto esta cerrado no es posible editar las tareas (si es posible editar cuando el proyecto este canccelado o suspendido) - Regla de negocio
-				if (selectedProjectDTO.getProjectState().getId() != 4){
-					if (selectedProjectDTO.getIsOwner() == 1 || (selectedProjectDTO.getIsOwner() == 0 && level > 0) ){
-						EditTaskModalWindow editTaskModalWin = new EditTaskModalWindow(task, id, name, description, estimatedHs, selectedProjectDTO.getId(), type);
-						editTaskModalWin.show();
-					} else {
-						SC.warn("No eres el due&ntildeo del proyecto para poder editar la tarea primaria");
-					}
-				} else{
-					SC.warn("No es posible crear nuevas tareas dado que el proyecto est&aacute; cerrado");
-				}
-			}
-		}
-
-		public void refresh(TaskDTO taskDTO) {
-			this.id = taskDTO.getId();
-			this.name = taskDTO.getName();
-			this.description = taskDTO.getDescription();
-			this.estimatedHs = taskDTO.getBudget();
-			this.type = taskDTO.getTaskTypeDTO().getName();
-			this.setTitle(taskDTO.getName()); 
-			content.setContents("<span style=\" font-weight: bold;\">Tipo: </span>" + type + "<br/>"  
-	                + "<span style=\" font-weight: bold;\">Horas Consumidas de la tarea: </span>" + realHs + "<br/>" 
-	                + "<span style=\" font-weight: bold;\">Horas Consumidas totales: </span>" + totalHs + "<br/>"
-	                + "<span style=\" font-weight: bold;\">Horas Estimadas: </span> "+ taskDTO.getBudget() + "</br>"
-	                + "<span style=\" font-weight: bold;\">Descripci&oacute;n: </span> "+ taskDTO.getDescription());
-			
-			if (this.type.equals("Analisis")){
-				content.setBackgroundColor("#CCFFCC");
-			} else if (this.type.equals("Desarrollo")){
-				content.setBackgroundColor("#C0C0C0");
-			} else {
-				content.setBackgroundColor("#FFFF99");
-			}
-			
 		}
 	}
 

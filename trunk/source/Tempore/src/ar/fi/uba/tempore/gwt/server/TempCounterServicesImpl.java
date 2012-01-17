@@ -21,14 +21,13 @@ public class TempCounterServicesImpl extends RemoteServiceServlet implements Tem
 	private static final Integer NONE = 0;
 	private static final Integer PLAY = 1;
 	private static final Integer PAUSE = 2;
+	
 	private final Logger log = Logger.getLogger(this.getClass());
-
-	private final TempCounterDAO tcDAO = new TempCounterDAO();
-	private final TaskUserDAO tuDAO = new TaskUserDAO();
 	private final DozerBeanMapper mapper = new DozerBeanMapper();
 
 	@Override
 	public TempCounterDTO getActualState(Integer userId){
+		TempCounterDAO tcDAO = new TempCounterDAO();
 		log.info("STATE COUNTER - " + userId);
 		TempCounter tc = tcDAO.findById(userId);
 		if (tc != null && tc.getControl() == PLAY){
@@ -42,6 +41,7 @@ public class TempCounterServicesImpl extends RemoteServiceServlet implements Tem
 
 	@Override
 	public TempCounterDTO start (Integer userId, Integer taskId){
+		TempCounterDAO tcDAO = new TempCounterDAO();
 		log.info("START COUNTER - " + userId + " - " + taskId);
 		TempCounter tc = tcDAO.findById(userId);
 		
@@ -73,6 +73,7 @@ public class TempCounterServicesImpl extends RemoteServiceServlet implements Tem
 
 	@Override
 	public TempCounterDTO pause (Integer userId){
+		TempCounterDAO tcDAO = new TempCounterDAO();
 		TempCounter tc = tcDAO.findById(userId);
 
 		if (tc == null){
@@ -93,6 +94,9 @@ public class TempCounterServicesImpl extends RemoteServiceServlet implements Tem
 
 	@Override
 	public Long save (Integer userId) {
+		TempCounterDAO tcDAO = new TempCounterDAO();
+		TaskUserDAO tuDAO = new TaskUserDAO();
+		
 		TempCounter tc = tcDAO.findById(userId);
 		Long timeSaved = null;
 		if (tc == null){
@@ -119,6 +123,7 @@ public class TempCounterServicesImpl extends RemoteServiceServlet implements Tem
 	
 	@Override
 	public Long cancel (Integer userId){
+		TempCounterDAO tcDAO = new TempCounterDAO();
 		TempCounter tc = tcDAO.findById(userId);
 		Long timeCanceled = null;
 		if (tc == null){

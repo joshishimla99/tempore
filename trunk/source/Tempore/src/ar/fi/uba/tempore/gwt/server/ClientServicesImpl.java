@@ -18,12 +18,12 @@ public class ClientServicesImpl extends RemoteServiceServlet implements ClientSe
 	private static final long serialVersionUID = -2409690393681645739L;
 
 	private final Logger log = Logger.getLogger(this.getClass());	
-	private final DozerBeanMapper mapper = new DozerBeanMapper();
-	private final ClientDAO cDAO = new ClientDAO(); 
+	private final DozerBeanMapper mapper = new DozerBeanMapper(); 
 
 
 	@Override
 	public List<ClientDTO> fetch() {	
+		ClientDAO cDAO = new ClientDAO();
 		log.info("FETCH - Clientes");
 		List<ClientDTO> list = new ArrayList<ClientDTO>();
 		
@@ -43,6 +43,7 @@ public class ClientServicesImpl extends RemoteServiceServlet implements ClientSe
 
 	@Override
 	public ClientDTO update(ClientDTO clientDTO) {
+		ClientDAO cDAO = new ClientDAO();
 		log.info("UPDATE - Cliente");
 		Client client = mapper.map(clientDTO, Client.class);
 		Client newClient = cDAO.makePersistent(client );
@@ -52,6 +53,7 @@ public class ClientServicesImpl extends RemoteServiceServlet implements ClientSe
 
 	@Override
 	public void remove(ClientDTO clientDTO) {
+		ClientDAO cDAO = new ClientDAO();
 		log.info("REMOVE - Cliente");
 		Client entity = mapper.map(clientDTO, Client.class);
 		cDAO.delete(entity);		

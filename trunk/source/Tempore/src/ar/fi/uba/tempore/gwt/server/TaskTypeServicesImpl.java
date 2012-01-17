@@ -14,12 +14,11 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 public class TaskTypeServicesImpl extends RemoteServiceServlet implements TaskTypeServicesClient {
 
-	private final TaskTypeDAO taskTypeDAO = new TaskTypeDAO();
-	private final DozerBeanMapper mapper = new DozerBeanMapper();
-	
 	private static final long serialVersionUID = -508734123193154880L;
+	private final DozerBeanMapper mapper = new DozerBeanMapper();
 
 	public List<TaskTypeDTO> fetch(){
+		TaskTypeDAO taskTypeDAO = new TaskTypeDAO();
 		List<TaskTypeDTO> taskTypeDTOList = new ArrayList<TaskTypeDTO>();
 		List<TaskType> taskTypeList = new ArrayList<TaskType>();
 		taskTypeList = taskTypeDAO.findAll();

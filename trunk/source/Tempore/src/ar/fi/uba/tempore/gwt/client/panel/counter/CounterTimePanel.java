@@ -95,22 +95,20 @@ public class CounterTimePanel extends VLayout implements TimeCounterObserved{
 		buttonsLayout.setAlign(Alignment.CENTER);
 		buttonsLayout.setMembers(start, pause, cancel, save);
 
-		
-
 		selectTaskTree.setTitle("Tareas");  
-//		selectTaskTree.setLoadDataOnDemand(true);
-		selectTaskTree.setDataSource(TaskListDataSource.getInstance());  
 		selectTaskTree.setEmptyMenuMessage("No Existe Sub-Tarea");
+		selectTaskTree.setLoadDataOnDemand(false);
+		selectTaskTree.setFetchMissingValues(false);
 		selectTaskTree.setDefaultValue(DEFAULT_TASK_VALUE);
 		selectTaskTree.setCanSelectParentItems(true);
 		selectTaskTree.setDisplayField(COL_NAME);
+		selectTaskTree.setDataSource(TaskListDataSource.getInstance());  
 		selectTaskTree.addChangedHandler(new ChangedHandler() {
 			@Override
 			public void onChanged(ChangedEvent event) {
 				Integer id =  (Integer) event.getValue();
 				if (id < 0) {
 					selectTaskTree.clearValue();
-					selectTaskTree.redraw();
 					SC.warn("La seleccion corresponde al nombre del Proyecto. Debe seleccionar una Tarea del Proyecto");
 				} else {
 					//VISTA
@@ -119,7 +117,6 @@ public class CounterTimePanel extends VLayout implements TimeCounterObserved{
 					cancel.setDisabled(true);
 					save.setDisabled(true);
 				}
-
 			}
 		});
 

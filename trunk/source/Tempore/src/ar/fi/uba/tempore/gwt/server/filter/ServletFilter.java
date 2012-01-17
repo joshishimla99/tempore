@@ -9,7 +9,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Transaction;
 
 import ar.fi.uba.tempore.dao.util.HibernateUtil;
 
@@ -26,25 +25,26 @@ public class ServletFilter implements javax.servlet.Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,	FilterChain chain) throws IOException, ServletException {
 		Long start = 0L;
 		
-		Transaction transaction = null;
 		try {
 			if (log.isDebugEnabled()){
 				start = System.currentTimeMillis();
 				log.info("******* Transaccion Iniciada *********");
 			}
-			transaction = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();		
+			HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();		
 			chain.doFilter(request, response);
 		
-			if (transaction != null && transaction.isActive()){
-				transaction.commit();
+			if (HibernateUtil.getSessionFactory().getCurrentSession().getTransaction() != null && 
+					HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().isActive()){
+				HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
 				if (log.isDebugEnabled()){
-					log.debug("******* Tranasccion Terminada ("+(System.currentTimeMillis()-start)+" ms) *********");			
+					log.info("******* Tranasccion Terminada ("+(System.currentTimeMillis()-start)+" ms) *********");			
 				}
 			}		
 		} catch (Exception e){			
 			log.warn("******* ROLLBACK *********");
-			if (transaction != null && transaction.isActive()){
-				transaction.rollback();
+			if (HibernateUtil.getSessionFactory().getCurrentSession().getTransaction() != null && 
+					HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().isActive()){
+				HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().rollback();
 			}
 			throw new IOException(e);
 		} finally {

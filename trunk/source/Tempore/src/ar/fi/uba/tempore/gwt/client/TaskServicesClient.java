@@ -36,5 +36,5 @@ public interface TaskServicesClient extends RemoteService {
 	
 	public long getTimeChargedToTask(Integer id);
 	
-	public long getTotalTimeChargedToTask(Integer id);
+	public long getTotalTimeChargedToChildsTask(Integer id);
 }

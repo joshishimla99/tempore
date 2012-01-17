@@ -21,12 +21,11 @@ public class UserProjectServicesImpl extends RemoteServiceServlet implements Use
 
 	private static final long serialVersionUID = 3871015150494046391L;
 	private final Logger log = Logger.getLogger(this.getClass());	
-	private UserProjectDAO upDAO = new UserProjectDAO();
-	private UserDAO uDAO = new UserDAO();
 	private final DozerBeanMapper mapper = new DozerBeanMapper();
 	
 	@Override
 	public List<UserProjectDTO> fetch(Integer projectId) {
+		UserProjectDAO upDAO = new UserProjectDAO();
 		log.info("UserProject - FETCH id=" + projectId);
 		List<UserProject> userAssignedToProject = upDAO.getUserAssignedToProject(projectId);
 
@@ -43,6 +42,9 @@ public class UserProjectServicesImpl extends RemoteServiceServlet implements Use
 
 	@Override
 	public UserProjectDTO add(UserProjectDTO data) {
+		UserProjectDAO upDAO = new UserProjectDAO();
+		UserDAO uDAO = new UserDAO();
+		
 		log.info("UserProject - ADD DATA - " + data.getProject().getId() + ", " + data.getUser().getId());
 
 		//TODO validar si usuario que lo esta realizando es owner para poder realizar esta operacion
@@ -64,6 +66,7 @@ public class UserProjectServicesImpl extends RemoteServiceServlet implements Use
 
 	@Override
 	public void remove(UserProjectDTO data) {
+		UserProjectDAO upDAO = new UserProjectDAO();
 		log.info("UserProject - REMOVE DATA");
 		UserProject up = upDAO.findById(data.getId());
 		
@@ -73,6 +76,7 @@ public class UserProjectServicesImpl extends RemoteServiceServlet implements Use
 	
 	@Override
 	public void changeOwner(UserProjectDTO dto) {
+		UserProjectDAO upDAO = new UserProjectDAO();
 		log.info("CHANGE OWNER");
 		
 		log.info("CLEAR OWNER - proyecto: " + dto.getProject().getId());
