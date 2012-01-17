@@ -41,10 +41,18 @@ public class TaskUserDAO extends GenericHibernateDAO<TaskUser, Integer> {
 //		}
 		return chargedHour;
 	}
-	
+	/**
+	 * TODO revisar el synchronized por que no deberia ir
+	 * Obtiene las horas cargadas por las tareas hijas y las subhijas.
+	 * @param taskId Id de la tarea padre
+	 * @return Acumulacion de las horas cargadas a todos sus herederos.
+	 */
 	public Long getTotalTimeByTask(Integer  taskId){
 		Long result = 0L;
-		log.error("Obtengo el tiempo total para la tarea " + taskId);
+		log.info("Obtengo el tiempo total para la tarea " + taskId + " - " + this.getSession());
+		
+		log.info("Obteniendo las horas de las tarea con id = " + taskId);
+		//Obtengo todas las horas cargadas a la tarea con id = taskId
 		String hqln1 = "select tu from TaskUser tu where tu.task.id = " + taskId;		
 				
 		Query createQuery1 = this.getSession().createQuery(hqln1);
@@ -60,6 +68,8 @@ public class TaskUserDAO extends GenericHibernateDAO<TaskUser, Integer> {
 			
 		}
 		
+		log.info("Acumulando las horas de las tarea con el id del Padre = " + taskId);
+		//Obtengo todas las horas donde el PADRE de las tareas cargadas sea taskId (Horas de las tareas hijas)
 		String hqln2 = "select tu from TaskUser tu inner join tu.task t where t.taskId = " + taskId;
 		Query createQuery2 = this.getSession().createQuery(hqln2);
 		@SuppressWarnings("unchecked")
@@ -69,8 +79,13 @@ public class TaskUserDAO extends GenericHibernateDAO<TaskUser, Integer> {
 				result += taskUser.getHourCount();
 			}
 		}
+		
+		
+		//Obtendo el id de todas las tareas donde el pader es taskId (id de tareas hijas)
 		String subQuery = "select t.id from Task as t where t.taskId=" + taskId;
 		
+		log.info("Acumulando las horas de las tarea nietas al taskId = " + taskId);
+		//Obtengo las horas de todas las tareas donde el padre pertenesca a una de las hijas del taskId (Horas de las tareas nietas)
 		String hqln3 = "select tu from TaskUser tu inner join tu.task t where t.taskId in ("+subQuery+") " ;
 		Query createQuery3 = this.getSession().createQuery(hqln3);
 		@SuppressWarnings("unchecked")
@@ -80,7 +95,7 @@ public class TaskUserDAO extends GenericHibernateDAO<TaskUser, Integer> {
 				result += taskUser.getHourCount();
 			}
 		}
-		
+		log.info("Total de horas acumuladas con sus subtareas para el id = " + taskId + ", es de " + result);
 		return result;
 	}
 
