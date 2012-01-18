@@ -107,9 +107,10 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 	/**
 	 * Fuerza a que se refresque la pantalla
 	 */
-	public void forceToFetchData(){
-		dataSource.invalidateCache();
-		fetchData();
+	public void forceToFetchData(Integer projectId){
+		this.invalidateCache();
+		this.fetchData();
+		this.redraw();
 	}
 	
 	/**

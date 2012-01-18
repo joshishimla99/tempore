@@ -197,13 +197,13 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 		@Override
 		public void onSelectionChanged(SelectionChangedEvent event) {
 			if (changeOwner){
-				UserProjectDTO data = new UserProjectDTO();
+				final UserProjectDTO data = new UserProjectDTO();
 				ResourceDataSource.getInstance().copyValues((ListGridRecord)event.getRecord(), data);
-				UserProjectServicesClient.Util.getInstance().changeOwner(data, new AsyncCallback<Void>() {
+				UserProjectServicesClient.Util.getInstance().changeOwner(data, new AsyncCallback<Integer>() {
 					@Override
-					public void onSuccess(Void result) {
+					public void onSuccess(Integer projectId) {
 						assignedTileGrid.fetchData();
-						ProjectPanel.getInstance().forceToFetchData();
+						ProjectPanel.getInstance().forceToFetchData(projectId);
 						
 						//vuelvo a la normalidad
 						changeOwner = false;

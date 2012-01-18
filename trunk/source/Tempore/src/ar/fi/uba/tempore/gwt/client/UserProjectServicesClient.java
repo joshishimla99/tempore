@@ -21,5 +21,5 @@ public interface UserProjectServicesClient extends GenericGwtRpcDataSourceServic
 		}
 	}
 
-	public void changeOwner(UserProjectDTO data);
+	public Integer changeOwner(UserProjectDTO data);
 }
