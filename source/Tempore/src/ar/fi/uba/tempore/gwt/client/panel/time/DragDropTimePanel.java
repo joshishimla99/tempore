@@ -99,7 +99,7 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		tasksTree.setDragDataAction(DragDataAction.COPY);
 		tasksTree.setNodeIcon("../images/tasks.png");  
 		tasksTree.setFolderIcon("../images/tasks.png");  
-		tasksTree.setEmptyMessage("Seleccion&aacute un proyecto...");  
+		tasksTree.setEmptyMessage("El Proyecto seleccionado no posee Tareas cargadas.");  
 		tasksTree.setFields(tfId, tfName, tfDescription);  
 		tasksTree.setShowConnectors(true);
 		

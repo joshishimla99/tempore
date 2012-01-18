@@ -75,7 +75,7 @@ public class UserProjectServicesImpl extends RemoteServiceServlet implements Use
 	
 	
 	@Override
-	public void changeOwner(UserProjectDTO dto) {
+	public Integer changeOwner(UserProjectDTO dto) {
 		UserProjectDAO upDAO = new UserProjectDAO();
 		log.info("CHANGE OWNER");
 		
@@ -90,5 +90,7 @@ public class UserProjectServicesImpl extends RemoteServiceServlet implements Use
 		up.setUser(u);
 		up.setProject(p);
 		upDAO.makePersistent(up);
+		
+		return p.getId();
 	}
 }

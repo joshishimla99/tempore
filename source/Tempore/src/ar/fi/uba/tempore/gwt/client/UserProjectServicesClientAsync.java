@@ -7,6 +7,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface UserProjectServicesClientAsync extends GenericGwtRpcDataSourceServiceFilterIdAsync<Integer, UserProjectDTO>{
 
-	void changeOwner(UserProjectDTO data, AsyncCallback<Void> asyncCallback);
+	void changeOwner(UserProjectDTO data, AsyncCallback<Integer> asyncCallback);
 
 }

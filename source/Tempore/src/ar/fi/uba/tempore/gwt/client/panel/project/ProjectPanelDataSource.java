@@ -20,7 +20,7 @@ import com.smartgwt.client.widgets.grid.ListGridRecord;
 public class ProjectPanelDataSource extends GenericGwtRpcDataSourceFilterId<Integer, ProjectDTO, ListGridRecord, ProjectServicesClientAsync> {
 
 	public static final String NAME_FIELD = "nameCol";
-	public static final String ID_FIELD = "idCol";
+	public final static String ID_FIELD = "idCol";
 	public static final String BUDGET_FIELD = "budgetCol";
 	public static final String DESCRIPTION_FIELD = "descCol";
 	public static final String ENDDATE_FIELD = "endCol";
