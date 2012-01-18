@@ -15,12 +15,14 @@ public class ProjectDAO extends GenericHibernateDAO<Project, Integer> {
 		List<Project> list = null;
 		
 		if (userId != null){
-			String hql = "select distinct p " +
-							"from Project as p " +
-							"inner join fetch p.userProjectList as up " +
-							"inner join fetch p.projectState as ps " +
-							"inner join fetch p.client as c " +
-							"where up.user.id = " + userId;
+			String hql = "select distinct p" +
+							" from Project as p" +
+							" inner join fetch p.userProjectList as up" +
+							" inner join fetch p.projectState as ps" +
+							" inner join fetch p.client as c" +
+							" where up.user.id = " + userId + 
+							" order by p.name";
+			
 			
 			Query createQuery = this.getSession().createQuery(hql);
 			list = createQuery.list();
