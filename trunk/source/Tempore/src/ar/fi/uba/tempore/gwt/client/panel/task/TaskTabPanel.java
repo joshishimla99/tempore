@@ -32,8 +32,8 @@ import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.events.CloseClickEvent;
 import com.smartgwt.client.widgets.events.CloseClickHandler;
-import com.smartgwt.client.widgets.events.CloseClientEvent;
 import com.smartgwt.client.widgets.events.DoubleClickEvent;
 import com.smartgwt.client.widgets.events.DoubleClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
@@ -346,7 +346,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 			addCloseClickHandler(new CloseClickHandler() {
 				
 				@Override
-				public void onCloseClick(CloseClientEvent event) {
+				public void onCloseClick(CloseClickEvent event) {
 					// Si el proyecto esta cerrado, suspendido o cancelado no es posible eliminar la tarea -- Regla de negocio
 					if (projectSelected.getProjectState().getId() != 4 && projectSelected.getProjectState().getId() != 5 && projectSelected.getProjectState().getId() != 6){
 						SC.ask("Eliminar Tarea", "Desea eliminar la tarea seleccionada", new BooleanCallback() {
@@ -382,9 +382,10 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 						
 					} else{
 						SC.warn("No es posible eliminar la tarea dado que el proyecto est&aacute; cerrado");
-					}
+					}					
 				}
 			});
+					
 			
 			setTitle(name);
 			content = new Label("<span style=\" font-weight: bold;\">Tipo: </span>" + type + "<br/>"  
@@ -464,8 +465,9 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 			winModal.setShowModalMask(true);
 			winModal.centerInPage();
 			winModal.addCloseClickHandler(new CloseClickHandler() {
-				public void onCloseClick(CloseClientEvent event) {
-					winModal.destroy();
+				@Override
+				public void onCloseClick(CloseClickEvent event) {
+					winModal.destroy();					
 				}
 			});
 			final DynamicForm form = new DynamicForm();

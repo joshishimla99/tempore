@@ -11,6 +11,7 @@ import ar.fi.uba.tempore.gwt.client.UserProjectServicesClientAsync;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 import ar.fi.uba.temporeutils.listgrid.filter.GenericGwtRpcDataSourceFilterId;
 
+import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceImageField;
@@ -74,9 +75,8 @@ public class ResourceDataSource extends GenericGwtRpcDataSourceFilterId<Integer,
 		project.setId(ProjectPanel.getInstance().getSelected().getId());
 		dto.setProject(project);
 		
-		//Coloco los que no son owner
-		//TODO si el que se arrastra es el owner decir que no
-		dto.setOwner(0);
+		GWT.log("Es dueño = " + from.getAttributeAsInt(ResourceTabPanel.IS_OWNER));
+		dto.setOwner(from.getAttributeAsInt(ResourceTabPanel.IS_OWNER));
 	}
 
 	@Override

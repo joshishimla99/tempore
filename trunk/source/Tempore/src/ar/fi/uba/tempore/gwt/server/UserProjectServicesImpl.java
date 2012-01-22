@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
 
+import ar.fi.uba.tempore.dao.AlertDAO;
 import ar.fi.uba.tempore.dao.UserDAO;
 import ar.fi.uba.tempore.dao.UserProjectDAO;
 import ar.fi.uba.tempore.dto.UserDTO;
@@ -43,15 +44,19 @@ public class UserProjectServicesImpl extends RemoteServiceServlet implements Use
 	@Override
 	public UserProjectDTO add(UserProjectDTO data) {
 		UserProjectDAO upDAO = new UserProjectDAO();
-		UserDAO uDAO = new UserDAO();
 		
 		log.info("UserProject - ADD DATA - " + data.getProject().getId() + ", " + data.getUser().getId());
+		
+		//Elimino id poque viene mal de la vista
+		data.setId(null);
 
 		//TODO validar si usuario que lo esta realizando es owner para poder realizar esta operacion
 		
 		UserProject up = mapper.map(data, UserProject.class);
-		UserProject makePersistent = upDAO.makePersistent(up);
-		UserProjectDTO dto = mapper.map(makePersistent, UserProjectDTO.class);
+		UserProject assignedUser = upDAO.makePersistent(up);
+		UserProjectDTO dto = mapper.map(assignedUser, UserProjectDTO.class);
+
+		UserDAO uDAO = new UserDAO();
 		User user = uDAO.findById(data.getUser().getId());
 		dto.setUser(mapper.map(user, UserDTO.class));
 		return dto;
@@ -65,10 +70,20 @@ public class UserProjectServicesImpl extends RemoteServiceServlet implements Use
 	}
 
 	@Override
-	public void remove(UserProjectDTO data) {
-		UserProjectDAO upDAO = new UserProjectDAO();
+	public void remove(UserProjectDTO userProject) {
 		log.info("UserProject - REMOVE DATA");
-		UserProject up = upDAO.findById(data.getId());
+
+//		if (data.getOwner()!=null && data.getOwner()==1){
+//			log.info("Usuario dueño");
+//			throw new Exception("El usuario dueño no puede ser desasignado del proyecto");
+//		}
+		
+		//TODO Validar que el usuario que realiza la operacion es el owner del proyecto
+		AlertDAO aDAO = new AlertDAO();
+		aDAO.deleteAllUserAlert(userProject.getId());
+
+		UserProjectDAO upDAO = new UserProjectDAO();
+		UserProject up = upDAO.findById(userProject.getId());
 		
 		upDAO.delete(up);
 	}

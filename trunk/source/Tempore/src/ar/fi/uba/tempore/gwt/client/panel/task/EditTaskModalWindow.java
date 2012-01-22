@@ -18,8 +18,8 @@ import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.events.CloseClickEvent;
 import com.smartgwt.client.widgets.events.CloseClickHandler;
-import com.smartgwt.client.widgets.events.CloseClientEvent;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
@@ -48,11 +48,12 @@ public class EditTaskModalWindow {
         winModal.setIsModal(true);  
         winModal.setShowModalMask(true);  
         winModal.centerInPage();  
-        winModal.addCloseClickHandler(new CloseClickHandler() {  
-            public void onCloseClick(CloseClientEvent event) {  
-                winModal.destroy();  
-            }  
-        }); 
+        winModal.addCloseClickHandler(new CloseClickHandler() {
+			@Override
+			public void onCloseClick(CloseClickEvent event) {
+				winModal.destroy();				
+			}
+		}); 
         form = new DynamicForm();  
         form.setHeight100();  
         form.setWidth100();  
