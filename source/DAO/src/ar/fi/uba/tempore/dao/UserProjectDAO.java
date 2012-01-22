@@ -22,7 +22,8 @@ public class UserProjectDAO extends GenericHibernateDAO<UserProject, Integer> {
 			String hql = "select up" +
 					" from UserProject up " +
 					" inner join fetch up.user u " +
-					" where up.project.id = " + projectId;
+					" where up.project.id = " + projectId +
+					" order by up.owner desc, up.id ";
 
 			Query createQuery = this.getSession().createQuery(hql);
 			list = createQuery.list();
