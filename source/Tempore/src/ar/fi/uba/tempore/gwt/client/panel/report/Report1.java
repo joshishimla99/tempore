@@ -13,8 +13,8 @@ import com.google.gwt.visualization.client.DataTable;
 import com.smartgwt.client.types.AnimationEffect;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Window;
+import com.smartgwt.client.widgets.events.CloseClickEvent;
 import com.smartgwt.client.widgets.events.CloseClickHandler;
-import com.smartgwt.client.widgets.events.CloseClientEvent;
 
 public class Report1 extends Window {
 
@@ -28,11 +28,12 @@ public class Report1 extends Window {
         this.centerInPage();
         this.animateShow(AnimationEffect.FLY);
         this.setAnimateTime(3000);
-        this.addCloseClickHandler(new CloseClickHandler() {  
-            public void onCloseClick(CloseClientEvent event) {
-                destroy();  
-            }  
-        });  
+        this.addCloseClickHandler(new CloseClickHandler() {
+			@Override
+			public void onCloseClick(CloseClickEvent event) {
+				destroy();				
+			}
+		});  
 	}
 
 	public void draw(final Date ini, final Date end) {

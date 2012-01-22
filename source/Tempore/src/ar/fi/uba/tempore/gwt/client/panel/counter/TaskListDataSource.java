@@ -7,10 +7,8 @@ import ar.fi.uba.tempore.dto.TaskTimeDTO;
 import ar.fi.uba.tempore.gwt.client.TaskCounterServicesClient;
 import ar.fi.uba.tempore.gwt.client.TaskCounterServicesClientAsync;
 import ar.fi.uba.tempore.gwt.client.login.SessionUser;
-import ar.fi.uba.tempore.gwt.client.panel.counter.CounterTimePanel;
 import ar.fi.uba.temporeutils.listgrid.filter.GenericGwtRpcDataSourceFilterId;
 
-import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
@@ -81,7 +79,6 @@ public class TaskListDataSource extends GenericGwtRpcDataSourceFilterId<Integer,
 
 	@Override  
     protected Object transformRequest(DSRequest dsRequest) {
-		GWT.log("Buscando Tareas para el contador de horas");
 		this.setId(SessionUser.getInstance().getUser().getId());
 		return super.transformRequest(dsRequest);
     }  

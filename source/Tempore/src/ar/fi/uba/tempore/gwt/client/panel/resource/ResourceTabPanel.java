@@ -12,14 +12,18 @@ import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 import ar.fi.uba.temporeutils.image.ImgClient;
 import ar.fi.uba.temporeutils.observer.ProjectObserver;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.Record;
+import com.smartgwt.client.types.DragAppearance;
 import com.smartgwt.client.types.SelectionType;
 import com.smartgwt.client.types.Visibility;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.events.DragStartEvent;
+import com.smartgwt.client.widgets.events.DragStartHandler;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tile.TileGrid;
@@ -54,8 +58,6 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 	@Override
 	public void freePanel() {
 		ProjectPanel.getInstance().removeObserver(this);
-//		userTileGrid.clear();
-//		assignedTileGrid.clear();
 	}	
 
 	public ResourceTabPanel(){
@@ -79,6 +81,7 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 		final DetailViewerField userField = new DetailViewerField(USER_NAME);  
 		final DetailViewerField emailField = new DetailViewerField(EMAIL);
 		userTileGrid.setFields(pictureField, nameField, userField, emailField);
+		userTileGrid.setDragAppearance(DragAppearance.NONE);
 		userTileGrid.setData(new Record[]{});
 
 		//BOTON HABILITADOR PARA CAMBIAR OWNER
@@ -102,35 +105,52 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 		assignedTileGrid.setHeight("50%");  
 		assignedTileGrid.setTileWidth(120);  
 		assignedTileGrid.setTileHeight(180);  
-		assignedTileGrid.setShowAllRecords(true);
+//		assignedTileGrid.setShowAllRecords(true);
 		assignedTileGrid.setAutoFetchData(true);
-		assignedTileGrid.addSelectionChangedHandler(changeProjectOwner);
 		assignedTileGrid.setCanAcceptDrop(true);
 		assignedTileGrid.setCanDrag(true);
+		assignedTileGrid.setCanReorderTiles(false);
+
+		assignedTileGrid.addSelectionChangedHandler(changeProjectOwner);
 		assignedTileGrid.setDataSource(ResourceDataSource.getInstance());
+		assignedTileGrid.addDragStartHandler(new DragStartHandler() {
+			@Override
+			public void onDragStart(DragStartEvent event) {
+				GWT.log("Start Drag...");
+				//TODO evitar que el dueño sea movido
+//				TileRecord selectedRecord = assignedTileGrid.getSelectedRecord();
+				
+//				final TileGrid theDragTargetGrid = (TileGrid)EventHandler.getDragTarget();
+//	            TileRecord theSelectedRecord = theDragTargetGrid.getSelectedRecord();
+//	            int theTileDropPosition = theDragTargetGrid.getRecordIndex(theSelectedRecord);
+//	            GWT.log("Indice seleccionado = " + theTileDropPosition);
+			}
+		});
 		
 		
 		//USUARIOS ASIGANDOS
-		final DetailViewerField pictureField2 = new DetailViewerField(IMAGE_NAME);
-		pictureField2.setType("image");
-		pictureField2.setImageWidth(100);
-		pictureField2.setImageHeight(100);
-		pictureField2.setImageURLPrefix(ImgClient.URL_PREFIX);
-		final DetailViewerField nameField2 = new DetailViewerField(NAME);
-		nameField2.setCellStyle("resourceUserName");
-		final DetailViewerField userField2 = new DetailViewerField(USER_NAME);  
-		final DetailViewerField emailField2 = new DetailViewerField(EMAIL);
-		final DetailViewerField ownerField2 = new DetailViewerField(IS_OWNER);
-		ownerField2.setCellStyle("resourceOwner");
-		ownerField2.setDetailFormatter(new DetailFormatter() {  
+		final DetailViewerField imageAsigned = new DetailViewerField(IMAGE_NAME);
+		imageAsigned.setType("image");
+		imageAsigned.setImageWidth(100);
+		imageAsigned.setImageHeight(100);
+		imageAsigned.setImageURLPrefix(ImgClient.URL_PREFIX);
+		final DetailViewerField nameAsigned = new DetailViewerField(NAME);
+		nameAsigned.setCellStyle("resourceUserName");
+		final DetailViewerField userAsigned = new DetailViewerField(USER_NAME);  
+		final DetailViewerField emailAsigned = new DetailViewerField(EMAIL);
+		final DetailViewerField ownerAsigned = new DetailViewerField(IS_OWNER);
+		ownerAsigned.setCellStyle("resourceOwner");
+		ownerAsigned.setDetailFormatter(new DetailFormatter() {  
 			public String format(Object value, Record record, DetailViewerField field) {
-				if (value.toString().equals("1")){
+				if (value!=null && value.toString().equals("1")){
 					return "Creador";  
 				} 
 				return "";
 			}  
 		});
-		assignedTileGrid.setFields(pictureField2, nameField2, userField2, emailField2, ownerField2);
+		assignedTileGrid.setFields(imageAsigned,nameAsigned, userAsigned, emailAsigned, ownerAsigned);
+		assignedTileGrid.setDragAppearance(DragAppearance.NONE);
+		
 		
 		VLayout vLayout = new VLayout();
 		vLayout.setWidth100();
@@ -143,51 +163,65 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 		this.addChild(vLayout);
 	}
 
+	/**
+	 * Metodo que se invoca cuando en el panel de proyecto se cambia.
+	 */
 	@Override
 	public void updateProjectSelected() {
 		ProjectDTO selected = ProjectPanel.getInstance().getSelected();
-		
 		if (selected != null) {
-			boolean isProjectOwner = selected.getIsOwner()==1;
+			updateAsignedTileGrid();
 			
+			boolean isProjectOwner = selected.getIsOwner()==1;
 			//Permisos dentro de la pantalla
 			changeOwnerBtn.setVisible(isProjectOwner);
 			if (isProjectOwner){				
-				userTileGrid.setBackgroundColor("rgb(255,255,255)");
+				updateUserTileGrid(selected.getId());
+				userTileGrid.show();
 				assignedTileGrid.setBackgroundColor("rgb(255,255,255)");
 			} else {
-				userTileGrid.setVisibility(Visibility.VISIBLE);		
-				userTileGrid.setBackgroundColor("rgb(220,220,220)");
+				userTileGrid.hide();
 				assignedTileGrid.setBackgroundColor("rgb(220,220,220)");
 			}
-			
-			//Tiene permisos para realizar la operacion
-			assignedTileGrid.invalidateCache();
-			assignedTileGrid.fetchData();
-			assignedTileGrid.redraw();
-			
-			userTileGrid.setData(new Record[]{});
-			UserServicesClient.Util.getInstance().getUserNotAssignedToProject(selected.getId(), new AsyncCallback<List<UserDTO>>() {
-				@Override
-				public void onSuccess(List<UserDTO> result) {
-					for (UserDTO dto : result) {
-						//GWT.log(dto.getName() + ", " + dto.getImageName());
-						Record t = new Record();
-						t.setAttribute(IMAGE_NAME, dto.getImageName());
-						t.setAttribute(NAME, dto.getName());
-						t.setAttribute(USER_NAME, dto.getUserName());
-						t.setAttribute(EMAIL, dto.getEmail());
-						t.setAttribute(USER_ID, dto.getId());
-						userTileGrid.addData(t);
-					}
-					userTileGrid.redraw();
-				}
-				@Override
-				public void onFailure(Throwable caught) {
-					SC.say("Error al cargar los usaurio para asignar");
-				}
-			});			
 		}		
+	}
+
+	/**
+	 * Actualiza las imagenes en el panel de recursos asignados
+	 */
+	private void updateAsignedTileGrid() {
+		assignedTileGrid.invalidateCache();
+		assignedTileGrid.fetchData();		
+	}
+
+	/**
+	 * Actualiza las imagenes del panel de los recusos SIN asignar.
+	 * @param projectId Id del proyecto que debe mostrar
+	 */
+	private void updateUserTileGrid(Integer projectId) {
+		//Actualizo los usuarios
+		userTileGrid.setData(new Record[]{});
+		UserServicesClient.Util.getInstance().getUserNotAssignedToProject(projectId, new AsyncCallback<List<UserDTO>>() {
+			@Override
+			public void onSuccess(List<UserDTO> result) {
+				for (UserDTO dto : result) {
+					Record t = new Record();
+					t.setAttribute(IMAGE_NAME, dto.getImageName());
+					t.setAttribute(NAME, dto.getName());
+					t.setAttribute(USER_NAME, dto.getUserName());
+					t.setAttribute(EMAIL, dto.getEmail());
+					t.setAttribute(USER_ID, dto.getId());
+					
+					userTileGrid.addData(t);
+				}
+				userTileGrid.redraw();
+			}
+			@Override
+			public void onFailure(Throwable caught) {
+				SC.say("Error al cargar los usaurio para asignar");
+			}
+		});			
+		
 	}
 
 	/**
