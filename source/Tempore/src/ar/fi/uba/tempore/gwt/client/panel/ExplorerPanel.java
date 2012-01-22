@@ -47,9 +47,9 @@ public class ExplorerPanel extends SectionStack {
 
 		ImgButton filterButton = new ImgButton();
 		filterButton.setTooltip("Filtrar Nombre del Proyecto");
-		filterButton.setSize(16);  
+		filterButton.setSize(16);
 		filterButton.setShowRollOver(false);  
-		filterButton.setSrc("../images/png/24x24/Filter.png");  
+		filterButton.setSrc("../images/png/explorer/Filter.png");  
 		filterButton.setActionType(SelectionType.CHECKBOX);		
 		filterButton.addClickHandler(new ClickHandler() {
 			@Override
@@ -63,7 +63,7 @@ public class ExplorerPanel extends SectionStack {
 		freeGroupButton.setTooltip("Desagrupar");
 		freeGroupButton.setSize(16);  
 		freeGroupButton.setShowRollOver(false);  
-		freeGroupButton.setSrc("../images/png/24x24/Yellow bookmark.png");  
+		freeGroupButton.setSrc("../images/png/explorer/Yellow bookmark.png");  
 		freeGroupButton.setActionType(SelectionType.RADIO);  
 		freeGroupButton.setRadioGroup(RADIO_GROUP);		
 		freeGroupButton.addClickHandler(new ClickHandler() {
@@ -78,7 +78,7 @@ public class ExplorerPanel extends SectionStack {
 		clientGroupButton.setTooltip("Agrupar por Owner");
 		clientGroupButton.setSize(16);  
 		clientGroupButton.setShowRollOver(false);  
-		clientGroupButton.setSrc("../images/png/24x24/Red bookmark.png");  
+		clientGroupButton.setSrc("../images/png/explorer/Red bookmark.png");  
 		clientGroupButton.setActionType(SelectionType.RADIO);  
 		clientGroupButton.setRadioGroup(RADIO_GROUP); 
 		clientGroupButton.addClickHandler(new ClickHandler() {
@@ -93,7 +93,7 @@ public class ExplorerPanel extends SectionStack {
 		stateGroupButton.setTooltip("Agrupar por Estado");
 		stateGroupButton.setSize(16);  
 		stateGroupButton.setShowRollOver(false);  
-		stateGroupButton.setSrc("../images/png/24x24/Blue bookmark.png");  
+		stateGroupButton.setSrc("../images/png/explorer/Blue bookmark.png");  
 		stateGroupButton.setActionType(SelectionType.RADIO);  
 		stateGroupButton.setRadioGroup(RADIO_GROUP);
 		stateGroupButton.addClickHandler(new ClickHandler() {

@@ -30,11 +30,12 @@ public class TempCounterServicesImpl extends RemoteServiceServlet implements Tem
 		TempCounterDAO tcDAO = new TempCounterDAO();
 		log.info("STATE COUNTER - " + userId);
 		TempCounter tc = tcDAO.findById(userId);
-		if (tc != null && tc.getControl() == PLAY){
-			//Esta en play, cuento desde cuando esta inicializado
-			tc.setTimeAcumulated(tc.getTimeAcumulated()+System.currentTimeMillis()-tc.getTimeIni());
-		}
+		
 		TempCounterDTO tcDTO = tc==null?null:mapper.map(tc, TempCounterDTO.class);
+		if (tcDTO != null && tcDTO.getControl() == PLAY){
+			//Esta en play, cuento desde cuando esta inicializado
+			tcDTO.setTimeAcumulated(tcDTO.getTimeAcumulated()+System.currentTimeMillis()-tcDTO.getTimeIni());
+		}
 
 		return tcDTO;
 	}

@@ -63,9 +63,18 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 		image.setCanFilter(false);
 		
 		ListGridField imageOwner = new ListGridField(ProjectPanelDataSource.IS_OWNER_FIELD);
+//		imageOwner.setCellFormatter(new CellFormatter() {
+//			@Override
+//			public String format(Object value, ListGridRecord record, int rowNum, int colNum) {
+//				if (value.toString().equals("1")){
+//					return "Creador";
+//				}
+//				return "Asignado";
+//			}
+//		});
 		imageOwner.setAlign(Alignment.CENTER);
 		imageOwner.setType(ListGridFieldType.IMAGE);
-		imageOwner.setImageURLPrefix("../images/png/24x24/Favourites");  
+		imageOwner.setImageURLPrefix("../images/png/explorer/Favourites");  
 		imageOwner.setImageURLSuffix(".png");
 		imageOwner.setWidth(25);
 		imageOwner.setCanFilter(false);
@@ -173,6 +182,7 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 	 */
 	public void viewByStateProjectGroup (){
 		this.groupBy(ProjectPanelDataSource.STATE_NAME_FIELD);
+		this.setGroupStartOpen("all");
 	}
 	
 	/**
@@ -180,6 +190,7 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 	 */
 	public void viewByClientProjectGroup (){
 		this.groupBy(ProjectPanelDataSource.IS_OWNER_FIELD);
+		this.setGroupStartOpen("all");
 	}
 	
 	/**
