@@ -1,13 +1,11 @@
 package ar.fi.uba.tempore.dto;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class UserProjectDTO implements Serializable {
+public class UserProjectDTO implements IsSerializable {
 
-	private static final long serialVersionUID = 2920888411152245465L;
 	private Integer id;	
 	private Integer owner;
-
 	private UserDTO user;
 	private ProjectDTO project;
 	
