@@ -12,7 +12,6 @@ import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 import ar.fi.uba.temporeutils.image.ImgClient;
 import ar.fi.uba.temporeutils.observer.ProjectObserver;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.Record;
 import com.smartgwt.client.types.DragAppearance;
@@ -22,11 +21,11 @@ import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
-import com.smartgwt.client.widgets.events.DragStartEvent;
-import com.smartgwt.client.widgets.events.DragStartHandler;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tile.TileGrid;
+import com.smartgwt.client.widgets.tile.events.RecordClickEvent;
+import com.smartgwt.client.widgets.tile.events.RecordClickHandler;
 import com.smartgwt.client.widgets.tile.events.SelectionChangedEvent;
 import com.smartgwt.client.widgets.tile.events.SelectionChangedHandler;
 import com.smartgwt.client.widgets.viewer.DetailFormatter;
@@ -110,23 +109,21 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 		assignedTileGrid.setCanAcceptDrop(true);
 		assignedTileGrid.setCanDrag(true);
 		assignedTileGrid.setCanReorderTiles(false);
-
+		assignedTileGrid.setAnimateTileChange(true);
+		
 		assignedTileGrid.addSelectionChangedHandler(changeProjectOwner);
 		assignedTileGrid.setDataSource(ResourceDataSource.getInstance());
-		assignedTileGrid.addDragStartHandler(new DragStartHandler() {
+		assignedTileGrid.addRecordClickHandler(new RecordClickHandler() {
 			@Override
-			public void onDragStart(DragStartEvent event) {
-				GWT.log("Start Drag...");
-				//TODO evitar que el dueño sea movido
-//				TileRecord selectedRecord = assignedTileGrid.getSelectedRecord();
-				
-//				final TileGrid theDragTargetGrid = (TileGrid)EventHandler.getDragTarget();
-//	            TileRecord theSelectedRecord = theDragTargetGrid.getSelectedRecord();
-//	            int theTileDropPosition = theDragTargetGrid.getRecordIndex(theSelectedRecord);
-//	            GWT.log("Indice seleccionado = " + theTileDropPosition);
+			public void onRecordClick(RecordClickEvent event) {
+				//Si puedo cambiar el dueño de proyecto 
+				if (ProjectPanel.getInstance().getSelected().getIsOwner() == 1) {
+					if (event.getRecord().getAttributeAsInt(IS_OWNER) == 1){
+						SC.say("No puede desasignar al usuario due&ntilde;o del proyecto");
+					}
+				}
 			}
 		});
-		
 		
 		//USUARIOS ASIGANDOS
 		final DetailViewerField imageAsigned = new DetailViewerField(IMAGE_NAME);

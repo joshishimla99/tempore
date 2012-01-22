@@ -11,7 +11,6 @@ import ar.fi.uba.tempore.gwt.client.UserProjectServicesClientAsync;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 import ar.fi.uba.temporeutils.listgrid.filter.GenericGwtRpcDataSourceFilterId;
 
-import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceImageField;
@@ -75,13 +74,13 @@ public class ResourceDataSource extends GenericGwtRpcDataSourceFilterId<Integer,
 		project.setId(ProjectPanel.getInstance().getSelected().getId());
 		dto.setProject(project);
 		
-		GWT.log("Es dueño = " + from.getAttributeAsInt(ResourceTabPanel.IS_OWNER));
-		dto.setOwner(from.getAttributeAsInt(ResourceTabPanel.IS_OWNER));
+		dto.setOwner(from.getAttributeAsInt(ResourceTabPanel.IS_OWNER)==null?0:from.getAttributeAsInt(ResourceTabPanel.IS_OWNER));
 	}
 
 	@Override
 	public void copyValues(UserProjectDTO from, ListGridRecord to) {
 		to.setAttribute(ResourceTabPanel.USER_PROJECT_ID, from.getId());
+		//Siempre cuando se asigna es un no dueño
 		to.setAttribute(ResourceTabPanel.IS_OWNER, from.getOwner());
 		
 		UserDTO user = from.getUser();
@@ -111,7 +110,6 @@ public class ResourceDataSource extends GenericGwtRpcDataSourceFilterId<Integer,
 
 	@Override  
     protected Object transformRequest(DSRequest dsRequest) {
-		//GWT.log("Evento de DataSource - " + dsRequest.getOperationType());
 		if (ProjectPanel.getInstance().getSelected() != null){
 			this.setId(ProjectPanel.getInstance().getSelected().getId());		
 		}

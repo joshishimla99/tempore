@@ -73,19 +73,19 @@ public class UserProjectServicesImpl extends RemoteServiceServlet implements Use
 	public void remove(UserProjectDTO userProject) {
 		log.info("UserProject - REMOVE DATA");
 
-//		if (data.getOwner()!=null && data.getOwner()==1){
-//			log.info("Usuario dueño");
-//			throw new Exception("El usuario dueño no puede ser desasignado del proyecto");
-//		}
-		
-		//TODO Validar que el usuario que realiza la operacion es el owner del proyecto
-		AlertDAO aDAO = new AlertDAO();
-		aDAO.deleteAllUserAlert(userProject.getId());
-
-		UserProjectDAO upDAO = new UserProjectDAO();
-		UserProject up = upDAO.findById(userProject.getId());
-		
-		upDAO.delete(up);
+		if (userProject.getOwner()!=null && userProject.getOwner()==1){
+			log.info("Usuario dueño, no desasignar");
+			throw new NullPointerException("El usuario dueño no puede ser desasignado del proyecto");
+		} else {
+			//TODO Validar que el usuario que realiza la operacion es el owner del proyecto
+			AlertDAO aDAO = new AlertDAO();
+			aDAO.deleteAllUserAlert(userProject.getId());
+	
+			UserProjectDAO upDAO = new UserProjectDAO();
+			UserProject up = upDAO.findById(userProject.getId());
+			
+			upDAO.delete(up);
+		}
 	}
 	
 	
