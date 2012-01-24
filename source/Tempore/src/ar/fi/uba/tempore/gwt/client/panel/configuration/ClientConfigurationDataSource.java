@@ -33,7 +33,7 @@ public class ClientConfigurationDataSource extends GenericGwtRpcDataSource<Clien
 		itemField1.setRequired(true);
 		fields.add(itemField1);
 		
-		DataSourceTextField itemField2 = new DataSourceTextField(COL_ADDRESS,"Direccion");
+		DataSourceTextField itemField2 = new DataSourceTextField(COL_ADDRESS,"Direcci&oacute;n");
 		itemField2.setRequired(true);
 		fields.add(itemField2);
 		
@@ -41,12 +41,12 @@ public class ClientConfigurationDataSource extends GenericGwtRpcDataSource<Clien
 		itemField3.setRequired(true);
 		fields.add(itemField3);
 
-		DataSourceTextField itemField4 = new DataSourceTextField(COL_COUNTRY,"Pais");
+		DataSourceTextField itemField4 = new DataSourceTextField(COL_COUNTRY,"Pa&iacute;s");
 		itemField4.setRequired(true);
 		fields.add(itemField4);
 		
 		
-		DataSourceTextField itemField5 = new DataSourceTextField(COL_PHONE,"Telefono");
+		DataSourceTextField itemField5 = new DataSourceTextField(COL_PHONE,"Tel&eacute;fono");
 		//itemField5.setRequired(true);
 		fields.add(itemField5);
 		
@@ -54,7 +54,7 @@ public class ClientConfigurationDataSource extends GenericGwtRpcDataSource<Clien
 		//itemField6.setRequired(true);
 		fields.add(itemField6);
 		
-		DataSourceTextField itemField7 = new DataSourceTextField(COL_ZIP,"Codigo Postal");
+		DataSourceTextField itemField7 = new DataSourceTextField(COL_ZIP,"C&oacute;odigo Postal");
 		//itemField7.setRequired(true);
 		fields.add(itemField7);
 		
