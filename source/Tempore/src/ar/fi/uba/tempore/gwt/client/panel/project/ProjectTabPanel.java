@@ -43,7 +43,22 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 	private static final String END_FIELD = "pEndDate";
 	private static final String CLIENT_FIELD = "pClient";
 	private static final String STATE_FIELD = "pState";
-
+	private static final String HELPTEXT = "<br><b>Administraci&oacute;n de Proyectos</b><br>Esta p&aacute;gina le permitir&aacute; modificar y dar de alta proyectos." +
+	"<br> La informaci&oacute;n que es posible actualizar o definir para cada proyecto es la siguiente:" +
+	"<br><b>Nombre: </b>Nombre del proyecto" +
+	"<br><b>Cliente: </b>Cliente del proyecto" +
+	"<br><b>Fecha Inicio: </b>Fecha estimada de inicio del proyecto" +
+	"<br><b>Fecha Fin: </b>Fecha estimada de finalizaci&oacute;n del proyecto" +
+	"<br><b>Presupuesto: </b>Presupuesto estimado en pesos del proyecto" +
+	"<br><b>Descripci&oacute;n: </b>Breve descripci&oacute;n del proyecto" +
+	"<br><b>Estado: </b>Estado actual del proyecto. Los posibles estados son: Adquirido, Iniciado, UAT, Cerrado, Cancelado, Suspendido." +
+    "<br><br><b>Creaci&oacute;n de Nuevo Proyecto</b><br>Para crear un nuevo proyecto seleccione el bot&oacute;n Nuevo, complete todos los campos y luego presione Guardar. Si uno o m&aacute;s de los campos no son ingresados, no ser&aacute; posible guardar el proyecto." +  
+    "<br><br><b>Modificaci&oacute;n de Proyecto</b><br>Seleccione el proyecto deseado, modifique el/los campo/s que se requieran y luego presione Guardar." +  
+    "<br><br><br><br><b>Importante</b><br>1) Un proyecto puede pasar de un estado a cualquier otro, independientemente del ciclo normal de los proyectos." +
+    "<br>2) La Fecha de Fin no puede ser menor a la Fecha de Inicio." +
+    "<br>3) Un proyecto puede tener solo un cliente.";  
+		
+	
 	private DynamicForm form;
 	private Label mesageError = new Label();
 
@@ -52,7 +67,7 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		//creo componente sin actualizar
 		updateContent();
 	}
-
+	
 	@Override
 	public void refreshPanel() {
 		ProjectPanel.getInstance().addObserver(this);
@@ -64,21 +79,33 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		ProjectPanel.getInstance().removeObserver(this);
 	}
 
-
+	
 	public void updateContent() {
 		final Label title = new Label("Administraci&oacute;n de Proyectos");
 		title.setWidth(200);
 		title.setHeight(15);
-
+		
 		mesageError.setVisible(false);
 		mesageError.setWidth(200);
 		mesageError.setHeight(15);
+		
+        title.setIcon("[SKIN]/actions/help.png");
+        title.addIconClickHandler(new com.smartgwt.client.widgets.events.IconClickHandler() {
+			
+			@Override
+			public void onIconClick(
+					com.smartgwt.client.widgets.events.IconClickEvent event) {
+				 	SC.say(HELPTEXT);
+				
+			}
+		});
 
+        
 		//FORM
 		form = new DynamicForm();		
 		final TextItem idCode = new TextItem(ID_FIELD, "C&oacute;digo");
 		idCode.setDisabled(true);
-
+		
 		final TextItem txtName = new TextItem(NAME_FIELD, "Nombre");
 		txtName.setLength(30);
 		txtName.setHint("<nobr>30 caracteres m&aacute;ximo</nobr>");
@@ -100,27 +127,27 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 				Window.alert("Error al cargar los Estados del Proyecto");
 			}
 		});
-
-		//		final SelectItem selClient = new SelectItem(CLIENT_FIELD, "Clientes");
-		//		selClient.setMultiple(true);
-		//		selClient.setMultipleAppearance(MultipleAppearance.PICKLIST);
-		//		selClient.setRequired(true);		
-		//		
-		//		ClientServicesClient.Util.getInstance().fetch(new AsyncCallback<List<ClientDTO>>() {			
-		//			@Override
-		//			public void onSuccess(List<ClientDTO> result) {
-		//				FormItem item = form.getItem(CLIENT_FIELD);
-		//				LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();  
-		//				for (ClientDTO clientDTO : result) {
-		//					valueMap.put(clientDTO.getId().toString(), clientDTO.getName());
-		//				}
-		//				item.setValueMap(valueMap);
-		//			}
-		//			@Override
-		//			public void onFailure(Throwable caught) {
-		//				Window.alert("Fallo la carga del combo 'Clientes'");				
-		//			}
-		//		});
+		
+//		final SelectItem selClient = new SelectItem(CLIENT_FIELD, "Clientes");
+//		selClient.setMultiple(true);
+//		selClient.setMultipleAppearance(MultipleAppearance.PICKLIST);
+//		selClient.setRequired(true);		
+//		
+//		ClientServicesClient.Util.getInstance().fetch(new AsyncCallback<List<ClientDTO>>() {			
+//			@Override
+//			public void onSuccess(List<ClientDTO> result) {
+//				FormItem item = form.getItem(CLIENT_FIELD);
+//				LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();  
+//				for (ClientDTO clientDTO : result) {
+//					valueMap.put(clientDTO.getId().toString(), clientDTO.getName());
+//				}
+//				item.setValueMap(valueMap);
+//			}
+//			@Override
+//			public void onFailure(Throwable caught) {
+//				Window.alert("Fallo la carga del combo 'Clientes'");				
+//			}
+//		});
 
 		final DateItem startDate = new DateItem(START_FIELD, "Fecha Inicio");
 		startDate.setUseTextField(true);
@@ -136,12 +163,12 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		endDate.setUseMask(true);
 		endDate.setRequired(true);
 		endDate.setInvalidDateStringMessage("La fecha ingresada no es v&aacute;lida");
-
+		
 		final TextItem budget = new TextItem(BUDGET_FIELD, "Presupuesto");
 		budget.setHint("$");
 		budget.setKeyPressFilter("[0-9]");
 		budget.setRequired(true);
-
+		
 		final TextAreaItem txtDescription = new TextAreaItem(DESCRIPTION_FIELD, "Descripci&oacute;n");
 		txtDescription.setLength(150);
 		txtDescription.setWidth(250);
@@ -158,13 +185,13 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 				}
 				selState.setValueMap(valueMap);	
 			}
-
+			
 			@Override
 			public void onFailure(Throwable caught) {
 				Window.alert("Error al cargar los Estados del Proyecto");
 			}
 		});
-
+		
 		form.setFields(	idCode, 
 				txtName, 
 				selClient,
@@ -174,56 +201,56 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 				txtDescription,
 				selState);		
 
-
-
+		
+		
 		//BOTONERA
 		final IButton cancelProjectButton = new IButton();
 		cancelProjectButton.setTitle("Cancelar");
 		cancelProjectButton.setIcon("../images/ico/back.ico");
 		cancelProjectButton.addClickHandler(cancelProjectEvent);
-
+		
 		final IButton createProjectButton = new IButton();
 		createProjectButton.setTitle("Nuevo");
 		createProjectButton.setIcon("../images/ico/add.ico");
 		createProjectButton.addClickHandler(newProjectEvent);
-
+		
 		final IButton applyButton = new IButton();
 		applyButton.setTitle("Guardar");
 		applyButton.setIcon("../images/ico/save.ico");
 		applyButton.addClickHandler(saveProjectEvent);
-
+						
 		//LAYOUTs
 		final HLayout hLayoutButton = new HLayout();
 		hLayoutButton.setMembersMargin(10);
 		hLayoutButton.setWidth(340);
 		hLayoutButton.setAlign(Alignment.RIGHT);
 		hLayoutButton.addMember(cancelProjectButton);
-		hLayoutButton.addMember(createProjectButton);
-		hLayoutButton.addMember(applyButton);
+	    hLayoutButton.addMember(createProjectButton);
+	    hLayoutButton.addMember(applyButton);
 
-		final VLayout vLayoutForm = new VLayout(10);
-		vLayoutForm.addMember(form);
-		final HLayout hLayoutBody = new HLayout();
-		hLayoutBody.addMember(vLayoutForm);
-
+	    final VLayout vLayoutForm = new VLayout(10);
+	    vLayoutForm.addMember(form);
+	    final HLayout hLayoutBody = new HLayout();
+	    hLayoutBody.addMember(vLayoutForm);
+	    
 		final VLayout vLayout = new VLayout();		
 		vLayout.setMembersMargin(20);
 		vLayout.addMember(title);
 		vLayout.addMember(mesageError);
 		vLayout.addMember(hLayoutBody);
 		vLayout.addMember(hLayoutButton);
-
+		
 		addChild(vLayout);
 		this.redraw();
 	}
-
+	
 	private ClickHandler cancelProjectEvent = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
 			form.reset();
 		}
 	};
-
+	
 	/**
 	 * Evento para crear un nuevo proyecto
 	 */
@@ -281,7 +308,7 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		}
 	};
 
-
+	
 	/**
 	 * Metodo del ProjectPanel cuando se selecciona otro Proyecto
 	 */
@@ -293,7 +320,7 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 			form.rememberValues();
 		}
 	}
-
+	
 	/**
 	 * Copia del formulario al DTO
 	 * @param ProjectDTO
@@ -311,12 +338,12 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		ClientDTO client = new ClientDTO();
 		client.setId(new Integer(form.getValue(CLIENT_FIELD).toString()));
 		to.setClient(client);
-
+		
 		//Estado del proyecto
 		ProjectStateDTO projectState = new ProjectStateDTO();
 		projectState.setId(new Integer(form.getValue(STATE_FIELD).toString()));
 		to.setProjectState(projectState);
-
+		
 		//Usuario creador
 		UserProjectDTO upDTO = new UserProjectDTO();
 		upDTO.setUser(SessionUser.getInstance().getUser());
@@ -324,7 +351,7 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		userProjectList.add(upDTO);
 		to.setUserProjectList(userProjectList);
 	}
-
+	
 	/**
 	 * Copia del DTO al formulario
 	 * @return DynamicForm
@@ -335,12 +362,12 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		to.setValue(NAME_FIELD, from.getName());
 		to.setValue(BUDGET_FIELD, from.getBudget());
 		to.setValue(DESCRIPTION_FIELD, from.getDescription());
-
+		
 		if (from.getEndDate() != null)
 			to.setValue(END_FIELD, from.getEndDate());
 		if (from.getInitDate() != null)
 			to.setValue(START_FIELD, from.getInitDate());
-
+		
 		to.setValue(CLIENT_FIELD, from.getClient().getId());
 		to.setValue(STATE_FIELD, from.getProjectState().getId());		
 	}
