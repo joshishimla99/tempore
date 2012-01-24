@@ -18,6 +18,7 @@ import com.smartgwt.client.data.Record;
 import com.smartgwt.client.types.DragDataAction;
 import com.smartgwt.client.types.GroupStartOpen;
 import com.smartgwt.client.types.ListGridFieldType;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.types.TimeDisplayFormat;
 import com.smartgwt.client.widgets.DateChooser;
 import com.smartgwt.client.widgets.Label;
@@ -58,15 +59,33 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 	private final TreeGrid tasksTree = new TreeGrid();
 	private final ListGrid hoursCountGrid = new ListGrid();
 	private final DateChooser dateChooser = new DateChooser();
-
+	private static final String HELPTEXT = "<br><b>Asignaci&oacute;n de horas trabajadas a tareas</b><br>Esta p&aacute;gina le permitir&aacute; administrar las horas cargadas." +
+	"<br> La informaci&oacute;n que se maneja para cada tarea cargada es la siguiente:" +
+	"<br><b>Usuario: </b>Nombre del usuario a ser utilizado para ingresar al sistema." +
+	"<br><b>Nombre: </b>Nombre del usuario." +
+	"<br><b>Cantidad de Horas: </b>Representa la cantidad de horas cargadas para la tarea seleccionada." +
+    "<br><br><b>Carga de Horas</b><br>Para cargar horas a una tarea se debe seleccionar la tarea de la parte superior, arrastre esa tarea al recuadro inferior donde podr&aacute; asignar las horas deseadas a la tarea. " +  
+    "<br><br><b>Modificaci&oacute;n de Horas Cargadas</b><br>Seleccione la tarea que desea modificar en el recuadro inferior y autom&aacute;ticamente el campo Horas ser&aacute; editable." +  
+    "<br><br><b>Eliminaci&oacute;n de Horas Cargadas</b><br>Seleccione la l&iacute;nea con las tareas que desee eliminar y presione el bot&oacute;n Menos ubicado sobre el sector derecho de la l&iacute;nea.";
+	
 	public DragDropTimePanel(){
 		super();
 
 		//TITULO
 		final Label title = new Label("Asignaci&oacute;n de horas trabajadas a tareas");
-		title.setWidth(200);
+		title.setWidth(250);
 		title.setHeight(30);
-		
+		title.setIcon("[SKIN]/actions/help.png");
+        title.addIconClickHandler(new com.smartgwt.client.widgets.events.IconClickHandler() {
+			
+			@Override
+			public void onIconClick(
+					com.smartgwt.client.widgets.events.IconClickEvent event) {
+				 	SC.say(HELPTEXT);
+				
+			}
+		});
+        
 		//FECHA PARA CARGA DE HORAS		
 		dateChooser.setHeight("190");
 		dateChooser.setShowTodayButton(false);
