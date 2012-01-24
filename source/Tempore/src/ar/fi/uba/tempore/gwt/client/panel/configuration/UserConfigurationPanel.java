@@ -4,6 +4,7 @@ import ar.fi.uba.temporeutils.image.ImgClient;
 import ar.fi.uba.temporeutils.image.UpdateImgHandler;
 
 import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Label;
@@ -22,6 +23,16 @@ import com.smartgwt.client.widgets.layout.VLayout;
 
 public class UserConfigurationPanel extends Canvas {
 
+	private static final String HELPTEXT = "<br><b>Configuraci&oacute;n de Usuarios</b><br>Esta p&aacute;gina le permitir&aacute; modificar, agregar y eliminar usuarios al sistema. Las modificaciones realizadas en esta p&aacute;gina ser&aacute;n utilizadas para asociar usuarios a los proyectos." +
+	"<br> La informaci&oacute;n que se maneja para cada usuario es la siguiente:" +
+	"<br><b>Usuario: </b>Nombre del usuario a ser utilizado para ingresar al sistema." +
+	"<br><b>Nombre: </b>Nombre del usuario." +
+	"<br><b>Apellido: </b>Apellido del usuario." +
+	"<br><b>Email: </b>Email del usuario." +
+    "<br><br><b>Creaci&oacute;n de Nuevo Usuario</b><br>Para crear un nuevo usuario seleccione el bot&oacute;n Nuevo y complete todos los campos. Si uno o m&aacute;s de los campos no son ingresados, no ser&aacute; posible guardar al cliente." +  
+    "<br><br><b>Modificaci&oacute;n de un Usuario</b><br>Seleccione al usuario que desee modificar y autom&aacute;ticamente todos los campos ser&aacute;n editables." +  
+    "<br><br><b>Eliminaci&oacute;n de un Usuario</b><br>Seleccione al usuario que desee eliminar y presione el bot&oacute;n Eliminar.";
+	
 	public UserConfigurationPanel() {
 		super();
 		updateContent();
@@ -37,7 +48,16 @@ public class UserConfigurationPanel extends Canvas {
 		Label title = new Label("Configuraci&oacute;n de Usuarios");
 		title.setWidth(200);
 		title.setHeight(15);
-
+		title.setIcon("[SKIN]/actions/help.png");
+        title.addIconClickHandler(new com.smartgwt.client.widgets.events.IconClickHandler() {
+			
+			@Override
+			public void onIconClick(
+					com.smartgwt.client.widgets.events.IconClickEvent event) {
+				 	SC.say(HELPTEXT);
+				
+			}
+		});
 
 		final UserConfigurationDataSource dataSource = UserConfigurationDataSource.getInstance();
 
