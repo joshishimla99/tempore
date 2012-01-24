@@ -57,10 +57,33 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 	private SectionItem  titleTask, firstLevelTask, secondLevelTask;
 	private ProjectDTO projectSelected;
 	private final ButtonItem addTask;
-//	private TaskTreePanel taskTreePanel;
+	private static final String HELPTEXT = "<br><b>Administraci&oacute;n de Tareas</b><br>Esta p&aacute;gina le permitir&aacute; modificar, agregar y eliminar tareas al proyecto seleccionado. Las tareas se visualizan comenzando por las tareas primarias y navegando se desplegar&aacute;n las tareas secundarias." +
+	"<br> La informaci&oacute;n que es posible actualizar o definir para cada tarea es la siguiente:" +
+	"<br><b>Nombre: </b>Nombre de la tarea" +
+	"<br><b>Descripci&oacute;n: </b>Breve descripci&oacute;n de la tarea" +
+	"<br><b>Tipo: </b>Tipo de tarea. Los posibles tipos son: An&aacute;lisis, Desarrollo y Soporte." +
+	"<br><b>Tiempo Estimado: </b>Tiempo estimado de la tarea en horas." +
+    "<br><br><b>Creaci&oacute;n de Nueva Tarea</b><br>Para crear una nueva tarea seleccione el bot&oacute;n Agregar Tarea, complete todos los campos y luego presione Guardar. Si uno o m&aacute;s de los campos no son ingresados, no ser&aacute; posible guardar la tarea." +  
+    "<br><br><b>Modificaci&oacute;n de una Tarea</b><br>Seleccione la estrella ubicada en la parte superior izquierda de la tarea deseada, modifique el/los campo/s que se requieran y luego presione Guardar." +  
+    "<br><br><b>Eliminaci&oacute;n de una Tarea</b><br>Seleccione la cruz ubicada en la parte superior izquierda de la tarea que se desea eliminar.";  
 
 	public TaskTabPanel() {
 		super();
+		Label titleTab = new Label("Administraci&oacute;n de Tareas");
+		titleTab.setWidth(200);
+		titleTab.setHeight(15);
+		
+		titleTab.setIcon("[SKIN]/actions/help.png");
+		titleTab.addIconClickHandler(new com.smartgwt.client.widgets.events.IconClickHandler() {
+				
+				@Override
+				public void onIconClick(
+						com.smartgwt.client.widgets.events.IconClickEvent event) {
+					 	SC.say(HELPTEXT);
+					
+				}
+			});
+		
 		form = new DynamicForm();
 		form.setAutoWidth();
 		form.setNumCols(5);
@@ -102,7 +125,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		upLayout.addMember(form);
 		upLayout.addMember(buttonsLayout);
 		
-		final VLayout vLayout = new VLayout(15);
+		vLayout.addMember(titleTab);
 		vLayout.setMargin(10);
 		vLayout.setWidth100();
 		vLayout.addMember(upLayout);
@@ -507,6 +530,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 			
 			final TextItem estimatedTimeLabel = new TextItem();
 			estimatedTimeLabel.setTitle("Tiempo Estimado");
+			estimatedTimeLabel.setHint("<nobr>Horas</nobr>");
 			estimatedTimeLabel.setKeyPressFilter("[0-9.]");
 			estimatedTimeLabel.setRequired(true);
 			
