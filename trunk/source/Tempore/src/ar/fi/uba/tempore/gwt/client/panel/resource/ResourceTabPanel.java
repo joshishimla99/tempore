@@ -19,6 +19,7 @@ import com.smartgwt.client.types.SelectionType;
 import com.smartgwt.client.types.Visibility;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Button;
+import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
@@ -46,6 +47,12 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 	private final TileGrid assignedTileGrid = new TileGrid();
 	private final Button changeOwnerBtn = new Button("Cambiar Lider del Proyecto");
 	private boolean changeOwner = false;
+	
+	private static final String HELPTEXT = "<br><b>Administraci&oacute;n de Recursos</b><br>Esta p&aacute;gina le permitir&aacute; administrar los recursos para el proyecto seleccionado. En la parte superior se localizan todos los recursos disponibles y en la parte inferior los recursos asignados al proyecto." +
+    "<br><br><b>Asignar un Recurso al Proyecto</b><br>Para asignar un recurso al proyecto, se debe  se debe seleccionar el recurso y arrastrarlo a la parte inferior. " +  
+    "<br><br><b>Desasignar un Recurso al Proyecto</b><br>Para desasignar un recurso al proyecto, se debe seleccionar el recurso deseado en la parte inferior y arrastrarlo a la parte superior del pantalla." +  
+    "<br><br><b>Cambiar el L&iacute;der del Proyecto</b><br>......................";
+	
 
 
 	@Override
@@ -62,6 +69,20 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 	public ResourceTabPanel(){
 		super();
 	
+		Label title = new Label("Administraci&oacute;n de Recursos");
+		title.setWidth(200);
+		title.setHeight(15);
+		title.setIcon("[SKIN]/actions/help.png");
+        title.addIconClickHandler(new com.smartgwt.client.widgets.events.IconClickHandler() {
+			
+			@Override
+			public void onIconClick(
+					com.smartgwt.client.widgets.events.IconClickEvent event) {
+				 	SC.say(HELPTEXT);
+				
+			}
+		});
+        
 		userTileGrid.setTileWidth(120);  
 		userTileGrid.setTileHeight(160);  
 		userTileGrid.setHeight("50%");  
@@ -152,7 +173,8 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 		VLayout vLayout = new VLayout();
 		vLayout.setWidth100();
 		vLayout.setHeight100();
-
+		
+		vLayout.addMember(title);
 		vLayout.addMember(userTileGrid);
 		vLayout.addMember(changeOwnerBtn);
 		vLayout.addMember(assignedTileGrid);
