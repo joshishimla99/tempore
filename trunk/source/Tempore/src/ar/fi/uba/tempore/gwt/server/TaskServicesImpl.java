@@ -22,10 +22,12 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class TaskServicesImpl extends RemoteServiceServlet implements TaskServicesClient {
 
 	private static final long serialVersionUID = -2875888868382111997L;
+//	private static final Long GMT_3 = 10800000L;
 	private final DozerBeanMapper mapper = new DozerBeanMapper();
 	private final Logger log = Logger.getLogger(this.getClass());
 	
 	public List<TaskDTO> getChildTask(Integer idProject, Integer idTask){
+		log.info("TASK - FETCH ChildTask");
 		TaskDAO taskDAO = new TaskDAO();
 		List<TaskDTO> taskDTOList = new ArrayList<TaskDTO>();
 		
@@ -42,6 +44,7 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 	
 	
 	public String deleteTask(Integer id, Integer idProject) throws TaskWithHoursChargedException{
+		log.info("TASK - DELETE");
 		TaskDAO taskDAO = new TaskDAO();
 		Task taskToDelete = taskDAO.findById(id);
 		// REGLA DE NEGOCIO -> SI LA TAREA NO TIENE TIEMPO CARGADO, ENTONCES VERIFICO SI SUS HIJAS LO TIENEN
@@ -96,25 +99,27 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 	 * Sino viene el ID se crea la tarea. Si viene y existe ese ID se actualiza con los datos que viene.
 	 */
 	public TaskDTO updateTask(TaskDTO taskDTO){
-		TaskDAO taskDAO = new TaskDAO();
-		TaskTypeDAO taskTypeDAO = new TaskTypeDAO();
-		
 		log.info("UPDATE - TASK");
-		List<TaskType> taskList = new ArrayList<TaskType>();
-		TaskType exampleInstance = new TaskType();
-		exampleInstance.setName(taskDTO.getTaskTypeDTO().getName());
-		log("Task Type " + taskDTO.getTaskTypeDTO().getName());
-		taskList = taskTypeDAO.findByExample(exampleInstance);
+		TaskDAO taskDAO = new TaskDAO();
+
+		//Actualizo el tiempo acumulado sacando le el GMT
+		Task task = mapper.map(taskDTO, Task.class);
+
+		//Seteamos el task type a partir del nombre
+		TaskType taskType = new TaskTypeDAO().findById(taskDTO.getTaskTypeDTO().getId());
+		task.setTaskType(taskType);
+		TaskTypeDTO taskTypeDTO = mapper.map(taskType, TaskTypeDTO.class);
 		
+		//Marco cual es el proyecto
 		Project project = new Project();
 		project.setId(taskDTO.getProject().getId());
+		task.setProject(project);
 		
-		Task a = mapper.map(taskDTO, Task.class);
-		a.setTaskType(taskList.get(0));
-		a.setProject(project);
+		//Actualizo la tarea
+		taskDAO.makePersistent(task);
 		
-		Task makePersistent = taskDAO.makePersistent(a);
-		return mapper.map(makePersistent, TaskDTO.class);
+		taskDTO.setTaskTypeDTO(taskTypeDTO);
+		return taskDTO;
 	}
 
 	/**

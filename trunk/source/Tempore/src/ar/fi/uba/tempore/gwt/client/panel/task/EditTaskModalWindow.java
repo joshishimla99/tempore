@@ -3,15 +3,17 @@ package ar.fi.uba.tempore.gwt.client.panel.task;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import ar.fi.uba.tempore.dto.ProjectDTO;
 import ar.fi.uba.tempore.dto.TaskDTO;
 import ar.fi.uba.tempore.dto.TaskTypeDTO;
 import ar.fi.uba.tempore.gwt.client.TaskServicesClient;
 import ar.fi.uba.tempore.gwt.client.TaskTypeServicesClient;
+import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 import ar.fi.uba.tempore.gwt.client.panel.task.TaskTabPanel.TaskBox;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.types.TimeDisplayFormat;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.IButton;
@@ -21,6 +23,7 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.events.CloseClickEvent;
 import com.smartgwt.client.widgets.events.CloseClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.HiddenItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
@@ -28,18 +31,22 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 public class EditTaskModalWindow {
+	protected static final String ID = "ID_TASK";
+	protected static final String NAME = "NAME_TASK";
+	protected static final String DESCRIPTION = "DESCRPTION_TASK";
+	protected static final String BUDGET = "BUDGET_TASK";
+	protected static final String TYPE = "TYPE_TASK";
+	protected static final String FATHER = "ID_PADRE_TASK";
+	private static final Long HORA = 60*60*1000L;
+	
 	private Window winModal;
-	private TextItem idLabel;
-	private TextItem taskNameLabel;
-	private TextAreaItem taskDescription;
-	private TextItem estimatedTimeLabel ;
-	private SelectItem taskType;
 	private DynamicForm form;
 	private TaskBox father;
 	
-	public EditTaskModalWindow(TaskBox task, final Integer id, String name, String description, Integer estimatedTime, final Integer projectId, final String type){
+	public EditTaskModalWindow(TaskBox task){
 		super();
 		this.father = task;
+		final TaskDTO taskDTO = task.getTaskDTO();
 		winModal = new Window();  
         winModal.setWidth(360);  
         winModal.setHeight(305);  
@@ -54,91 +61,96 @@ public class EditTaskModalWindow {
 				winModal.destroy();				
 			}
 		}); 
-        form = new DynamicForm();  
-        form.setHeight100();  
-        form.setWidth100();  
-        form.setPadding(5);  
-        form.setLayoutAlign(VerticalAlignment.BOTTOM);  
+          
         
-        idLabel = new TextItem("N&uacute;mero");
-        idLabel.setValue(String.valueOf(id));
+        final TextItem idLabel = new TextItem(ID, "N&uacute;mero");
+        idLabel.setValue(taskDTO.getId().toString());
         idLabel.setDisabled(true);
         
-     // Nombre de la tarea
-		taskNameLabel = new TextItem();
-		taskNameLabel.setTitle("Nombre");
-		taskNameLabel.setValue(name);
+        //Nombre de la tarea
+        final TextItem taskNameLabel = new TextItem(NAME, "Nombre");
+		taskNameLabel.setValue(taskDTO.getName());
 		taskNameLabel.setLength(30);
 		taskNameLabel.setRequired(true);
 
-		// description
-		taskDescription = new TextAreaItem();
-		taskDescription.setTitle("Descripci&oacute;n");
-		taskDescription.setValue(description);
+		//description
+		final TextAreaItem taskDescription = new TextAreaItem(DESCRIPTION,"Descripci&oacute;n");
+		taskDescription.setValue(taskDTO.getDescription());
 		taskDescription.setLength(150);
 		taskDescription.setRequired(true);
 		
-		estimatedTimeLabel = new TextItem();
-		estimatedTimeLabel.setTitle("Tiempo Estimado");
-		estimatedTimeLabel.setValue(estimatedTime);
-		estimatedTimeLabel.setKeyPressFilter("[0-9.]");
+		final HiddenItem taskParentId = new HiddenItem(FATHER);
+		taskParentId.setValue(taskDTO.getTaskId());
+		
+		final TextItem estimatedTimeLabel = new TextItem(BUDGET, "Tiempo Estimado");
+		estimatedTimeLabel.setTimeFormatter(TimeDisplayFormat.TOPADDED24HOURTIME);
+//		estimatedTimeLabel.setUseMask(true);
+		estimatedTimeLabel.setMask("###");
+		estimatedTimeLabel.setHint("Hs");
+		estimatedTimeLabel.setValue(taskDTO.getBudget()/HORA);
 		estimatedTimeLabel.setRequired(true);  
         
-		taskType = new SelectItem("taskType", "Tipo");
+		final SelectItem taskType = new SelectItem(TYPE, "Tipo");
+
+		form = new DynamicForm();  
+        form.setHeight100();  
+        form.setWidth100();  
+        form.setPadding(5);  
+        form.setLayoutAlign(VerticalAlignment.BOTTOM);
+		form.setFields(idLabel, taskParentId, taskNameLabel,taskDescription, estimatedTimeLabel, taskType);
+
+		
+		
 		TaskTypeServicesClient.Util.getInstance().fetch(new AsyncCallback<List<TaskTypeDTO>>() {			
 			@Override
 			public void onSuccess(List<TaskTypeDTO> result) {
 				LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();  
 				for (TaskTypeDTO taskTypeDTO : result) {
 					valueMap.put(taskTypeDTO.getId().toString(), taskTypeDTO.getName());
-					if (taskTypeDTO.getName().equals(type)){
-						taskType.setDefaultValue(taskTypeDTO.getName());
-					}
 				}
 				taskType.setValueMap(valueMap);
+				taskType.setValue(taskDTO.getTaskTypeDTO().getId());
 			}
 			@Override
 			public void onFailure(Throwable caught) {
-				SC.say("Fallo la carga del combo de Tipo de Tarea");				
+				SC.warn("Error en Servicio", "Fallo la carga del combo de Tipo de Tarea", null, null);				
 			}
 		});
-
 		
-		IButton editTaskButton = new IButton();
-		editTaskButton.setTitle("Guardar");
-		editTaskButton.setIcon("../images/ico/save.ico");
-		editTaskButton.addClickHandler(new ClickHandler(){
-
+		
+		GWT.log("Id del padre = " + taskDTO.getTaskId());
+		
+		IButton updateButton = new IButton();
+		updateButton.setTitle("Guardar");
+		updateButton.setIcon("../images/ico/save.ico");
+		updateButton.addClickHandler(new ClickHandler(){
 			@Override
 			public void onClick(ClickEvent event) {
 				if (form.validate()) {
+					
 					TaskDTO taskDTO = new TaskDTO();
-					ProjectDTO projectDTO = new ProjectDTO();
-					projectDTO.setId(projectId);
-					taskDTO.setProject(projectDTO);
-					taskDTO.setId(id);
-					taskDTO.setName(taskNameLabel.getValueAsString());
-					taskDTO.setDescription(taskDescription.getValueAsString());
-					taskDTO.setBudget(Integer.parseInt(estimatedTimeLabel.getValueAsString()));
+					taskDTO.setProject(ProjectPanel.getInstance().getSelected());
+					taskDTO.setId(new Integer(form.getValue(ID).toString()));
+					taskDTO.setName(form.getValue(NAME).toString());
+					taskDTO.setDescription(form.getValue(DESCRIPTION).toString());
+					taskDTO.setBudget(new Long(form.getValue(BUDGET).toString())*HORA);
+					taskDTO.setTaskId(new Integer(form.getValue(FATHER).toString()));
+					
 					final TaskTypeDTO taskTypeDTO = new TaskTypeDTO();
-					taskTypeDTO.setName(taskType.getDisplayValue());
+					taskTypeDTO.setId(new Integer(form.getValue(TYPE).toString()));
 					taskDTO.setTaskTypeDTO(taskTypeDTO);
 					
+					//Actualizo la tarea
 					TaskServicesClient.Util.getInstance().updateTask(taskDTO, new AsyncCallback<TaskDTO>(){
 						@Override
-						public void onFailure(Throwable caught) {
-							com.google.gwt.user.client.Window.alert("Ha ocurrido un error al intentar actualizar la tarea");
-						}
-
-						@Override
 						public void onSuccess(TaskDTO result) {
-							winModal.destroy();
-							TaskTypeDTO taskTypeDTO = new TaskTypeDTO();
-							taskTypeDTO.setName(taskType.getDisplayValue());
-							result.setTaskTypeDTO(taskTypeDTO);
 							father.refresh(result);
+							winModal.destroy();
 						}
-						
+						@Override
+						public void onFailure(Throwable caught) {
+							SC.warn("Error en Servicio", "Ha ocurrido un error al intentar actualizar la tarea", null, null);
+						}
 					});
 				}
 			}
@@ -153,13 +165,15 @@ public class EditTaskModalWindow {
 			}
 		});  
 		
-        form.setFields(idLabel, taskNameLabel,taskDescription, estimatedTimeLabel, taskType);  
-        VLayout vLayout = new VLayout();
+          
+
         HLayout buttonLayout = new HLayout();
         buttonLayout.setMembersMargin(10);
         buttonLayout.setAlign(Alignment.CENTER);
-        buttonLayout.addMember(editTaskButton);
+        buttonLayout.addMember(updateButton);
         buttonLayout.addMember(cancelTaskButton);
+        
+        VLayout vLayout = new VLayout();
         vLayout.addMember(form);
         vLayout.addMember(buttonLayout);
         
