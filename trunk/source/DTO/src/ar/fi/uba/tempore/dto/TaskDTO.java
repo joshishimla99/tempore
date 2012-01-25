@@ -7,7 +7,7 @@ public class TaskDTO implements IsSerializable {
 	private Integer taskId;
 	private String name;
 	private String description;
-	private int budget;
+	private Long budget;
 	private float realHs;
 	private TaskTypeDTO taskTypeDTO;
 	private ProjectDTO project;
@@ -41,11 +41,11 @@ public class TaskDTO implements IsSerializable {
 		this.description = description;
 	}
 
-	public int getBudget() {
+	public Long getBudget() {
 		return budget;
 	}
 
-	public void setBudget(int budget) {
+	public void setBudget(Long budget) {
 		this.budget = budget;
 	}
 
