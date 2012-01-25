@@ -27,7 +27,7 @@ public class Task implements Serializable {
 	private String name;
 	private String description;
 	private Integer taskId;
-	private Integer budget;
+	private Long budget;
 	
 	private TaskType taskType;
 	private Project project;
@@ -67,10 +67,10 @@ public class Task implements Serializable {
 	}
 	
 	@Column(name = "budget")
-	public Integer getBudget() {
+	public Long getBudget() {
 		return budget;
 	}
-	public void setBudget(Integer budget) {
+	public void setBudget(Long budget) {
 		this.budget = budget;
 	}
 	
