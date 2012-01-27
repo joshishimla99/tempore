@@ -134,7 +134,12 @@ public class EditTaskModalWindow {
 					taskDTO.setName(form.getValue(NAME).toString());
 					taskDTO.setDescription(form.getValue(DESCRIPTION).toString());
 					taskDTO.setBudget(new Long(form.getValue(BUDGET).toString())*HORA);
-					taskDTO.setTaskId(new Integer(form.getValue(FATHER).toString()));
+					
+					if (form.getValue(FATHER) == null){
+						taskDTO.setTaskId(null);
+					} else {
+						taskDTO.setTaskId(new Integer(form.getValue(FATHER).toString()));
+					}
 					
 					final TaskTypeDTO taskTypeDTO = new TaskTypeDTO();
 					taskTypeDTO.setId(new Integer(form.getValue(TYPE).toString()));

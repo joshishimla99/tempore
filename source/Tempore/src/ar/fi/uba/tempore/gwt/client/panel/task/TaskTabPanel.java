@@ -20,7 +20,6 @@ import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.DragAppearance;
 import com.smartgwt.client.types.HeaderControls;
 import com.smartgwt.client.types.LayoutPolicy;
-import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.types.TimeDisplayFormat;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.BooleanCallback;
@@ -340,18 +339,35 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 				break;
 			}
 			
-			
-			
 			//Caracteristicas de la ventana que tiene la tarea
-			setShowShadow(false);
-			setAnimateMinimize(true);
-			setDragAppearance(DragAppearance.OUTLINE);
-			setCanDrop(true);
-			setHeaderControls(HeaderControls.MINIMIZE_BUTTON,HeaderControls.HEADER_LABEL, new HeaderControl(HeaderControl.SETTINGS, 
-					new EditTaskHandler(this)) , HeaderControls.CLOSE_BUTTON);
-			setDragOpacity(30);
-			setVPolicy(LayoutPolicy.NONE);
-			setOverflow(Overflow.VISIBLE);
+			this.setShowShadow(false);
+			this.setAnimateMinimize(true);
+			this.setDragAppearance(DragAppearance.OUTLINE);
+			this.setCanDrop(true);
+			this.setHeaderControls(
+					HeaderControls.MINIMIZE_BUTTON,
+					HeaderControls.HEADER_LABEL, 
+					new HeaderControl(HeaderControl.SETTINGS, new EditTaskHandler(this)) , 
+					HeaderControls.CLOSE_BUTTON);
+			this.setDragOpacity(30);
+			this.setVPolicy(LayoutPolicy.NONE);
+//			this.setOverflow(Overflow.VISIBLE);
+			this.setHeight(130);
+			
+			this.setTitle(taskDTO.getName());
+			content = new Label("<span style=\" font-weight: bold;\">Tipo: </span>" + taskDTO.getTaskTypeDTO().getName() + "<br/>"  
+					+ "<span style=\" font-weight: bold;\">Horas Consumidas de la tarea: </span>" + MySimpleDateFormat.formatTime(realHs) + "<br/>"
+					+ "<span style=\" font-weight: bold;\">Horas Consumidas totales: </span>" + MySimpleDateFormat.formatTime(totalHs) + "<br/>"
+					+ "<span style=\" font-weight: bold;\">Horas Estimadas: </span> "+ MySimpleDateFormat.formatTime(taskDTO.getBudget()) + "</br>"
+					+ "<span style=\" font-weight: bold;\">Descripci&oacute;n: </span> "+ taskDTO.getDescription());
+			
+			content.setBackgroundColor(color);
+			content.setHeight100();
+			content.setWidth100();
+			this.addItem(content);
+
+			this.redraw();
+
 			
 			addDoubleClickHandler(new DoubleClickHandler() {
 				@Override
@@ -409,18 +425,6 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 				}
 			});
 					
-			
-			setTitle(taskDTO.getName());
-			content = new Label("<span style=\" font-weight: bold;\">Tipo: </span>" + taskDTO.getTaskTypeDTO().getName() + "<br/>"  
-	                + "<span style=\" font-weight: bold;\">Horas Consumidas de la tarea: </span>" + MySimpleDateFormat.formatTime(realHs) + "<br/>"
-	                + "<span style=\" font-weight: bold;\">Horas Consumidas totales: </span>" + MySimpleDateFormat.formatTime(totalHs) + "<br/>"
-	                + "<span style=\" font-weight: bold;\">Horas Estimadas: </span> "+ MySimpleDateFormat.formatTime(taskDTO.getBudget()) + "</br>"
-	                + "<span style=\" font-weight: bold;\">Descripci&oacute;n: </span> "+ taskDTO.getDescription());
-			content.setBackgroundColor(color);
-			content.setHeight100();
-			content.setWidth100();
-			addItem(content);
-			this.redraw();
 		}
 		
 		public void close() {
