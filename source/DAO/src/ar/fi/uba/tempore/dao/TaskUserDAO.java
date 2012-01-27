@@ -25,20 +25,19 @@ public class TaskUserDAO extends GenericHibernateDAO<TaskUser, Integer> {
 //				chargedHour += taskUserResult.getHourCount();
 //			}
 //		}
-//
-//		String hql = "select sum(tu.hourCount) from TaskUser as tu inner join tu.task as t where t.id=" + idTask;
-//
-//		Query createQuery = this.getSession().createQuery(hql);
-//		@SuppressWarnings("unchecked")
-//		List<Long> list = createQuery.list();
-//		if (!list.isEmpty()) {
-//			for (Long taskUserResult : list) {
-//				if(taskUserResult != null){
-//					log.error("entro en el servicio");
-//					chargedHour += taskUserResult.longValue();
-//				}
-//			}
-//		}
+
+		String hql = "select sum(tu.hourCount) from TaskUser as tu inner join tu.task as t where t.id=" + idTask;
+
+		Query createQuery = this.getSession().createQuery(hql);
+		@SuppressWarnings("unchecked")
+		List<Long> list = createQuery.list();
+		log.info("TASK HOUR = " + list);
+		for (Long taskUserResult : list) {
+			if(taskUserResult != null){
+				log.error("entro en el servicio");
+				chargedHour += taskUserResult.longValue();
+			}
+		}
 		return chargedHour;
 	}
 	/**
