@@ -23,7 +23,6 @@ import com.smartgwt.client.widgets.tree.TreeGridField;
  */
 public class TaskTreePanel extends TreeGrid{
 
-
 	public TaskTreePanel(TaskTabPanel taskTabPanel){
 		super();
 

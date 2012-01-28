@@ -10,7 +10,6 @@ import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 
 public class TaskTreeDataSource extends DataSource {
-	
 	public static final String NAME_FIELD = "name";
 	public static final String ID_FIELD = "id";
 	public static final String DESCRIPTION_FIELD = "description";

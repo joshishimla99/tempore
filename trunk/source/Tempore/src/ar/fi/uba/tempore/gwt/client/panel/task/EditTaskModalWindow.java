@@ -36,6 +36,7 @@ public class EditTaskModalWindow {
 	protected static final String FATHER = "ID_PADRE_TASK";
 	private static final Long HORA = 60*60*1000L;
 	
+	
 	private Window winModal;
 	private DynamicForm form;
 	private TaskBox father;

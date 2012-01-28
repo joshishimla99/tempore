@@ -40,6 +40,7 @@ public class NewTaskModalWindow extends Window{
 	protected static final String FATHER = "ID_PADRE_TASK";
 	private static final Long HORA = 60*60*1000L;
 	
+	
 	private TaskTabPanel taskTabPanel;
 	private final DynamicForm form = new DynamicForm();
 	
