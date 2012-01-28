@@ -25,7 +25,6 @@ import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.layout.VStack;
 
 public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver {
-
 	private TaskLayout taskBoxPanel;
 	private DynamicForm formTitles;
 	private Integer parentTaskIdForBackButton = null, parentTaskId = null;

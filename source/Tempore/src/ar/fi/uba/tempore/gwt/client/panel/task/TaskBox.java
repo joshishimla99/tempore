@@ -28,7 +28,6 @@ import com.smartgwt.client.widgets.events.DoubleClickHandler;
  * CLASS TASKBOX
  */
 public class TaskBox extends Window {
-
 	private static final String COLOR_DEFAULT = "#00FF00";
 	private static final String COLOR_SOPORTE = "#FFFF99";
 	private static final String COLOR_DESARROLLO = "#C0C0C0";
