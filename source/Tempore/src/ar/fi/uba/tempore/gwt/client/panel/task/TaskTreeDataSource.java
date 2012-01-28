@@ -9,7 +9,7 @@ import com.smartgwt.client.data.fields.DataSourceDateField;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 
-public class TaskDataSource extends DataSource {
+public class TaskTreeDataSource extends DataSource {
 	
 	public static final String NAME_FIELD = "name";
 	public static final String ID_FIELD = "id";
@@ -18,7 +18,7 @@ public class TaskDataSource extends DataSource {
 	public static final String ESTIMATED_HOURS_FIELD = "estimatedHs";
 	public static final String REAL_HOURS_FIELD = "realHs";
 
-	public TaskDataSource(){
+	public TaskTreeDataSource(){
 		super();
 	}
 	

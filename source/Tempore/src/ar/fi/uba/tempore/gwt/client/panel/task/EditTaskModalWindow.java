@@ -8,12 +8,9 @@ import ar.fi.uba.tempore.dto.TaskTypeDTO;
 import ar.fi.uba.tempore.gwt.client.TaskServicesClient;
 import ar.fi.uba.tempore.gwt.client.TaskTypeServicesClient;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
-import ar.fi.uba.tempore.gwt.client.panel.task.TaskTabPanel.TaskBox;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.Alignment;
-import com.smartgwt.client.types.TimeDisplayFormat;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.IButton;
@@ -83,8 +80,6 @@ public class EditTaskModalWindow {
 		taskParentId.setValue(taskDTO.getTaskId());
 		
 		final TextItem estimatedTimeLabel = new TextItem(BUDGET, "Tiempo Estimado");
-		estimatedTimeLabel.setTimeFormatter(TimeDisplayFormat.TOPADDED24HOURTIME);
-//		estimatedTimeLabel.setUseMask(true);
 		estimatedTimeLabel.setMask("###");
 		estimatedTimeLabel.setHint("Hs");
 		estimatedTimeLabel.setValue(taskDTO.getBudget()/HORA);
@@ -117,8 +112,6 @@ public class EditTaskModalWindow {
 			}
 		});
 		
-		
-		GWT.log("Id del padre = " + taskDTO.getTaskId());
 		
 		IButton updateButton = new IButton();
 		updateButton.setTitle("Guardar");
