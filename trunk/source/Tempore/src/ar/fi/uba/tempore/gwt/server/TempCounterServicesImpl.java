@@ -18,7 +18,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 public class TempCounterServicesImpl extends RemoteServiceServlet implements TempCounterServicesClient {
 	private static final long serialVersionUID = 7476117264486326360L;
-	private static final Integer NONE = 0;
+//	private static final Integer NONE = 0;
 	private static final Integer PLAY = 1;
 	private static final Integer PAUSE = 2;
 	
@@ -57,7 +57,6 @@ public class TempCounterServicesImpl extends RemoteServiceServlet implements Tem
 				tc.setTimeAcumulated(0L);
 			} else {
 				//contador existe (reinicio)
-				//TODO ver si requiere hacerce algo
 				log.info("Continuo conteo existente");
 			}
 			tc.setTask(new Task(taskId));		

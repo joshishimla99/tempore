@@ -90,7 +90,12 @@ public class TaskTimeDataSource extends GenericGwtRpcDataSourceFilterId<Integer,
 	
 	@Override  
     protected Object transformRequest(DSRequest dsRequest) {
-		this.setId(ProjectPanel.getInstance().getSelected().getId());
+		if (ProjectPanel.getInstance().getSelected() != null) {
+			this.setId(ProjectPanel.getInstance().getSelected().getId());
+		} else {
+			//TODO ver si se puede solucionar de otra manera
+			this.setId(1);
+		}
 		return super.transformRequest(dsRequest);
     }  
 }
