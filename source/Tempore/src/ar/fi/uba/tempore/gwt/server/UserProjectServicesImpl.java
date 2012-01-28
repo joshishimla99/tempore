@@ -77,7 +77,6 @@ public class UserProjectServicesImpl extends RemoteServiceServlet implements Use
 			log.info("Usuario dueño, no desasignar");
 			throw new NullPointerException("El usuario dueño no puede ser desasignado del proyecto");
 		} else {
-			//TODO Validar que el usuario que realiza la operacion es el owner del proyecto
 			AlertDAO aDAO = new AlertDAO();
 			aDAO.deleteAllUserAlert(userProject.getId());
 	
