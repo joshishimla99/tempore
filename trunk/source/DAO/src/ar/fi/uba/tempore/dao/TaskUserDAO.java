@@ -15,16 +15,6 @@ public class TaskUserDAO extends GenericHibernateDAO<TaskUser, Integer> {
 	private Logger log = Logger.getLogger(TaskUserDAO.class); 
 	public long hoursChargedByTask(Integer idTask) {
 		long chargedHour = 0;
-//		Task task = new Task();
-//		task.setId(idTask);
-//		TaskUser taskUser = new TaskUser();
-//		taskUser.setTask(task);
-//		List<TaskUser> findByExample = this.findByExample(taskUser);
-//		if (!findByExample.isEmpty()) {
-//			for (TaskUser taskUserResult : findByExample) {
-//				chargedHour += taskUserResult.getHourCount();
-//			}
-//		}
 
 		String hql = "select sum(tu.hourCount) from TaskUser as tu inner join tu.task as t where t.id=" + idTask;
 
@@ -41,7 +31,6 @@ public class TaskUserDAO extends GenericHibernateDAO<TaskUser, Integer> {
 		return chargedHour;
 	}
 	/**
-	 * TODO revisar el synchronized por que no deberia ir
 	 * Obtiene las horas cargadas por las tareas hijas y las subhijas.
 	 * @param taskId Id de la tarea padre
 	 * @return Acumulacion de las horas cargadas a todos sus herederos.
@@ -98,17 +87,12 @@ public class TaskUserDAO extends GenericHibernateDAO<TaskUser, Integer> {
 		return result;
 	}
 
-	//TODO Cambiar por el filtro correcto
 	@SuppressWarnings("unchecked")
 	public List<TaskUser> findByDate(Integer userId, Date dateFilter) {
 		log.info("HorasDelUsuario - FETCH - " + dateFilter);
 		List<TaskUser> list = null;
 		
 		if (dateFilter != null) {
-//			dateFilter.setHours(0);
-//			dateFilter.setMinutes(0);
-//			dateFilter.setSeconds(0);
-			
 			String hql = 	"from TaskUser ut " +
 							"where ut.date = :dateFilter " +
 							"and " +
