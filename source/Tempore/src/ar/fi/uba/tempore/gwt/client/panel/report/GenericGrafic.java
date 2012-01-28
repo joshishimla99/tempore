@@ -71,7 +71,6 @@ public abstract class GenericGrafic extends VLayout {
 			drawLineChart(data, options);
 			break;
 		default:
-			//TODO validar que hacer
 			SC.say("No se reconoce tipo de grafico. Se genera tipo LINEA por defecto.");
 			drawLineChart(data, options);
 			break;
