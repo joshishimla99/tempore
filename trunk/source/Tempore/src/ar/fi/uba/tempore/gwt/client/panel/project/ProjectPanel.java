@@ -172,7 +172,6 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 	 * Habilita el filtro de la grilla
 	 */
 	public void showFilter(){
-		//TODO limpiar filtro cuando se deshabilita
 		this.setShowFilterEditor(!this.getShowFilterEditor());
 		this.redraw();
 	}
