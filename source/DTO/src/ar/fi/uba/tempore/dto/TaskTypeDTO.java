@@ -8,6 +8,13 @@ public class TaskTypeDTO implements IsSerializable{
 	private String name;
 	private String description;
 
+	public TaskTypeDTO(){
+	}
+	
+	public TaskTypeDTO(Integer id){
+		setId(id);
+	}
+	
 	public Integer getId() {
 		return id;
 	}
