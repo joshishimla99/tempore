@@ -36,31 +36,37 @@ public class TabsPanel extends TabSet {
 		final Tab timeTab = new Tab("Tempore  ", "../images/ico/schedule.ico");
 		timeTab.setWidth(tabWidth);
 //		timeTab.setPane(new TimeTabPanel());
+		timeTab.setPrompt("Esta secci&oacute;n le permite administrar sus horas");
 		timeTab.setPane(new DragDropTimePanel());
 		
 		//Tab 1
 		final Tab resourceTab = new Tab("Recursos  ", "../images/ico/user_group.ico");
+		resourceTab.setPrompt("Esta secci&oacute;n le permite administrar los recursos del proyecto");
 		resourceTab.setWidth(tabWidth);   
 		resourceTab.setPane(new ResourceTabPanel());
 		
 		//Tab 2
 		final Tab projectTab = new Tab("Proyectos  ", "../images/ico/briefcase.ico");
 		projectTab.setWidth(tabWidth);   
+		projectTab.setPrompt("Esta secci&oacute;n le permite crear y editar la informaci&oacute;n de proyectos");
 		projectTab.setPane(new ProjectTabPanel());
 		
 		//Tab 3
 		final Tab taskTab = new Tab("Tareas  ", "../images/ico/notes.ico");
 		taskTab.setWidth(tabWidth);
+		taskTab.setPrompt("Esta secci&oacute;n le permite administrar las tareas del proyecto");
 		taskTab.setPane(new TaskTabPanel());
 		
 		//Tab 4
 		final Tab reportTab = new Tab("Reportes  ", "../images/ico/report.ico");
 		reportTab.setWidth(tabWidth);
+		reportTab.setPrompt("Esta secci&óacute;n le permite generar reportes");
 		reportTab.setPane(new ReportTabPanel());
 		
 		//Tab 5
 		final Tab configurationTab = new Tab("Configuraci&oacute;n  ", "../images/ico/wrench.ico");
 		configurationTab.setWidth(tabWidth);
+		configurationTab.setPrompt("Esta secci&oacute;n le permite administrar las personas, los clientes y las alarmas");
 		configurationTab.setPane(new ConfigurationTabPanel());
 		
 		//Tab 6

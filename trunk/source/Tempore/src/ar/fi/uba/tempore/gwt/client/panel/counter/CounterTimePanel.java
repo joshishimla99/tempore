@@ -68,23 +68,27 @@ public class CounterTimePanel extends VLayout implements TimeCounterObserved{
 		
 		start.setSize(IMAGE_SIZE);
 		start.setSrc("../images/png/counter/ok.png");
+		start.setAltText("Iniciar/Continuar contador");
 		start.addClickHandler(startEvent);
 		start.setDisabled(false);
 
 		
 		pause.setSize(IMAGE_SIZE);
 		pause.setSrc("../images/png/counter/pause.png");
+		pause.setAltText("Pausar contador");
 		pause.addClickHandler(pauseEvent);
 		pause.setDisabled(true);
 
 		
 		cancel.setSize(IMAGE_SIZE);
 		cancel.setSrc("../images/png/counter/trash.png");
+		cancel.setAltText("Reiniciar contador");
 		cancel.addClickHandler(cancelEvent );
 		cancel.setDisabled(true);
 
 		save.setSize(IMAGE_SIZE);
 		save.setSrc("../images/png/counter/save.png");
+		save.setAltText("Guardar contador");
 		save.addClickHandler(saveEvent);
 		save.setDisabled(true);
 
