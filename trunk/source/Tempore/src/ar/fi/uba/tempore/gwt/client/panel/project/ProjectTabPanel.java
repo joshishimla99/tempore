@@ -90,6 +90,8 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		mesageError.setHeight(15);
 		
         title.setIcon("[SKIN]/actions/help.png");
+        title.setStyleName("Informal");
+		title.setIconOrientation("right");
         title.addIconClickHandler(new com.smartgwt.client.widgets.events.IconClickHandler() {
 			
 			@Override

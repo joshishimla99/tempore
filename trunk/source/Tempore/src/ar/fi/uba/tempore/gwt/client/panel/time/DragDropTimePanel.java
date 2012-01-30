@@ -73,9 +73,11 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 
 		//TITULO
 		final Label title = new Label("Asignaci&oacute;n de horas trabajadas a tareas");
-		title.setWidth(250);
+		title.setWidth(270);
 		title.setHeight(30);
 		title.setIcon("[SKIN]/actions/help.png");
+		title.setStyleName("Informal");
+		title.setIconOrientation("right");
         title.addIconClickHandler(new com.smartgwt.client.widgets.events.IconClickHandler() {
 			
 			@Override

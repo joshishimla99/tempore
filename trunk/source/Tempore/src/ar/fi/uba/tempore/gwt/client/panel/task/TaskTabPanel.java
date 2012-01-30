@@ -51,6 +51,8 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		title.setWidth(200);
 		title.setHeight(15);
 		title.setIcon("[SKIN]/actions/help.png");
+		title.setStyleName("Informal");
+		title.setIconOrientation("right");
 		title.addIconClickHandler(new com.smartgwt.client.widgets.events.IconClickHandler() {
 			@Override
 			public void onIconClick(
@@ -107,7 +109,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		taskBoxLayout.addMember(formAddButton);
 		taskBoxLayout.addMember(upLayout);
 		taskBoxLayout.addMember(getTaskBoxPanel());
-
+		
 		
 		final HLayout workLayout = new HLayout();
 		workLayout.setWidth100();
@@ -120,7 +122,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		mainLayout.setHeight100();
 		mainLayout.addMember(title);
 		mainLayout.addMember(workLayout);
-		
+
 		this.addChild(mainLayout);
 	}
 

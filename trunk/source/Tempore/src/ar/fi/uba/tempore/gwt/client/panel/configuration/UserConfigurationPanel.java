@@ -49,6 +49,9 @@ public class UserConfigurationPanel extends Canvas {
 		title.setWidth(200);
 		title.setHeight(15);
 		title.setIcon("[SKIN]/actions/help.png");
+		title.setBorder("1px solid blue");
+		title.setStyleName("Informal");
+		title.setIconOrientation("right");
         title.addIconClickHandler(new com.smartgwt.client.widgets.events.IconClickHandler() {
 			
 			@Override

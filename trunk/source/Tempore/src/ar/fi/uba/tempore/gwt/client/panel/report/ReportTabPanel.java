@@ -134,8 +134,9 @@ public class ReportTabPanel extends TabsPanelContainer{
         final Label title = new Label("Administraci&oacute;n de Reportes");
 		title.setWidth(200);
 		title.setHeight(15);
-		
         title.setIcon("[SKIN]/actions/help.png");
+        title.setStyleName("Informal");
+		title.setIconOrientation("right");
         title.addIconClickHandler(new com.smartgwt.client.widgets.events.IconClickHandler() {
 			
 			@Override
