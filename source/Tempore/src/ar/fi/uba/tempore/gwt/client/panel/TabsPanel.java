@@ -66,7 +66,7 @@ public class TabsPanel extends TabSet {
 		//Tab 5
 		final Tab configurationTab = new Tab("Configuraci&oacute;n  ", "../images/ico/wrench.ico");
 		configurationTab.setWidth(tabWidth);
-		configurationTab.setPrompt("Esta secci&oacute;n le permite administrar las personas, los clientes y las alarmas");
+		configurationTab.setPrompt("Esta secci&oacute;n le permite administrar los usuarios, los clientes y las alarmas");
 		configurationTab.setPane(new ConfigurationTabPanel());
 		
 		//Tab 6
