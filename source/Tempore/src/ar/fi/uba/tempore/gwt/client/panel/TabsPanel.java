@@ -60,7 +60,7 @@ public class TabsPanel extends TabSet {
 		//Tab 4
 		final Tab reportTab = new Tab("Reportes  ", "../images/ico/report.ico");
 		reportTab.setWidth(tabWidth);
-		reportTab.setPrompt("Esta secci&óacute;n le permite generar reportes");
+		reportTab.setPrompt("Esta secci&oacute;n le permite generar reportes");
 		reportTab.setPane(new ReportTabPanel());
 		
 		//Tab 5
