@@ -32,4 +32,5 @@ public interface ReportServicesClient extends RemoteService {
 	public List<TasksTimesDTO> getPrimaryTaskTimes (Integer projectId ,Date from, Date to);
 	
 	public List<ProjectsTimesDTO> getUserActivity (Integer userId, Date ini, Date end);
+
 }
