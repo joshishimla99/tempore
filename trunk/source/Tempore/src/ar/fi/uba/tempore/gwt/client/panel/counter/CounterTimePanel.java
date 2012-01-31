@@ -131,6 +131,8 @@ public class CounterTimePanel extends VLayout implements TimeCounterObserved{
 		timerLabel.setWidth(200);
 		timerLabel.setHint("");
 		timerLabel.setTextBoxStyle("counter");
+		timerLabel.setCanEdit(false);
+		timerLabel.setCanFocus(false);
 		timerLabel.addChangedHandler(new ChangedHandler() {
 			@Override
 			public void onChanged(ChangedEvent event) {
