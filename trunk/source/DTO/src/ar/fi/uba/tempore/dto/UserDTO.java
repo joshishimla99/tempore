@@ -19,6 +19,13 @@ public class UserDTO implements IsSerializable{
 	private String password;
 	private String imageName;
 	
+	public UserDTO(){
+	}
+
+	public UserDTO(Integer id){
+		setId(id);
+	}
+	
 	public String getName() {
 		return name;
 	}
