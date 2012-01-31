@@ -68,19 +68,19 @@ public class ReportDAO {
 	 * @return Listado de usuarios con el contador de horas en el intervalo.
 	 */
 	@SuppressWarnings("unchecked")
-	public List<UsersTimes> getUsersTimes (Date ini, Date end){	
+	public List<UsersTimes> getUsersTimes (Integer projectId, Date ini, Date end){	
 		List<UsersTimes> list = null;
 		
 		String hql = "select new ar.fi.uba.tempore.entity.reports.UsersTimes(u.name as name, u.lastName as lastName, u.userName as user , sum(tu.hourCount) as total)" +
-				"from User as u " +
-				"left outer join u.taskUserList as tu " +
-				"with (tu.date >= :iniDate " +
-				"and tu.date <= :endDate) " +
-				"group by u " +
-				"order by total desc";
+				" from User as u " +
+				" left outer join u.taskUserList as tu " +
+				" with (tu.date >= :iniDate and tu.date <= :endDate) " +
+				" inner join tu.task as t where t.project.id = :projectId" +
+				" group by u " +
+				" order by total desc";
 		
 		Query query = this.getSession().createQuery(hql);
-		query = query.setDate("iniDate", ini).setDate("endDate", end);
+		query = query.setDate("iniDate", ini).setDate("endDate", end).setInteger("projectId", projectId);
 		list = query.list();
 		
 		return list;
