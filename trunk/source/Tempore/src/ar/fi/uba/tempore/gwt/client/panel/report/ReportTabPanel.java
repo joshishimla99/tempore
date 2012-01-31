@@ -52,7 +52,7 @@ public class ReportTabPanel extends TabsPanelContainer{
 		
 		final ImgButton btnReporte2 = new ImgButton();
 		btnReporte2.addClickHandler(onClickReport2);
-		btnReporte2.setSrc("../images/report/reportTorta.jpg");
+		btnReporte2.setSrc("../images/report/ColumnReport.gif");
 		btnReporte2.setHeight(54);
 		btnReporte2.setWidth(54);
 		btnReporte2.setAltText("Generar reporte");
@@ -67,7 +67,7 @@ public class ReportTabPanel extends TabsPanelContainer{
 		
 		final ImgButton btnReporte4 = new ImgButton();
 		btnReporte4.addClickHandler(onClickReport4);
-		btnReporte4.setSrc("../images/report/ColumnReport.gif");
+		btnReporte4.setSrc("../images/report/reportTorta.jpg");
 		btnReporte4.setHeight(55);
 		btnReporte4.setWidth(55);
 		btnReporte4.setAltText("Generar reporte");

@@ -3,7 +3,6 @@ package ar.fi.uba.tempore.gwt.client.panel.resource;
 import java.util.ArrayList;
 import java.util.List;
 
-import ar.fi.uba.tempore.dto.ProjectDTO;
 import ar.fi.uba.tempore.dto.UserDTO;
 import ar.fi.uba.tempore.dto.UserProjectDTO;
 import ar.fi.uba.tempore.gwt.client.UserProjectServicesClient;
@@ -11,6 +10,7 @@ import ar.fi.uba.tempore.gwt.client.UserProjectServicesClientAsync;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 import ar.fi.uba.temporeutils.listgrid.filter.GenericGwtRpcDataSourceFilterId;
 
+import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceImageField;
@@ -64,21 +64,22 @@ public class ResourceDataSource extends GenericGwtRpcDataSourceFilterId<Integer,
 
 	@Override
 	public void copyValues(ListGridRecord from, UserProjectDTO dto) {
+		GWT.log("Pantalla -> DTO | " + from.getAttributeAsInt(ResourceTabPanel.USER_PROJECT_ID));
 		dto.setId(from.getAttributeAsInt(ResourceTabPanel.USER_PROJECT_ID));
 		
-		UserDTO user = new UserDTO();
-		user.setId(from.getAttributeAsInt(ResourceTabPanel.USER_ID));
-		dto.setUser(user);
-		
-		ProjectDTO project = new ProjectDTO();
-		project.setId(ProjectPanel.getInstance().getSelected().getId());
-		dto.setProject(project);
+		UserDTO user = new UserDTO(from.getAttributeAsInt(ResourceTabPanel.USER_ID));
+		dto.setUser(user);		
+		dto.setProject(ProjectPanel.getInstance().getSelected());
 		
 		dto.setOwner(from.getAttributeAsInt(ResourceTabPanel.IS_OWNER)==null?0:from.getAttributeAsInt(ResourceTabPanel.IS_OWNER));
 	}
 
+	/**
+	 * Cuando se levanta el dato de la BBDD hacia la pantalla
+	 */
 	@Override
 	public void copyValues(UserProjectDTO from, ListGridRecord to) {
+		GWT.log("DTO -> Pantalla | " + from.getUser().getName());
 		to.setAttribute(ResourceTabPanel.USER_PROJECT_ID, from.getId());
 		//Siempre cuando se asigna es un no dueño
 		to.setAttribute(ResourceTabPanel.IS_OWNER, from.getOwner());

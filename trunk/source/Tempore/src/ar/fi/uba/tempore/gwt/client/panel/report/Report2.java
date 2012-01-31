@@ -5,6 +5,7 @@ import java.util.List;
 
 import ar.fi.uba.tempore.dto.reports.UsersTimesDTO;
 import ar.fi.uba.tempore.gwt.client.ReportServicesClient;
+import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -37,12 +38,13 @@ public class Report2 extends Window {
 	}
 
 	public void draw(final Date ini, final Date end) {
-		ReportServicesClient.Util.getInstance().getUsersTimes(ini, end, new AsyncCallback<List<UsersTimesDTO>>() {
+		Integer projectId = ProjectPanel.getInstance().getSelected().getId();
+		ReportServicesClient.Util.getInstance().getUsersTimes(projectId, ini, end, new AsyncCallback<List<UsersTimesDTO>>() {
 			@Override
 			public void onSuccess(final List<UsersTimesDTO> result) {
 				 DateTimeFormat fmt = DateTimeFormat.getFormat("dd-MMMM-yyyy");
 				
-				final GenericGrafic gg =  new GenericGrafic("Horas Cargas de usuarios, desde " + fmt.format(ini) + ", hasta " + fmt.format(end),GenericGrafic.AREA) {
+				final GenericGrafic gg =  new GenericGrafic("Horas Cargadas de usuarios, desde " + fmt.format(ini) + ", hasta " + fmt.format(end),GenericGrafic.AREA) {
 					@Override
 					public DataTable createTable() {
 						final DataTable data = DataTable.create();
@@ -53,7 +55,8 @@ public class Report2 extends Window {
 						data.addRows(result.size());
 						for (UsersTimesDTO reg : result) {
 							data.setValue(i, 0, reg.getUserName());
-							data.setValue(i, 1, reg.getHourCounted());
+//							data.setValue(i, 1, reg.getHourCounted());
+							data.setValue(i, 1, new Float(reg.getHourCounted())/GenericGrafic.HORA);
 							i++;
 						}
 						return data;

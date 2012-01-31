@@ -61,9 +61,9 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 			}
 		});
 
-		formTitles = new DynamicForm();
-		formTitles.setAutoWidth();
-		formTitles.setWidth100();
+		setFormTitles(new DynamicForm());
+		getFormTitles().setAutoWidth();
+		getFormTitles().setWidth100();
 		
 		addTask = createAddTaskButton();
 
@@ -78,10 +78,10 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		secondLevelTask.setAlign(Alignment.RIGHT);
 		secondLevelTask.setLeft(20);
 
-		formTitles.setItems(titleTask, firstLevelTask, secondLevelTask);
-		formTitles.hideItem("titleTask");
-		formTitles.hideItem("firstLevelTask");
-		formTitles.hideItem("secondLevelTask");
+		getFormTitles().setItems(titleTask, firstLevelTask, secondLevelTask);
+		getFormTitles().hideItem("titleTask");
+		getFormTitles().hideItem("firstLevelTask");
+		getFormTitles().hideItem("secondLevelTask");
 
 
 
@@ -93,7 +93,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 
 		final HLayout upLayout = new HLayout();
 		upLayout.addMember(backButton);
-		upLayout.addMember(formTitles);
+		upLayout.addMember(getFormTitles());
 		
 		DynamicForm formAddButton = new DynamicForm(); 
 		formAddButton.setItems(addTask);
@@ -143,8 +143,8 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		getTaskBoxPanel().cleanLayout();
 		
 		projectSelected = ProjectPanel.getInstance().getSelected();
-		formTitles.hideItem("firstLevelTask");
-		formTitles.hideItem("secondLevelTask");
+		getFormTitles().hideItem("firstLevelTask");
+		getFormTitles().hideItem("secondLevelTask");
 
 		parentTaskIdForBackButton = null;
 		parentTaskId = null;
@@ -153,7 +153,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 			taskTree.updateTaskTree();
 			
 			titleTask.setDefaultValue(projectSelected.getName());
-			formTitles.showItem("titleTask");
+			getFormTitles().showItem("titleTask");
 			TaskServicesClient.Util.getInstance().getChildTask(projectSelected.getId(), null, new AsyncCallback<List<TaskDTO>>() {
 				@Override
 				public void onSuccess(List<TaskDTO> result) {
@@ -240,20 +240,20 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 
 	private void hideSection(){
 		if (this.level == 1){
-			this.formTitles.hideItem("firstLevelTask");
+			this.getFormTitles().hideItem("firstLevelTask");
 		} else {
 			if (this.level == 2){
-				this.formTitles.hideItem("secondLevelTask");
+				this.getFormTitles().hideItem("secondLevelTask");
 			}
 		}
 	}
 
 	private SectionItem getSectionItem(){
 		if (this.level == 1){
-			this.formTitles.showItem("firstLevelTask");
+			this.getFormTitles().showItem("firstLevelTask");
 			return this.firstLevelTask;
 		} 
-		this.formTitles.showItem("secondLevelTask");
+		this.getFormTitles().showItem("secondLevelTask");
 		return secondLevelTask;
 	}
 
@@ -404,6 +404,14 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 
 	public void setTaskBoxPanel(TaskLayout taskBoxPanel) {
 		this.taskBoxPanel = taskBoxPanel;
+	}
+
+	public DynamicForm getFormTitles() {
+		return formTitles;
+	}
+
+	public void setFormTitles(DynamicForm formTitles) {
+		this.formTitles = formTitles;
 	}
 
 	

@@ -18,6 +18,8 @@ public abstract class GenericGrafic extends VLayout {
 	public static final int AREA = 2;
 	public static final int COLUMNS = 3;
 
+	public static final Long HORA = 60*60*1000L;
+
 	private int graficType;
 	private static String html = "<div id=\"grafic_nested_div\" style=\"position: absolute; z-index: 1000000\"> </div>\n";
 	private Options options;

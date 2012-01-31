@@ -37,7 +37,7 @@ public class UserProjectServicesImpl extends RemoteServiceServlet implements Use
 			map.setUser(mapper.map(userProject.getUser(), UserDTO.class));
 			list.add(map);
 		}
-		log.info("### " + userAssignedToProject.size());
+		log.info("Cantidad total = " + userAssignedToProject.size());
 		return list;
 	}
 
