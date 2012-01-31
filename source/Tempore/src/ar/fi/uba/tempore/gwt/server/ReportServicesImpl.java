@@ -40,11 +40,11 @@ public class ReportServicesImpl extends RemoteServiceServlet implements ReportSe
 	}
 
 	@Override
-	public List<UsersTimesDTO> getUsersTimes(Date dateIni, Date dateEnd) {
+	public List<UsersTimesDTO> getUsersTimes(Integer projectId, Date dateIni, Date dateEnd) {
 		ReportDAO report = new ReportDAO();
 		log.info("REPORTE - getUsersTimes ["+dateIni+"],["+dateEnd+"]");
 
-		List<UsersTimes> usersTimes = report.getUsersTimes(dateIni, dateEnd);
+		List<UsersTimes> usersTimes = report.getUsersTimes(projectId, dateIni, dateEnd);
 		List<UsersTimesDTO> result = new ArrayList<UsersTimesDTO>(usersTimes.size());
 		for (UsersTimes ut : usersTimes) {
 			result.add(mapper.map(ut, UsersTimesDTO.class));

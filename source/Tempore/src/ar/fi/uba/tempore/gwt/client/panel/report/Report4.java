@@ -53,7 +53,7 @@ public class Report4 extends Window {
 						data.addRows(result.size());
 						for (ProjectsTimesDTO reg : result) {
 							data.setValue(i, 0, reg.getProjectName());
-							data.setValue(i, 1, reg.getHourCounted());
+							data.setValue(i, 1, new Float(reg.getHourCounted())/GenericGrafic.HORA);
 							i++;
 						}
 						return data;

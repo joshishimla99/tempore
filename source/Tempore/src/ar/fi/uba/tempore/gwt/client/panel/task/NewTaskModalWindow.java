@@ -102,26 +102,30 @@ public class NewTaskModalWindow extends Window{
 		form.setFields(taskNameLabel, taskDescription, taskType, estimatedTimeLabel);
 		
 		
-		final IButton editTaskButton = new IButton();
-		editTaskButton.setTitle("Guardar");
-		editTaskButton.setIcon("../images/ico/save.ico");
-		editTaskButton.addClickHandler(new ClickHandler() {
+		final IButton saveTaskButton = new IButton();
+		saveTaskButton.setTitle("Guardar");
+		saveTaskButton.setIcon("../images/ico/save.ico");
+		saveTaskButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				if (form.validate()) {
-					destroy();
 					TaskDTO taskDTO = new TaskDTO();
-					taskDTO.setProject(ProjectPanel.getInstance().getSelected());
 					taskDTO.setName(form.getValue(NAME).toString());
 					taskDTO.setDescription(form.getValue(DESCRIPTION).toString());
 					taskDTO.setBudget(new Long(form.getValue(BUDGET).toString())*HORA);					
-					taskDTO.setTaskId(taskTabPanel.getParentTaskId());
+					if (taskTabPanel.getLevel() > 0){
+						taskDTO.setTaskId(taskTabPanel.getParentTaskId());
+					} else {
+						taskDTO.setTaskId(null);
+					}
 					
+					taskDTO.setProject(ProjectPanel.getInstance().getSelected());
 					final TaskTypeDTO taskTypeDTO = new TaskTypeDTO();
 					taskTypeDTO.setId(new Integer(form.getValue(TYPE).toString()));
 					taskDTO.setTaskTypeDTO(taskTypeDTO);
 					
 					updateTaskList(addTask,taskDTO);
+					destroy();
 				}
 			}
 		});
@@ -140,7 +144,7 @@ public class NewTaskModalWindow extends Window{
 		HLayout buttonLayout = new HLayout();
 		buttonLayout.setMembersMargin(10);
 		buttonLayout.setAlign(Alignment.CENTER);
-		buttonLayout.addMember(editTaskButton);
+		buttonLayout.addMember(saveTaskButton);
 		buttonLayout.addMember(cancelTaskButton);
 
 		vLayout.addMember(form);
@@ -149,26 +153,13 @@ public class NewTaskModalWindow extends Window{
 		this.addItem(vLayout);
 	}
 
-	private void updateTaskList(final ButtonItem addTask, TaskDTO task) {
-//		TaskDTO task = new TaskDTO();
-//		task.setDescription(description);
-//		task.setName(name);
-//		task.setBudget(estimation);
-//		TaskTypeDTO taskTypeDTO = new TaskTypeDTO();
-//		taskTypeDTO.setName(formTitles.getValueAsString("taskType"));
-//		task.setTaskTypeDTO(taskTypeDTO);
-//		task.setProject(ProjectPanel.getInstance().getSelected());
-		if (taskTabPanel.getLevel() > 0){
-			task.setTaskId(taskTabPanel.getParentTaskId());
-		}
-
+	private void updateTaskList(final ButtonItem addTask, TaskDTO taskDTO) {
 		//Agregar o Actualiza una tarea 
-		TaskServicesClient.Util.getInstance().updateTask(task , new AsyncCallback<TaskDTO>() {
-
+		TaskServicesClient.Util.getInstance().updateTask(taskDTO , new AsyncCallback<TaskDTO>() {
+			
 			@Override
 			public void onSuccess(final TaskDTO taskDTO) {
 				//Obtengo las horas de las tareas
-
 				TaskServicesClient.Util.getInstance().getTimeChargedToTask(taskDTO.getId(), new AsyncCallback<Long>() {
 					@Override
 					public void onSuccess(final Long taskHs) {
@@ -188,9 +179,8 @@ public class NewTaskModalWindow extends Window{
 
 								// create an outline around the clicked button
 								final Canvas outline = new Canvas();
-//								TODO revisar si se debe sacar o no
-//								outline.setLeft(formTitles.getAbsoluteLeft() + addTask.getLeft());
-//								outline.setTop(formTitles.getAbsoluteTop());
+								outline.setLeft(taskTabPanel.getFormTitles().getAbsoluteLeft() + addTask.getLeft());
+								outline.setTop(taskTabPanel.getFormTitles().getAbsoluteTop());
 								outline.setWidth(addTask.getWidth());
 								outline.setHeight(addTask.getHeight());
 								outline.setBorder("2px solid #8289A6");
@@ -209,25 +199,22 @@ public class NewTaskModalWindow extends Window{
 							}
 							@Override
 							public void onFailure(Throwable caught) {
-								SC.say("Ha ocurrido un error al intentar recuperar las horas totales cargadas a la tarea");
+								SC.warn("Ha ocurrido un error al intentar recuperar las horas totales cargadas a la tarea");
 							}
 
 						});
 					}
 					@Override
 					public void onFailure(Throwable caught) {
-						SC.say("Ha ocurrido un error al intentar recuperar las horas cargadas a la tarea");
+						SC.warn("Ha ocurrido un error al intentar recuperar las horas cargadas a la tarea");
 					}
 				});
 
 			}
 			@Override
 			public void onFailure(Throwable caught) {
-				SC.say("Ha ocurrido un error al intentar actualizar la tarea");					
+				SC.warn("Ha ocurrido un error al intentar actualizar la tarea");					
 			}
 		});
-
 	}
-
-
 }

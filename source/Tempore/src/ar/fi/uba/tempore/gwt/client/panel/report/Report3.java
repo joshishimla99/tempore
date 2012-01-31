@@ -21,7 +21,7 @@ public class Report3 extends Window {
 	public Report3 (){
         this.setWidth(700);  
         this.setHeight(400);  
-        this.setTitle("Reporte - Horas cargadas a cada tarea de Proyecto");  
+        this.setTitle("Reporte - Horas Cargadas en cada Tarea de Proyecto");  
         this.setShowMinimizeButton(false);  
         this.setIsModal(true);  
         this.setShowModalMask(true);  
@@ -40,7 +40,7 @@ public class Report3 extends Window {
 		ReportServicesClient.Util.getInstance().getPrimaryTaskTimes(new Integer(1), ini, end,new AsyncCallback<List<TasksTimesDTO>>(){
 			@Override
 			public void onSuccess(final List<TasksTimesDTO> result) {
-				DateTimeFormat fmt = DateTimeFormat.getFormat("dd-MMMM-yyyy");
+				DateTimeFormat fmt = DateTimeFormat.getFormat("dd-MM-yyyy");
 				
 				final GenericGrafic gg =  new GenericGrafic("Horas cargadas a Proyecto Tempore, desde " + fmt.format(ini) + ", hasta " + fmt.format(end),GenericGrafic.AREA) {
 					@Override
@@ -53,7 +53,7 @@ public class Report3 extends Window {
 						data.addRows(result.size());
 						for (TasksTimesDTO reg : result) {
 							data.setValue(i, 0, reg.getTaskName());
-							data.setValue(i, 1, reg.getHourCounted());
+							data.setValue(i, 1, new Float(reg.getHourCounted())/GenericGrafic.HORA);
 							i++;
 						}
 						return data;

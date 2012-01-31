@@ -12,7 +12,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public interface ReportServicesClientAsync {
 	void getProjectsTimes(Date dateIni, Date dateEnd, AsyncCallback<List<ProjectsTimesDTO>> callback);
 
-	void getUsersTimes(Date dateIni, Date dateEnd,
+	void getUsersTimes(Integer ProjectId, Date dateIni, Date dateEnd,
 			AsyncCallback<List<UsersTimesDTO>> callback);
 
 	void getPrimaryTaskTimes(Integer projectId, Date from, Date to,
@@ -20,4 +20,5 @@ public interface ReportServicesClientAsync {
 
 	void getUserActivity(Integer userId, Date ini, Date end,
 			AsyncCallback<List<ProjectsTimesDTO>> callback);
+
 }
