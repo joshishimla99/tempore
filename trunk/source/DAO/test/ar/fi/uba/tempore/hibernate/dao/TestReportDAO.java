@@ -42,7 +42,7 @@ public class TestReportDAO extends TestDAO{
 		Date end = new Date();
 		
 		
-		List<UsersTimes> pTime = rDAO.getUsersTimes(ini, end);
+		List<UsersTimes> pTime = rDAO.getUsersTimes(1,ini, end);
 		
 		System.out.println("Cantidad de Registros: " + pTime.size());
 		for (UsersTimes r : pTime) {
