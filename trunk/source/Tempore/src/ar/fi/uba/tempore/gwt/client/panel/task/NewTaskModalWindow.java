@@ -9,7 +9,6 @@ import ar.fi.uba.tempore.gwt.client.TaskServicesClient;
 import ar.fi.uba.tempore.gwt.client.TaskTypeServicesClient;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 import ar.fi.uba.tempore.gwt.client.panel.task.TaskTabPanel.TaskColumn;
-
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.VerticalAlignment;
