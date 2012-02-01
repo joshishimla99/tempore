@@ -45,7 +45,7 @@ public class ReportTabPanel extends TabsPanelContainer{
 		
 		final ImgButton btnReporte1 = new ImgButton();
 		btnReporte1.addClickHandler(onClickReport1);
-		btnReporte1.setSrc("../images/report/LineReport.gif");
+		btnReporte1.setSrc("../images/report/LineReport.jpg");
 		btnReporte1.setHeight(61);
 		btnReporte1.setWidth(61);
 		btnReporte1.setAltText("Generar reporte");
