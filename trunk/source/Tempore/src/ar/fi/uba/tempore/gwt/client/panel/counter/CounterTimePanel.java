@@ -101,8 +101,8 @@ public class CounterTimePanel extends VLayout implements TimeCounterObserved{
 
 		selectTaskTree.setTitle("Tareas");  
 		selectTaskTree.setEmptyMenuMessage("No Existe Sub-Tarea");
-		selectTaskTree.setLoadDataOnDemand(false);
-		selectTaskTree.setFetchMissingValues(false);
+		selectTaskTree.setLoadDataOnDemand(true);
+		selectTaskTree.setFetchMissingValues(true);
 		selectTaskTree.setDefaultValue(DEFAULT_TASK_VALUE);
 		selectTaskTree.setCanSelectParentItems(true);
 		selectTaskTree.setDisplayField(COL_NAME);
