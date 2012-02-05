@@ -150,6 +150,7 @@ public class UserConfigurationPanel extends Canvas {
 		grid.setHeight100();		
 		grid.setAutoFetchData(true);
 		grid.setAutoSaveEdits(true);
+		grid.setLoadingDataMessage("${loadingImage}&nbsp;Cargando...");
 
 		ListGridField user = new ListGridField (UserConfigurationDataSource.USER_NAME);
 		ListGridField name = new ListGridField (UserConfigurationDataSource.NAME);

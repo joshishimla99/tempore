@@ -51,6 +51,7 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 		this.setLeaveScrollbarGap(false);
 		this.setShowFilterEditor(false);
 		this.setFilterOnKeypress(true);
+		this.setLoadingDataMessage("${loadingImage}&nbsp;Cargando...");
 		this.setGroupStartOpen(GroupStartOpen.ALL);
 	
 		//Columnas a ser visualizadas

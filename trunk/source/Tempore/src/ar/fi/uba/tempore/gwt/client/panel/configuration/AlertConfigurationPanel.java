@@ -42,7 +42,8 @@ public class AlertConfigurationPanel extends Canvas{
 		grid.setCanEdit(true);
 		grid.setEditEvent(ListGridEditEvent.CLICK);		
 		grid.setListEndEditAction(RowEndEditAction.NEXT);
-		grid.setAutoSaveEdits(true);		
+		grid.setAutoSaveEdits(true);	
+		grid.setLoadingDataMessage("${loadingImage}&nbsp;Cargando...");
 		
 		//BOTONERA 
 		final HLayout btnLayout = new HLayout();
