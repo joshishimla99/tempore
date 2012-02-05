@@ -69,6 +69,7 @@ public class ClientConfigurationPanel extends Canvas {
 		grid.setEditEvent(ListGridEditEvent.CLICK);		
 		grid.setListEndEditAction(RowEndEditAction.NEXT);
 		grid.setAutoSaveEdits(true);
+		grid.setLoadingDataMessage("${loadingImage}&nbsp;Cargando...");
 		
 		
 		// BOTONERA 
