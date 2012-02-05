@@ -18,6 +18,7 @@ public class TimeServicesImpl extends RemoteServiceServlet implements TimeServic
 
 	private static final long serialVersionUID = -7296572794226418672L;
 
+	public static final Long QUINCE_MIN = 15*60*1000L;
 	private final Logger log = Logger.getLogger(this.getClass());	
 	private final DozerBeanMapper mapper = new DozerBeanMapper(); 
 
@@ -47,19 +48,13 @@ public class TimeServicesImpl extends RemoteServiceServlet implements TimeServic
 	public TaskUserDTO update(TaskUserDTO taskUserDTO) {
 		TaskUserDAO tuDAO = new TaskUserDAO();
 		log.info("UPDATE - TaskUser");
-//		taskUserDTO.setComment("Comentario harcodeado");
-//		taskUserDTO.setDate(new Date());
-//		taskUserDTO.setHourCount(2);
-//		TaskDTO tarea = new TaskDTO();
-//		tarea.setId(1);
-//		taskUserDTO.setTask(tarea);
-//		UserDTO usuario = new UserDTO();
-//		usuario.setId(1);
-//		taskUserDTO.setUser(usuario);
-		
-		
+
+		//Redondeo de las horas a 15 min
+		Long factor = Math.round((double)taskUserDTO.getHourCount()/QUINCE_MIN);
+		taskUserDTO.setHourCount(factor*QUINCE_MIN);
 		
 		TaskUser userTask = mapper.map(taskUserDTO, TaskUser.class);
+		
 		
 		
 		log.info("ID USER: " + userTask.getUser().getId());
