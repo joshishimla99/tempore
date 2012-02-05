@@ -124,7 +124,6 @@ public class NewTaskModalWindow extends Window{
 					taskDTO.setTaskTypeDTO(taskTypeDTO);
 					
 					updateTaskList(addTask,taskDTO);
-					destroy();
 				}
 			}
 		});
@@ -152,68 +151,89 @@ public class NewTaskModalWindow extends Window{
 		this.addItem(vLayout);
 	}
 
-	private void updateTaskList(final ButtonItem addTask, TaskDTO taskDTO) {
-		//Agregar o Actualiza una tarea 
-		TaskServicesClient.Util.getInstance().updateTask(taskDTO , new AsyncCallback<TaskDTO>() {
+	private void updateTaskList(final ButtonItem addTask, final TaskDTO taskDTO) {
+		
+		TaskServicesClient.Util.getInstance().validateTask(taskDTO, new AsyncCallback<Boolean>() {
+			@Override
+			public void onSuccess(Boolean isTaskValid) {
+				
+				if (isTaskValid) {
+					//Agregar o Actualiza una tarea 
+					TaskServicesClient.Util.getInstance().updateTask(taskDTO , new AsyncCallback<TaskDTO>() {
+						@Override
+						public void onSuccess(final TaskDTO taskDTO) {
+							//Destruimos todas las tareas
+							destroy();
+							
+							//Obtengo las horas de las tareas
+							TaskServicesClient.Util.getInstance().getTimeChargedToTask(taskDTO.getId(), new AsyncCallback<Long>() {
+								@Override
+								public void onSuccess(final Long taskHs) {
+
+									//Calular las horas totales de la tarea
+									TaskServicesClient.Util.getInstance().getTotalTimeChargedToChildsTask(taskDTO.getId(), new AsyncCallback<Long>() {
+
+										@Override
+										public void onSuccess(Long totalHs) {
+											final TaskBox newTask = new TaskBox(taskTabPanel, taskDTO, taskHs, totalHs);
+											newTask.setVisible(false);
+											TaskColumn column = taskTabPanel.getTaskBoxPanel().addTask(newTask);
+
+											final LayoutSpacer placeHolder = new LayoutSpacer();
+											placeHolder.setRect(newTask.getRect());
+											column.addMember(placeHolder, 0); // add to top
+
+											// create an outline around the clicked button
+											final Canvas outline = new Canvas();
+											outline.setLeft(taskTabPanel.getFormTitles().getAbsoluteLeft() + addTask.getLeft());
+											outline.setTop(taskTabPanel.getFormTitles().getAbsoluteTop());
+											outline.setWidth(addTask.getWidth());
+											outline.setHeight(addTask.getHeight());
+											outline.setBorder("2px solid #8289A6");
+											outline.draw();
+											outline.bringToFront();
+
+											outline.animateRect(newTask.getPageLeft(), newTask.getPageTop(),
+													newTask.getVisibleWidth(), newTask.getViewportHeight(),
+													new AnimationCallback() {
+												public void execute(boolean earlyFinish) {
+													placeHolder.destroy();
+													outline.destroy();
+													newTask.show();
+												}
+											}, 750);
+										}
+										@Override
+										public void onFailure(Throwable caught) {
+											SC.warn("Ha ocurrido un error al intentar recuperar las horas totales cargadas a la tarea");
+										}
+
+									});
+								}
+								@Override
+								public void onFailure(Throwable caught) {
+									SC.warn("Ha ocurrido un error al intentar recuperar las horas cargadas a la tarea");
+								}
+							});
+
+						}
+						@Override
+						public void onFailure(Throwable caught) {
+							SC.warn("Ha ocurrido un error al intentar actualizar la tarea");					
+						}
+					});
+
+				} else {
+					SC.warn("El nombre de la tarea ("+taskDTO.getName()+") ya existe en el mismo nivel. Cambie el nombre e intente nuevamente.");
+				}
+			}
 			
 			@Override
-			public void onSuccess(final TaskDTO taskDTO) {
-				//Obtengo las horas de las tareas
-				TaskServicesClient.Util.getInstance().getTimeChargedToTask(taskDTO.getId(), new AsyncCallback<Long>() {
-					@Override
-					public void onSuccess(final Long taskHs) {
-
-						//Calular las horas totales de la tarea
-						TaskServicesClient.Util.getInstance().getTotalTimeChargedToChildsTask(taskDTO.getId(), new AsyncCallback<Long>() {
-
-							@Override
-							public void onSuccess(Long totalHs) {
-								final TaskBox newTask = new TaskBox(taskTabPanel, taskDTO, taskHs, totalHs);
-								newTask.setVisible(false);
-								TaskColumn column = taskTabPanel.getTaskBoxPanel().addTask(newTask);
-
-								final LayoutSpacer placeHolder = new LayoutSpacer();
-								placeHolder.setRect(newTask.getRect());
-								column.addMember(placeHolder, 0); // add to top
-
-								// create an outline around the clicked button
-								final Canvas outline = new Canvas();
-								outline.setLeft(taskTabPanel.getFormTitles().getAbsoluteLeft() + addTask.getLeft());
-								outline.setTop(taskTabPanel.getFormTitles().getAbsoluteTop());
-								outline.setWidth(addTask.getWidth());
-								outline.setHeight(addTask.getHeight());
-								outline.setBorder("2px solid #8289A6");
-								outline.draw();
-								outline.bringToFront();
-
-								outline.animateRect(newTask.getPageLeft(), newTask.getPageTop(),
-										newTask.getVisibleWidth(), newTask.getViewportHeight(),
-										new AnimationCallback() {
-									public void execute(boolean earlyFinish) {
-										placeHolder.destroy();
-										outline.destroy();
-										newTask.show();
-									}
-								}, 750);
-							}
-							@Override
-							public void onFailure(Throwable caught) {
-								SC.warn("Ha ocurrido un error al intentar recuperar las horas totales cargadas a la tarea");
-							}
-
-						});
-					}
-					@Override
-					public void onFailure(Throwable caught) {
-						SC.warn("Ha ocurrido un error al intentar recuperar las horas cargadas a la tarea");
-					}
-				});
-
-			}
-			@Override
 			public void onFailure(Throwable caught) {
-				SC.warn("Ha ocurrido un error al intentar actualizar la tarea");					
+				SC.warn("Error", "Error al validar la nueva Tarea", null, null);
 			}
 		});
+		
+		
 	}
 }

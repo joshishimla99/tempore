@@ -20,6 +20,8 @@ public interface TaskServicesClientAsync {
 	void getTimeChargedToTask(Integer id, AsyncCallback<Long> callback);
 
 	void getTotalTimeChargedToChildsTask(Integer id, AsyncCallback<Long> callback);
+
+	void validateTask(TaskDTO task, AsyncCallback<Boolean> callback);
 	
 	
 

@@ -136,4 +136,22 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 		return taskUserDAO.getTotalTimeByTask(taskId);
 	}
 
+	@Override
+	public boolean validateTask (TaskDTO taskDTO) {
+		log.info("VALIDATE TASK - " + taskDTO.getName());
+		boolean result = true;
+		TaskDAO taskDAO = new TaskDAO();
+		
+		//validamos la tarea que vamos a guardar
+		List<Task> childTaskList = taskDAO.getChildTask(taskDTO.getProject().getId(), taskDTO.getTaskId());
+		for (Task task : childTaskList) {
+			String nameTask = new String(task.getName());
+			if (task.getId() != taskDTO.getId() &&
+					nameTask.trim().toUpperCase().equals(taskDTO.getName().toUpperCase().trim())){
+				result = false;
+			}
+		}	
+		
+		return result;
+	}
 }

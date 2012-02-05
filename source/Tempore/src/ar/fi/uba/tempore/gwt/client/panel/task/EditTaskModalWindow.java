@@ -122,7 +122,7 @@ public class EditTaskModalWindow {
 			public void onClick(ClickEvent event) {
 				if (form.validate()) {
 					
-					TaskDTO taskDTO = new TaskDTO();
+					final TaskDTO taskDTO = new TaskDTO();
 					taskDTO.setProject(ProjectPanel.getInstance().getSelected());
 					taskDTO.setId(new Integer(form.getValue(ID).toString()));
 					taskDTO.setName(form.getValue(NAME).toString());
@@ -139,18 +139,35 @@ public class EditTaskModalWindow {
 					taskTypeDTO.setId(new Integer(form.getValue(TYPE).toString()));
 					taskDTO.setTaskTypeDTO(taskTypeDTO);
 					
-					//Actualizo la tarea
-					TaskServicesClient.Util.getInstance().updateTask(taskDTO, new AsyncCallback<TaskDTO>(){
+					
+					TaskServicesClient.Util.getInstance().validateTask(taskDTO, new AsyncCallback<Boolean>() {
 						@Override
-						public void onSuccess(TaskDTO result) {
-							father.refresh(result);
-							winModal.destroy();
+						public void onSuccess(Boolean isTaskValid) {
+							if (isTaskValid) {
+								//Actualizo la tarea
+								TaskServicesClient.Util.getInstance().updateTask(taskDTO, new AsyncCallback<TaskDTO>(){
+									@Override
+									public void onSuccess(TaskDTO result) {
+										father.refresh(result);
+										winModal.destroy();
+									}
+									@Override
+									public void onFailure(Throwable caught) {
+										SC.warn("Error en Servicio", "Ha ocurrido un error al intentar actualizar la tarea", null, null);
+									}
+								});
+							} else {
+								SC.warn("El nombre de la tarea ("+taskDTO.getName()+") ya existe en el mismo nivel. Cambie el nombre e intente nuevamente.");
+							}
 						}
+						
 						@Override
 						public void onFailure(Throwable caught) {
-							SC.warn("Error en Servicio", "Ha ocurrido un error al intentar actualizar la tarea", null, null);
+							// TODO Auto-generated method stub
+							
 						}
 					});
+					
 				}
 			}
 		});    			
