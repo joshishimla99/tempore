@@ -48,26 +48,26 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 	public static final String COL_DATE = "dateCol";
 	public static final String COL_NAME = "nameCol";
 	public static final String COL_DESCRIPTION = "descriptionCol";
-	
+
 	public static final String COL_TASK_ID = "taskId";
-	
+
 	public static final String COL_PROJECT_NAME = "projectCol";
 	public static final String COL_PROJECT_ID = "projectIdCol";	
-	
+
 	public static final String COL_PARENT_ID = "ReportsTo";
-	
+
 	private final TreeGrid tasksTree = new TreeGrid();
 	private final ListGrid hoursCountGrid = new ListGrid();
 	private final DateChooser dateChooser = new DateChooser();
 	private static final String HELPTEXT = "<br><b>Asignaci&oacute;n de horas trabajadas a tareas</b><br>Esta p&aacute;gina le permitir&aacute; administrar las horas cargadas." +
-	"<br> La informaci&oacute;n que se maneja para cada tarea cargada es la siguiente:" +
-	"<br><b>Usuario: </b>Nombre del usuario a ser utilizado para ingresar al sistema." +
-	"<br><b>Nombre: </b>Nombre del usuario." +
-	"<br><b>Cantidad de Horas: </b>Representa la cantidad de horas cargadas para la tarea seleccionada." +
-    "<br><br><b>Carga de Horas</b><br>Para cargar horas a una tarea se debe seleccionar la tarea de la parte superior, arrastre esa tarea al recuadro inferior donde podr&aacute; asignar las horas deseadas a la tarea. " +  
-    "<br><br><b>Modificaci&oacute;n de Horas Cargadas</b><br>Seleccione la tarea que desea modificar en el recuadro inferior y autom&aacute;ticamente el campo Horas ser&aacute; editable." +  
-    "<br><br><b>Eliminaci&oacute;n de Horas Cargadas</b><br>Seleccione la l&iacute;nea con las tareas que desee eliminar y presione el bot&oacute;n Menos ubicado sobre el sector derecho de la l&iacute;nea.";
-	
+			"<br> La informaci&oacute;n que se maneja para cada tarea cargada es la siguiente:" +
+			"<br><b>Usuario: </b>Nombre del usuario a ser utilizado para ingresar al sistema." +
+			"<br><b>Nombre: </b>Nombre del usuario." +
+			"<br><b>Cantidad de Horas: </b>Representa la cantidad de horas cargadas para la tarea seleccionada." +
+			"<br><br><b>Carga de Horas</b><br>Para cargar horas a una tarea se debe seleccionar la tarea de la parte superior, arrastre esa tarea al recuadro inferior donde podr&aacute; asignar las horas deseadas a la tarea. " +  
+			"<br><br><b>Modificaci&oacute;n de Horas Cargadas</b><br>Seleccione la tarea que desea modificar en el recuadro inferior y autom&aacute;ticamente el campo Horas ser&aacute; editable." +  
+			"<br><br><b>Eliminaci&oacute;n de Horas Cargadas</b><br>Seleccione la l&iacute;nea con las tareas que desee eliminar y presione el bot&oacute;n Menos ubicado sobre el sector derecho de la l&iacute;nea.";
+
 	public DragDropTimePanel(){
 		super();
 
@@ -78,16 +78,13 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		title.setIcon("[SKIN]/actions/help.png");
 		title.setStyleName("Informal");
 		title.setIconOrientation("right");
-        title.addIconClickHandler(new com.smartgwt.client.widgets.events.IconClickHandler() {
-			
+		title.addIconClickHandler(new com.smartgwt.client.widgets.events.IconClickHandler() {
 			@Override
-			public void onIconClick(
-					com.smartgwt.client.widgets.events.IconClickEvent event) {
-				 	SC.say(HELPTEXT);
-				
+			public void onIconClick(com.smartgwt.client.widgets.events.IconClickEvent event) {
+				SC.say(HELPTEXT);
 			}
 		});
-        
+
 		//FECHA PARA CARGA DE HORAS		
 		dateChooser.setHeight("190");
 		dateChooser.setShowTodayButton(false);
@@ -96,8 +93,8 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 				refreshTimeGrid();
 			}
 		});
-		
-			
+
+
 		//LISTADO DE TAREAS
 		tasksTree.setShowDropIcons(true);
 		tasksTree.setHeight100();
@@ -123,10 +120,10 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		tasksTree.setEmptyMessage("El Proyecto seleccionado no posee Tareas cargadas.");  
 		tasksTree.setFields(tfId, tfName, tfDescription);  
 		tasksTree.setShowConnectors(true);
-		
-		
+
+
 		//TABLA DE CARGA DE HORAS
-		
+
 		hoursCountGrid.setAddDropValues(false);
 		hoursCountGrid.setLoadingDataMessage("${loadingImage}&nbsp;Cargando...");
 		hoursCountGrid.addRecordDropHandler(new RecordDropHandler() {
@@ -161,47 +158,47 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		final ListGridField lfName = new ListGridField(COL_NAME);
 		lfName.setCanEdit(false);
 		lfName.setSummaryFunction(new SummaryFunction() {  
-            public Object getSummaryValue(Record[] records, ListGridField field) {  
-                Set<String> uniqueCategories = new HashSet<String>();  
-  
-                for (int i = 0; i < records.length; i++) {  
-                    Record record = records[i];  
-                    uniqueCategories.add(record.getAttribute(COL_NAME)); 
-                }  
-                return uniqueCategories.size() + " Tareas";  
-            }  
-        });
+			public Object getSummaryValue(Record[] records, ListGridField field) {  
+				Set<String> uniqueCategories = new HashSet<String>();  
+
+				for (int i = 0; i < records.length; i++) {  
+					Record record = records[i];  
+					uniqueCategories.add(record.getAttribute(COL_NAME)); 
+				}  
+				return uniqueCategories.size() + " Tareas";  
+			}  
+		});
 		final ListGridField lfDescription = new ListGridField(COL_DESCRIPTION);
 		lfDescription.setCanEdit(false);
 		final ListGridField lfDate = new ListGridField(COL_DATE);
-		
+
 		final ListGridField lfHours = new ListGridField(COL_HOURS);
 		lfHours.setIncludeInRecordSummary(false); 
 		lfHours.setType(ListGridFieldType.TIME);
 		lfHours.setTimeFormatter(TimeDisplayFormat.TOSHORT24HOURTIME);
 		lfHours.setSummaryFunction(new SummaryFunction() {  
-            public Object getSummaryValue(Record[] records, ListGridField field) {  
-            	Long acum = 0L;
-                for (int i = 0; i < records.length; i++) {  
-                    Record record = records[i];  
-                    acum += record.getAttributeAsDate(COL_HOURS).getTime(); 
-                }
-                return DateTimeFormat.getFormat(PredefinedFormat.HOUR_MINUTE).format(new Date(acum - ((records.length-1) * 10800000)));
-            }   
-        });
-//		lfHours.setCellFormatter(new CellFormatter() {  
-//            public String format(Object value, ListGridRecord record, int rowNum, int colNum) {  
-//                if (value == null) return null;  
-//                try {  
-//                    NumberFormat nf = NumberFormat.getFormat("#,##0.0");  
-//                    return  nf.format(((Number) value).doubleValue()) + " hs.";  
-//                } catch (Exception e) {  
-//                    return value.toString();  
-//                }  
-//            }
-//        });
-		
-		
+			public Object getSummaryValue(Record[] records, ListGridField field) {  
+				Long acum = 0L;
+				for (int i = 0; i < records.length; i++) {  
+					Record record = records[i];  
+					acum += record.getAttributeAsDate(COL_HOURS).getTime(); 
+				}
+				return DateTimeFormat.getFormat(PredefinedFormat.HOUR_MINUTE).format(new Date(acum - ((records.length-1) * 10800000)));
+			}   
+		});
+		//		lfHours.setCellFormatter(new CellFormatter() {  
+			//            public String format(Object value, ListGridRecord record, int rowNum, int colNum) {  
+		//                if (value == null) return null;  
+		//                try {  
+		//                    NumberFormat nf = NumberFormat.getFormat("#,##0.0");  
+		//                    return  nf.format(((Number) value).doubleValue()) + " hs.";  
+		//                } catch (Exception e) {  
+		//                    return value.toString();  
+		//                }  
+		//            }
+		//        });
+
+
 		final ListGridField lfComments = new ListGridField(COL_COMMENTS);
 		final ListGridField lfProjectId = new ListGridField(COL_PROJECT_ID);
 		lfProjectId.setHidden(true);
@@ -209,7 +206,7 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		lfTaskId.setHidden(true);
 
 		hoursCountGrid.setFields(lfTaskId, lfProject, lfName, lfDescription, lfDate, lfHours, lfComments, lfProjectId); 
-		
+
 		hoursCountGrid.setEditorCustomizer(new ListGridEditorCustomizer() {  
 			public FormItem getEditor(ListGridEditorContext context) {  
 				ListGridField field = context.getEditField();  
@@ -230,20 +227,20 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 				}
 				return context.getDefaultProperties();}
 		});
-		
+
 		//LAYOUTs
-		
+
 		final HLayout hHoursCount = new HLayout();
 		hHoursCount.setHeight("60%");
 		hHoursCount.setWidth100();	
 		hHoursCount.addMember(hoursCountGrid);
-		
+
 		final HLayout hDateTasks = new HLayout();
 		hDateTasks.setHeight("197");
 		hDateTasks.setWidth100();
 		hDateTasks.addMember(dateChooser);
 		hDateTasks.addMember(tasksTree);
-		
+
 		//Agrego los Componentes al Panel
 		final VLayout vAllPanel = new VLayout();
 		vAllPanel.setHeight100();
@@ -266,7 +263,7 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		TimeFilterDTO filter = new TimeFilterDTO();
 		filter.setDateFilter(dateChooser.getData());
 		filter.setUserId(SessionUser.getInstance().getUser().getId());
-		
+
 		HourCountDataSource.getInstance().setId(filter);
 		hoursCountGrid.invalidateCache();
 		hoursCountGrid.fetchData();
@@ -279,12 +276,12 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 			tasksTree.fetchData();
 		}
 	}  
-	
+
 	@Override
 	public void refreshPanel() {
 		ProjectPanel.getInstance().addObserver(this);
 		updateProjectSelected();
-		
+
 		CounterTimePanel.getInstance().addObserver(this);
 	}
 
@@ -292,7 +289,7 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 	@Override
 	public void freePanel() {
 		ProjectPanel.getInstance().removeObserver(this);
-		
+
 		CounterTimePanel.getInstance().removeObserver(this);
 	}
 
