@@ -204,7 +204,8 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		final ListGridField lfTaskId = new ListGridField(COL_TASK_ID);		
 		lfTaskId.setHidden(true);
 
-		hoursCountGrid.setFields(lfTaskId, lfProject, lfName, lfDescription, lfDate, lfHours, lfComments, lfProjectId); 
+		hoursCountGrid.setFields(lfTaskId, lfProject, lfName, lfDescription, lfDate, lfHours, lfComments, lfProjectId);
+//		hoursCountGrid.setFields(lfTaskId, lfProject, lfName, lfDate, lfHours, lfComments, lfProjectId);
 
 		hoursCountGrid.setEditorCustomizer(new ListGridEditorCustomizer() {  
 			public FormItem getEditor(ListGridEditorContext context) {  
@@ -249,7 +250,8 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		vAllPanel.addMember(hHoursCount);
 
 		//refresco panel de Horas
-		refreshTimeGrid();
+//		refreshTimeGrid();
+		refreshPanel();
 		this.addChild(vAllPanel);		
 	}
 
