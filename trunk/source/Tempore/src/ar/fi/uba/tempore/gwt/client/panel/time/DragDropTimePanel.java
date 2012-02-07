@@ -18,12 +18,14 @@ import com.smartgwt.client.data.Record;
 import com.smartgwt.client.types.DragDataAction;
 import com.smartgwt.client.types.GroupStartOpen;
 import com.smartgwt.client.types.ListGridFieldType;
-import com.smartgwt.client.util.SC;
 import com.smartgwt.client.types.TimeDisplayFormat;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.DateChooser;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.DataChangedEvent;
 import com.smartgwt.client.widgets.events.DataChangedHandler;
+import com.smartgwt.client.widgets.events.DrawEvent;
+import com.smartgwt.client.widgets.events.DrawHandler;
 import com.smartgwt.client.widgets.form.fields.DateItem;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
@@ -120,7 +122,15 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		tasksTree.setEmptyMessage("El Proyecto seleccionado no posee Tareas cargadas.");  
 		tasksTree.setFields(tfId, tfName, tfDescription);  
 		tasksTree.setShowConnectors(true);
-
+		tasksTree.addDrawHandler(new DrawHandler() {
+			@Override
+			public void onDraw(DrawEvent event) {
+				
+//				tasksTree.getTree().openAll();
+			}
+		});
+		
+		
 
 		//TABLA DE CARGA DE HORAS
 
@@ -186,17 +196,7 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 				return DateTimeFormat.getFormat(PredefinedFormat.HOUR_MINUTE).format(new Date(acum - ((records.length-1) * 10800000)));
 			}   
 		});
-		//		lfHours.setCellFormatter(new CellFormatter() {  
-			//            public String format(Object value, ListGridRecord record, int rowNum, int colNum) {  
-		//                if (value == null) return null;  
-		//                try {  
-		//                    NumberFormat nf = NumberFormat.getFormat("#,##0.0");  
-		//                    return  nf.format(((Number) value).doubleValue()) + " hs.";  
-		//                } catch (Exception e) {  
-		//                    return value.toString();  
-		//                }  
-		//            }
-		//        });
+
 
 
 		final ListGridField lfComments = new ListGridField(COL_COMMENTS);
@@ -253,7 +253,6 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		refreshTimeGrid();
 		this.addChild(vAllPanel);		
 	}
-
 
 	/**
 	 * Va ha buscar la informacion de la grilla de las horas con los filtros elegidos en la pantalla
