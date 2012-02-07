@@ -1,10 +1,14 @@
 package ar.fi.uba.tempore.gwt.client.panel.time;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import ar.fi.uba.tempore.dto.TaskTimeDTO;
 import ar.fi.uba.tempore.dto.TimeFilterDTO;
+import ar.fi.uba.tempore.gwt.client.TaskTimeServicesClient;
 import ar.fi.uba.tempore.gwt.client.login.SessionUser;
 import ar.fi.uba.tempore.gwt.client.panel.TabsPanelContainer;
 import ar.fi.uba.tempore.gwt.client.panel.counter.CounterTimePanel;
@@ -14,18 +18,18 @@ import ar.fi.uba.temporeutils.observer.TimeCounterObserver;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.Record;
 import com.smartgwt.client.types.DragDataAction;
 import com.smartgwt.client.types.GroupStartOpen;
 import com.smartgwt.client.types.ListGridFieldType;
 import com.smartgwt.client.types.TimeDisplayFormat;
+import com.smartgwt.client.types.TreeModelType;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.DateChooser;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.DataChangedEvent;
 import com.smartgwt.client.widgets.events.DataChangedHandler;
-import com.smartgwt.client.widgets.events.DrawEvent;
-import com.smartgwt.client.widgets.events.DrawHandler;
 import com.smartgwt.client.widgets.form.fields.DateItem;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
@@ -39,8 +43,10 @@ import com.smartgwt.client.widgets.grid.events.RecordDropEvent;
 import com.smartgwt.client.widgets.grid.events.RecordDropHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.smartgwt.client.widgets.tree.Tree;
 import com.smartgwt.client.widgets.tree.TreeGrid;
 import com.smartgwt.client.widgets.tree.TreeGridField;
+import com.smartgwt.client.widgets.tree.TreeNode;
 
 public class DragDropTimePanel extends TabsPanelContainer implements ProjectObserver, TimeCounterObserver{
 
@@ -96,44 +102,37 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 			}
 		});
 
-
 		//LISTADO DE TAREAS
 		tasksTree.setShowDropIcons(true);
 		tasksTree.setHeight100();
 		tasksTree.setWidth("80%");
 		tasksTree.setHeight("100%");		
 		tasksTree.setShowDragShadow(true);
-		tasksTree.setAutoShowParent(true);
-		tasksTree.setAutoFetchData(true);
+//		tasksTree.setAutoShowParent(true);
 		tasksTree.setAddDropValues(false);
 		tasksTree.setLoadingDataMessage("${loadingImage}&nbsp;Cargando...");
-		tasksTree.setDataSource(TaskTimeDataSource.getInstance());
 		TreeGridField tfId = new TreeGridField();
 		tfId.setHidden(true);
 		TreeGridField tfName = new TreeGridField(COL_NAME);
 		TreeGridField tfDescription = new TreeGridField(COL_DESCRIPTION);
-		tasksTree.setShowAllRecords(true);  
 		tasksTree.setCanReorderRecords(false);  
 		tasksTree.setCanDragRecordsOut(true);  
 		tasksTree.setCanAcceptDroppedRecords(false);  
 		tasksTree.setDragDataAction(DragDataAction.COPY);
 		tasksTree.setNodeIcon("../images/tasks.png");  
-		tasksTree.setFolderIcon("../images/tasks.png");  
+		tasksTree.setFolderIcon("../images/folder.png");  
 		tasksTree.setEmptyMessage("El Proyecto seleccionado no posee Tareas cargadas.");  
-		tasksTree.setFields(tfId, tfName, tfDescription);  
 		tasksTree.setShowConnectors(true);
-		tasksTree.addDrawHandler(new DrawHandler() {
-			@Override
-			public void onDraw(DrawEvent event) {
-				
-//				tasksTree.getTree().openAll();
-			}
-		});
-		
+		tasksTree.setFields(tfId, tfName, tfDescription);  
+		tasksTree.setShowAllRecords(true);  
+		tasksTree.setAutoFetchData(false);
+//		tasksTree.setDataSource(TaskTimeDataSource.getInstance());
+//		tasksTree.fetchData();
 		
 
+        
+        
 		//TABLA DE CARGA DE HORAS
-
 		hoursCountGrid.setAddDropValues(false);
 		hoursCountGrid.setLoadingDataMessage("${loadingImage}&nbsp;Cargando...");
 		hoursCountGrid.addRecordDropHandler(new RecordDropHandler() {
@@ -272,7 +271,33 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 	@Override
 	public void updateProjectSelected() {
 		if (ProjectPanel.getInstance().getSelected() != null){
-			tasksTree.fetchData();
+//			tasksTree.fetchData();
+			TaskTimeServicesClient.Util.getInstance().fetch(ProjectPanel.getInstance().getSelected().getId(), new AsyncCallback<List<TaskTimeDTO>>() {
+				@Override
+				public void onSuccess(List<TaskTimeDTO> listTask) {
+
+					final Tree dataTaskTree = new Tree();
+			        dataTaskTree.setModelType(TreeModelType.PARENT);  
+			        dataTaskTree.setRootValue(0);  
+			        dataTaskTree.setNameProperty(COL_NAME);
+			        dataTaskTree.setNameProperty(COL_DESCRIPTION);
+			        dataTaskTree.setIdField(COL_TASK_ID);  
+			        dataTaskTree.setParentIdField(COL_PARENT_ID);  
+			        dataTaskTree.setOpenProperty("isOpen");  
+					
+					List<TreeNode> treeRecords = new ArrayList<TreeNode>();
+					for (TaskTimeDTO taskTimeDTO : listTask){
+						TaskTreeNode taskTreeNode = new TaskTreeNode(taskTimeDTO);
+						treeRecords.add(taskTreeNode);
+					}
+					dataTaskTree.setData(treeRecords.toArray(new TaskTreeNode[0]));
+					tasksTree.setData(dataTaskTree);
+				}
+				@Override
+				public void onFailure(Throwable caught) {
+					SC.warn("Error al cargar las cargas Tareas");
+				}
+			});
 		}
 	}  
 
@@ -297,4 +322,20 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 	public void updateTimesCounted() {
 		refreshTimeGrid();
 	}
+	
+	
+	/**
+	 * Nodo de tareas
+	 * @author Nicolas
+	 *
+	 */
+	 public static class TaskTreeNode extends TreeNode {  
+	        public TaskTreeNode(TaskTimeDTO taskTimeDTO) {  
+	            setAttribute(COL_TASK_ID, taskTimeDTO.getId());  
+	            setAttribute(COL_PARENT_ID, taskTimeDTO.getTaskId());  
+	            setAttribute(COL_NAME, taskTimeDTO.getName());  
+	            setAttribute(COL_DESCRIPTION, taskTimeDTO.getDescription());
+	            setAttribute("isOpen", true);  
+	        }  
+	    }  
 }

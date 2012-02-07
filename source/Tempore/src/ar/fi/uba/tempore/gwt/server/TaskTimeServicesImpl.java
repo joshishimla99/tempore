@@ -21,13 +21,12 @@ public class TaskTimeServicesImpl extends RemoteServiceServlet implements TaskTi
 
 
 	@Override
-	public List<TaskTimeDTO> fetch(Integer id) {	
+	public List<TaskTimeDTO> fetch(Integer projectId) {	
 		TaskDAO tuDAO = new TaskDAO();
-		log.info("FETCH - TaskTime");
+		log.info("FETCH - TaskTime - ProjectId = " + projectId);
 		List<TaskTimeDTO> list = new ArrayList<TaskTimeDTO>();
-		log.info("Id Projecto: " + id);
 		
-		List<Task> findAll = tuDAO.getAllTasksByProject(id);
+		List<Task> findAll = tuDAO.getAllTasksByProject(projectId);
 		for (Task c : findAll) {
 			
 			
