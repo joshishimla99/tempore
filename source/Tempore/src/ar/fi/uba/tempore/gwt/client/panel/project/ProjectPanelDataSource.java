@@ -33,6 +33,9 @@ public class ProjectPanelDataSource extends GenericGwtRpcDataSourceFilterId<Inte
 	public static final String STATE_NAME_FIELD = "stateNameCol";
 	
 	public static final String IS_OWNER_FIELD = "isOwnerCol";
+
+	private static final Object OWNER_CREADOR = "Creador";
+	private static final Object OWNER_ASIGNADO = "Asignado";
 	
 	public ProjectPanelDataSource(){
 		super();
@@ -91,7 +94,9 @@ public class ProjectPanelDataSource extends GenericGwtRpcDataSourceFilterId<Inte
 		to.setDescription(from.getAttribute(DESCRIPTION_FIELD));
 		to.setEndDate(from.getAttributeAsDate(ENDDATE_FIELD));
 		to.setInitDate(from.getAttributeAsDate(INITDATE_FIELD));
-		to.setIsOwner(from.getAttributeAsInt(IS_OWNER_FIELD));
+		
+		Integer owner = from.getAttribute(IS_OWNER_FIELD).equals(OWNER_CREADOR)?1:0;
+		to.setIsOwner(owner);
 		
 		ProjectStateDTO projectState = new ProjectStateDTO();
 		projectState.setId(from.getAttributeAsInt(STATE_ID_FIELD));
@@ -120,7 +125,7 @@ public class ProjectPanelDataSource extends GenericGwtRpcDataSourceFilterId<Inte
 		to.setAttribute(CLIENT_ID_FIELD, from.getClient().getId());
 		to.setAttribute(CLIENT_NAME_FIELD, from.getClient().getName());
 		
-		to.setAttribute(IS_OWNER_FIELD, from.getIsOwner());
+		to.setAttribute(IS_OWNER_FIELD, from.getIsOwner()==1?OWNER_CREADOR:OWNER_ASIGNADO);
 	}
 	
 	@Override

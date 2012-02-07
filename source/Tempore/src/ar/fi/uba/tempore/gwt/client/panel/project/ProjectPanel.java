@@ -64,15 +64,6 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 		image.setCanFilter(false);
 		
 		ListGridField imageOwner = new ListGridField(ProjectPanelDataSource.IS_OWNER_FIELD);
-//		imageOwner.setCellFormatter(new CellFormatter() {
-//			@Override
-//			public String format(Object value, ListGridRecord record, int rowNum, int colNum) {
-//				if (value.toString().equals("1")){
-//					return "Creador";
-//				}
-//				return "Asignado";
-//			}
-//		});
 		imageOwner.setAlign(Alignment.CENTER);
 		imageOwner.setType(ListGridFieldType.IMAGE);
 		imageOwner.setImageURLPrefix("../images/png/explorer/Favourites");  
