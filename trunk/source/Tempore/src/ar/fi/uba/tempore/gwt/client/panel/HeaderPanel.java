@@ -4,6 +4,7 @@ import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.layout.HLayout;
 
+
 public class HeaderPanel extends HLayout {
 	private static final String TEMPORE_HEADER = "Tempore_Header";
 
