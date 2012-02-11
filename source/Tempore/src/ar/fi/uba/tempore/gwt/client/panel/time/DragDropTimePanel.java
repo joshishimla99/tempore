@@ -250,7 +250,7 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		vAllPanel.addMember(hHoursCount);
 
 		//refresco panel de Horas
-//		refreshTimeGrid();
+		refreshTimeGrid();
 		refreshPanel();
 		this.addChild(vAllPanel);		
 	}

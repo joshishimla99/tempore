@@ -14,4 +14,6 @@ public interface UserServicesClientAsync extends GenericGwtRpcDataSourceServiceA
 
 	void getUserNotAssignedToProject(Integer projectId, AsyncCallback<List<UserDTO>> callback);
 
+	void getUserLoggued(AsyncCallback<String> callback);
+
 }
