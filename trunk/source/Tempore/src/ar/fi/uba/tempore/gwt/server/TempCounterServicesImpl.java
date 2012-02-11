@@ -18,7 +18,6 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 public class TempCounterServicesImpl extends RemoteServiceServlet implements TempCounterServicesClient {
 	private static final long serialVersionUID = 7476117264486326360L;
-//	private static final Integer NONE = 0;
 	private static final Integer PLAY = 1;
 	private static final Integer PAUSE = 2;
 	
@@ -28,7 +27,8 @@ public class TempCounterServicesImpl extends RemoteServiceServlet implements Tem
 	@Override
 	public TempCounterDTO getActualState(Integer userId){
 		TempCounterDAO tcDAO = new TempCounterDAO();
-		log.info("STATE COUNTER - " + userId);
+		log.info("THREAD = " + this.getThreadLocalRequest());
+		log.info("STATE COUNTER - " + userId + " - " + this.getThreadLocalRequest().getAttribute("username"));
 		TempCounter tc = tcDAO.findById(userId);
 		
 		TempCounterDTO tcDTO = tc==null?null:mapper.map(tc, TempCounterDTO.class);
@@ -43,6 +43,7 @@ public class TempCounterServicesImpl extends RemoteServiceServlet implements Tem
 	@Override
 	public TempCounterDTO start (Integer userId, Integer taskId){
 		TempCounterDAO tcDAO = new TempCounterDAO();
+		
 		log.info("START COUNTER - " + userId + " - " + taskId);
 		TempCounter tc = tcDAO.findById(userId);
 		

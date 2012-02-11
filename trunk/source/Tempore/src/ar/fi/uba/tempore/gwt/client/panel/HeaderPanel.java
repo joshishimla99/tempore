@@ -21,8 +21,6 @@ public class HeaderPanel extends HLayout {
 		setStyleName(TEMPORE_HEADER);
 		setWidth100();
 		setSize("100%", "75px");
-//		setDefaultLayoutAlign(Alignment.CENTER);
-//		setAlign(VerticalAlignment.CENTER);
 
 		Img a = new Img("../images/logo_tempore_izq.jpg");
 		a.setSize("360", "75");
