@@ -71,3 +71,15 @@ h4 { font-size:12px; line-height:14px; text-transform: uppercase; color:#000; }
   font-weight: bold;
   color: rgb(255,106,21);
 }
+
+.logginHeader {
+	font-size:14px;
+	font-weight:bold;
+	color: rgb(60,60,251);	
+}
+
+.loggin_title_text{
+	font-size:14px;
+	font-weight:bold;
+	/* color: rgb(0,0,255); */
+}
