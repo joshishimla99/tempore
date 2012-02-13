@@ -32,6 +32,8 @@ public class TaskBox extends Window {
 	private static final String COLOR_SOPORTE = "#FFFF99";
 	private static final String COLOR_DESARROLLO = "#C0C0C0";
 	private static final String COLOR_ANALISIS = "#CCFFCC";
+	private static final String COLOR_QC = "rgb(254,208,122)";
+	private static final String COLOR_ADMINSITRACION = "rgb(255,91,255)";
 
 	private TaskTabPanel taskTabPanel;
 	private TaskDTO taskDTO;
@@ -60,6 +62,12 @@ public class TaskBox extends Window {
 			break;
 		case 3:
 			color = COLOR_SOPORTE;
+			break;
+		case 4:
+			color = COLOR_QC;
+			break;
+		case 5:
+			color = COLOR_ADMINSITRACION;
 			break;
 		}
 
@@ -196,6 +204,12 @@ public class TaskBox extends Window {
 			break;
 		case 3:
 			color = COLOR_SOPORTE;
+			break;
+		case 4:
+			color = COLOR_QC;
+			break;
+		case 5:
+			color = COLOR_ADMINSITRACION;
 			break;
 		}
 		content.setBackgroundColor(color);		
