@@ -149,6 +149,15 @@
 		<url-pattern>/tempore/TaskCounterServicesClient</url-pattern>
 	</servlet-mapping>	
 	
+	<servlet>
+		<servlet-name>MyUserServlet</servlet-name>
+		<servlet-class>ar.fi.uba.tempore.gwt.server.MyUserServicesImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MyUserServlet</servlet-name>
+		<url-pattern>/tempore/MyUserServicesClient</url-pattern>
+	</servlet-mapping>
+
 
 	<!-- IMAGES SERVLETS -->
 	<context-param>
