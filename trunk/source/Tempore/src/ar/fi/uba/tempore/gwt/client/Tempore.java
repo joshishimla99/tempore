@@ -28,20 +28,18 @@ public class Tempore implements EntryPoint {
 			public void onSuccess(String username) {
 				if (username == null){
 					//usuario desloguado
-					
 					new LoginPanel();
 				} else {
 					//usuario ya logueado
 					RootPanel.get("Content").add(new ConteinerMainPanel());
 				}
 			}
-			
+
 			@Override
 			public void onFailure(Throwable caught) {
 				new LoginPanel();
 			}
 		});
-		
 	}
 
 	public void dummyLogin(){
