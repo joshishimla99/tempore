@@ -3,6 +3,9 @@ package ar.fi.uba.tempore.gwt.server;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
 
@@ -22,6 +25,15 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 	
 	public UserDTO validateUser (String userName, String password){
 		UserDTO dto = null;
+		
+		HttpServletRequest request = this.getThreadLocalRequest();
+		HttpSession session = request.getSession();
+		
+		if (session.isNew()){
+			log.info("Session EXISTENTE");
+		} else {
+			log.info("NUEVA SESSION!!!!");
+		}
 
 		UserDAO uDAO = new UserDAO(); 
 		log.info("Users - VALIDATE USER");
@@ -29,7 +41,7 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 		User user = uDAO.validateUser(userName, password);
 		if (user != null && user.getId() != null) {
 			dto = mapper.map(user, UserDTO.class);
-			this.getThreadLocalRequest().setAttribute("username", userName);
+			session.setAttribute("userName", dto.getUserName());
 		}
 		
 		return dto;
@@ -37,7 +49,15 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 	
 	@Override
 	public String getUserLoggued(){
-		return (String) this.getThreadLocalRequest().getAttribute("username");
+		HttpServletRequest request = this.getThreadLocalRequest();
+		HttpSession session = request.getSession();
+		
+		if (session.isNew()){
+			log.info("Session EXISTENTE" + session.getAttribute("username"));
+		} else {
+			log.info("NUEVA SESSION!!!!");
+		}
+		return (String) session.getAttribute("username");
 	}
 	
 	
