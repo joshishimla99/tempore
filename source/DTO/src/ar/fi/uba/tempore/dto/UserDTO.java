@@ -5,7 +5,6 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  * Este DTO maneja la info a transportar para manejar los usuarios en la GUI
  */
 public class UserDTO implements IsSerializable{
-
 	private Integer id;
 	private String name;
 	private String lastName;
