@@ -1,13 +1,18 @@
 package ar.fi.uba.tempore.dao;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 import org.hibernate.classic.Session;
 
 import ar.fi.uba.tempore.dao.util.HibernateUtil;
 import ar.fi.uba.tempore.entity.reports.ProjectsTimes;
+import ar.fi.uba.tempore.entity.reports.TaskTypesTimes;
 import ar.fi.uba.tempore.entity.reports.TasksTimes;
 import ar.fi.uba.tempore.entity.reports.TasksUsersTimes;
 import ar.fi.uba.tempore.entity.reports.UsersTimes;
@@ -15,6 +20,7 @@ import ar.fi.uba.tempore.entity.reports.UsersTimes;
 public class ReportDAO {
 
 	private Session session;
+	
 
 	public ReportDAO() {
 
@@ -162,5 +168,95 @@ public class ReportDAO {
 		list = query.list();
 		
 		return list;
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public List<TaskTypesTimes> getUserTimeByTime (Integer userId){	
+		List<TaskTypesTimes> list = null;
+		String hql = "select new ar.fi.uba.tempore.entity.reports.TaskTypesTimes(t.name, tu.date, sum(tu.hourCount) as total) " +
+				" from Task as t " +
+				" inner join t.taskUserList as tu " +
+				" where tu.user.id = :userId " + 
+				" group by tu.date " +
+				" order by tu.date";
+		
+		
+		Query query = this.getSession().createQuery(hql);
+		query = query.setInteger("userId", userId);
+		list = query.list();
+		
+		return list;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TaskTypesTimes> getProjectTaskTypeByTime (Integer projectId){	
+		List<TaskTypesTimes> result = null;
+		String hql = "select new ar.fi.uba.tempore.entity.reports.TaskTypesTimes(tt.name, tu.date, sum(tu.hourCount) as total) " +
+				" from Task as t " +
+				" inner join t.taskType as tt " +
+				" inner join t.taskUserList as tu " +
+				" where t.project.id = :projectId " + 
+				" group by tu.date, tt.name " +
+				" order by tu.date, tt.name";
+		
+		Query query = this.getSession().createQuery(hql);
+		query = query.setInteger("projectId", projectId);
+		result = query.list();
+				
+		return result;
+	}
+
+	
+	
+	public static void main(String[] args) {
+		Transaction transaction = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
+		
+		ReportDAO reportDAO = new ReportDAO();
+//		List<TaskTypesTimes> userTimeByTime = reportDAO.getUserTimeByTime(1);
+//		for (TaskTypesTimes data : userTimeByTime) {
+//			System.out.println(data.toString());
+//		}
+
+		List<TaskTypesTimes> result = reportDAO.getProjectTaskTypeByTime(1);
+//		for (TaskTypesTimes data : userTimeByTime) {
+//			System.out.println(data.toString());
+//		}
+
+		Date iniDate = result.get(0).getDate();
+		Date endDate = result.get(result.size()-1).getDate();
+				
+		Calendar day = Calendar.getInstance();
+		
+		Map<Integer, Map<Integer, Integer>> mainMap = new HashMap<Integer, Map<Integer, Integer>>();
+		
+		Map<Integer, Integer> typeTaskMap = new HashMap<Integer, Integer>();
+		
+		int projectDay = 0;
+		int projectBeforeDay = 0;
+		for (TaskTypesTimes data : result) {
+			
+			projectDay = difBetweenDates(iniDate, data.getDate());
+			if (projectDay != projectBeforeDay){
+				typeTaskMap = new HashMap<Integer, Integer>();
+				
+			}
+			
+			mainMap.put(projectDay, typeTaskMap);
+			
+			
+			projectBeforeDay = projectDay;
+//			for (int i=0; day.getTime().before(endDate); day.add(Calendar.DAY_OF_YEAR, 1)){
+//				System.out.println(""+);
+//			}
+		}
+
+		
+		
+		transaction.commit();
+	}
+	
+	private static int difBetweenDates(Date dateIni, Date dateEnd){
+		return (int)((dateEnd.getTime()-dateIni.getTime())/(1000*60*60*24));
 	}
 }
