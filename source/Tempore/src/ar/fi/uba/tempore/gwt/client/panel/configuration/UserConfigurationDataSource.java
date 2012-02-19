@@ -30,7 +30,9 @@ public class UserConfigurationDataSource extends GenericGwtRpcDataSource<UserDTO
 	public static final String PHONE = "phoneCol";
 	public static final String ZIP_CODE = "zipCodeCol";
 	public static final String IMAGE_NAME = "imageName";
+	public static final String IS_ADMIN = "isAdmin";
 	//TODO falta saber si es cliente o no
+
 	
 
 	public static UserConfigurationDataSource getInstance(){
@@ -81,6 +83,9 @@ public class UserConfigurationDataSource extends GenericGwtRpcDataSource<UserDTO
 		imageName.setHidden(true);
 		fields.add(imageName);
 		
+		DataSourceField isAdmin = new DataSourceTextField(IS_ADMIN, "Administrador");
+		fields.add(isAdmin);
+		
 		return fields;
 	}
 
@@ -98,6 +103,7 @@ public class UserConfigurationDataSource extends GenericGwtRpcDataSource<UserDTO
 		dto.setUserName(rec.getAttribute(USER_NAME));
 		dto.setZipCode(rec.getAttribute(ZIP_CODE));		
 		dto.setImageName(rec.getAttribute(IMAGE_NAME));
+		dto.setAdmin(rec.getAttribute(IS_ADMIN).equals("true")?"S":"N");
 	}
 
 	@Override
@@ -114,6 +120,7 @@ public class UserConfigurationDataSource extends GenericGwtRpcDataSource<UserDTO
 		rec.setAttribute(USER_NAME, dto.getUserName());
 		rec.setAttribute(ZIP_CODE, dto.getZipCode());
 		rec.setAttribute(IMAGE_NAME, dto.getImageName());
+		rec.setAttribute(IS_ADMIN, dto.isAdmin());
 	}
 
 	@Override
