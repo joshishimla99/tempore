@@ -130,27 +130,6 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 			}
 		});
 		
-//		final SelectItem selClient = new SelectItem(CLIENT_FIELD, "Clientes");
-//		selClient.setMultiple(true);
-//		selClient.setMultipleAppearance(MultipleAppearance.PICKLIST);
-//		selClient.setRequired(true);		
-//		
-//		ClientServicesClient.Util.getInstance().fetch(new AsyncCallback<List<ClientDTO>>() {			
-//			@Override
-//			public void onSuccess(List<ClientDTO> result) {
-//				FormItem item = form.getItem(CLIENT_FIELD);
-//				LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();  
-//				for (ClientDTO clientDTO : result) {
-//					valueMap.put(clientDTO.getId().toString(), clientDTO.getName());
-//				}
-//				item.setValueMap(valueMap);
-//			}
-//			@Override
-//			public void onFailure(Throwable caught) {
-//				Window.alert("Fallo la carga del combo 'Clientes'");				
-//			}
-//		});
-
 		final DateItem startDate = new DateItem(START_FIELD, "Fecha Inicio");
 		startDate.setUseTextField(true);
 		startDate.setDisplayFormat(DateDisplayFormat.TOEUROPEANSHORTDATE);
