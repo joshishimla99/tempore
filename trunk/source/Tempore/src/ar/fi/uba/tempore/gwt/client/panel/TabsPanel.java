@@ -1,7 +1,9 @@
 package ar.fi.uba.tempore.gwt.client.panel;
 
+import ar.fi.uba.tempore.gwt.client.login.SessionUser;
 import ar.fi.uba.tempore.gwt.client.panel.configuration.ConfigurationTabPanel;
 import ar.fi.uba.tempore.gwt.client.panel.help.HelpTabPanel;
+import ar.fi.uba.tempore.gwt.client.panel.myuser.MyUserTabPanel;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectTabPanel;
 import ar.fi.uba.tempore.gwt.client.panel.report.ReportTabPanel;
 import ar.fi.uba.tempore.gwt.client.panel.resource.ResourceTabPanel;
@@ -68,6 +70,14 @@ public class TabsPanel extends TabSet {
 		configurationTab.setWidth(tabWidth);
 		configurationTab.setPrompt("Esta secci&oacute;n le permite administrar los usuarios, los clientes y las alarmas");
 		configurationTab.setPane(new ConfigurationTabPanel());
+
+		//Tab 5
+		final Tab myUserTab = new Tab("Mi Cuenta  ", "../images/ico/wrench.ico");
+		myUserTab.setWidth(tabWidth);
+		myUserTab.setPrompt("Esta secci&oacute;n le permite administrar la cuenta propia");
+		myUserTab.setPane(new MyUserTabPanel());
+
+		
 		
 		//Tab 6
 		final Tab helpTab = new Tab("Ayuda  ", "../images/ico/help1.ico");
@@ -93,8 +103,11 @@ public class TabsPanel extends TabSet {
 			}
 		});
 		
-		setTabs(timeTab, projectTab, resourceTab, taskTab, reportTab, configurationTab, helpTab);
-		selectTab(0);
+		if (SessionUser.getInstance().getUser().isAdmin()){
+			setTabs(timeTab, projectTab, resourceTab, taskTab, reportTab, configurationTab ,helpTab);
+		} else {
+			setTabs(timeTab, projectTab, resourceTab, taskTab, reportTab, myUserTab ,helpTab);
+		}
+		selectTab(5);
 	}
-
 }
