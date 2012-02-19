@@ -23,6 +23,9 @@ public class User extends Person {
 	private String state;
 	private String userName;
 	private String password;
+	private String admin;
+	
+	
 	private List<TaskUser> taskUserList = new ArrayList<TaskUser>();
 	private List<UserProject> userProjectList = new ArrayList<UserProject>();
 	private List<Client> clientList = new ArrayList<Client>();
@@ -53,13 +56,20 @@ public class User extends Person {
 	}
 	
 	@Column(name="password")
-	public void setPassword(String password) {
-		this.password = password;
-	}
 	public String getPassword() {
 		return password;
 	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	
+	@Column(name="admin")
+	public String getAdmin() {
+		return admin;
+	}
+	public void setAdmin(String admin) {
+		this.admin = admin;
+	}
 	
 	@ManyToMany(
 			targetEntity=Client.class,
@@ -96,4 +106,5 @@ public class User extends Person {
 	public void setUserProjectList(List<UserProject> userProjectList) {
 		this.userProjectList = userProjectList;
 	}
+	
 }

@@ -23,15 +23,16 @@
 	<PROJECT id='1' name='Tempore' projectStateId='1' description='Trabajo profesional sobre contador de horas' initDate='2011-02-09' endDate='2012-07-01' budget='65555' clientId='1'/>
 	<PROJECT id='2' name='Google+' projectStateId='2' description='Trabajo demo' initDate='2010-05-01' endDate='2012-07-01' budget='77000' clientId='2'/>
 		
-	<USER personId='1' state='A' username='ngarcia' password='1234'/>
-	<USER personId='2' state='A' username='jpgigante' password='1234'/>
-	<USER personId='3' state='A' username='lrinaudo' password='1234'/>
-	<USER personId='11' state='A' username='user11' password='pass11'/>
-	<USER personId='12' state='A' username='user12' password='pass12'/>
-	<USER personId='13' state='A' username='user13' password='pass13'/>
-	<USER personId='20' state='A' username='tcs1' password='tcs1'/>
-	<USER personId='21' state='A' username='tcs2' password='tcs2'/>
-	<USER personId='22' state='A' username='Experian' password='Experian'/>	
+	<USER personId='1' state='A' username='ngarcia' password='1234' admin='S'/>
+	<USER personId='2' state='A' username='jpgigante' password='1234' admin='N'/>
+	<USER personId='3' state='A' username='lrinaudo' password='1234' admin='N'/>
+	<USER personId='11' state='A' username='user11' password='pass11' admin='N'/>
+	<USER personId='12' state='A' username='user12' password='pass12' admin='N'/>
+	<USER personId='13' state='A' username='user13' password='pass13' admin='N'/>
+	<USER personId='20' state='A' username='tcs1' password='tcs1' admin='N'/>
+	<USER personId='21' state='A' username='tcs2' password='tcs2' admin='N'/>
+	<USER personId='22' state='A' username='Experian' password='Experian' admin='N'/>	
+	
 	
 	<CLIENTCONTACT clientId='1' userId='20'/>
 	<CLIENTCONTACT clientId='1' userId='21'/>
