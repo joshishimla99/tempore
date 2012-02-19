@@ -7,6 +7,7 @@ import ar.fi.uba.tempore.dto.UserDTO;
 import ar.fi.uba.tempore.dto.UserProjectDTO;
 import ar.fi.uba.tempore.gwt.client.UserProjectServicesClient;
 import ar.fi.uba.tempore.gwt.client.UserServicesClient;
+import ar.fi.uba.tempore.gwt.client.login.SessionUser;
 import ar.fi.uba.tempore.gwt.client.panel.TabsPanelContainer;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 import ar.fi.uba.temporeutils.image.ImgClient;
@@ -138,9 +139,9 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 			public void onRecordClick(RecordClickEvent event) {
 				if (event.getRecord().getAttributeAsInt(IS_OWNER) == 1){
 					//Si puedo cambiar el dueño de proyecto 
-					if (ProjectPanel.getInstance().getSelected().getIsOwner() == 1) {
+//					if (ProjectPanel.getInstance().getSelected().getIsOwner() == 1) {
 						SC.say("No puede desasignar al usuario due&ntilde;o del proyecto");
-					}
+//					}
 				}
 			}
 		});
@@ -192,12 +193,13 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 
 			boolean isProjectOwner = selected.getIsOwner()==1;
 			//Permisos dentro de la pantalla
-			changeOwnerBtn.setVisible(isProjectOwner);
-			if (isProjectOwner){				
+			if (isProjectOwner || SessionUser.getInstance().getUser().isAdmin()){				
+				changeOwnerBtn.setVisible(true);
 				updateUserTileGrid(selected.getId());
 				userTileGrid.show();
 				assignedTileGrid.setBackgroundColor("rgb(255,255,255)");
 			} else {
+				changeOwnerBtn.setVisible(false);
 				userTileGrid.hide();
 				assignedTileGrid.setBackgroundColor("rgb(220,220,220)");
 			}
