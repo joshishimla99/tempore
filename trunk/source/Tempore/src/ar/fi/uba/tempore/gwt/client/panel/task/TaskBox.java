@@ -33,7 +33,7 @@ public class TaskBox extends Window {
 	private static final String COLOR_DESARROLLO = "#C0C0C0";
 	private static final String COLOR_ANALISIS = "#CCFFCC";
 	private static final String COLOR_QC = "rgb(254,208,122)";
-	private static final String COLOR_ADMINSITRACION = "rgb(255,91,255)";
+	private static final String COLOR_ADMINSITRACION = "rgb(255,166,210)";
 
 	private TaskTabPanel taskTabPanel;
 	private TaskDTO taskDTO;
