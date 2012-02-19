@@ -20,7 +20,7 @@ import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
-public class LoginPanel  extends Composite{
+public class LoginPanel extends Composite{
 
 	private static final String USER = "User";
 	private static final String PASSWORD = "Password";
@@ -102,7 +102,7 @@ public class LoginPanel  extends Composite{
 		
 		
 		
-		
+		final LoginPanel thisPanel = this;
 		submit.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(com.smartgwt.client.widgets.events.ClickEvent event) {
@@ -116,6 +116,9 @@ public class LoginPanel  extends Composite{
 								//LOGGIN SUCCESS
 								SessionUser.getInstance().setUser(result);
 								RootPanel.get("Content").add(new ConteinerMainPanel());
+								
+								//TODO ver de hacer el login correctamente
+								thisPanel.setVisible(false);
 							} else {
 								error.setVisible(true);
 							}
