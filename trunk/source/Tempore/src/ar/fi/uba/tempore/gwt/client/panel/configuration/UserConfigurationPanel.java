@@ -13,6 +13,7 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.events.DrawEvent;
 import com.smartgwt.client.widgets.events.DrawHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.CheckboxItem;
 import com.smartgwt.client.widgets.form.fields.HiddenItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.grid.ListGrid;
@@ -49,7 +50,6 @@ public class UserConfigurationPanel extends Canvas {
 		title.setWidth(200);
 		title.setHeight(15);
 		title.setIcon("[SKIN]/actions/help.png");
-		title.setBorder("1px solid blue");
 		title.setStyleName("Informal");
 		title.setIconOrientation("right");
         title.addIconClickHandler(new com.smartgwt.client.widgets.events.IconClickHandler() {
@@ -70,7 +70,6 @@ public class UserConfigurationPanel extends Canvas {
 			protected Canvas getExpansionComponent(final ListGridRecord record){
 
 				final ListGrid grid = this;  
-					
 				
 				final HiddenItem field = new HiddenItem(UserConfigurationDataSource.IMAGE_NAME);
 				final TextItem n0 = new TextItem(UserConfigurationDataSource.NAME);
@@ -81,13 +80,14 @@ public class UserConfigurationPanel extends Canvas {
 				final TextItem n5 = new TextItem(UserConfigurationDataSource.ADDRESS);
 				final TextItem n6 = new TextItem(UserConfigurationDataSource.COUNTRY);
 				final TextItem n7 = new TextItem(UserConfigurationDataSource.PHONE);
-				final TextItem n8 = new TextItem(UserConfigurationDataSource.ZIP_CODE);				
+				final TextItem n8 = new TextItem(UserConfigurationDataSource.ZIP_CODE);
+				final CheckboxItem n9 = new CheckboxItem(UserConfigurationDataSource.IS_ADMIN);
 				
 				final DynamicForm form = new DynamicForm();  				
 				form.setNumCols(4);  
 				form.setDataSource(dataSource);				
 				
-				form.setFields(n0,n1,n2,n3,n4,n5,n6,n7,n8,field);
+				form.setFields(n0,n1,n2,n3,n4,n5,n6,n7,n8,n9,field);
 				form.addDrawHandler(new DrawHandler() {  
 					public void onDraw(DrawEvent event) {  
 						form.editRecord(record);  
@@ -109,14 +109,19 @@ public class UserConfigurationPanel extends Canvas {
 				
 				
 
-				IButton saveButton = new IButton("Guardar");  
+				IButton saveButton = new IButton("Guardar"); 
+				saveButton.setIcon("../images/ico/save.ico");
 				saveButton.addClickHandler(new ClickHandler() {  
 					public void onClick(ClickEvent event) {  
-						form.saveData();  
+						if (form.validate()){
+							grid.collapseRecord(record);
+							form.saveData();  
+						}
 					}  
 				});  
 
-				IButton cancelButton = new IButton("Cancelar");  
+				IButton cancelButton = new IButton("Cancelar"); 
+				cancelButton.setIcon("../images/ico/back.ico");
 				cancelButton.addClickHandler(new ClickHandler() {  
 					public void onClick(ClickEvent event) {  
 						grid.collapseRecord(record);  
@@ -187,4 +192,5 @@ public class UserConfigurationPanel extends Canvas {
 		vLayout.addMember(grid);
 		this.addChild(vLayout);
 	}
+
 }
