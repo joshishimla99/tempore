@@ -38,6 +38,10 @@
 		<class-b>ar.fi.uba.tempore.entity.reports.TasksTimes</class-b>
 	</mapping>
 	<mapping>
+		<class-a>ar.fi.uba.tempore.dto.reports.TaskTypesTimesDTO</class-a>
+		<class-b>ar.fi.uba.tempore.entity.reports.TaskTypesTimes</class-b>
+	</mapping>
+	<mapping>
 		<class-a>ar.fi.uba.tempore.dto.TempCounterDTO</class-a>
 		<class-b>ar.fi.uba.tempore.entity.TempCounter</class-b>
 	</mapping>
