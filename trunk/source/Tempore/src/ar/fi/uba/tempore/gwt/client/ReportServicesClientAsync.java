@@ -2,6 +2,8 @@ package ar.fi.uba.tempore.gwt.client;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
 
 import ar.fi.uba.tempore.dto.reports.ProjectsTimesDTO;
 import ar.fi.uba.tempore.dto.reports.TasksTimesDTO;
@@ -20,5 +22,8 @@ public interface ReportServicesClientAsync {
 
 	void getUserActivity(Integer userId, Date ini, Date end,
 			AsyncCallback<List<ProjectsTimesDTO>> callback);
+
+	void getProjectTaskTypeByTime(Integer projectId, Date ini, Date end,
+			AsyncCallback<Map<String, Map<Integer, Long>>> asyncCallback);
 
 }
