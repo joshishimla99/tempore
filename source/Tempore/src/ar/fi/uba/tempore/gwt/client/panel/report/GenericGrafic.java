@@ -2,6 +2,7 @@ package ar.fi.uba.tempore.gwt.client.panel.report;
 
 import com.google.gwt.visualization.client.DataTable;
 import com.google.gwt.visualization.client.VisualizationUtils;
+import com.google.gwt.visualization.client.visualizations.corechart.AxisOptions;
 import com.google.gwt.visualization.client.visualizations.corechart.CoreChart;
 import com.google.gwt.visualization.client.visualizations.corechart.Options;
 import com.smartgwt.client.types.Overflow;
@@ -22,15 +23,21 @@ public abstract class GenericGrafic extends VLayout {
 	private static String html = "<div id=\"grafic_nested_div\" style=\"position: absolute; z-index: 1000000\"> </div>\n";
 	private Options options;
 
-	public GenericGrafic(String title, int graficType) {
+	public GenericGrafic(String title, String titleX, String titleY, int graficType) {
 		setGraficType(graficType);
 
 		final HTMLFlow htmlFlow = new HTMLFlow(html); 
 
 		options = Options.create();
-		options.setWidth(700);
-		options.setHeight(400);
+		options.setWidth(750);
+		options.setHeight(450);
 		options.setTitle(title);
+		AxisOptions optionsHAxis = AxisOptions.create();
+		optionsHAxis.setTitle(titleX);
+		AxisOptions optionsVAxis = AxisOptions.create();
+		optionsVAxis.setTitle(titleY);
+		options.setHAxisOptions(optionsHAxis);
+		options.setVAxisOptions(optionsVAxis);
 
 		this.setHeight100();
 		this.setWidth100();
@@ -50,7 +57,6 @@ public abstract class GenericGrafic extends VLayout {
 			public void run() {
 				drawChart(createTable(), getOptions());
 			}
-
 		};
 
 		VisualizationUtils.loadVisualizationApi(onLoadCallback, CoreChart.PACKAGE);
@@ -140,7 +146,7 @@ public abstract class GenericGrafic extends VLayout {
 		return graficType;
 	}
 
-	public void setGraficType(int graficType) {
+	protected void setGraficType(int graficType) {
 		this.graficType = graficType;
 	}	
 }
