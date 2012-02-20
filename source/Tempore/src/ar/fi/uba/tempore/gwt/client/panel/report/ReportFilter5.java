@@ -2,13 +2,18 @@ package ar.fi.uba.tempore.gwt.client.panel.report;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import ar.fi.uba.tempore.dto.ProjectDTO;
+import ar.fi.uba.tempore.gwt.client.ProjectServicesClient;
 import ar.fi.uba.tempore.gwt.client.ReportServicesClient;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.visualization.client.DataTable;
 import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
@@ -28,7 +33,7 @@ import com.smartgwt.client.widgets.layout.VLayout;
 
 public class ReportFilter5 extends VLayout {
 
-	private final DynamicForm formFilterDate = new DynamicForm();
+	private final DynamicForm formFilter = new DynamicForm();
 	protected static final String DESDE_FIELD = "DesdeItem";
 	protected static final String HASTA_FIELD = "HastaItem";
 	private static final String PROJECT_FIELD = "ProyectoItem";
@@ -42,6 +47,22 @@ public class ReportFilter5 extends VLayout {
 		this.parent = parent;
 		//Filtro Fecha
 		final SelectItem project = new SelectItem(PROJECT_FIELD, "Proyecto");
+		project.setRequired(true);
+		ProjectServicesClient.Util.getInstance().fetch(new AsyncCallback<List<ProjectDTO>>() {
+			@Override
+			public void onSuccess(List<ProjectDTO> result) {
+				LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();  
+				for (ProjectDTO dto : result) {
+					valueMap.put(dto.getId().toString(), dto.getName());
+				}
+				project.setValueMap(valueMap);	
+			}
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Error al cargar los Proyecto para Filtro de Reporte");
+			}
+		});
+
 		
 		final DateItem ini = new DateItem(DESDE_FIELD,"Desde");
 		ini.setDisplayFormat(DateDisplayFormat.TOEUROPEANSHORTDATE);
@@ -49,7 +70,7 @@ public class ReportFilter5 extends VLayout {
 		final DateItem end = new DateItem(HASTA_FIELD, "Hasta");
 		end.setDisplayFormat(DateDisplayFormat.TOEUROPEANSHORTDATE);
 
-		formFilterDate.setFields(project,ini,end);
+		formFilter.setFields(project);//,ini,end);
 
 
 
@@ -68,25 +89,27 @@ public class ReportFilter5 extends VLayout {
 	    hLayout5.addMember(btnReporte5);
 	    
 	    this.addMember(htmlFlow5);
-	    this.addMember(formFilterDate);
+	    this.addMember(formFilter);
 	    this.addMember(hLayout5);
 	}
 	
 	private ClickHandler onClickReport5 = new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-			final Date ini = (Date) formFilterDate.getValue(DESDE_FIELD);
-			final Date end = (Date) formFilterDate.getValue(HASTA_FIELD);
-			final Integer projectId = ProjectPanel.getInstance().getSelected().getId();
-			final String projectName = ProjectPanel.getInstance().getSelected().getName();
-			
-			
-			Canvas[] oldGrafics = parent.getChildren();
-			for (Canvas old : oldGrafics) {
-				parent.removeChild(old);
+			if (formFilter.validate()){
+				final Date ini = (Date) formFilter.getValue(DESDE_FIELD);
+				final Date end = (Date) formFilter.getValue(HASTA_FIELD);
+				final Integer projectId = new Integer(formFilter.getValue(PROJECT_FIELD).toString());
+				final String projectName = formFilter.getItem(PROJECT_FIELD).getDisplayValue().toString();
+				
+				
+				Canvas[] oldGrafics = parent.getChildren();
+				for (Canvas old : oldGrafics) {
+					parent.removeChild(old);
+				}
+	
+				draw(projectId, projectName, ini, end);
 			}
-
-			draw(projectId, projectName, ini, end);				
 		}
 	};
 	
@@ -105,41 +128,41 @@ public class ReportFilter5 extends VLayout {
 						data.addColumn(ColumnType.NUMBER, "Numero de Dia del Proyecto");						
 						for (String taskType : taskMap.keySet()){
 							data.addColumn(ColumnType.NUMBER, taskType);
-//							GWT.log("Columna: " + taskType);
 						}
 						
 						Collection<Map<Integer, Long>> values = taskMap.values();
-						data.addRows(values.iterator().next().size());
-						
-						//Columna de los Dias EJE X
-						int columnIndex = 0; 
-						String key = taskMap.keySet().iterator().next();
-						Map<Integer, Long> map = taskMap.get(key);
-						int rowIndex = 0;
-						for (Integer day : map.keySet()){
-							data.setValue(rowIndex, columnIndex, day);
-//							GWT.log("["+rowIndex+","+columnIndex+","+day+"]");
-							rowIndex++;
-						}
-						
-						//Graficos del Eje Y para cada una de los tipos de tarea
-						columnIndex = 1; 
-						GWT.log("Cantidad de tipos de Tareas " + taskMap.keySet().size());
-						for (String taskType : taskMap.keySet()){
-							Map<Integer, Long> dayMap = taskMap.get(taskType);
-							GWT.log("Columna: " + taskType);
-							rowIndex = 0;
-							Set<Integer> daySet = dayMap.keySet();
-							for (Integer day : daySet) {
-								Long hourCharged = dayMap.get(day);
-								
-								data.setValue(rowIndex, columnIndex, hourCharged/HORA);
-								GWT.log("["+rowIndex+","+columnIndex+","+hourCharged/HORA+"]");
+						if (values.iterator().hasNext()){
+							data.addRows(values.iterator().next().size());
+							
+							//Columna de los Dias EJE X
+							int columnIndex = 0; 
+							String key = taskMap.keySet().iterator().next();
+							Map<Integer, Long> map = taskMap.get(key);
+							int rowIndex = 0;
+							for (Integer day : map.keySet()){
+								data.setValue(rowIndex, columnIndex, day);
+	//							GWT.log("["+rowIndex+","+columnIndex+","+day+"]");
 								rowIndex++;
 							}
-							columnIndex++;
+							
+							//Graficos del Eje Y para cada una de los tipos de tarea
+							columnIndex = 1; 
+							GWT.log("Cantidad de tipos de Tareas " + taskMap.keySet().size());
+							for (String taskType : taskMap.keySet()){
+								Map<Integer, Long> dayMap = taskMap.get(taskType);
+								GWT.log("Columna: " + taskType);
+								rowIndex = 0;
+								Set<Integer> daySet = dayMap.keySet();
+								for (Integer day : daySet) {
+									Long hourCharged = dayMap.get(day);
+									
+									data.setValue(rowIndex, columnIndex, hourCharged/HORA);
+									GWT.log("["+rowIndex+","+columnIndex+","+hourCharged/HORA+"]");
+									rowIndex++;
+								}
+								columnIndex++;
+							}
 						}
-
 						return data;
 					}
 				};
