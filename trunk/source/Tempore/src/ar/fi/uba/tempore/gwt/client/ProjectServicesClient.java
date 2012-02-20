@@ -1,4 +1,6 @@
 package ar.fi.uba.tempore.gwt.client;
+import java.util.List;
+
 import ar.fi.uba.tempore.dto.ProjectDTO;
 import ar.fi.uba.temporeutils.listgrid.filter.GenericGwtRpcDataSourceServiceFilterId;
 
@@ -18,7 +20,9 @@ public interface ProjectServicesClient extends GenericGwtRpcDataSourceServiceFil
 		}
 	}
 	
-	ProjectDTO getProjectById(Integer id);
+	public ProjectDTO getProjectById(Integer id);
+	
+	public List<ProjectDTO> fetch();
 }
 
 
