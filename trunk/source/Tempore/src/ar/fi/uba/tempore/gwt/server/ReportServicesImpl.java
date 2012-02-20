@@ -91,33 +91,34 @@ public class ReportServicesImpl extends RemoteServiceServlet implements ReportSe
 		log.info("REPORTE - getProjectTaskTypeByTime "+ projectId +" ["+ini+" ,"+end+"]");
 		
 		List<TaskTypesTimes> projectTaskTypeByTime = report.getProjectTaskTypeByTime(projectId);
-		Date iniDate = projectTaskTypeByTime.get(0).getDate();
-		
 		
 		Map<String, Map<Integer, Long>> mainMap = new HashMap<String, Map<Integer,Long>>();
-		
-		//Creo HashMap de Tipos de Tarea
-		Map<Integer, Long> internalMap = new HashMap<Integer, Long>();
-		for (TaskTypesTimes item : projectTaskTypeByTime) {			
-			if (!mainMap.containsKey(item.getTaskTypeName())){
-				mainMap.put(item.getTaskTypeName(), null);
+
+		if (!projectTaskTypeByTime.isEmpty()){
+			Date iniDate = projectTaskTypeByTime.get(0).getDate();
+			
+			//Creo HashMap de Tipos de Tarea
+			Map<Integer, Long> internalMap = new HashMap<Integer, Long>();
+			for (TaskTypesTimes item : projectTaskTypeByTime) {			
+				if (!mainMap.containsKey(item.getTaskTypeName())){
+					mainMap.put(item.getTaskTypeName(), null);
+				}
+				internalMap.put(difBetweenDates(iniDate, item.getDate()), 0L);
 			}
-			internalMap.put(difBetweenDates(iniDate, item.getDate()), 0L);
+			
+			//Inicializo los map de horas con ceros en todos los dias cargados
+			Set<String> keySet = mainMap.keySet();
+			for (String key : keySet) {
+				Map<Integer, Long> iniMap = new HashMap<Integer, Long>(internalMap);
+				mainMap.put(key, iniMap);
+			}
+			
+			//Coloco los Datos reales a cada fecha de proyecto
+			for (TaskTypesTimes item : projectTaskTypeByTime) {
+				Map<Integer, Long> map = mainMap.get(item.getTaskTypeName());
+				map.put(difBetweenDates(iniDate, item.getDate()), item.getHourCounted());
+			}
 		}
-		
-		//Inicializo los map de horas con ceros en todos los dias cargados
-		Set<String> keySet = mainMap.keySet();
-		for (String key : keySet) {
-			Map<Integer, Long> iniMap = new HashMap<Integer, Long>(internalMap);
-			mainMap.put(key, iniMap);
-		}
-		
-		//Coloco los Datos reales a cada fecha de proyecto
-		for (TaskTypesTimes item : projectTaskTypeByTime) {
-			Map<Integer, Long> map = mainMap.get(item.getTaskTypeName());
-			map.put(difBetweenDates(iniDate, item.getDate()), item.getHourCounted());
-		}
-		
 		return mainMap;
 	}
 	
