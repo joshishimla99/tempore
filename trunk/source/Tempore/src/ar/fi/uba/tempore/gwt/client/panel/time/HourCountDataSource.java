@@ -101,7 +101,7 @@ public class HourCountDataSource extends GenericGwtRpcDataSourceFilterId<TimeFil
 		dto.setUser(userDTO);
 		dto.setTask(taskDTO);
 		
-		Long milis = rec.getAttributeAsDate(DragDropTimePanel.COL_HOURS)==null?0:rec.getAttributeAsDate(DragDropTimePanel.COL_HOURS).getTime();
+		Long milis = rec.getAttributeAsDate(DragDropTimePanel.COL_HOURS)==null?(60*60*1000):rec.getAttributeAsDate(DragDropTimePanel.COL_HOURS).getTime();
 		if (milis > GMT_3){
 			dto.setHourCount(milis-GMT_3);
 		} else {

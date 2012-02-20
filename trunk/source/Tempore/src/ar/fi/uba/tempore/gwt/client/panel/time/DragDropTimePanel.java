@@ -113,8 +113,8 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		tasksTree.setLoadingDataMessage("${loadingImage}&nbsp;Cargando...");
 		TreeGridField tfId = new TreeGridField();
 		tfId.setHidden(true);
-		TreeGridField tfName = new TreeGridField(COL_NAME);
-		TreeGridField tfDescription = new TreeGridField(COL_DESCRIPTION);
+		TreeGridField tfName = new TreeGridField(COL_NAME, "Nombre");
+		TreeGridField tfDescription = new TreeGridField(COL_DESCRIPTION, "Descripci&oacute;n");
 		tasksTree.setCanReorderRecords(false);  
 		tasksTree.setCanDragRecordsOut(true);  
 		tasksTree.setCanAcceptDroppedRecords(false);  
@@ -126,11 +126,7 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		tasksTree.setFields(tfId, tfName, tfDescription);  
 		tasksTree.setShowAllRecords(true);  
 		tasksTree.setAutoFetchData(false);
-//		tasksTree.setDataSource(TaskTimeDataSource.getInstance());
-//		tasksTree.fetchData();
 		
-
-        
         
 		//TABLA DE CARGA DE HORAS
 		hoursCountGrid.setAddDropValues(false);
@@ -161,10 +157,12 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		hoursCountGrid.setShowGroupSummaryInHeader(true); 
 		hoursCountGrid.setGroupStartOpen(GroupStartOpen.ALL);
 
-		final ListGridField lfProject = new ListGridField(COL_PROJECT_NAME);		
+		final ListGridField lfProject = new ListGridField(COL_PROJECT_NAME, "Proyecto");
+		lfProject.setWidth("10%");
 		lfProject.setCanEdit(false);
 		lfProject.setHidden(true);
-		final ListGridField lfName = new ListGridField(COL_NAME);
+		final ListGridField lfName = new ListGridField(COL_NAME, "Nombre Tarea");
+		lfName.setWidth("25%");
 		lfName.setCanEdit(false);
 		lfName.setSummaryFunction(new SummaryFunction() {  
 			public Object getSummaryValue(Record[] records, ListGridField field) {  
@@ -177,12 +175,16 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 				return uniqueCategories.size() + " Tareas";  
 			}  
 		});
-		final ListGridField lfDescription = new ListGridField(COL_DESCRIPTION);
+		final ListGridField lfDescription = new ListGridField(COL_DESCRIPTION, "Descripcion");
 		lfDescription.setCanEdit(false);
-		final ListGridField lfDate = new ListGridField(COL_DATE);
-
-		final ListGridField lfHours = new ListGridField(COL_HOURS);
-		lfHours.setIncludeInRecordSummary(false); 
+		final ListGridField lfDate = new ListGridField(COL_DATE, "Fecha");
+		lfDate.setType(ListGridFieldType.DATE);
+		lfDate.setWidth("60");
+		lfDate.setCanEdit(false);
+		final ListGridField lfHours = new ListGridField(COL_HOURS, "Horas");
+		lfHours.setWidth("60");
+		
+		lfHours.setIncludeInRecordSummary(false);
 		lfHours.setType(ListGridFieldType.TIME);
 		lfHours.setTimeFormatter(TimeDisplayFormat.TOSHORT24HOURTIME);
 		lfHours.setSummaryFunction(new SummaryFunction() {  
@@ -198,14 +200,15 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 
 
 
-		final ListGridField lfComments = new ListGridField(COL_COMMENTS);
+		final ListGridField lfComments = new ListGridField(COL_COMMENTS,"Comentarios");
+		lfComments.setWidth("40%");
 		final ListGridField lfProjectId = new ListGridField(COL_PROJECT_ID);
 		lfProjectId.setHidden(true);
 		final ListGridField lfTaskId = new ListGridField(COL_TASK_ID);		
 		lfTaskId.setHidden(true);
 
-		hoursCountGrid.setFields(lfTaskId, lfProject, lfName, lfDescription, lfDate, lfHours, lfComments, lfProjectId);
-//		hoursCountGrid.setFields(lfTaskId, lfProject, lfName, lfDate, lfHours, lfComments, lfProjectId);
+//		hoursCountGrid.setFields(lfTaskId, lfProject, lfName, lfDescription, lfDate, lfHours, lfComments, lfProjectId);
+		hoursCountGrid.setFields(lfTaskId, lfProject, lfName, lfDate, lfHours, lfComments, lfProjectId);
 
 		hoursCountGrid.setEditorCustomizer(new ListGridEditorCustomizer() {  
 			public FormItem getEditor(ListGridEditorContext context) {  
@@ -337,7 +340,7 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 	            setAttribute(COL_PARENT_ID, taskTimeDTO.getTaskId());  
 	            setAttribute(COL_NAME, taskTimeDTO.getName());  
 	            setAttribute(COL_DESCRIPTION, taskTimeDTO.getDescription());
-	            setAttribute("isOpen", true);  
+	            setAttribute("isOpen", false);  
 	        }  
 	    }  
 }
