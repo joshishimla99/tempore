@@ -36,6 +36,23 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 	}
 
 	@Override
+	public List<ProjectDTO> fetch() {
+		ProjectDAO pDAO = new ProjectDAO();
+		log.info("FETCH ALL - Proyectos ");
+		
+		List<ProjectDTO> list = new ArrayList<ProjectDTO>();
+		
+		List<Project> projects = pDAO.findAll();
+		for (Project project : projects) {
+			ProjectDTO pDTO = mapper.map(project, ProjectDTO.class);
+			list.add(pDTO);
+		}
+		
+		return list;
+	}
+	
+	
+	@Override
 	public List<ProjectDTO> fetch(Integer userId) {
 		ProjectDAO pDAO = new ProjectDAO();
 		log.info("FETCH - Proyectos " + userId);
