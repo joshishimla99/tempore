@@ -1,6 +1,8 @@
 package ar.fi.uba.tempore.gwt.client;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
 
 import ar.fi.uba.tempore.dto.reports.ProjectsTimesDTO;
 import ar.fi.uba.tempore.dto.reports.TasksTimesDTO;
@@ -32,5 +34,7 @@ public interface ReportServicesClient extends RemoteService {
 	public List<TasksTimesDTO> getPrimaryTaskTimes (Integer projectId ,Date from, Date to);
 	
 	public List<ProjectsTimesDTO> getUserActivity (Integer userId, Date ini, Date end);
+
+	public Map<String, Map<Integer, Long>> getProjectTaskTypeByTime(Integer projectId,	Date ini, Date end);
 
 }
