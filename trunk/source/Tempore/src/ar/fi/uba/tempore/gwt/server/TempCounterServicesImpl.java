@@ -110,6 +110,9 @@ public class TempCounterServicesImpl extends RemoteServiceServlet implements Tem
 
 			Long factor = Math.round((double)timeSaved/TimeServicesImpl.QUINCE_MIN);
 			timeSaved = factor*TimeServicesImpl.QUINCE_MIN;
+			if (timeSaved == 0L){
+				timeSaved = TimeServicesImpl.QUINCE_MIN;
+			}
 			
 			TaskUser tu = new TaskUser();
 			tu.setUser(new User(tc.getUserId()));

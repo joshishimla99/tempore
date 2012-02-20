@@ -57,7 +57,7 @@ public class TimeServicesImpl extends RemoteServiceServlet implements TimeServic
 		
 		
 		
-		log.info("ID USER: " + userTask.getUser().getId());
+		log.info("ID USER: " + userTask.getUser().getId() +","+ taskUserDTO.getHourCount());
 		log.info("Id task: " + userTask.getTask().getId());
 		
 		TaskUser newUserTask = tuDAO.makePersistent(userTask );

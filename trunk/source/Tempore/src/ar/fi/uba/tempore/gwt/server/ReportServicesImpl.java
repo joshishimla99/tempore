@@ -2,7 +2,10 @@ package ar.fi.uba.tempore.gwt.server;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
@@ -12,6 +15,7 @@ import ar.fi.uba.tempore.dto.reports.ProjectsTimesDTO;
 import ar.fi.uba.tempore.dto.reports.TasksTimesDTO;
 import ar.fi.uba.tempore.dto.reports.UsersTimesDTO;
 import ar.fi.uba.tempore.entity.reports.ProjectsTimes;
+import ar.fi.uba.tempore.entity.reports.TaskTypesTimes;
 import ar.fi.uba.tempore.entity.reports.TasksTimes;
 import ar.fi.uba.tempore.entity.reports.UsersTimes;
 import ar.fi.uba.tempore.gwt.client.ReportServicesClient;
@@ -79,5 +83,45 @@ public class ReportServicesImpl extends RemoteServiceServlet implements ReportSe
 		}
 
 		return result;
+	}
+
+	@Override
+	public Map<String, Map<Integer, Long>> getProjectTaskTypeByTime(Integer projectId, Date ini, Date end) {
+		ReportDAO report = new ReportDAO();
+		log.info("REPORTE - getProjectTaskTypeByTime "+ projectId +" ["+ini+" ,"+end+"]");
+		
+		List<TaskTypesTimes> projectTaskTypeByTime = report.getProjectTaskTypeByTime(projectId);
+		Date iniDate = projectTaskTypeByTime.get(0).getDate();
+		
+		
+		Map<String, Map<Integer, Long>> mainMap = new HashMap<String, Map<Integer,Long>>();
+		
+		//Creo HashMap de Tipos de Tarea
+		Map<Integer, Long> internalMap = new HashMap<Integer, Long>();
+		for (TaskTypesTimes item : projectTaskTypeByTime) {			
+			if (!mainMap.containsKey(item.getTaskTypeName())){
+				mainMap.put(item.getTaskTypeName(), null);
+			}
+			internalMap.put(difBetweenDates(iniDate, item.getDate()), 0L);
+		}
+		
+		//Inicializo los map de horas con ceros en todos los dias cargados
+		Set<String> keySet = mainMap.keySet();
+		for (String key : keySet) {
+			Map<Integer, Long> iniMap = new HashMap<Integer, Long>(internalMap);
+			mainMap.put(key, iniMap);
+		}
+		
+		//Coloco los Datos reales a cada fecha de proyecto
+		for (TaskTypesTimes item : projectTaskTypeByTime) {
+			Map<Integer, Long> map = mainMap.get(item.getTaskTypeName());
+			map.put(difBetweenDates(iniDate, item.getDate()), item.getHourCounted());
+		}
+		
+		return mainMap;
+	}
+	
+	private Integer difBetweenDates(Date dateIni, Date dateEnd){
+		return (int)((dateEnd.getTime()-dateIni.getTime())/(1000*60*60*24));
 	}
 }
