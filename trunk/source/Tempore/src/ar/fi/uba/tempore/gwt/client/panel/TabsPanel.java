@@ -108,6 +108,6 @@ public class TabsPanel extends TabSet {
 		} else {
 			setTabs(timeTab, projectTab, resourceTab, taskTab, reportTab, myUserTab ,helpTab);
 		}
-		selectTab(5);
+		selectTab(4);
 	}
 }
