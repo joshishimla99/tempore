@@ -65,6 +65,10 @@ public class ReportTabPanel extends TabsPanelContainer{
 		final SectionStackSection sectionReport5 = new SectionStackSection("Tipo Tarea-Proyecto");  
 		sectionReport5.setCanCollapse(true);
 		sectionReport5.addItem(new ReportFilter5(graficLayout));
+		
+		final SectionStackSection sectionReport6 = new SectionStackSection("Horas Usuario-Semana");  
+		sectionReport6.setCanCollapse(true);
+		sectionReport6.addItem(new ReportFilter6(graficLayout));
 
 		
 		final SectionStack sectionStackReport = new SectionStack();
@@ -76,6 +80,7 @@ public class ReportTabPanel extends TabsPanelContainer{
         sectionStackReport.addSection(sectionReport3);
         sectionStackReport.addSection(sectionReport4);
         sectionStackReport.addSection(sectionReport5);
+        sectionStackReport.addSection(sectionReport6);
         
         
         
