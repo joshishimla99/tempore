@@ -3,12 +3,9 @@ package ar.fi.uba.tempore.dao;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.hibernate.Query;
-import org.hibernate.Transaction;
 import org.hibernate.classic.Session;
 
 import ar.fi.uba.tempore.dao.util.HibernateUtil;
@@ -171,20 +168,35 @@ public class ReportDAO {
 		return list;
 	}
 
-
+	/**
+	 * Query para buscar las horas cargadas por un usuario en la semana. Con el objetivo de que sepa que dia le falta cargar
+	 * @param userId Id del usuario
+	 * @param weekDate un dia de la semana
+	 * @return Mapa con el numero de dia de la semana y las horas cargadas en este
+	 */
 	@SuppressWarnings("unchecked")
-	public List<TaskTypesTimes> getUserTimeByTime (Integer userId){	
+	public List<TaskTypesTimes> getUserTimeByWeek (Integer userId, Date weekDate){
+		
+		Calendar c  = Calendar.getInstance();
+		c.setTime(weekDate);
+		c.add(Calendar.DAY_OF_YEAR, -c.get(Calendar.DAY_OF_WEEK)+1);
+		Date iniDate = c.getTime();
+		c.add(Calendar.DAY_OF_YEAR, 6);
+		Date endDate = c.getTime();
+		
 		List<TaskTypesTimes> list = null;
-		String hql = "select new ar.fi.uba.tempore.entity.reports.TaskTypesTimes(t.name, tu.date, sum(tu.hourCount) as total) " +
-				" from Task as t " +
-				" inner join t.taskUserList as tu " +
-				" where tu.user.id = :userId " + 
+		String hql = "select new ar.fi.uba.tempore.entity.reports.TaskTypesTimes(tu.date, sum(tu.hourCount) as total) " +
+				" from TaskUser as tu " +
+				" where (tu.date >= :iniDate " +
+				" and tu.date <= :endDate) " +
+				" and tu.user.id = :userId " + 
 				" group by tu.date " +
 				" order by tu.date";
 		
 		
 		Query query = this.getSession().createQuery(hql);
 		query = query.setInteger("userId", userId);
+		query = query.setDate("iniDate", iniDate).setDate("endDate", endDate);
 		list = query.list();
 		
 		return list;
@@ -210,54 +222,19 @@ public class ReportDAO {
 
 	
 	
-	public static void main(String[] args) {
-		Transaction transaction = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
-		
-		ReportDAO reportDAO = new ReportDAO();
-//		List<TaskTypesTimes> userTimeByTime = reportDAO.getUserTimeByTime(1);
-//		for (TaskTypesTimes data : userTimeByTime) {
-//			System.out.println(data.toString());
+//	public static void main(String[] args) {
+//		Transaction transaction = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
+//		Calendar day = Calendar.getInstance();
+//		day.set(2012, 1, 20,0,0,0);
+//		
+//		ReportDAO reportDAO = new ReportDAO();
+//		Map<Integer,TaskTypesTimes> map = reportDAO.getUserTimeByWeek(1, day.getTime());
+//		Set<Integer> keySet = map.keySet();
+//		for (Integer date : keySet) {
+//			System.out.println(date +", " + map.get(date));
 //		}
-
-		List<TaskTypesTimes> result = reportDAO.getProjectTaskTypeByTime(1);
-//		for (TaskTypesTimes data : userTimeByTime) {
-//			System.out.println(data.toString());
-//		}
-
-		Date iniDate = result.get(0).getDate();
-		Date endDate = result.get(result.size()-1).getDate();
-				
-		Calendar day = Calendar.getInstance();
-		
-		Map<Integer, Map<Integer, Integer>> mainMap = new HashMap<Integer, Map<Integer, Integer>>();
-		
-		Map<Integer, Integer> typeTaskMap = new HashMap<Integer, Integer>();
-		
-		int projectDay = 0;
-		int projectBeforeDay = 0;
-		for (TaskTypesTimes data : result) {
-			
-			projectDay = difBetweenDates(iniDate, data.getDate());
-			if (projectDay != projectBeforeDay){
-				typeTaskMap = new HashMap<Integer, Integer>();
-				
-			}
-			
-			mainMap.put(projectDay, typeTaskMap);
-			
-			
-			projectBeforeDay = projectDay;
-//			for (int i=0; day.getTime().before(endDate); day.add(Calendar.DAY_OF_YEAR, 1)){
-//				System.out.println(""+);
-//			}
-		}
-
-		
-		
-		transaction.commit();
-	}
-	
-	private static int difBetweenDates(Date dateIni, Date dateEnd){
-		return (int)((dateEnd.getTime()-dateIni.getTime())/(1000*60*60*24));
-	}
+//		
+//		
+//		transaction.commit();
+//	}
 }
