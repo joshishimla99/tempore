@@ -12,6 +12,7 @@ import ar.fi.uba.tempore.gwt.client.ReportServicesClient;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.datepicker.client.CalendarUtil;
 import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
 import com.google.gwt.visualization.client.DataTable;
 import com.smartgwt.client.types.Alignment;
@@ -62,12 +63,12 @@ public class ReportFilter2 extends VLayout {
 		});
 		
 		//Filtro Fecha
+		Date day = new Date();
+		CalendarUtil.addMonthsToDate(day, -1);
 		final DateItem ini = new DateItem(DESDE_FIELD,"Desde");
-		ini.setRequired(true);
 		ini.setDisplayFormat(DateDisplayFormat.TOEUROPEANSHORTDATE);
-		ini.setValue(new Date(System.currentTimeMillis() + (3600000*24*30) ));
+		ini.setValue(day);
 		final DateItem end = new DateItem(HASTA_FIELD, "Hasta");
-		end.setRequired(true);
 		end.setDisplayFormat(DateDisplayFormat.TOEUROPEANSHORTDATE);
 
 		formFilter.setFields(project, ini,end);

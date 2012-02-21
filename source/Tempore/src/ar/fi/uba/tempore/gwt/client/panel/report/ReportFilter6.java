@@ -60,9 +60,8 @@ public class ReportFilter6 extends VLayout {
 			}
 		});
 
-		final DateItem ini = new DateItem(DESDE_FIELD,"Desde");
+		final DateItem ini = new DateItem(DESDE_FIELD,"Semana");
 		ini.setDisplayFormat(DateDisplayFormat.TOEUROPEANSHORTDATE);
-		ini.setValue(new Date(System.currentTimeMillis() + (3600000*24*30) ));
 		
 
 		formFilter.setFields(user, ini);
