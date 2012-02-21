@@ -16,6 +16,7 @@ import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.HiddenItem;
+import com.smartgwt.client.widgets.form.fields.PasswordItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -65,7 +66,7 @@ public class MyUserTabPanel extends TabsPanelContainer {
 		final TextItem userName = new TextItem(USER_NAME, "Usuario");
 		userName.setDisabled(true);
 		userName.setRequired(true);
-		final TextItem password = new TextItem(PASSWORD, "Contrase&ntilde;a");
+		final PasswordItem password = new PasswordItem(PASSWORD, "Contrase&ntilde;a");
 		password.setRequired(true);
 		final TextItem email = new TextItem(EMAIL, "Email");
 		email.setRequired(true);
