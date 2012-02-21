@@ -1,6 +1,7 @@
 package ar.fi.uba.tempore.gwt.server;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.dozer.DozerBeanMapper;
 
 import ar.fi.uba.tempore.dao.ReportDAO;
 import ar.fi.uba.tempore.dto.reports.ProjectsTimesDTO;
+import ar.fi.uba.tempore.dto.reports.TaskTypesTimesDTO;
 import ar.fi.uba.tempore.dto.reports.TasksTimesDTO;
 import ar.fi.uba.tempore.dto.reports.UsersTimesDTO;
 import ar.fi.uba.tempore.entity.reports.ProjectsTimes;
@@ -120,6 +122,33 @@ public class ReportServicesImpl extends RemoteServiceServlet implements ReportSe
 			}
 		}
 		return mainMap;
+	}
+	
+	@Override
+	public Map<Integer,TaskTypesTimesDTO> getUserTimesByWeek (Integer userId, Date weekDate){
+		ReportDAO report = new ReportDAO();
+		log.info("REPORTE - getUserTimesByWeek "+ userId +" ["+weekDate+"]");
+		
+		List<TaskTypesTimes> list = report.getUserTimeByWeek(userId, weekDate);
+		
+		Calendar c  = Calendar.getInstance();
+		c.setTime(weekDate);
+		c.add(Calendar.DAY_OF_YEAR, -c.get(Calendar.DAY_OF_WEEK)+1);
+		
+		Map<Integer,TaskTypesTimesDTO> map = new HashMap<Integer, TaskTypesTimesDTO>();
+		
+		for (int i=0; i<7; i++) {
+			map.put(i, new TaskTypesTimesDTO(c.getTime(), 0L));
+			c.add(Calendar.DAY_OF_YEAR, 1);
+		}
+		
+		for (TaskTypesTimes item : list) {
+			c.setTime(item.getDate());
+			int i = c.get(Calendar.DAY_OF_WEEK);
+			map.put(i-1, new TaskTypesTimesDTO(item.getDate(), item.getHourCounted()));
+		}
+		
+		return map;
 	}
 	
 	private Integer difBetweenDates(Date dateIni, Date dateEnd){
