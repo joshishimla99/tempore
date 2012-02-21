@@ -2,7 +2,7 @@ package ar.fi.uba.tempore.gwt.client.panel;
 
 import ar.fi.uba.tempore.gwt.client.login.SessionUser;
 import ar.fi.uba.tempore.gwt.client.panel.configuration.ConfigurationTabPanel;
-import ar.fi.uba.tempore.gwt.client.panel.help.HelpTabPanel;
+import ar.fi.uba.tempore.gwt.client.panel.help.AboutTabPanel;
 import ar.fi.uba.tempore.gwt.client.panel.myuser.MyUserTabPanel;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectTabPanel;
 import ar.fi.uba.tempore.gwt.client.panel.report.ReportTabPanel;
@@ -80,9 +80,9 @@ public class TabsPanel extends TabSet {
 		
 		
 		//Tab 6
-		final Tab helpTab = new Tab("Ayuda  ", "../images/ico/help1.ico");
+		final Tab helpTab = new Tab("Acerca de  ", "../images/ico/help1.ico");
 		helpTab.setWidth(tabWidth);
-		helpTab.setPane(new HelpTabPanel());
+		helpTab.setPane(new AboutTabPanel());
 	
 		
 		//deteccion del select y el unselected de cada Tab
@@ -109,6 +109,6 @@ public class TabsPanel extends TabSet {
 			setTabs(timeTab, projectTab, resourceTab, taskTab, reportTab, myUserTab ,helpTab);
 		}
 		
-		selectTab(4);
+		selectTab(6);
 	}
 }
