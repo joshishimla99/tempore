@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
 
 import ar.fi.uba.tempore.dao.ProjectDAO;
+import ar.fi.uba.tempore.dao.UserDAO;
 import ar.fi.uba.tempore.dao.UserProjectDAO;
 import ar.fi.uba.tempore.dto.ClientDTO;
 import ar.fi.uba.tempore.dto.ProjectDTO;
@@ -43,8 +44,15 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 		List<ProjectDTO> list = new ArrayList<ProjectDTO>();
 		
 		List<Project> projects = pDAO.findAll();
-		for (Project project : projects) {
-			ProjectDTO pDTO = mapper.map(project, ProjectDTO.class);
+		for (Project p : projects) {
+			ProjectDTO pDTO = mapper.map(p, ProjectDTO.class);
+			pDTO.setProjectState(mapper.map(p.getProjectState(), ProjectStateDTO.class));
+			pDTO.setClient(mapper.map(p.getClient(), ClientDTO.class));
+			if (!p.getUserProjectList().isEmpty()){
+				pDTO.setIsOwner(p.getUserProjectList().get(0).getOwner());
+			} else {
+				pDTO.setIsOwner(0);
+			}
 			list.add(pDTO);
 		}
 		
@@ -54,19 +62,26 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 	
 	@Override
 	public List<ProjectDTO> fetch(Integer userId) {
-		ProjectDAO pDAO = new ProjectDAO();
-		log.info("FETCH - Proyectos " + userId);
+		UserDAO uDAO = new UserDAO();
+		User user = uDAO.findById(userId);
+		
 		List<ProjectDTO> list = new ArrayList<ProjectDTO>();
+		if (user.getAdmin().equalsIgnoreCase("S")){
+			list = fetch();
+		} else {
+			log.info("FETCH - Proyectos " + userId);
+			ProjectDAO pDAO = new ProjectDAO();
 		
-		List<Project> projects = pDAO.getProjectsByUser(userId);		
-		for (Project p : projects) {
-			ProjectDTO pDTO = mapper.map(p, ProjectDTO.class);
-			pDTO.setProjectState(mapper.map(p.getProjectState(), ProjectStateDTO.class));
-			pDTO.setClient(mapper.map(p.getClient(), ClientDTO.class));
-			pDTO.setIsOwner(p.getUserProjectList().get(0).getOwner());
-			list.add(pDTO);
+			List<Project> projects = pDAO.getProjectsByUser(userId);
+			 		
+			for (Project p : projects) {
+				ProjectDTO pDTO = mapper.map(p, ProjectDTO.class);
+				pDTO.setProjectState(mapper.map(p.getProjectState(), ProjectStateDTO.class));
+				pDTO.setClient(mapper.map(p.getClient(), ClientDTO.class));
+				pDTO.setIsOwner(p.getUserProjectList().get(0).getOwner());
+				list.add(pDTO);
+			}
 		}
-		
 		return list;
 	}
 
