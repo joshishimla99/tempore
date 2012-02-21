@@ -83,3 +83,15 @@ h4 { font-size:12px; line-height:14px; text-transform: uppercase; color:#000; }
 	font-weight:bold;
 	/* color: rgb(0,0,255); */
 }
+
+.logoutPanel{
+	color:#808080;
+	font-size:14px;
+	font-weight:bold;	
+	cursor:pointer;
+}
+
+.userloggedPanel{
+	color:#808080;
+	font-size:14px;
+}
