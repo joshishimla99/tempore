@@ -6,6 +6,7 @@ import java.util.Map;
 
 
 import ar.fi.uba.tempore.dto.reports.ProjectsTimesDTO;
+import ar.fi.uba.tempore.dto.reports.TaskTypesTimesDTO;
 import ar.fi.uba.tempore.dto.reports.TasksTimesDTO;
 import ar.fi.uba.tempore.dto.reports.UsersTimesDTO;
 
@@ -25,5 +26,8 @@ public interface ReportServicesClientAsync {
 
 	void getProjectTaskTypeByTime(Integer projectId, Date ini, Date end,
 			AsyncCallback<Map<String, Map<Integer, Long>>> asyncCallback);
+
+	void getUserTimesByWeek(Integer userId, Date weekDate,
+			AsyncCallback<Map<Integer, TaskTypesTimesDTO>> callback);
 
 }

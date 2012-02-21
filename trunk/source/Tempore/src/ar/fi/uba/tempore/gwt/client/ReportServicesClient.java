@@ -5,6 +5,7 @@ import java.util.Map;
 
 
 import ar.fi.uba.tempore.dto.reports.ProjectsTimesDTO;
+import ar.fi.uba.tempore.dto.reports.TaskTypesTimesDTO;
 import ar.fi.uba.tempore.dto.reports.TasksTimesDTO;
 import ar.fi.uba.tempore.dto.reports.UsersTimesDTO;
 
@@ -37,4 +38,5 @@ public interface ReportServicesClient extends RemoteService {
 
 	public Map<String, Map<Integer, Long>> getProjectTaskTypeByTime(Integer projectId,	Date ini, Date end);
 
+	public Map<Integer,TaskTypesTimesDTO> getUserTimesByWeek (Integer userId, Date weekDate);
 }
