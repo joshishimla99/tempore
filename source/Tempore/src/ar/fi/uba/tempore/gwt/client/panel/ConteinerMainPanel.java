@@ -25,6 +25,7 @@ public class ConteinerMainPanel extends VLayout {
 
 
 		this.addMember(new HeaderPanel());
+		this.addMember(new UserLoggedPanel());
 		this.addMember(hLayoutData);	
 	}
 
