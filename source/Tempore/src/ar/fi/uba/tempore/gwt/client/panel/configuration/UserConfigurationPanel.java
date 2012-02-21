@@ -15,6 +15,7 @@ import com.smartgwt.client.widgets.events.DrawHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.CheckboxItem;
 import com.smartgwt.client.widgets.form.fields.HiddenItem;
+import com.smartgwt.client.widgets.form.fields.PasswordItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
@@ -75,7 +76,7 @@ public class UserConfigurationPanel extends Canvas {
 				final TextItem n0 = new TextItem(UserConfigurationDataSource.NAME);
 				final TextItem n1 = new TextItem(UserConfigurationDataSource.LAST_NAME);
 				final TextItem n2 = new TextItem(UserConfigurationDataSource.USER_NAME);
-				final TextItem n3 = new TextItem(UserConfigurationDataSource.PASSWORD);
+				final PasswordItem n3 = new PasswordItem(UserConfigurationDataSource.PASSWORD);
 				final TextItem n4 = new TextItem(UserConfigurationDataSource.EMAIL);
 				final TextItem n5 = new TextItem(UserConfigurationDataSource.ADDRESS);
 				final TextItem n6 = new TextItem(UserConfigurationDataSource.COUNTRY);
