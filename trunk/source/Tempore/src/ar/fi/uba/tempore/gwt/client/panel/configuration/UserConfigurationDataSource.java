@@ -103,7 +103,11 @@ public class UserConfigurationDataSource extends GenericGwtRpcDataSource<UserDTO
 		dto.setUserName(rec.getAttribute(USER_NAME));
 		dto.setZipCode(rec.getAttribute(ZIP_CODE));		
 		dto.setImageName(rec.getAttribute(IMAGE_NAME));
-		dto.setAdmin(rec.getAttribute(IS_ADMIN).equals("true")?"S":"N");
+		if (rec.getAttribute(IS_ADMIN) != null){
+			dto.setAdmin(rec.getAttribute(IS_ADMIN).equals("true")?"S":"N");
+		} else {
+			dto.setAdmin("N");
+		}
 	}
 
 	@Override
