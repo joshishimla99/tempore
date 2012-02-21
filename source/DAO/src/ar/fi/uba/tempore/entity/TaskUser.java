@@ -22,7 +22,7 @@ public class TaskUser implements Serializable{
 	private Long hourCount;
 	private Date date;
 	private String comment;
-	
+
 	@Id
 	@GeneratedValue
 	@Column(name="id")

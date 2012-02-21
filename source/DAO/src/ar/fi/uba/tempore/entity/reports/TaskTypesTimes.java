@@ -24,6 +24,11 @@ public class TaskTypesTimes implements Serializable {
 		this.taskTypeName = taskTypeName;
 		this.hourCounted = hourCounted;
 	}
+	public TaskTypesTimes(Date date, Long hourCounted) {
+		super();
+		this.date = date;
+		this.hourCounted = hourCounted;
+	}
 	public Long getHourCounted() {
 		return hourCounted;
 	}
@@ -47,4 +52,5 @@ public class TaskTypesTimes implements Serializable {
 	public String toString() {
 		return "["+date +","+ taskTypeName +","+ hourCounted+"]";
 	}
+
 }
