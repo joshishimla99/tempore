@@ -12,6 +12,7 @@ import ar.fi.uba.tempore.gwt.client.UserServicesClient;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.datepicker.client.CalendarUtil;
 import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
 import com.google.gwt.visualization.client.DataTable;
 import com.smartgwt.client.types.Alignment;
@@ -62,10 +63,11 @@ public class ReportFilter4 extends VLayout {
 			}
 		});
 
-
+		Date day = new Date();
+		CalendarUtil.addMonthsToDate(day, -1);
 		final DateItem ini = new DateItem(DESDE_FIELD,"Desde");
 		ini.setDisplayFormat(DateDisplayFormat.TOEUROPEANSHORTDATE);
-		ini.setValue(new Date(System.currentTimeMillis() + (3600000*24*30) ));
+		ini.setValue(day);
 		final DateItem end = new DateItem(HASTA_FIELD, "Hasta");
 		end.setDisplayFormat(DateDisplayFormat.TOEUROPEANSHORTDATE);
 
@@ -114,7 +116,7 @@ public class ReportFilter4 extends VLayout {
 		ReportServicesClient.Util.getInstance().getUserActivity(userId, ini, end, new AsyncCallback<List<ProjectsTimesDTO>>() {
 			@Override
 			public void onSuccess(final List<ProjectsTimesDTO> result) {
-				DateTimeFormat fmt = DateTimeFormat.getFormat("dd-MMMM-yyyy");
+				DateTimeFormat fmt = DateTimeFormat.getFormat("dd-MMM-yyyy");
 
 				final GenericGrafic gg =  new GenericGrafic("Asignacion en Proyectos del Usuario "+userName+" [" + fmt.format(ini) + ", " + fmt.format(end) + "]",
 						"",

@@ -15,6 +15,7 @@ import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.datepicker.client.CalendarUtil;
 import com.google.gwt.visualization.client.DataTable;
 import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
 import com.smartgwt.client.types.Alignment;
@@ -64,11 +65,14 @@ public class ReportFilter5 extends VLayout {
 		});
 
 		
+		Date day = new Date();
+		CalendarUtil.addMonthsToDate(day, -1);
 		final DateItem ini = new DateItem(DESDE_FIELD,"Desde");
 		ini.setDisplayFormat(DateDisplayFormat.TOEUROPEANSHORTDATE);
-		ini.setValue(new Date(System.currentTimeMillis() + (3600000*24*30) ));
+		ini.setValue(day);
 		final DateItem end = new DateItem(HASTA_FIELD, "Hasta");
 		end.setDisplayFormat(DateDisplayFormat.TOEUROPEANSHORTDATE);
+
 
 		formFilter.setFields(project);//,ini,end);
 
@@ -126,12 +130,16 @@ public class ReportFilter5 extends VLayout {
 					public DataTable createTable() {
 						final DataTable data = DataTable.create();
 						data.addColumn(ColumnType.NUMBER, "Numero de Dia del Proyecto");						
-						for (String taskType : taskMap.keySet()){
-							data.addColumn(ColumnType.NUMBER, taskType);
-						}
 						
-						Collection<Map<Integer, Long>> values = taskMap.values();
-						if (values.iterator().hasNext()){
+						if (taskMap.isEmpty()){
+							data.addColumn(ColumnType.NUMBER, "No hay Info");
+//							data.addRows(0);
+						} else {
+							for (String taskType : taskMap.keySet()){
+								data.addColumn(ColumnType.NUMBER, taskType);
+							}
+							
+							Collection<Map<Integer, Long>> values = taskMap.values();
 							data.addRows(values.iterator().next().size());
 							
 							//Columna de los Dias EJE X
@@ -166,7 +174,6 @@ public class ReportFilter5 extends VLayout {
 						return data;
 					}
 				};
-//				gg.setGraficType(GenericGrafic.AREA);
 				parent.addChild(gg);
 
 				gg.draw();
