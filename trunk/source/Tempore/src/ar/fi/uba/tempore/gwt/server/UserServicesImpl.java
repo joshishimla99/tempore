@@ -3,12 +3,15 @@ package ar.fi.uba.tempore.gwt.server;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
 
+import ar.fi.uba.mail.RandomString;
+import ar.fi.uba.mail.SendMailSSL;
 import ar.fi.uba.tempore.dao.UserDAO;
 import ar.fi.uba.tempore.dto.UserDTO;
 import ar.fi.uba.tempore.entity.User;
@@ -117,4 +120,51 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 		}
 		return list;
 	}
+
+	@Override
+	public boolean validateUserName(String userName) {
+		UserDAO uDAO = new UserDAO(); 
+		log.info("Users - VALIDATE USERNAME FOR RECOVERY PASSWORD");
+
+		return uDAO.validateUserName(userName);
+	}
+
+	
+	@Override
+	public void recoveryUserPassword(String userName, String password) {
+		UserDAO uDAO = new UserDAO();
+		log.debug("Username: "+ userName);
+		User user = uDAO.getUser(userName);
+		if (user != null){
+			log.debug(user.getEmail());
+			try {
+				SendMailSSL mail = new SendMailSSL(userName, user.getEmail(), password);
+				mail.sendMail();
+			} catch (MessagingException e){
+				e.printStackTrace();
+				log.error("Ha ocurrido un error al actualizar el usuario");
+			} 
+			
+		}
+	}
+	
+	@Override
+	public String generatePassword(String userName){
+		UserDAO uDAO = new UserDAO();
+		RandomString random = new RandomString(5);
+		User user = uDAO.getUser(userName);
+		String password = random.nextString();
+		if (user != null){
+			log.debug(user.getEmail());
+			try {
+				user.setPassword(uDAO.hashPassword(password));
+				uDAO.makePersistent(user);
+			} catch (Exception e){
+				e.printStackTrace();
+				log.error("Ha ocurrido un error al generar la clave del usuario");
+			}
+		}
+		return password;
+	}
 }
+
