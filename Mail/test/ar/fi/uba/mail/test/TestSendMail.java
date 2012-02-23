@@ -1,18 +1,21 @@
 package ar.fi.uba.mail.test;
 
+import ar.fi.uba.mail.RandomString;
 import ar.fi.uba.mail.SendMailSSL;
 
 public class TestSendMail {
 
 	public static void main(String[] args) {
-		SendMailSSL mail= new SendMailSSL();
-		
+		RandomString random = new RandomString(5);
+		String password = random.nextString();
 		try {
-			mail.sendMail("ngarcia", "khkhkjh", "garcian@gmail.com");
-		} catch (RuntimeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			SendMailSSL mail= new SendMailSSL("lrinaudo", "rinaudo.ludmila@gmail.com", password);
+			mail.sendMail();
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
+			
+		
 
 	}
 
