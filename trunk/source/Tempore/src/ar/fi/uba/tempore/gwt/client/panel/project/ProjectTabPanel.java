@@ -32,6 +32,7 @@ import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.smartgwt.client.widgets.tile.TileGrid;
 
 public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserver {
 
@@ -82,15 +83,22 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 	
 	public void updateContent() {
 		final Label title = new Label("Administraci&oacute;n de Proyectos");
-		title.setWidth(200);
+		title.setWidth(1000);
 		title.setHeight(15);
 		
 		mesageError.setVisible(false);
 		mesageError.setWidth(200);
 		mesageError.setHeight(15);
 		
+		final TileGrid tileGrid = new TileGrid();  
+//        tileGrid.setTileWidth(450);  
+//        tileGrid.setTileHeight(185);  
+        tileGrid.setHeight(370);
+        tileGrid.setWidth(450);
+        tileGrid.setLeft("50%");
+        
         title.setIcon("[SKIN]/actions/help.png");
-        title.setStyleName("Informal");
+        title.setStyleName("titleStyleInformal");
 		title.setIconOrientation("right");
         title.addIconClickHandler(new com.smartgwt.client.widgets.events.IconClickHandler() {
 			
@@ -182,7 +190,7 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 				txtDescription,
 				selState);		
 
-		
+		tileGrid.addChild(form);
 		
 		//BOTONERA
 		final IButton cancelProjectButton = new IButton();
@@ -210,7 +218,7 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 	    hLayoutButton.addMember(applyButton);
 
 	    final VLayout vLayoutForm = new VLayout(10);
-	    vLayoutForm.addMember(form);
+	    vLayoutForm.addMember(tileGrid);
 	    final HLayout hLayoutBody = new HLayout();
 	    hLayoutBody.addMember(vLayoutForm);
 	    
