@@ -1,5 +1,4 @@
 package ar.fi.uba.tempore.gwt.client;
-
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -15,5 +14,11 @@ public interface UserServicesClientAsync extends GenericGwtRpcDataSourceServiceA
 	void getUserNotAssignedToProject(Integer projectId, AsyncCallback<List<UserDTO>> callback);
 
 	void getUserLoggued(AsyncCallback<String> callback);
+
+	void validateUserName(String userName, AsyncCallback<Boolean> callback);
+
+	void recoveryUserPassword(String userName, String password, AsyncCallback<Void> callback);
+
+	void generatePassword(String userName, AsyncCallback<String> callback);
 
 }

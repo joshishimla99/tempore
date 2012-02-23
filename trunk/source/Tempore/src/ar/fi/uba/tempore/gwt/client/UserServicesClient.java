@@ -25,6 +25,12 @@ public interface UserServicesClient extends GenericGwtRpcDataSourceService<UserD
 	public String getUserLoggued();
 
 	public List<UserDTO> getUserNotAssignedToProject(Integer projectId);
+	
+	public boolean validateUserName(String userName);
+	
+	public void recoveryUserPassword(String userName, String password);
+
+	public String generatePassword(String userName);
 }
 
 
