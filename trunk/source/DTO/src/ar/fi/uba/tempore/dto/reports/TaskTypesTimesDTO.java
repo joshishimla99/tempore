@@ -21,6 +21,11 @@ public class TaskTypesTimesDTO implements IsSerializable {
 		this.taskTypeName = taskTypeName;
 		this.hourCounted = hourCounted;
 	}
+	public TaskTypesTimesDTO(Date date, Long hourCounted) {
+		this.date = date;
+		this.hourCounted = hourCounted; 
+	}
+
 	public Long getHourCounted() {
 		return hourCounted;
 	}
