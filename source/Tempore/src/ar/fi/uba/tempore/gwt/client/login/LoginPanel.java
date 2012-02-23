@@ -9,12 +9,18 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Label;
+import com.smartgwt.client.widgets.Window;
+import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.events.CloseClickEvent;
+import com.smartgwt.client.widgets.events.CloseClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.ButtonItem;
 import com.smartgwt.client.widgets.form.fields.PasswordItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.layout.HLayout;
@@ -24,6 +30,7 @@ public class LoginPanel extends Composite{
 
 	private static final String USER = "User";
 	private static final String PASSWORD = "Password";
+	private static final String USERNAME = "Username";
 	private final DynamicForm formLogin = new DynamicForm();
 	final Label error = new Label("Usuario y/o Contrase&ntilde;a invalidas");
 
@@ -59,12 +66,121 @@ public class LoginPanel extends Composite{
         submit.setShowDisabled(true);  
         submit.setShowDown(true);  
         submit.setTitleStyle("stretchTitle"); 
+		submit.setAlign(Alignment.CENTER);
 		
-			
+        final Label link = new Label("Recuperar Contrase&ntilde;a");  
+        link.setHeight(30);
+        link.setAlign(Alignment.CENTER);
+        link.addStyleName("clickable");
+
+        link.addClickHandler(new ClickHandler() {  
+            public void onClick(ClickEvent event) {  
+                final Window winModal = new Window();  
+                winModal.setWidth(360);  
+                winModal.setHeight(225);  
+                winModal.setTitle("Recuperar Contrase&ntilde;a");  
+                winModal.setShowMinimizeButton(false);  
+                winModal.setIsModal(true);  
+                winModal.setShowModalMask(true);  
+                winModal.centerInPage();  
+                winModal.addCloseClickHandler(new CloseClickHandler() {  
+                    public void onCloseClick(CloseClickEvent event) {  
+                        winModal.destroy();  
+                    }  
+                });  
+                final DynamicForm formRecoveryPassword = new DynamicForm();  
+                final VLayout vLayoutRP = new VLayout();
+                final Label errorRecoveryPassword = new Label("Usuario inv&aacute;lido");
+                errorRecoveryPassword.setVisible(false);
+                
+                formRecoveryPassword.setHeight100();  
+                formRecoveryPassword.setWidth100();  
+                formRecoveryPassword.setPadding(5);  
+                formRecoveryPassword.setLayoutAlign(VerticalAlignment.BOTTOM);  
+                final TextItem userItem = new TextItem(USERNAME);  
+                userItem.setTitle("Ingrese el nombre de usuario");  
+                Label indicationLabel = new Label("La aplicaci&oacute;n le enviar&aacute; un mail con la nueva contrase&ntilde;a");  
+                ButtonItem acceptButton = new ButtonItem();
+        		acceptButton.setTitle("Enviar");
+        		//acceptButton.setShowRollOver(true);  
+                acceptButton.setShowDisabled(true);  
+                //acceptButton.setShowDown(true);  
+                acceptButton.setTitleStyle("stretchTitle"); 
+        		acceptButton.setAlign(Alignment.CENTER);
+        		
+        		acceptButton.addClickHandler(new com.smartgwt.client.widgets.form.fields.events.ClickHandler() {
+
+					@Override
+					public void onClick(
+							com.smartgwt.client.widgets.form.fields.events.ClickEvent event) {
+						if (formRecoveryPassword.validate()){
+        					UserServicesClient.Util.getInstance().validateUserName(formRecoveryPassword.getValueAsString(USERNAME), new AsyncCallback<Boolean>() {
+        						@Override
+        						public void onSuccess(Boolean result) {
+        							if (result == true) {
+        								try {
+        								UserServicesClient.Util.getInstance().generatePassword(formRecoveryPassword.getValueAsString(USERNAME), new AsyncCallback<String>(){
+
+											@Override
+											public void onFailure(Throwable caught) {
+												winModal.destroy();
+												SC.say("Ha ocurrido un error al intentar generar la clave del usuario");
+												
+											}
+
+											@Override
+											public void onSuccess(String result) {
+												UserServicesClient.Util.getInstance().recoveryUserPassword(formRecoveryPassword.getValueAsString(USERNAME), result, new AsyncCallback<Void>(){
+
+													@Override
+													public void onFailure(Throwable caught) {
+														winModal.destroy();
+														SC.say("Ha ocurrido un error al intentar enviar el mail");
+														
+													}
+
+													@Override
+													public void onSuccess(Void result) {
+														winModal.destroy();
+														SC.say("Se ha enviado el mail satisfactoriamente");
+														
+													}
+												});
+											}
+        									
+        								});
+        								} catch (Exception e) {
+											e.printStackTrace();
+										}
+        								
+        							} else {
+        								errorRecoveryPassword.setVisible(true);
+        							}
+        						}
+        						@Override
+        						public void onFailure(Throwable caught) {
+        							SC.warn("Error al intentar validar el usuario");
+        						}
+        					});	
+        				}
+						
+					}
+        		}); 
+
+                
+                formRecoveryPassword.setFields(userItem, acceptButton);  
+                vLayoutRP.addChild(indicationLabel);
+                vLayoutRP.addChild(formRecoveryPassword);  
+                vLayoutRP.addChild(errorRecoveryPassword);
+                winModal.addChild(vLayoutRP);
+                winModal.show();  
+            }  
+        });  
 		formLogin.setAutoFocus(true);
 		formLogin.setFields(userText, passText);
 		
 		final VLayout logginLayout = new VLayout();
+		final HLayout hLayout = new HLayout();
 		logginLayout.setShowEdges(true);
 		logginLayout.setEdgeShowCenter(true);
 		logginLayout.setEdgeImage("../images/login/glow_35.png");
@@ -77,7 +193,10 @@ public class LoginPanel extends Composite{
 		logginLayout.addMember(headerTitle);
 		logginLayout.addMember(formLogin);
 		logginLayout.addMember(error);
-		logginLayout.addMember(submit);		
+		logginLayout.addMember(submit);
+		logginLayout.addMember(link);
+		logginLayout.addMember(hLayout);
+		
 
 		//Textos introductorios
 		final VLayout textVLayout = new VLayout();
