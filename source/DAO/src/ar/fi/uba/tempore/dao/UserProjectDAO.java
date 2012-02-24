@@ -44,6 +44,6 @@ public class UserProjectDAO extends GenericHibernateDAO<UserProject, Integer> {
 						"set up.owner = 0 " +
 						"where up.project.id = " + projectId;
 		Query query = this.getSession().createQuery(hql);
-        int rowCount = query.executeUpdate();	        
+        query.executeUpdate();	        
 	}
 }
