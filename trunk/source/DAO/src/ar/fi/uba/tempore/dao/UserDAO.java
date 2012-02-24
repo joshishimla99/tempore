@@ -14,7 +14,6 @@ import ar.fi.uba.tempore.entity.User;
 public class UserDAO extends GenericHibernateDAO<User, Integer> {
 
 	public User validateUser(String userName, String password) {
-
 		User user = new User();
 		user.setUserName(userName);
 		try {
@@ -25,7 +24,6 @@ public class UserDAO extends GenericHibernateDAO<User, Integer> {
 				user = findByExample.get(0);
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 			return null;
 		}
 		return user;
