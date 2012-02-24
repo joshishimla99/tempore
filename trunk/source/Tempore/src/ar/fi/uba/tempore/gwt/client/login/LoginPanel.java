@@ -34,6 +34,7 @@ public class LoginPanel extends Composite{
 	private final DynamicForm formLogin = new DynamicForm();
 	final Label error = new Label("Usuario y/o Contrase&ntilde;a invalidas");
 
+
 	public LoginPanel(){
 
 		final Label headerTitle = new Label("Ingreso a Tempore");
@@ -47,138 +48,38 @@ public class LoginPanel extends Composite{
 		userText.setSelectOnFocus(true);
 		userText.setAlign(Alignment.LEFT);
 		userText.setRequired(true);
-		
-		
+
+
 		final PasswordItem passText = new PasswordItem(PASSWORD);
 		passText.setTitle("Contrase&ntilde;a");
 		passText.setRequired(true);
 		passText.setAlign(Alignment.LEFT);
-		
+
 		error.setWidth(250);
 		error.setHeight(20);
 		error.setVisible(false);
 		error.setStyleName("label-errorMessages");
-		
+
 
 		final IButton submit = new IButton();
 		submit.setTitle("Acceder");
 		submit.setShowRollOver(true);  
-        submit.setShowDisabled(true);  
-        submit.setShowDown(true);  
-        submit.setTitleStyle("stretchTitle"); 
+		submit.setShowDisabled(true);  
+		submit.setShowDown(true);  
+		submit.setTitleStyle("stretchTitle"); 
 		submit.setAlign(Alignment.CENTER);
-		
-        final Label link = new Label("Recuperar Contrase&ntilde;a");  
-        link.setHeight(30);
-        link.setAlign(Alignment.CENTER);
-        link.addStyleName("clickable");
 
-        link.addClickHandler(new ClickHandler() {  
-            public void onClick(ClickEvent event) {  
-                final Window winModal = new Window();  
-                winModal.setWidth(360);  
-                winModal.setHeight(225);  
-                winModal.setTitle("Recuperar Contrase&ntilde;a");  
-                winModal.setShowMinimizeButton(false);  
-                winModal.setIsModal(true);  
-                winModal.setShowModalMask(true);  
-                winModal.centerInPage();  
-                winModal.addCloseClickHandler(new CloseClickHandler() {  
-                    public void onCloseClick(CloseClickEvent event) {  
-                        winModal.destroy();  
-                    }  
-                });  
-                final DynamicForm formRecoveryPassword = new DynamicForm();  
-                final VLayout vLayoutRP = new VLayout();
-                final Label errorRecoveryPassword = new Label("Usuario inv&aacute;lido");
-                errorRecoveryPassword.setVisible(false);
-                
-                formRecoveryPassword.setHeight100();  
-                formRecoveryPassword.setWidth100();  
-                formRecoveryPassword.setPadding(5);  
-                formRecoveryPassword.setLayoutAlign(VerticalAlignment.BOTTOM);  
-                final TextItem userItem = new TextItem(USERNAME);  
-                userItem.setTitle("Ingrese el nombre de usuario");  
-                Label indicationLabel = new Label("La aplicaci&oacute;n le enviar&aacute; un mail con la nueva contrase&ntilde;a");  
-                ButtonItem acceptButton = new ButtonItem();
-        		acceptButton.setTitle("Enviar");
-        		//acceptButton.setShowRollOver(true);  
-                acceptButton.setShowDisabled(true);  
-                //acceptButton.setShowDown(true);  
-                acceptButton.setTitleStyle("stretchTitle"); 
-        		acceptButton.setAlign(Alignment.CENTER);
-        		
-        		acceptButton.addClickHandler(new com.smartgwt.client.widgets.form.fields.events.ClickHandler() {
 
-					@Override
-					public void onClick(
-							com.smartgwt.client.widgets.form.fields.events.ClickEvent event) {
-						if (formRecoveryPassword.validate()){
-        					UserServicesClient.Util.getInstance().validateUserName(formRecoveryPassword.getValueAsString(USERNAME), new AsyncCallback<Boolean>() {
-        						@Override
-        						public void onSuccess(Boolean result) {
-        							if (result == true) {
-        								try {
-        								UserServicesClient.Util.getInstance().generatePassword(formRecoveryPassword.getValueAsString(USERNAME), new AsyncCallback<String>(){
+		//Recuperar contraseña
+		final Label link = new Label("Recuperar Contrase&ntilde;a");  
+		link.setHeight(30);
+		link.setAlign(Alignment.CENTER);
+		link.addStyleName("clickable");
 
-											@Override
-											public void onFailure(Throwable caught) {
-												winModal.destroy();
-												SC.say("Ha ocurrido un error al intentar generar la clave del usuario");
-												
-											}
-
-											@Override
-											public void onSuccess(String result) {
-												UserServicesClient.Util.getInstance().recoveryUserPassword(formRecoveryPassword.getValueAsString(USERNAME), result, new AsyncCallback<Void>(){
-
-													@Override
-													public void onFailure(Throwable caught) {
-														winModal.destroy();
-														SC.say("Ha ocurrido un error al intentar enviar el mail");
-														
-													}
-
-													@Override
-													public void onSuccess(Void result) {
-														winModal.destroy();
-														SC.say("Se ha enviado el mail satisfactoriamente");
-														
-													}
-												});
-											}
-        									
-        								});
-        								} catch (Exception e) {
-											e.printStackTrace();
-										}
-        								
-        							} else {
-        								errorRecoveryPassword.setVisible(true);
-        							}
-        						}
-        						@Override
-        						public void onFailure(Throwable caught) {
-        							SC.warn("Error al intentar validar el usuario");
-        						}
-        					});	
-        				}
-						
-					}
-        		}); 
-
-                
-                formRecoveryPassword.setFields(userItem, acceptButton);  
-                vLayoutRP.addChild(indicationLabel);
-                vLayoutRP.addChild(formRecoveryPassword);  
-                vLayoutRP.addChild(errorRecoveryPassword);
-                winModal.addChild(vLayoutRP);
-                winModal.show();  
-            }  
-        });  
+		link.addClickHandler(recoverPass );
 		formLogin.setAutoFocus(true);
 		formLogin.setFields(userText, passText);
-		
+
 		final VLayout logginLayout = new VLayout();
 		final HLayout hLayout = new HLayout();
 		logginLayout.setShowEdges(true);
@@ -196,19 +97,19 @@ public class LoginPanel extends Composite{
 		logginLayout.addMember(submit);
 		logginLayout.addMember(link);
 		logginLayout.addMember(hLayout);
-		
+
 
 		//Textos introductorios
 		final VLayout textVLayout = new VLayout();
 		textVLayout.setWidth(750);
 		addMember(textVLayout);
-		
+
 		final HLayout layout = new HLayout(15);
 		layout.setHeight(200);
 		layout.addMember(textVLayout);
 		layout.addMember(logginLayout);
 		layout.setLayoutLeftMargin(150);
-		
+
 		final VLayout main = new VLayout();
 		main.setWidth100();
 		main.setHeight100();
@@ -216,11 +117,13 @@ public class LoginPanel extends Composite{
 		main.setMembersMargin(70);
 		main.addMember(new HeaderPanel());
 		main.addMember(layout);
-		
+
 		initWidget(main);
-		
-		
-		
+
+
+
+
+
 		final LoginPanel thisPanel = this;
 		submit.addClickHandler(new ClickHandler() {
 			@Override
@@ -235,7 +138,7 @@ public class LoginPanel extends Composite{
 								//LOGGIN SUCCESS
 								SessionUser.getInstance().setUser(result);
 								RootPanel.get("Content").add(new ConteinerMainPanel());
-								
+
 								//TODO ver de hacer el login correctamente
 								thisPanel.setVisible(false);
 							} else {
@@ -299,9 +202,93 @@ public class LoginPanel extends Composite{
 	}
 
 
-	protected void login() {
-			
-	}
+	private ClickHandler recoverPass = new ClickHandler() {  
+		public void onClick(ClickEvent event) {  
+
+			final Window winModal = new Window();  
+			winModal.setWidth(360);  
+			winModal.setHeight(225);  
+			winModal.setTitle("Recuperar Contrase&ntilde;a");  
+			winModal.setShowMinimizeButton(false);  
+			winModal.setIsModal(true);  
+			winModal.setShowModalMask(true);  
+			winModal.centerInPage();  
+			winModal.addCloseClickHandler(new CloseClickHandler() {  
+				public void onCloseClick(CloseClickEvent event) {  
+					winModal.destroy();  
+				}  
+			});  
+			//Formulario para completar
+
+			final Label errorRecoveryPassword = new Label("Usuario inv&aacute;lido");
+			errorRecoveryPassword.setVisible(false);
+
+			final DynamicForm formRecoveryPassword = new DynamicForm();  
+			formRecoveryPassword.setHeight100();  
+			formRecoveryPassword.setWidth100();  
+			formRecoveryPassword.setPadding(5);  
+			formRecoveryPassword.setLayoutAlign(VerticalAlignment.BOTTOM);  
+
+			final TextItem userItem = new TextItem(USERNAME, "Ingrese el nombre de usuario");
+			userItem.setRequired(true);
+			userItem.setValue("ngarcia");
+			final Label indicationLabel = new Label("La aplicaci&oacute;n le enviar&aacute; un mail con la nueva contrase&ntilde;a");  
+
+			final ButtonItem acceptButton = new ButtonItem();
+			acceptButton.setTitle("Enviar");
+			acceptButton.setShowDisabled(true);  
+			acceptButton.setTitleStyle("stretchTitle"); 
+			acceptButton.setAlign(Alignment.CENTER);
+			acceptButton.addClickHandler(new com.smartgwt.client.widgets.form.fields.events.ClickHandler() {
+				@Override
+				public void onClick(com.smartgwt.client.widgets.form.fields.events.ClickEvent event) {
+					if (formRecoveryPassword.validate()){
+						
+						final String userName = formRecoveryPassword.getValueAsString(USERNAME);
+						UserServicesClient.Util.getInstance().validateUserName(userName , new AsyncCallback<Boolean>() {
+							@Override
+							public void onSuccess(Boolean isUserValid) {
+								if (isUserValid) {
+									//Existe el usuario enviamos mail con la nueva contraseña
+									UserServicesClient.Util.getInstance().recoveryUserPassword(userName , new AsyncCallback<Void>(){
+										@Override
+										public void onSuccess(Void result) {
+											winModal.destroy();
+											SC.say("Se ha enviado el mail con su nuevo password");													
+										}
+										@Override
+										public void onFailure(Throwable caught) {
+											winModal.destroy();
+											SC.say("Ha ocurrido un error al intentar enviar el mail");
+										}
+									});
+								} else {
+									//No existe el usuario 
+									errorRecoveryPassword.setVisible(true);
+								}
+							}
+							@Override
+							public void onFailure(Throwable caught) {
+								SC.warn("Error al intentar validar el usuario");
+							}
+						});	
+					}
+
+				}
+			}); 
+
+
+			formRecoveryPassword.setFields(userItem, acceptButton);
+
+			final VLayout vLayoutRP = new VLayout();
+			vLayoutRP.addChild(indicationLabel);
+			vLayoutRP.addChild(formRecoveryPassword);  
+			vLayoutRP.addChild(errorRecoveryPassword);
+			winModal.addChild(vLayoutRP);
+			winModal.show();  
+		}  
+	};  
+
 
 
 	/**
