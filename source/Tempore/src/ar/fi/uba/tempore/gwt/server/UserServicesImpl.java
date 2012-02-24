@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+import javax.naming.ServiceUnavailableException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -131,38 +133,35 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 
 	
 	@Override
-	public void recoveryUserPassword(String userName, String password) {
+	public void recoveryUserPassword(String userName) {
 		UserDAO uDAO = new UserDAO();
-		log.debug("Username: "+ userName);
 		User user = uDAO.getUser(userName);
 		if (user != null){
-			log.debug(user.getEmail());
+			String password = generatePassword(userName);
+			SendMailSSL mail = new SendMailSSL(userName, user.getEmail(), password);
 			try {
-				SendMailSSL mail = new SendMailSSL(userName, user.getEmail(), password);
 				mail.sendMail();
-			} catch (MessagingException e){
+			} catch (AddressException e) {
 				e.printStackTrace();
-				log.error("Ha ocurrido un error al actualizar el usuario");
-			} 
-			
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}		
 		}
 	}
 	
-	@Override
-	public String generatePassword(String userName){
+	private String generatePassword(String userName){
 		UserDAO uDAO = new UserDAO();
 		RandomString random = new RandomString(5);
 		User user = uDAO.getUser(userName);
 		String password = random.nextString();
 		if (user != null){
-			log.debug(user.getEmail());
 			try {
 				user.setPassword(uDAO.hashPassword(password));
-				uDAO.makePersistent(user);
-			} catch (Exception e){
+			} catch (ServiceUnavailableException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
-				log.error("Ha ocurrido un error al generar la clave del usuario");
 			}
+			uDAO.makePersistent(user);
 		}
 		return password;
 	}

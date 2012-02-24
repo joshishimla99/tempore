@@ -28,9 +28,9 @@ public interface UserServicesClient extends GenericGwtRpcDataSourceService<UserD
 	
 	public boolean validateUserName(String userName);
 	
-	public void recoveryUserPassword(String userName, String password);
+	public void recoveryUserPassword(String userName);
 
-	public String generatePassword(String userName);
+//	public String generatePassword(String userName);
 }
 
 
