@@ -97,7 +97,7 @@
 	<TASK id='3' projectId='1' taskTypeId='1' name='Analisis' description='Analisis Funcional de la aplicacion' budget='12351'/>
 	<TASK id='4' projectId='1' taskTypeId='2' name='Desarrollo' description='Implementacion de la aplicacion' budget='12351'/>
 	<TASK id='5' projectId='1' taskTypeId='5' name='Pruebas' description='QC a la aplicacion y Reporte de Errores' budget='12351'/>
-	<TASK id='5' projectId='1' taskTypeId='3' name='Soporte' description='Soporte a la aplicacion' budget='12351'/>
+	<TASK id='6' projectId='1' taskTypeId='3' name='Soporte' description='Soporte a la aplicacion' budget='12351'/>
 
  	<TASK id='11' taskId='1' projectId='1' taskTypeId='1' name='SmartGWT' description='Nuevo Framework SmartGWT' budget='12351' />
 	<TASK id='12' taskId='1' projectId='1' taskTypeId='1' name='Hibernate' description='Frameworks para la persistencia de datos' budget='12351' />
