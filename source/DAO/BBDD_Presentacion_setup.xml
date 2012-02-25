@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+	<PERSON id ='1' name='Nicolás' lastname='García' phone='15-6330-5220' email='ngarcia@gmail.com' zip='1199' country='Argentina' address='Tte JD Peron 4420 5°C - Almagro' imageName='1317575837812_Nico.jpg'/>
+	<PERSON id ='2' name='Juan Pablo' lastname='Gigante' phone='4567-9938' email='juanpablo.gigante@gmail.com' zip='ADFAAFSD' country='Argentina' address='Direccion - Florencio Varela' imageName='1318188597703_Juan.png'/>
+	<PERSON id ='3' name='Ludmila Liz' lastname='Rinaudo' phone='6445-9980' email='rinaudo.ludmila@gmail.com' zip='ADFAAFSD' country='Mexico' address='Direccion - Mexico DF' imageName='1318189046500_LudmilaRinaudo.png'/>
+	
+	<PERSON id ='11' name='Juan' lastname='Perez' phone='4000-0000' email='perez@gmai1.com' zip='' country='Argentina' address=''/>
+	<PERSON id ='12' name='Jose' lastname='Lopez' phone='4111-1111' email='lopez@gmai1.com' zip='' country='Argentina' address=''/>
+	<PERSON id ='13' name='Luis' lastname='Gutierres' phone='4222-2222' email='gutierres@gmai1.com' zip='' country='Argentina' address=''/>
+	<PERSON id ='14' name='Emilio' lastname='Martinez' phone='4333-3333' email='martinez@gmai1.com' zip='' country='Argentina' address=''/>
+	<PERSON id ='20' name='Mateo' lastname='Andreu' phone='4444-4444' email='tcs1@gmai1.com' zip='' country='Argentina' address=''/>
+	<PERSON id ='21' name='Andres' lastname='Gomez' phone='4555-5555' email='tcs2@gmail.com' zip='' country='Argentina' address=''/>
+	<PERSON id ='22' name='Administrador' lastname='-' phone='0000-0000' email='ngarcia@gmail.com' zip='' country='Argentina' address='qwerwerqwe'/>
+	
+	<CLIENT id='1' name='Fi Uba'/>
+	<CLIENT id='2' name='Experian SRL'/>
+	<CLIENT id='3' name='Google'/>
+	<CLIENT id='4' name='Microsoft'/>
+	<CLIENT id='5' name='Sony'/>
+	<CLIENT id='6' name='Movistar'/>
+	<CLIENT id='7' name='Claro'/>
+	<CLIENT id='8' name='Personal'/>
+	<CLIENT id='9' name='Banco Santander'/>
+	<CLIENT id='10' name='Banco Frances'/>
+	
+	<PROJECTSTATE  id='1' name='Adquirido' description='Proyecto listo para empezar'/>
+	<PROJECTSTATE  id='2' name='Iniciado' description='Proyecto ya esta iniciado'/>
+	<PROJECTSTATE  id='3' name='UAT' description='Proyecto en Aceptacion por el Usuario'/>
+	<PROJECTSTATE  id='4' name='Cerrado' description='Proyecto Cerrado'/>
+	<PROJECTSTATE  id='5' name='Cancelado' description='Proyecto Cancelado'/>
+	<PROJECTSTATE  id='6' name='Suspendido' description='Proyecto Suspendido'/>
+	
+	<PROJECT id='1' name='1-Tempore' 	projectStateId='3' description='Trabajo Profesional para la FI-UBA' initDate='2011-06-09' endDate='2012-03-01' budget='0' clientId='1'/>
+	<PROJECT id='2' name='2-Google+' 	projectStateId='2' description='Proyecto ' 							initDate='2012-01-01' endDate='2013-07-01' budget='77000' clientId='3'/>
+	<PROJECT id='3' name='3-Contabilidad' 	projectStateId='1' description='Trabajo demo' 					initDate='2012-02-15' endDate='2013-01-01' budget='150000' clientId='4'/>
+	<PROJECT id='4' name='4-Diseño' projectStateId='2' description='Trabajo demo' 							initDate='2012-06-01' endDate='2014-07-01' budget='1200000' clientId='5'/>
+		
+	<USER personId='1' state='A' username='ngarcia' password='cRDtpNCeBiql5KOQsKVyrA0sAiA=' admin='N'/>
+	<USER personId='2' state='A' username='jpgigante' password='cRDtpNCeBiql5KOQsKVyrA0sAiA=' admin='N'/>
+	<USER personId='3' state='A' username='lrinaudo' password='cRDtpNCeBiql5KOQsKVyrA0sAiA=' admin='N'/>
+	<USER personId='11' state='A' username='jperez' password='cRDtpNCeBiql5KOQsKVyrA0sAiA=' admin='N'/>
+	<USER personId='12' state='A' username='jlopez' password='cRDtpNCeBiql5KOQsKVyrA0sAiA=' admin='N'/>
+	<USER personId='13' state='A' username='lgutierrez' password='cRDtpNCeBiql5KOQsKVyrA0sAiA=' admin='N'/>
+	<USER personId='20' state='A' username='mandreu' password='cRDtpNCeBiql5KOQsKVyrA0sAiA=' admin='N'/>
+	<USER personId='21' state='A' username='agomez' password='cRDtpNCeBiql5KOQsKVyrA0sAiA=' admin='N'/>
+	<USER personId='22' state='A' username='admin' password='cRDtpNCeBiql5KOQsKVyrA0sAiA=' admin='S'/>
+
+	<CLIENTCONTACT clientId='1' userId='11'/>
+	<CLIENTCONTACT clientId='2' userId='12'/>
+	<CLIENTCONTACT clientId='3' userId='13'/>
+	
+	<USERPROJECT id='1' userId='1' projectId='1' owner='1'/><!-- Nicolas -->
+	<USERPROJECT id='2' userId='2' projectId='1' owner='0'/><!-- Ludmila -->
+	<USERPROJECT id='3' userId='3' projectId='1' owner='0'/><!-- Juan Pablo -->
+	<USERPROJECT id='4' userId='1' projectId='2' owner='0'/><!-- Nicolas -->
+	<USERPROJECT id='5' userId='3' projectId='2' owner='1'/><!-- Juan Pablo -->
+	<USERPROJECT id='6' userId='3' projectId='3' owner='0'/><!-- Juan Pablo -->
+	<USERPROJECT id='7' userId='2' projectId='3' owner='1'/><!-- Ludmila -->
+	<USERPROJECT id='8' userId='1' projectId='4' owner='0'/><!-- Nicolas -->
+	<USERPROJECT id='9' userId='2' projectId='4' owner='1'/><!-- Ludmila -->
+	<USERPROJECT id='10' userId='11' projectId='4' owner='0'/>
+	<USERPROJECT id='11' userId='12' projectId='4' owner='0'/>
+	<USERPROJECT id='12' userId='13' projectId='4' owner='0'/>
+	
+	<ALERT id='1' name='Analista' 		description='Alerta 1' 		userProjectId='1'/>
+	<ALERT id='2' name='PM' 			description='Alerta 2' 		userProjectId='1'/>
+	<ALERT id='3' name='Desarrollador' 	description='Alerta 2' 		userProjectId='2'/>
+	
+	<TASKTYPE id='1' name='Analisis' 	description='Análisis Funcional'/>
+	<TASKTYPE id='2' name='Desarrollo' 	description='Implementación y Desarrollo'/>
+	<TASKTYPE id='3' name='Soporte' 	description='Soporte al proyecto'/>
+	<TASKTYPE id='4' name='Administración' 	description='Administración del Proyecto'/>
+	<TASKTYPE id='5' name='QC' 			description='Quality Control'/>
+
+
+	<TASK id='200' projectId='2' taskTypeId='1' name='Analisis 1' description='Analisis' budget='500000'/>
+	<TASK id='201' projectId='2' taskTypeId='2' name='Desarrollo 1' description='Dessarrollo' budget='3000'/>
+	<TASK id='202' projectId='2' taskTypeId='3' name='Soporte 1' description='Soporte' budget='3000'/>
+	<TASK id='203' projectId='2' taskTypeId='4' name='Administracion 1' description='Adminstracion' budget='3000'/>
+	<TASK id='204' projectId='2' taskTypeId='5' name='QC 1' description='Quality Control' budget='3000'/>
+
+	<TASK id='300' projectId='3' taskTypeId='1' name='Analisis 2' description='Analisis' budget='500000'/>
+	<TASK id='301' projectId='3' taskTypeId='2' name='Desarrollo 2' description='Dessarrollo' budget='3000'/>
+	<TASK id='302' projectId='3' taskTypeId='3' name='Soporte 2' description='Soporte' budget='3000'/>
+	<TASK id='303' projectId='3' taskTypeId='4' name='Administracion 2' description='Adminstracion' budget='3000'/>
+	<TASK id='304' projectId='3' taskTypeId='5' name='QC 3' description='Quality Control' budget='3000'/>
+	
+	<TASK id='400' projectId='4' taskTypeId='1' name='Analisis 4' description='Analisis' budget='500000'/>
+	<TASK id='401' projectId='4' taskTypeId='2' name='Desarrollo 4' description='Dessarrollo' budget='3000'/>
+	<TASK id='402' projectId='4' taskTypeId='3' name='Soporte 4' description='Soporte' budget='3000'/>
+	<TASK id='403' projectId='4' taskTypeId='4' name='Administracion 4' description='Adminstracion' budget='3000'/>
+	<TASK id='404' projectId='4' taskTypeId='5' name='QC 4' description='Quality Control' budget='3000'/>
+
+	
+	<TASK id='1' projectId='1' taskTypeId='1' name='Investigación' description='Investigacion de las herramientas a utilizar' budget='500000'/>
+	<TASK id='2' projectId='1' taskTypeId='4' name='Seguimiento y Administración' description='Reuniones de Avance y de toma de decisiones' budget='3000'/>
+	<TASK id='3' projectId='1' taskTypeId='1' name='Analisis' description='Analisis Funcional de la aplicacion' budget='12351'/>
+	<TASK id='4' projectId='1' taskTypeId='2' name='Desarrollo' description='Implementacion de la aplicacion' budget='12351'/>
+	<TASK id='5' projectId='1' taskTypeId='5' name='Pruebas' description='QC a la aplicacion y Reporte de Errores' budget='12351'/>
+	<TASK id='5' projectId='1' taskTypeId='3' name='Soporte' description='Soporte a la aplicacion' budget='12351'/>
+
+ 	<TASK id='11' taskId='1' projectId='1' taskTypeId='1' name='SmartGWT' description='Nuevo Framework SmartGWT' budget='12351' />
+	<TASK id='12' taskId='1' projectId='1' taskTypeId='1' name='Hibernate' description='Frameworks para la persistencia de datos' budget='12351' />
+	<TASK id='13' taskId='1' projectId='1' taskTypeId='1' name='Reportes' description='Frameworks para Reportes - Visualization' budget='12351' />
+	<TASK id='14' taskId='1' projectId='1' taskTypeId='1' name='Dozer' description='Frameworks para Mapeos entre Entities y DTOs' budget='12351' />	
+	
+	<TASK id='21' taskId='2' projectId='1' taskTypeId='4' name='Reuniones de Grupo' description='asdfasd sdaf sdf' budget='12351' />
+	<TASK id='22' taskId='2' projectId='1' taskTypeId='4' name='Reuniones con Tutor' description='asdfasd sdaf sdf' budget='12351' />
+	<TASK id='23' taskId='2' projectId='1' taskTypeId='1' name='Documentación' description='Documentacion de la aplicacion' budget='12351' />
+	<TASK id='24' taskId='2' projectId='1' taskTypeId='4' name='Presentación' description='Presentacion de la aplicacion' budget='12351' />
+	
+	<TASK id='31' taskId='3' projectId='1' taskTypeId='1' name='Requerimientos' description='Listado de Requerimientos' budget='12351' />
+	<TASK id='32' taskId='3' projectId='1' taskTypeId='1' name='Reglas de Negocio' description='Reglas de Negocio' budget='12351' />
+	<TASK id='33' taskId='3' projectId='1' taskTypeId='1' name='CUSO' description='Casos de Usos' budget='12351' />
+	<TASK id='34' taskId='3' projectId='1' taskTypeId='1' name='Base de Datos' description='Analisis de la estructura de BBDD' budget='12351' />
+	<TASK id='35' taskId='3' projectId='1' taskTypeId='1' name='Diseño Pantallas' description='Diseño de Secuencias y Pantallas' budget='12351' />
+	<TASK id='36' taskId='3' projectId='1' taskTypeId='1' name='Arquitectura' description='Analisis de la Arquitectura' budget='12351' />
+	
+	<TASK id='41' taskId='4' projectId='1' taskTypeId='4' name='Back End' description='Implementacion de Persistencia de Datos' budget='12351' />
+	<TASK id='42' taskId='4' projectId='1' taskTypeId='4' name='Servicios' description='Implementacion de Servicios' budget='12351' />
+	<TASK id='43' taskId='4' projectId='1' taskTypeId='4' name='Front End' description='Implementacion de logica de pantallas' budget='12351' />
+	<TASK id='44' taskId='4' projectId='1' taskTypeId='4' name='Reportes' description='Implementacion de Reportes - Visualization' budget='12351' />
+	<TASK id='45' taskId='4' projectId='1' taskTypeId='4' name='Interfaces ABMs' description='Implementacion de Framework de ABMs' budget='12351' />
+	<TASK id='46' taskId='4' projectId='1' taskTypeId='4' name='Diesño' description='Implementacion del Diseño de Pantallas' budget='12351' />
+	
+	<TASK id='51' taskId='5' projectId='1' taskTypeId='5' name='QC DAOs' description='Pruebas unitarias de los DAOs' budget='12351' />
+	<TASK id='52' taskId='5' projectId='1' taskTypeId='5' name='QC Funcional' description='Pruebas Funcionales' budget='12351' />
+	<TASK id='53' taskId='5' projectId='1' taskTypeId='2' name='Correcciones de Bugs' description='Correcciones de Bugs encontrados' budget='12351' />
+	<TASK id='54' taskId='5' projectId='1' taskTypeId='5' name='Revisión de Bugs' description='Revision de Bugs Reportados como corregidos' budget='12351' />
+
+		
+	<!-- <TASKUSER id='1' userId='1' taskId='1' hourCount='2' date='2011-04-30' comment=''/>
+	<TASKUSER id='2' userId='1' taskId='1' hourCount='3' date='2010-06-01' comment=''/>
+	<TASKUSER id='3' userId='1' taskId='2' hourCount='5' date='2011-04-25' comment=''/>
+	<TASKUSER id='4' userId='2' taskId='3' hourCount='1' date='2011-04-18' comment=''/>
+	<TASKUSER id='5' userId='2' taskId='4' hourCount='3' date='2011-04-10' comment=''/>
+	<TASKUSER id='6' userId='2' taskId='1' hourCount='7' date='2011-03-30' comment=''/>
+	<TASKUSER id='7' userId='3' taskId='4' hourCount='9' date='2011-04-30' comment=''/> -->
+		
+	<ROLE id='1' name='Administrador'/>
+	<ROLE id='2' name='Usuario'/>
+	<ROLE id='3' name='Cliente'/>
+			
+	<ROLEUSERPROJECT roleId='2' userProjectId='1'/>
+	<ROLEUSERPROJECT roleId='1' userProjectId='2'/>
+	<ROLEUSERPROJECT roleId='3' userProjectId='3'/>
+	
+</dataset>
