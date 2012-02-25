@@ -1,3 +1,4 @@
+
 package ar.fi.uba.tempore.gwt.server;
 
 import java.util.ArrayList;
@@ -30,15 +31,14 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 	
 	public UserDTO validateUser (String userName, String password){
 		UserDTO dto = null;
-		
-		HttpServletRequest request = this.getThreadLocalRequest();
-		HttpSession session = request.getSession();
-		
-		if (session.isNew()){
-			log.info("Session EXISTENTE");
-		} else {
-			log.info("NUEVA SESSION!!!!");
-		}
+//		HttpServletRequest request = this.getThreadLocalRequest();
+//		HttpSession session = request.getSession();
+//		
+//		if (session.isNew()){
+//			log.info("Session EXISTENTE");
+//		} else {
+//			log.info("NUEVA SESSION!!!!");
+//		}
 
 		UserDAO uDAO = new UserDAO(); 
 		log.info("Users - VALIDATE USER");
@@ -46,7 +46,7 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 		User user = uDAO.validateUser(userName, password);
 		if (user != null && user.getId() != null) {
 			dto = mapper.map(user, UserDTO.class);
-			session.setAttribute("userName", dto.getUserName());
+//			session.setAttribute("userName", dto.getUserName());
 		}
 		
 		return dto;
@@ -56,16 +56,13 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 	public String getUserLoggued(){
 		HttpServletRequest request = this.getThreadLocalRequest();
 		HttpSession session = request.getSession();
-		
-		if (session.isNew()){
-			log.info("Session EXISTENTE" + session.getAttribute("username"));
-		} else {
-			log.info("NUEVA SESSION!!!!");
-		}
+//		if (session.isNew()){
+//			log.info("Session EXISTENTE" + session.getAttribute("username"));
+//		} else {
+//			log.info("NUEVA SESSION!!!!");
+//		}
 		return (String) session.getAttribute("username");
 	}
-	
-	
 	
 	@Override
 	public List<UserDTO> fetch() {
@@ -83,6 +80,9 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 
 	@Override
 	public UserDTO add(UserDTO userDTO) {
+		if (userDTO.getPassword()==null){
+			userDTO.setPassword("1234");
+		}
 		return update(userDTO);
 	}
 
@@ -91,6 +91,11 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 		UserDAO uDAO = new UserDAO(); 
 		log.info("UPDATE - User");
 		User user = mapper.map(userDTO, User.class);
+		try {
+			user.setPassword(uDAO.hashPassword(userDTO.getPassword()));
+		} catch (ServiceUnavailableException e) {
+			e.printStackTrace();
+		}
 		User newUser = uDAO.makePersistent(user);
 		UserDTO newUserDto = mapper.map(newUser, UserDTO.class);
 		return newUserDto;
@@ -131,39 +136,46 @@ public class UserServicesImpl extends RemoteServiceServlet implements ar.fi.uba.
 		return uDAO.validateUserName(userName);
 	}
 
-	
 	@Override
 	public void recoveryUserPassword(String userName) {
 		UserDAO uDAO = new UserDAO();
 		User user = uDAO.getUser(userName);
 		if (user != null){
 			String password = generatePassword(userName);
-			SendMailSSL mail = new SendMailSSL(userName, user.getEmail(), password);
 			try {
+				user.setPassword(uDAO.hashPassword(password));
+				uDAO.makePersistent(user);
+			
+				SendMailSSL mail = new SendMailSSL(userName, user.getEmail(), password);
 				mail.sendMail();
-			} catch (AddressException e) {
-				e.printStackTrace();
-			} catch (MessagingException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}		
 		}
 	}
 	
 	private String generatePassword(String userName){
-		UserDAO uDAO = new UserDAO();
 		RandomString random = new RandomString(5);
-		User user = uDAO.getUser(userName);
 		String password = random.nextString();
-		if (user != null){
-			try {
-				user.setPassword(uDAO.hashPassword(password));
-			} catch (ServiceUnavailableException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			uDAO.makePersistent(user);
-		}
 		return password;
+	}
+	
+	@Override
+	public UserDTO updateNotAdmin(UserDTO userDTO) {
+		log.info("UPDATE USER - " + userDTO.getUserName());
+		UserDAO uDAO = new UserDAO();
+		//seteo admin en No
+		userDTO.setAdmin("N");
+		User user = mapper.map(userDTO, User.class);
+		try {
+			user.setPassword(uDAO.hashPassword(userDTO.getPassword()));
+		} catch (ServiceUnavailableException e) {
+			e.printStackTrace();
+		}
+		User makePersistent = uDAO.makePersistent(user);
+		UserDTO result = mapper.map(makePersistent, UserDTO.class);
+		
+		return result;
 	}
 }
 

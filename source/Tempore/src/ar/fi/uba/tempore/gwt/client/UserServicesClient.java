@@ -30,6 +30,7 @@ public interface UserServicesClient extends GenericGwtRpcDataSourceService<UserD
 	
 	public void recoveryUserPassword(String userName);
 
+	public UserDTO updateNotAdmin(UserDTO userDTO);
 //	public String generatePassword(String userName);
 }
 

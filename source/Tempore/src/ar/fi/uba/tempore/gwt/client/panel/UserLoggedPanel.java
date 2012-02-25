@@ -24,8 +24,6 @@ public class UserLoggedPanel extends HLayout {
 				redirect("http://localhost:8080/Tempore/"); 
 			}
 		});
-//		logout.setShowDown(true);
-//		logout.setShowRollOver(true);
 		logout.setAutoWidth();
 		logout.setAlign(Alignment.RIGHT);
 		logout.setStyleName("logoutPanel");
@@ -34,7 +32,7 @@ public class UserLoggedPanel extends HLayout {
 		Label user = new Label("Hola "+SessionUser.getInstance().getUser().getName() +"!");
 		user.setAlign(Alignment.RIGHT);
 		user.setHeight(10);
-		user.setWidth(100);
+		user.setWidth(200);
 		user.setStyleName("userloggedPanel");
 		
 		this.addMember(user);
