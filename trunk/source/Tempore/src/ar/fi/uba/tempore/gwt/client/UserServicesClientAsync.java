@@ -19,6 +19,8 @@ public interface UserServicesClientAsync extends GenericGwtRpcDataSourceServiceA
 
 	void recoveryUserPassword(String userName, AsyncCallback<Void> callback);
 
+	void updateNotAdmin(UserDTO userDTO, AsyncCallback<UserDTO> callback);
+
 //	void generatePassword(String userName, AsyncCallback<String> callback);
 
 }

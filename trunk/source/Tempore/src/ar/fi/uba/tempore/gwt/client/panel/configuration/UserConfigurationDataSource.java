@@ -119,7 +119,7 @@ public class UserConfigurationDataSource extends GenericGwtRpcDataSource<UserDTO
 		rec.setAttribute(EMAIL, dto.getEmail());
 		rec.setAttribute(LAST_NAME, dto.getLastName());
 		rec.setAttribute(NAME, dto.getName());
-		rec.setAttribute(PASSWORD, dto.getPassword());
+//		rec.setAttribute(PASSWORD, dto.getPassword());
 		rec.setAttribute(PHONE, dto.getPhone());		
 		rec.setAttribute(USER_NAME, dto.getUserName());
 		rec.setAttribute(ZIP_CODE, dto.getZipCode());

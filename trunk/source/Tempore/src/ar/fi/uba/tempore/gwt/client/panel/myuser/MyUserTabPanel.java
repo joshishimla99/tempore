@@ -1,7 +1,7 @@
 package ar.fi.uba.tempore.gwt.client.panel.myuser;
 
 import ar.fi.uba.tempore.dto.UserDTO;
-import ar.fi.uba.tempore.gwt.client.MyUserServicesClient;
+import ar.fi.uba.tempore.gwt.client.UserServicesClient;
 import ar.fi.uba.tempore.gwt.client.login.SessionUser;
 import ar.fi.uba.tempore.gwt.client.panel.TabsPanelContainer;
 import ar.fi.uba.temporeutils.image.ImgClient;
@@ -130,7 +130,7 @@ public class MyUserTabPanel extends TabsPanelContainer {
 			if (form.validate()){
 				UserDTO userDTO = new UserDTO();
 				copy(form, userDTO);
-				MyUserServicesClient.Util.getInstance().update(userDTO, new AsyncCallback<UserDTO>() {
+				UserServicesClient.Util.getInstance().updateNotAdmin(userDTO, new AsyncCallback<UserDTO>() {
 					@Override
 					public void onSuccess(UserDTO userDTO) {
 						//Si actualizacion correcta actualizar
@@ -164,7 +164,8 @@ public class MyUserTabPanel extends TabsPanelContainer {
 		form.setValue(NAME, userDTO.getName());
 		form.setValue(LAST_NAME, userDTO.getLastName());
 		form.setValue(USER_NAME, userDTO.getUserName());
-		form.setValue(PASSWORD, userDTO.getPassword());
+//		No se copia aproposito, para que se cargue nuevamente el pass al cambiar
+//		form.setValue(PASSWORD, userDTO.getPassword());
 		form.setValue(EMAIL, userDTO.getEmail());
 		form.setValue(ADDRESS, userDTO.getAddress());
 		form.setValue(COUNTRY, userDTO.getCountry());
