@@ -19,8 +19,8 @@ public class AboutTabPanel extends TabsPanelContainer {
 		HTMLFlow textHtml = new HTMLFlow();
 		textHtml.setWidth100();
 		textHtml.setMargin(25);
-		textHtml.setContents("<H1>Maneja tus Tiempos</H1>" +
-				"<H2>Version 1.0.0.0</H2>" +
+		textHtml.setContents("<H1>Manej&aacute; tus tiempos</H1>" +
+				"<H2>Version 1.0.0</H2>" +
 				"<H4>Autores:</H4> " +
 				"Ludmila Lis, RINAUDO" +
 				"<br/>" +
@@ -31,9 +31,9 @@ public class AboutTabPanel extends TabsPanelContainer {
 				"<H4>Tutor:</H4>" +
 				"Ing. Guillermo, PANTALEO" +
 				"<br/>" +"<br/>" +
-				"Trabajo Profesional de la Carrera Ingenier&iacute;a Inform&aacute;tica de la Universidad de Buenos Aires" +
+				"Trabajo Profesional de la Carrera Ingenier&iacute;a en Inform&aacute;tica de la Universidad de Buenos Aires" +
 				"<br/>" +
-				"Marzo del 2012");
+				"Marzo de 2012");
 		
 		final Img img = new Img("../images/logo_tempore_izq.jpg");
 		img.setPadding(20);
