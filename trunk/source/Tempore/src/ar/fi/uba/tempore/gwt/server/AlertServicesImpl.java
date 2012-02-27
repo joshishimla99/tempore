@@ -18,7 +18,6 @@ public class AlertServicesImpl extends RemoteServiceServlet implements AlertServ
 	private final Logger log = Logger.getLogger(this.getClass());
 
 	private final DozerBeanMapper mapper = new DozerBeanMapper();
-		
 
 	@Override
 	public List<AlertDTO> fetch() {
