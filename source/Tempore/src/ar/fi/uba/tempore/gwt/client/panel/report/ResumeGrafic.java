@@ -15,7 +15,7 @@ import com.smartgwt.client.widgets.layout.VLayout;
 
 public abstract class ResumeGrafic extends VLayout {
 	public static final Long HORA = 60*60*1000L;
-	private static String html = "<div id=\"grafic_nested_div\" style=\"position: absolute; z-index: 1000000\"> </div>\n";
+	private static String html = "<div id=\"grafic_nested_div2\" style=\"position: absolute; z-index: 1000000\"> </div>\n";
 	private Options options;
 
 	public ResumeGrafic() {
@@ -66,7 +66,7 @@ public abstract class ResumeGrafic extends VLayout {
 	 * @param options opciones de la tabla
 	 */
 	private native void drawColumnChart(DataTable data, Options options) /*-{
-	    var chart = new $wnd.google.visualization.ColumnChart($doc.getElementById('grafic_nested_div'));
+	    var chart = new $wnd.google.visualization.ColumnChart($doc.getElementById('grafic_nested_div2'));
 		chart.draw(data, options);
 	}-*/;
 
