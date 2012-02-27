@@ -122,7 +122,7 @@ public class ReportFilter5 extends VLayout {
 		ReportServicesClient.Util.getInstance().getProjectTaskTypeByTime(projectId , ini, end, new AsyncCallback<Map<String, Map<Integer, Long>>>() {
 			@Override
 			public void onSuccess(final Map<String, Map<Integer, Long>> taskMap) {
-				final GenericGrafic gg =  new GenericGrafic("Horas Cargadas a los Tipos de Tarea del Proyecto "+ProjectPanel.getInstance().getSelected().getName(),
+				final GenericGrafic gg =  new GenericGrafic("Horas Cargadas a los Tipos de Tarea del Proyecto "+projectName,
 						"Numero de Dia del Proyecto " + projectName,
 						"Horas Cargadas",
 						GenericGrafic.AREA) {
