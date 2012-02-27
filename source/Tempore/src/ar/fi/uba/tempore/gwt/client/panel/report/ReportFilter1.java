@@ -53,7 +53,7 @@ public class ReportFilter1 extends VLayout {
 		formFilterDate.setFields(ini,end);
 
 
-		final HTMLFlow htmlFlow1 = new HTMLFlow("Reporte encargado de graficar en forma de barras la cantidad de horas totales reportadas para cada uno de los proyectos existentes en el sistema.");  
+		final HTMLFlow htmlFlow1 = new HTMLFlow("Reporte de tipo barras que muestra la cantidad de horas totales de los proyectos existentes en el sistema, registradas por los miembros de cada uno de los proyectos.");  
 		htmlFlow1.setPadding(10);
 
 		final ImgButton btnReporte1 = new ImgButton();

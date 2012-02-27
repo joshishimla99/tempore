@@ -5,6 +5,7 @@ import ar.fi.uba.tempore.gwt.client.panel.TabsPanelContainer;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.VisibilityMode;
 import com.smartgwt.client.util.SC;
+import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.SectionStack;
@@ -15,7 +16,7 @@ public class ReportTabPanel extends TabsPanelContainer{
 
 	final VLayout graficLayout = new VLayout();
 	
-	 private static final String HELPTEXT = "<br><b>Horas cargadas por Proyecto</b><br>Reporte encargado de graficar en forma de torta la cantidad de horas totales reportadas para cada uno de los proyectos existentes en el sistema. " +    
+	 private static final String HELPTEXT = "<br><b>Horas cargadas por Proyecto</b><br>Reporte de tipo torta que muestra la cantidad de horas totales registradas por los miembros para cada uno de los proyectos existentes en el sistema. " +    
      "<br><br><b>Horas cargadas por Usuario del Proyecto seleccionado</b><br>Reporte que representa por medio de l&iacute;neas la cantidad de horas cargadas por cada usuario del proyecto seleccionado." +  
      "<br><br><b>Horas cargadas a cada Tarea del Proyecto seleccionado</b><br>Reporte que grafica mediante &aacute;reas las horas cargadas a cada una de las tareas creadas para el proyecto seleccionado." +  
      "<br><br><b>Usuarios por proyecto</b><br>Reporte que grafica en columnas los usuario involucrados para todos los proyectos abiertos.";  
@@ -43,7 +44,12 @@ public class ReportTabPanel extends TabsPanelContainer{
         graficLayout.setAlign(Alignment.CENTER);
         graficLayout.setMargin(10);
         graficLayout.setBorder("2px solid gray");
-	    
+        
+
+		final Img img = new Img("../images/tempore_reporting.jpg");
+		img.setWidth(619);
+		img.setHeight(222);		
+		graficLayout.addMember(img);	    
 	    
 	    final SectionStackSection sectionReport1 = new SectionStackSection("Proyectos-Horas");  
 	    sectionReport1.setExpanded(true);
