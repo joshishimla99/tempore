@@ -13,6 +13,7 @@ import ar.fi.uba.tempore.gwt.client.login.SessionUser;
 import ar.fi.uba.tempore.gwt.client.panel.TabsPanelContainer;
 import ar.fi.uba.tempore.gwt.client.panel.counter.CounterTimePanel;
 import ar.fi.uba.tempore.gwt.client.panel.project.ProjectPanel;
+import ar.fi.uba.tempore.gwt.client.panel.report.ResumeReportHoursWeek;
 import ar.fi.uba.temporeutils.observer.ProjectObserver;
 import ar.fi.uba.temporeutils.observer.TimeCounterObserver;
 
@@ -39,6 +40,8 @@ import com.smartgwt.client.widgets.grid.ListGridEditorContext;
 import com.smartgwt.client.widgets.grid.ListGridEditorCustomizer;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.SummaryFunction;
+import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
+import com.smartgwt.client.widgets.grid.events.DataArrivedHandler;
 import com.smartgwt.client.widgets.grid.events.RecordDropEvent;
 import com.smartgwt.client.widgets.grid.events.RecordDropHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
@@ -67,6 +70,8 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 	private final TreeGrid tasksTree = new TreeGrid();
 	private final ListGrid hoursCountGrid = new ListGrid();
 	private final DateChooser dateChooser = new DateChooser();
+	private final ResumeReportHoursWeek draw = new ResumeReportHoursWeek();
+	
 	private static final String HELPTEXT = "<br><b>Asignaci&oacute;n de horas trabajadas a tareas</b><br>Esta p&aacute;gina le permitir&aacute; administrar las horas cargadas." +
 			"<br> La informaci&oacute;n que se maneja para cada tarea cargada es la siguiente:" +
 			"<br><b>Usuario: </b>Nombre del usuario a ser utilizado para ingresar al sistema." +
@@ -94,7 +99,8 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		});
 
 		//FECHA PARA CARGA DE HORAS		
-		dateChooser.setHeight("190");
+		dateChooser.setHeight(50);
+		dateChooser.setWidth("50%");
 		dateChooser.setShowTodayButton(false);
 		dateChooser.addDataChangedHandler(new DataChangedHandler() {
 			public void onDataChanged(DataChangedEvent event) {
@@ -105,8 +111,7 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		//LISTADO DE TAREAS
 		tasksTree.setShowDropIcons(true);
 		tasksTree.setHeight100();
-		tasksTree.setWidth("80%");
-		tasksTree.setHeight("100%");		
+		tasksTree.setWidth100();
 		tasksTree.setShowDragShadow(true);
 //		tasksTree.setAutoShowParent(true);
 		tasksTree.setAddDropValues(false);
@@ -126,6 +131,7 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		tasksTree.setFields(tfId, tfName, tfDescription);  
 		tasksTree.setShowAllRecords(true);  
 		tasksTree.setAutoFetchData(false);
+//		tasksTree.setAutoFitData(Autofit.BOTH);
 		
         
 		//TABLA DE CARGA DE HORAS
@@ -156,6 +162,12 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		hoursCountGrid.setShowGroupSummary(true);
 		hoursCountGrid.setShowGroupSummaryInHeader(true); 
 		hoursCountGrid.setGroupStartOpen(GroupStartOpen.ALL);
+		hoursCountGrid.addDataArrivedHandler(new DataArrivedHandler() {
+			@Override
+			public void onDataArrived(DataArrivedEvent event) {
+				draw.drawReport(dateChooser.getData());				
+			}
+		});
 
 		final ListGridField lfProject = new ListGridField(COL_PROJECT_NAME, "Proyecto");
 		lfProject.setWidth("10%");
@@ -181,6 +193,8 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		lfDate.setType(ListGridFieldType.DATE);
 		lfDate.setWidth("60");
 		lfDate.setCanEdit(false);
+		//Ver si vale la pena
+		lfDate.setHidden(true);
 		final ListGridField lfHours = new ListGridField(COL_HOURS, "Horas");
 		lfHours.setWidth("60");
 		
@@ -231,31 +245,50 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 				return context.getDefaultProperties();}
 		});
 
+		draw.setHeight(170);
+		draw.setWidth(270);
+		draw.drawReport(dateChooser.getData());
+		
 		//LAYOUTs
-
-		final HLayout hHoursCount = new HLayout();
-		hHoursCount.setHeight("60%");
-		hHoursCount.setWidth100();	
-		hHoursCount.addMember(hoursCountGrid);
-
-		final HLayout hDateTasks = new HLayout();
-		hDateTasks.setHeight("197");
-		hDateTasks.setWidth100();
-		hDateTasks.addMember(dateChooser);
-		hDateTasks.addMember(tasksTree);
-
+		final HLayout hort0 = new HLayout();
+		hort0.setWidth100();
+		hort0.addMember(dateChooser);
+		hort0.addMember(draw);
+		
+		
+		final VLayout vert1 = new VLayout();
+		vert1.setHeight100();
+		vert1.addMember(hort0);
+		vert1.addMember(hoursCountGrid);
+		
+		final VLayout vert2 = new VLayout();
+		vert2.setWidth("50%");
+		vert2.setHeight100();
+		vert2.setEdgeImage("../edges/blue/sharpframe_10.png");
+//		vert2.setDragAppearance(DragAppearance.TARGET);  
+		vert2.setShowResizeBar(true);
+		vert2.setCanDragResize(true);  
+		vert2.setResizeFrom("R");
+		vert2.setMinWidth(200);  
+		vert2.addMember(tasksTree);
+		
 		//Agrego los Componentes al Panel
-		final VLayout vAllPanel = new VLayout();
-		vAllPanel.setHeight100();
-		vAllPanel.setWidth100();
-		vAllPanel.addMember(title);
-		vAllPanel.addMember(hDateTasks);
-		vAllPanel.addMember(hHoursCount);
+		final HLayout horizontal = new HLayout();
+		horizontal.setHeight100();
+		horizontal.setWidth100();
+		horizontal.addMember(vert2);
+		horizontal.addMember(vert1);
+		
+		final VLayout main = new VLayout();
+		main.setHeight100();
+		main.setWidth100();
+		main.addMember(title);
+		main.addMember(horizontal);
 
 		//refresco panel de Horas
 		refreshTimeGrid();
 		refreshPanel();
-		this.addChild(vAllPanel);		
+		this.addChild(main);		
 	}
 
 	/**
@@ -270,6 +303,8 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		HourCountDataSource.getInstance().setId(filter);
 		hoursCountGrid.invalidateCache();
 		hoursCountGrid.fetchData();
+		
+		draw.drawReport(dateChooser.getData());
 	}
 
 
