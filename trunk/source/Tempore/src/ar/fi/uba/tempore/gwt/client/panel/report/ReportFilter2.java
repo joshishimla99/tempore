@@ -82,7 +82,7 @@ public class ReportFilter2 extends VLayout {
 		btnReporte2.setMargin(10);
 		btnReporte2.setAltText("Generar reporte");
 	    
-	    final HTMLFlow htmlFlow2 = new HTMLFlow("Reporte que grafica por medio de Barras la cantidad de horas cargadas por cada usuario en el proyecto seleccionado.");  
+	    final HTMLFlow htmlFlow2 = new HTMLFlow("Reporte de tipo Barras que muestra la cantidad de horas registradas por cada miembro del proyecto seleccionado.");  
 	    htmlFlow2.setPadding(10);
 	    
 	    final HLayout hLayout2 = new HLayout();

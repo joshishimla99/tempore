@@ -78,7 +78,7 @@ public class ReportFilter3 extends VLayout {
 
 
 
-	    final HTMLFlow htmlFlow3 = new HTMLFlow("Reporte que grafica mediante &aacute;reas las horas cargadas a cada una de las Tareas Primarias del proyecto seleccionado.");  
+	    final HTMLFlow htmlFlow3 = new HTMLFlow("Reporte de tipo &aacute;rea que muestra las horas registradas a cada una de las Tareas de primer nivel del proyecto seleccionado.");  
 	    htmlFlow3.setPadding(10);
 	
 		final ImgButton btnReporte3 = new ImgButton();
