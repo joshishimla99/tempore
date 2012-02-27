@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.SC;
+import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Label;
@@ -48,25 +49,25 @@ public class LoginPanel extends Composite{
 		userText.setSelectOnFocus(true);
 		userText.setAlign(Alignment.LEFT);
 		userText.setRequired(true);
-
-
+		
+		
 		final PasswordItem passText = new PasswordItem(PASSWORD);
 		passText.setTitle("Contrase&ntilde;a");
 		passText.setRequired(true);
 		passText.setAlign(Alignment.LEFT);
-
+		
 		error.setWidth(250);
 		error.setHeight(20);
 		error.setVisible(false);
 		error.setStyleName("label-errorMessages");
-
+		
 
 		final IButton submit = new IButton();
 		submit.setTitle("Acceder");
 		submit.setShowRollOver(true);  
-		submit.setShowDisabled(true);  
-		submit.setShowDown(true);  
-		submit.setTitleStyle("stretchTitle"); 
+        submit.setShowDisabled(true);  
+        submit.setShowDown(true);  
+        submit.setTitleStyle("stretchTitle"); 
 		submit.setAlign(Alignment.CENTER);
 
 
@@ -97,19 +98,19 @@ public class LoginPanel extends Composite{
 		logginLayout.addMember(submit);
 		logginLayout.addMember(link);
 		logginLayout.addMember(hLayout);
-
+		
 
 		//Textos introductorios
 		final VLayout textVLayout = new VLayout();
 		textVLayout.setWidth(750);
 		addMember(textVLayout);
-
+		
 		final HLayout layout = new HLayout(15);
 		layout.setHeight(200);
 		layout.addMember(textVLayout);
 		layout.addMember(logginLayout);
 		layout.setLayoutLeftMargin(150);
-
+		
 		final VLayout main = new VLayout();
 		main.setWidth100();
 		main.setHeight100();
@@ -117,13 +118,11 @@ public class LoginPanel extends Composite{
 		main.setMembersMargin(70);
 		main.addMember(new HeaderPanel());
 		main.addMember(layout);
-
+		
 		initWidget(main);
-
-
-
-
-
+		
+		
+		
 		final LoginPanel thisPanel = this;
 		submit.addClickHandler(new ClickHandler() {
 			@Override
@@ -138,7 +137,7 @@ public class LoginPanel extends Composite{
 								//LOGGIN SUCCESS
 								SessionUser.getInstance().setUser(result);
 								RootPanel.get("Content").add(new ConteinerMainPanel());
-
+								
 								//TODO ver de hacer el login correctamente
 								thisPanel.setVisible(false);
 							} else {
@@ -207,9 +206,10 @@ public class LoginPanel extends Composite{
 
 			final Window winModal = new Window();  
 			winModal.setWidth(360);  
-			winModal.setHeight(225);  
+			winModal.setHeight(225); 
 			winModal.setTitle("Recuperar Contrase&ntilde;a");  
 			winModal.setShowMinimizeButton(false);  
+			
 			winModal.setIsModal(true);  
 			winModal.setShowModalMask(true);  
 			winModal.centerInPage();  
@@ -222,20 +222,28 @@ public class LoginPanel extends Composite{
 
 			final Label errorRecoveryPassword = new Label("Usuario inv&aacute;lido");
 			errorRecoveryPassword.setVisible(false);
-
+			
 			final DynamicForm formRecoveryPassword = new DynamicForm();  
-			formRecoveryPassword.setHeight100();  
+			formRecoveryPassword.setHeight(120);  
 			formRecoveryPassword.setWidth100();  
-			formRecoveryPassword.setPadding(5);  
+			formRecoveryPassword.setPadding(10);  
 			formRecoveryPassword.setLayoutAlign(VerticalAlignment.BOTTOM);  
 
-			final TextItem userItem = new TextItem(USERNAME, "Ingrese el nombre de usuario");
+			final TextItem userItem = new TextItem(USERNAME, "Nombre de usuario");
 			userItem.setRequired(true);
+			//userItem.setLength(250);
+			//userItem.setLength(20);
+			userItem.setWidth(200);
 			userItem.setValue("ngarcia");
-			final Label indicationLabel = new Label("La aplicaci&oacute;n le enviar&aacute; un mail con la nueva contrase&ntilde;a");  
-
+			final Canvas indicationLabel = new Canvas();  
+			indicationLabel.setContents("<b>&iquest; Ha olvidado su contrase&ntilde;a?</b><br><br>La aplicaci&oacute;n le enviar&aacute; la nueva contrase&ntilde;a al mail configurado del usuario.");
+			indicationLabel.setPadding(5);
+			indicationLabel.setHeight(50);
+			final VLayout vLayoutRP = new VLayout();
 			final ButtonItem acceptButton = new ButtonItem();
 			acceptButton.setTitle("Enviar");
+			acceptButton.setWidth(90);
+			acceptButton.setIcon("../images/ico/mail.ico");
 			acceptButton.setShowDisabled(true);  
 			acceptButton.setTitleStyle("stretchTitle"); 
 			acceptButton.setAlign(Alignment.CENTER);
@@ -265,11 +273,13 @@ public class LoginPanel extends Composite{
 								} else {
 									//No existe el usuario 
 									errorRecoveryPassword.setVisible(true);
+									//errorRecoveryPassword.setContents("Usuario inv&aacute;lido");
 								}
 							}
 							@Override
 							public void onFailure(Throwable caught) {
 								SC.warn("Error al intentar validar el usuario");
+								vLayoutRP.redraw();
 							}
 						});	
 					}
@@ -280,11 +290,10 @@ public class LoginPanel extends Composite{
 
 			formRecoveryPassword.setFields(userItem, acceptButton);
 
-			final VLayout vLayoutRP = new VLayout();
-			vLayoutRP.addChild(indicationLabel);
+			winModal.addItem(indicationLabel);
 			vLayoutRP.addChild(formRecoveryPassword);  
 			vLayoutRP.addChild(errorRecoveryPassword);
-			winModal.addChild(vLayoutRP);
+			winModal.addItem(vLayoutRP);
 			winModal.show();  
 		}  
 	};  
