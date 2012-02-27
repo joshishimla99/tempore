@@ -73,7 +73,7 @@ public class MyUserTabPanel extends TabsPanelContainer {
 		final TextItem address = new TextItem(ADDRESS, "Direcci&oacute;n");
 		final TextItem country = new TextItem(COUNTRY, "Pa&iacute;s");
 		final TextItem phone = new TextItem(PHONE, "Tel&eacute;fono");
-		final TextItem zip = new TextItem(ZIP_CODE, "Codigo Postal");
+		final TextItem zip = new TextItem(ZIP_CODE, "C&oacute;digo Postal");
 		final HiddenItem admin = new HiddenItem(IS_ADMIN);
 
 		form = new DynamicForm();
