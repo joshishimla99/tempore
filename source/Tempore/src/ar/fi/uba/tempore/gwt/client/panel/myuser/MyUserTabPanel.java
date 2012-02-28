@@ -45,11 +45,12 @@ public class MyUserTabPanel extends TabsPanelContainer {
 	public MyUserTabPanel() {
 		super();  
 		final Label title = new Label("Mi Cuenta");
-		title.setWidth(200);
+		title.setWidth(800);
 		title.setHeight(15);
 		title.setIcon("[SKIN]/actions/help.png");
-		title.setStyleName("Informal");
+		title.setStyleName("titleStyleInformal");
 		title.setIconOrientation("right");
+		
 		title.addIconClickHandler(new com.smartgwt.client.widgets.events.IconClickHandler() {
 			@Override
 			public void onIconClick(
