@@ -48,10 +48,10 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 	public TaskTabPanel() {
 		super();
 		Label title = new Label("Administraci&oacute;n de Tareas");
-		title.setWidth(200);
+		title.setWidth(1000);
 		title.setHeight(15);
 		title.setIcon("[SKIN]/actions/help.png");
-		title.setStyleName("Informal");
+		title.setStyleName("titleStyleInformal");
 		title.setIconOrientation("right");
 		title.addIconClickHandler(new com.smartgwt.client.widgets.events.IconClickHandler() {
 			@Override

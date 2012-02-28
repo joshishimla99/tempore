@@ -24,11 +24,12 @@ public class ReportTabPanel extends TabsPanelContainer{
 	public ReportTabPanel() {
 		super();
 		
+//
 		final Label title = new Label("Administraci&oacute;n de Reportes");
-		title.setWidth(200);
+		title.setWidth(1060);
 		title.setHeight(15);
         title.setIcon("[SKIN]/actions/help.png");
-        title.setStyleName("Informal");
+        title.setStyleName("titleStyleInformal");
 		title.setIconOrientation("right");
         title.addIconClickHandler(new com.smartgwt.client.widgets.events.IconClickHandler() {
 			@Override
@@ -50,6 +51,7 @@ public class ReportTabPanel extends TabsPanelContainer{
 		img.setWidth(619);
 		img.setHeight(222);		
 		graficLayout.addMember(img);	    
+	    
 	    
 	    final SectionStackSection sectionReport1 = new SectionStackSection("Proyectos-Horas");  
 	    sectionReport1.setExpanded(true);

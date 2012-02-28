@@ -69,10 +69,10 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 		super();
 
 		Label title = new Label("Administraci&oacute;n de Recursos");
-		title.setWidth(200);
+		title.setWidth(1060);
 		title.setHeight(15);
 		title.setIcon("[SKIN]/actions/help.png");
-		title.setStyleName("Informal");
+		title.setStyleName("titleStyleInformal");
 		title.setIconOrientation("right");
 		title.addIconClickHandler(new com.smartgwt.client.widgets.events.IconClickHandler() {
 			@Override
