@@ -3,6 +3,8 @@ package ar.fi.uba.tempore.gwt.client.panel;
 import ar.fi.uba.tempore.gwt.client.login.SessionUser;
 
 import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.widgets.Button;
+import com.smartgwt.client.widgets.ImgButton;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
@@ -17,6 +19,7 @@ public class UserLoggedPanel extends HLayout {
 		this.setMembersMargin(10);
 		
 		Label logout = new Label("Salir");
+		logout.setStyleName("nameStyleInformal");
 		logout.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -30,6 +33,7 @@ public class UserLoggedPanel extends HLayout {
 		
 		
 		Label user = new Label("Hola "+SessionUser.getInstance().getUser().getName() +"!");
+		user.setStyleName("nameStyleInformal");
 		user.setAlign(Alignment.RIGHT);
 		user.setHeight(10);
 		user.setWidth(200);
