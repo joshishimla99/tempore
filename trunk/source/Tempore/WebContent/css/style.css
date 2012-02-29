@@ -116,6 +116,12 @@ h4 { font-size:12px; line-height:14px; text-transform: uppercase; color:#000; }
     /* border: 1px solid grey; */
 }
 
+.nameStyleInformal {
+    font-weight: bold;
+    text-decoration: underline;
+    font-family: Arial,Helvetica,sans-serif;
+
+}
 .clickable {
   color: blue;
   font-size:11px;
