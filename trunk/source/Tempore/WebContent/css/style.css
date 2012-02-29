@@ -96,14 +96,24 @@ h4 { font-size:12px; line-height:14px; text-transform: uppercase; color:#000; }
 	font-size:14px;
 }
 
+.hyperlink {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.inline-label {
+  display: inline !important;
+}
+
 .titleStyleInformal {
-    font-family: lucida handwriting,cursive;
+    /* font-family: lucida handwriting,cursive; */
     font-size: 14px;
     line-height: 22px;
-    color: black;
-    background-color: Gainsboro;
-    padding: 8px;
-    border: 1px solid grey;
+    color: #2676AB;
+   /*  background-color: Gainsboro; */
+    padding: 3px;
+    /* border: 1px solid grey; */
 }
 
 .clickable {
