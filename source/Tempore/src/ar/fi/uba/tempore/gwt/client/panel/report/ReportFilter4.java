@@ -73,7 +73,7 @@ public class ReportFilter4 extends VLayout {
 
 		formFilter.setFields(user,ini,end);
 
-		final HTMLFlow htmlFlow4 = new HTMLFlow("Reporte de tipo Torta que muestra el involucramiento (porcentaje de dedicación) en los Proyectos del Usuario seleccionado.");  
+		final HTMLFlow htmlFlow4 = new HTMLFlow("Reporte de tipo Torta que muestra el involucramiento (porcentaje de dedicaci&oacute;n) en los Proyectos del Usuario seleccionado.");  
 		htmlFlow4.setPadding(10);
 
 		final ImgButton btnReporte4 = new ImgButton();

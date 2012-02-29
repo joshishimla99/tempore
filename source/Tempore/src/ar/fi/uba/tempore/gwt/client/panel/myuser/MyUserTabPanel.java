@@ -45,7 +45,7 @@ public class MyUserTabPanel extends TabsPanelContainer {
 	public MyUserTabPanel() {
 		super();  
 		final Label title = new Label("Mi Cuenta");
-		title.setWidth(800);
+		title.setWidth100();
 		title.setHeight(15);
 		title.setIcon("[SKIN]/actions/help.png");
 		title.setStyleName("titleStyleInformal");
@@ -119,6 +119,8 @@ public class MyUserTabPanel extends TabsPanelContainer {
 		hLayoutRoot.addMember(image);
 
 		final VLayout mainLayout = new VLayout();
+		mainLayout.setWidth100();
+		mainLayout.setHeight100();
 		mainLayout.addMember(title);
 		mainLayout.addMember(hLayoutRoot);
 		

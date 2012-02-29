@@ -69,7 +69,7 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 		super();
 
 		Label title = new Label("Administraci&oacute;n de Recursos");
-		title.setWidth(1060);
+		title.setWidth100();
 		title.setHeight(15);
 		title.setIcon("[SKIN]/actions/help.png");
 		title.setStyleName("titleStyleInformal");

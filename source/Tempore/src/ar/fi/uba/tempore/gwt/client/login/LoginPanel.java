@@ -50,11 +50,13 @@ public class LoginPanel extends Composite{
 		userText.setAlign(Alignment.LEFT);
 		userText.setRequired(true);
 		
-		
 		final PasswordItem passText = new PasswordItem(PASSWORD);
 		passText.setTitle("Contrase&ntilde;a");
 		passText.setRequired(true);
 		passText.setAlign(Alignment.LEFT);
+		
+		formLogin.setAutoFocus(true);
+		formLogin.setFields(userText, passText);
 		
 		error.setWidth(250);
 		error.setHeight(20);
@@ -63,6 +65,7 @@ public class LoginPanel extends Composite{
 		
 
 		final IButton submit = new IButton();
+		submit.setHeight(35);
 		submit.setTitle("Acceder");
 		submit.setShowRollOver(true);  
         submit.setShowDisabled(true);  
@@ -72,17 +75,21 @@ public class LoginPanel extends Composite{
 
 
 		//Recuperar contraseña
-		final Label link = new Label("Recuperar Contrase&ntilde;a");  
-		link.setHeight(30);
+		final Label link = new Label("Recuperar Contrase&ntilde;a");
+//		link.setHeight(30);
+		link.setWidth(150);
 		link.setAlign(Alignment.CENTER);
-		link.addStyleName("clickable");
-
-		link.addClickHandler(recoverPass );
-		formLogin.setAutoFocus(true);
-		formLogin.setFields(userText, passText);
+		link.setStyleName("clickable");
+		link.addClickHandler(recoverPass);
+		
+		final HLayout hLayout = new HLayout();
+//		hLayout.setMembersMargin(5);
+		hLayout.setAlign(VerticalAlignment.CENTER);
+		hLayout.addMember(submit);
+		hLayout.addMember(link);
+		
 
 		final VLayout logginLayout = new VLayout();
-		final HLayout hLayout = new HLayout();
 		logginLayout.setShowEdges(true);
 		logginLayout.setEdgeShowCenter(true);
 		logginLayout.setEdgeImage("../images/login/glow_35.png");
@@ -95,8 +102,8 @@ public class LoginPanel extends Composite{
 		logginLayout.addMember(headerTitle);
 		logginLayout.addMember(formLogin);
 		logginLayout.addMember(error);
-		logginLayout.addMember(submit);
-		logginLayout.addMember(link);
+//		logginLayout.addMember(submit);
+//		logginLayout.addMember(link);
 		logginLayout.addMember(hLayout);
 		
 

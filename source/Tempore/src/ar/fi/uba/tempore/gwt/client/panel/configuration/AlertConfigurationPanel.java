@@ -27,9 +27,9 @@ public class AlertConfigurationPanel extends Canvas{
 	
 		//TITULO
 		final Label title = new Label("Configuraci&oacute;n de Alertas");
-		title.setWidth(200);
+		title.setWidth100();
 		title.setHeight(15);
-		title.setStyleName("Informal");
+		title.setStyleName("titleStyleInformal");
 		title.setIconOrientation("right");
 		
 		//GRILLA

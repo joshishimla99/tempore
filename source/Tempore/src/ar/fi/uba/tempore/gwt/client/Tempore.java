@@ -21,8 +21,12 @@ public class Tempore implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-//		dummyLogin();
+		dummyLoggin();
 		
+//		loggin();
+	}
+
+	private void loggin() {
 		UserServicesClient.Util.getInstance().getUserLoggued(new AsyncCallback<String>() {
 			@Override
 			public void onSuccess(String username) {
@@ -39,10 +43,10 @@ public class Tempore implements EntryPoint {
 			public void onFailure(Throwable caught) {
 				new LoginPanel();
 			}
-		});
+		});		
 	}
 
-	public void dummyLogin(){
+	private void dummyLoggin(){
 		//TODO Dummy de loggin
 		UserServicesClient.Util.getInstance().validateUser("ngarcia", "1234", new AsyncCallback<UserDTO>() {
 			@Override
