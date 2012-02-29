@@ -21,9 +21,9 @@ public class Tempore implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-		dummyLoggin();
+//		dummyLoggin();
 		
-//		loggin();
+		loggin();
 	}
 
 	private void loggin() {
