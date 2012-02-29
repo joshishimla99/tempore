@@ -23,6 +23,7 @@ public class Tempore implements EntryPoint {
 	public void onModuleLoad() {
 //		dummyLoggin();
 		
+
 		loggin();
 	}
 
