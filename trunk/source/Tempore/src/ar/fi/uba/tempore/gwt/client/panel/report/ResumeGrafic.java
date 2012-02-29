@@ -19,7 +19,7 @@ public abstract class ResumeGrafic extends VLayout {
 	private Options options;
 
 	public ResumeGrafic() {
-
+		super();
 		final HTMLFlow htmlFlow = new HTMLFlow(html); 
 
 		options = Options.create();

@@ -148,7 +148,7 @@ public class ReportFilter5 extends VLayout {
 							int rowIndex = 0;
 							for (Integer day : map.keySet()){
 								data.setValue(rowIndex, columnIndex, day);
-	//							GWT.log("["+rowIndex+","+columnIndex+","+day+"]");
+								GWT.log("["+rowIndex+","+columnIndex+","+day+"]");
 								rowIndex++;
 							}
 							

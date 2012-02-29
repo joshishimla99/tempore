@@ -65,19 +65,6 @@ public class TabsPanel extends TabSet {
 		reportTab.setPrompt("Esta secci&oacute;n le permite generar reportes");
 		reportTab.setPane(new ReportTabPanel());
 		
-		//Tab 5
-		final Tab configurationTab = new Tab("Configuraci&oacute;n  ", "../images/ico/wrench.ico");
-		configurationTab.setWidth(tabWidth);
-		configurationTab.setPrompt("Esta secci&oacute;n le permite administrar los usuarios, los clientes y las alarmas");
-		configurationTab.setPane(new ConfigurationTabPanel());
-
-		//Tab 5
-		final Tab myUserTab = new Tab("Mi Cuenta  ", "../images/ico/wrench.ico");
-		myUserTab.setWidth(tabWidth);
-		myUserTab.setPrompt("Esta secci&oacute;n le permite administrar la cuenta propia");
-		myUserTab.setPane(new MyUserTabPanel());
-
-		
 		
 		//Tab 6
 		final Tab helpTab = new Tab("Acerca de  ", "../images/ico/help1.ico");
@@ -104,11 +91,24 @@ public class TabsPanel extends TabSet {
 		});
 		
 		if (SessionUser.getInstance().getUser().isAdmin()){
+			//Tab 5
+			final Tab configurationTab = new Tab("Configuraci&oacute;n  ", "../images/ico/wrench.ico");
+			configurationTab.setWidth(tabWidth);
+			configurationTab.setPrompt("Esta secci&oacute;n le permite administrar los usuarios, los clientes y las alarmas");
+			configurationTab.setPane(new ConfigurationTabPanel());
+
+			
 			setTabs(timeTab, projectTab, resourceTab, taskTab, reportTab, configurationTab ,helpTab);
 		} else {
+			//Tab 5
+			final Tab myUserTab = new Tab("Mi Cuenta  ", "../images/ico/wrench.ico");
+			myUserTab.setWidth(tabWidth);
+			myUserTab.setPrompt("Esta secci&oacute;n le permite administrar la cuenta propia");
+			myUserTab.setPane(new MyUserTabPanel());
+
 			setTabs(timeTab, projectTab, resourceTab, taskTab, reportTab, myUserTab ,helpTab);
 		}
 		
-		selectTab(6);
+		selectTab(4);
 	}
 }

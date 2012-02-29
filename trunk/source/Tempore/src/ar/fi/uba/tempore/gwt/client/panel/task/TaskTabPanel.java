@@ -48,7 +48,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 	public TaskTabPanel() {
 		super();
 		Label title = new Label("Administraci&oacute;n de Tareas");
-		title.setWidth(1000);
+		title.setWidth100();
 		title.setHeight(15);
 		title.setIcon("[SKIN]/actions/help.png");
 		title.setStyleName("titleStyleInformal");

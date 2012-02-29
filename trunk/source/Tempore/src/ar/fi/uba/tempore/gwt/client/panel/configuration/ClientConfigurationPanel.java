@@ -43,10 +43,10 @@ public class ClientConfigurationPanel extends Canvas {
 		vLayout.setMembersMargin(6);
 		
 		final Label title = new Label("Configuraci&oacute;n de Clientes");
-		title.setWidth(200);
+		title.setWidth100();
 		title.setHeight(15);
 		title.setIcon("[SKIN]/actions/help.png");
-		title.setStyleName("Informal");
+		title.setStyleName("titleStyleInformal");
 		title.setIconOrientation("right");
         title.addIconClickHandler(new com.smartgwt.client.widgets.events.IconClickHandler() {
 			

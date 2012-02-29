@@ -26,7 +26,7 @@ public class ReportTabPanel extends TabsPanelContainer{
 		
 //
 		final Label title = new Label("Administraci&oacute;n de Reportes");
-		title.setWidth(1060);
+		title.setWidth100();
 		title.setHeight(15);
         title.setIcon("[SKIN]/actions/help.png");
         title.setStyleName("titleStyleInformal");
@@ -53,28 +53,28 @@ public class ReportTabPanel extends TabsPanelContainer{
 		graficLayout.addMember(img);	    
 	    
 	    
-	    final SectionStackSection sectionReport1 = new SectionStackSection("Proyectos-Horas");  
+	    final SectionStackSection sectionReport1 = new SectionStackSection("1- Proyectos-Horas");  
 	    sectionReport1.setExpanded(true);
 	    sectionReport1.setCanCollapse(true);
 		sectionReport1.addItem(new ReportFilter1(graficLayout));
 		
-		final SectionStackSection sectionReport2 = new SectionStackSection("Usuarios-Horas");  
+		final SectionStackSection sectionReport2 = new SectionStackSection("2- Usuarios-Horas");  
 		sectionReport2.setCanCollapse(true);
 		sectionReport2.addItem(new ReportFilter2(graficLayout));
 		
-		final SectionStackSection sectionReport3 = new SectionStackSection("Tareas-Horas");  
+		final SectionStackSection sectionReport3 = new SectionStackSection("3- Tareas-Horas");  
 		sectionReport3.setCanCollapse(true);
 		sectionReport3.addItem(new ReportFilter3(graficLayout));
 		
-		final SectionStackSection sectionReport4 = new SectionStackSection("Usuario-Proyecto");  
+		final SectionStackSection sectionReport4 = new SectionStackSection("4- Usuario-Proyecto");  
 		sectionReport4.setCanCollapse(true);
 		sectionReport4.addItem(new ReportFilter4(graficLayout));
 
-		final SectionStackSection sectionReport5 = new SectionStackSection("Tipo Tarea-Proyecto");  
+		final SectionStackSection sectionReport5 = new SectionStackSection("5- Tipo Tarea-Proyecto");  
 		sectionReport5.setCanCollapse(true);
 		sectionReport5.addItem(new ReportFilter5(graficLayout));
 		
-		final SectionStackSection sectionReport6 = new SectionStackSection("Horas Usuario-Semana");  
+		final SectionStackSection sectionReport6 = new SectionStackSection("6- Horas Usuario-Semana");  
 		sectionReport6.setCanCollapse(true);
 		sectionReport6.addItem(new ReportFilter6(graficLayout));
 
@@ -102,7 +102,7 @@ public class ReportTabPanel extends TabsPanelContainer{
 		final VLayout vLayout = new VLayout();
 		vLayout.setHeight100();
 		vLayout.setWidth100();
-		vLayout.setMembersMargin(20);
+//		vLayout.setMembersMargin(20);
 		vLayout.addMember(title);
 		vLayout.addMember(hLayout);
 		
