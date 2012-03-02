@@ -32,7 +32,6 @@ import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
-import com.smartgwt.client.widgets.tile.TileGrid;
 
 public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserver {
 
@@ -176,6 +175,8 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 			}
 		});
 		form.setPadding(25);
+		form.setNumCols(4);
+		form.setMargin(10);
 		form.setFields(	idCode, 
 				txtName, 
 				selClient,
@@ -185,14 +186,15 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 				txtDescription,
 				selState);		
 
-		final TileGrid tileGrid = new TileGrid();  
+//		final TileGrid tileGrid = new TileGrid();  
 //      tileGrid.setTileWidth(450);  
 //      tileGrid.setTileHeight(185);  
-		tileGrid.setHeight(370);
-		tileGrid.setWidth(450);
-		tileGrid.setLeft("50%");
-		tileGrid.addChild(form);
+//		tileGrid.setHeight(370);
+//		tileGrid.setWidth(450);
+//		tileGrid.setLeft("50%");
+//		tileGrid.addChild(form);
 
+		
 		//BOTONERA
 		final IButton cancelProjectButton = new IButton();
 		cancelProjectButton.setTitle("Cancelar");
@@ -219,7 +221,7 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		hLayoutButton.addMember(applyButton);
 
 		final VLayout vLayoutForm = new VLayout(10);
-		vLayoutForm.addMember(tileGrid);
+		vLayoutForm.addMember(form);
 		final HLayout hLayoutBody = new HLayout();
 		hLayoutBody.addMember(vLayoutForm);
 

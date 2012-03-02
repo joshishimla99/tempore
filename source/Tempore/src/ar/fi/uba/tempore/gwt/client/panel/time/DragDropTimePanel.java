@@ -247,7 +247,6 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 
 		draw.setHeight(170);
 		draw.setWidth(270);
-		draw.drawReport(dateChooser.getData());
 		
 		//LAYOUTs
 		final HLayout hort0 = new HLayout();
@@ -285,10 +284,11 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		main.addMember(title);
 		main.addMember(horizontal);
 
+		this.addChild(main);		
+
 		//refresco panel de Horas
 		refreshTimeGrid();
 		refreshPanel();
-		this.addChild(main);		
 	}
 
 	/**

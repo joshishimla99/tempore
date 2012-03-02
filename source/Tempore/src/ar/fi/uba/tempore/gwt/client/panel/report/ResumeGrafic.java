@@ -23,17 +23,14 @@ public abstract class ResumeGrafic extends VLayout {
 		final HTMLFlow htmlFlow = new HTMLFlow(html); 
 
 		options = Options.create();
-		options.setWidth(300);
-		options.setColors("gray");
+		options.setWidth(270);
+		options.setColors("#EAAA0F");
 		options.setHeight(170);
-//		options.setTitle("XXXXXXX");
 		options.setLegend(LegendPosition.NONE);
 		AxisOptions optionsHAxis = AxisOptions.create();
-//		optionsHAxis.setTitle(titleX);
 		AxisOptions optionsVAxis = AxisOptions.create();
 		optionsVAxis.setMinValue(0);
 		optionsVAxis.setMaxValue(8);
-//		optionsVAxis.setTitle(titleY);
 		options.setHAxisOptions(optionsHAxis);
 		options.setVAxisOptions(optionsVAxis);
 
@@ -66,8 +63,10 @@ public abstract class ResumeGrafic extends VLayout {
 	 * @param options opciones de la tabla
 	 */
 	private native void drawColumnChart(DataTable data, Options options) /*-{
-	    var chart = new $wnd.google.visualization.ColumnChart($doc.getElementById('grafic_nested_div2'));
-		chart.draw(data, options);
+		if ($doc.getElementById('grafic_nested_div2')){
+	    	var chart = new $wnd.google.visualization.ColumnChart($doc.getElementById('grafic_nested_div2'));
+			chart.draw(data, options);
+		}
 	}-*/;
 
 
