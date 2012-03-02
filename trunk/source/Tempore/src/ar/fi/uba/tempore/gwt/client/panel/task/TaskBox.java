@@ -29,11 +29,11 @@ import com.smartgwt.client.widgets.events.DoubleClickHandler;
  */
 public class TaskBox extends Window {
 	private static final String COLOR_DEFAULT = "#00FF00";
-	private static final String COLOR_SOPORTE = "#FFFF99";
-	private static final String COLOR_DESARROLLO = "#C0C0C0";
-	private static final String COLOR_ANALISIS = "#CCFFCC";
-	private static final String COLOR_QC = "rgb(254,208,122)";
-	private static final String COLOR_ADMINSITRACION = "rgb(255,166,210)";
+	private static final String COLOR_SOPORTE = "#EBAA10";
+	private static final String COLOR_DESARROLLO = "#C9DEF3";
+	private static final String COLOR_ANALISIS = "#DDE8BE";
+	private static final String COLOR_QC = "#7D9A3D";
+	private static final String COLOR_ADMINSITRACION = "#FAE2B6";
 
 	private TaskTabPanel taskTabPanel;
 	private TaskDTO taskDTO;

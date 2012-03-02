@@ -8,7 +8,6 @@ import ar.fi.uba.tempore.dto.reports.TaskTypesTimesDTO;
 import ar.fi.uba.tempore.gwt.client.ReportServicesClient;
 import ar.fi.uba.tempore.gwt.client.login.SessionUser;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
@@ -22,9 +21,8 @@ public class ResumeReportHoursWeek extends VLayout {
 //	private VLayout parent;
 
 	public ResumeReportHoursWeek(){
-		
 	}
-	
+		
 	public void drawReport(Date dayWeek){
 		Canvas[] oldGrafics = this.getChildren();
 		for (Canvas old : oldGrafics) {
@@ -54,7 +52,7 @@ public class ResumeReportHoursWeek extends VLayout {
 						Set<Integer> keySet = result.keySet();
 						for (Integer key : keySet) {
 							data.setValue(i, 0, fmt.format(result.get(key).getDate()));
-							GWT.log(fmt.format(result.get(key).getDate())+"-"+new Float(result.get(key).getHourCounted())/GenericGrafic.HORA);
+//							GWT.log(fmt.format(result.get(key).getDate())+"-"+new Float(result.get(key).getHourCounted())/GenericGrafic.HORA);
 							data.setValue(i, 1, new Float(result.get(key).getHourCounted())/GenericGrafic.HORA);
 							i++;
 						}
