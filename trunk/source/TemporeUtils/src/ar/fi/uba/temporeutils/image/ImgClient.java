@@ -40,7 +40,7 @@ public class ImgClient extends VLayout implements UpdateImgHandler {
 		form.setAction(UPLOAD_URL);
 		form.setTarget(FRAME_RESPONSE);
 
-		final UploadItem upload = new UploadItem("Src");
+		final UploadItem upload = new UploadItem("Archivo");
 		upload.setType("");
 		upload.addChangeHandler(new ChangeHandler() {
 			@Override
