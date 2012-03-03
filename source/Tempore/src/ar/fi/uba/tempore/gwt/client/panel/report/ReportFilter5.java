@@ -77,7 +77,7 @@ public class ReportFilter5 extends VLayout {
 
 
 
-		final HTMLFlow htmlFlow5 = new HTMLFlow("Reporte que grafica en columnas los usuario involucrados para todos los proyectos abiertos.");  
+		final HTMLFlow htmlFlow5 = new HTMLFlow("Reporte en gr&aacute;fico de &aacute;rea los usuarios involucrados para todos los proyectos activos.");  
 	    htmlFlow5.setPadding(10);
 
 		final ImgButton btnReporte5 = new ImgButton();
