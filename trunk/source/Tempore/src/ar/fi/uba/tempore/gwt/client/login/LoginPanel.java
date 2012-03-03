@@ -167,10 +167,10 @@ public class LoginPanel extends Composite{
 		HLayout hLayoutQuick = new HLayout();
 		Label space1 = new Label("");
 		space1.setWidth(20);
-		Label titleQuick = new Label("R&atilde;pida");
+		Label titleQuick = new Label("R&aacute;pida");
 		titleQuick.setStyleName("loggin_title_text");
 		LoginImg  pictureQuick = new LoginImg ("Clock.png", "quick");
-		Label labelQuick = new Label("Tempore te permite cargar tus horas en forma rapida por medio de diversas formas de acceso al alcance de tu mano.");
+		Label labelQuick = new Label("Tempore te permite cargar tus horas de manera r&aacute;pida por medio de diversas formas de acceso al alcance de tu mano.");
 		labelQuick.setWidth(300);
 		hLayoutQuick.addMember(pictureQuick);
 		hLayoutQuick.addMember(space1);
@@ -183,7 +183,7 @@ public class LoginPanel extends Composite{
 		Label titleSimple = new Label("Simple");
 		titleSimple.setStyleName("loggin_title_text");
 		LoginImg pictureSimple = new LoginImg("Template.png", "simple");
-		Label labelSimple = new Label("Tempore es simple dado que brinda diferentes medios de acceso para que escogas el mas simple para ti.");
+		Label labelSimple = new Label("Tempore te permite utilizar herramientas de trabajo simples al alcance de tu mano.");
 		labelSimple.setWidth(300);
 		hLayoutSimple.addMember(pictureSimple);
 		hLayoutSimple.addMember(space2);
@@ -196,7 +196,7 @@ public class LoginPanel extends Composite{
 		LoginImg pictureFriendly = new LoginImg("Chat.png", "friednly");
 		Label titleFriendly = new Label("Amigable");
 		titleFriendly.setStyleName("loggin_title_text");
-		Label labelFriendly = new Label("Tempore es simple dado que brinda diferentes medios de acceso para que escogas el mas simple para ti.");
+		Label labelFriendly = new Label("Tempore es lo que estabas buscando para comunicar a lo que dedicas tu tiempo de trabajo.");
 		labelFriendly.setWidth(300);
 		hLayoutFriendly.addMember(pictureFriendly);
 		hLayoutFriendly.addMember(space3);
