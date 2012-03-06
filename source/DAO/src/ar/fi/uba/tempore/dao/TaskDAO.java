@@ -36,7 +36,6 @@ public class TaskDAO extends GenericHibernateDAO<Task, Integer> {
 	 * @return Lista de tareas del mismo nivel
 	 */
 	public List<Task> getChildTask(Integer projectId, Integer parentTaskId) {
-
 		String hql = "select distinct t" +
 				" from Task as t" +
 				" inner join t.project as p" +	
@@ -50,5 +49,20 @@ public class TaskDAO extends GenericHibernateDAO<Task, Integer> {
 		@SuppressWarnings("unchecked")
 		List<Task> list = createQuery.list();
 		return list;
+	}
+
+	public Long getCountOfChild(Integer projectId, Integer parentTaskId) {
+		String hql = "select count(distinct t)" +
+				" from Task as t" +
+//				" inner join t.project as p" +
+				" where" +
+//				" p.id = " + projectId +
+				" t.taskId = " + parentTaskId;
+		
+		Query createQuery = this.getSession().createQuery(hql);
+		@SuppressWarnings("unchecked")
+		List<Long> list = createQuery.list();
+
+		return list==null?0:list.get(0);
 	}
 }
