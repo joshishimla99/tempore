@@ -22,7 +22,6 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class TaskServicesImpl extends RemoteServiceServlet implements TaskServicesClient {
 
 	private static final long serialVersionUID = -2875888868382111997L;
-//	private static final Long GMT_3 = 10800000L;
 	private final DozerBeanMapper mapper = new DozerBeanMapper();
 	private final Logger log = Logger.getLogger(this.getClass());
 	
@@ -33,9 +32,12 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 		
 		List<Task> taskList = taskDAO.getChildTask(idProject, idTask); 
 		for (Task task : taskList) {
-			TaskDTO map = mapper.map(task, TaskDTO.class);
-			map.setTaskTypeDTO(mapper.map(task.getTaskType(), TaskTypeDTO.class));
-			taskDTOList.add(map);
+			TaskDTO taskDTO = mapper.map(task, TaskDTO.class);
+			taskDTO.setTaskTypeDTO(mapper.map(task.getTaskType(), TaskTypeDTO.class));
+			
+			taskDTO.setCountChild(taskDAO.getCountOfChild(idProject, task.getId()));
+			
+			taskDTOList.add(taskDTO);
 		}
 		
 		return taskDTOList;
@@ -118,6 +120,7 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 		//Actualizo la tarea
 		taskDAO.makePersistent(task);
 		
+		taskDTO.setCountChild(taskDAO.getCountOfChild(taskDTO.getProject().getId(), task.getId()));
 		taskDTO.setTaskTypeDTO(taskTypeDTO);
 		return taskDTO;
 	}
