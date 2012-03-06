@@ -24,13 +24,19 @@ import com.smartgwt.client.data.Record;
 import com.smartgwt.client.types.DragDataAction;
 import com.smartgwt.client.types.GroupStartOpen;
 import com.smartgwt.client.types.ListGridFieldType;
+import com.smartgwt.client.types.SelectionType;
 import com.smartgwt.client.types.TimeDisplayFormat;
 import com.smartgwt.client.types.TreeModelType;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.DateChooser;
+import com.smartgwt.client.widgets.ImgButton;
 import com.smartgwt.client.widgets.Label;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.events.DataChangedEvent;
 import com.smartgwt.client.widgets.events.DataChangedHandler;
+import com.smartgwt.client.widgets.events.DragMoveEvent;
+import com.smartgwt.client.widgets.events.DragMoveHandler;
 import com.smartgwt.client.widgets.form.fields.DateItem;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
@@ -71,7 +77,7 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 	private final ListGrid hoursCountGrid = new ListGrid();
 	private final DateChooser dateChooser = new DateChooser();
 	private final ResumeReportHoursWeek draw = new ResumeReportHoursWeek();
-	
+	private Boolean treeClosed = true;
 	private static final String HELPTEXT = "<br><b>Asignaci&oacute;n de horas trabajadas a tareas</b><br>Esta p&aacute;gina le permitir&aacute; administrar las horas cargadas." +
 			"<br> La informaci&oacute;n que se maneja para cada tarea cargada es la siguiente:" +
 			"<br><b>Usuario: </b>Nombre del usuario a ser utilizado para ingresar al sistema." +
@@ -113,10 +119,9 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		tasksTree.setHeight100();
 		tasksTree.setWidth100();
 		tasksTree.setShowDragShadow(true);
-//		tasksTree.setAutoShowParent(true);
 		tasksTree.setAddDropValues(false);
 		tasksTree.setLoadingDataMessage("${loadingImage}&nbsp;Cargando...");
-		TreeGridField tfId = new TreeGridField();
+		TreeGridField tfId = new TreeGridField(COL_TASK_ID, "N&uacute;mero");
 		tfId.setHidden(true);
 		TreeGridField tfName = new TreeGridField(COL_NAME, "Nombre");
 		TreeGridField tfDescription = new TreeGridField(COL_DESCRIPTION, "Descripci&oacute;n");
@@ -131,7 +136,16 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		tasksTree.setFields(tfId, tfName, tfDescription);  
 		tasksTree.setShowAllRecords(true);  
 		tasksTree.setAutoFetchData(false);
-//		tasksTree.setAutoFitData(Autofit.BOTH);
+		tasksTree.addDragMoveHandler(new DragMoveHandler() {
+			@Override
+			public void onDragMove(DragMoveEvent event) {
+				Integer idState = ProjectPanel.getInstance().getSelected().getProjectState().getId();
+				String nameState = ProjectPanel.getInstance().getSelected().getProjectState().getName();
+				if (idState == 4 || idState == 5 || idState == 6){
+					SC.say("El proyecto est&aacute; en el estado "+nameState+". Y los proyectos en este estado, no se permite la cargar horas");
+				}
+			}
+		});
 		
         
 		//TABLA DE CARGA DE HORAS
@@ -248,6 +262,26 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		draw.setHeight(170);
 		draw.setWidth(270);
 		
+		final ImgButton expand = new ImgButton();
+		expand.setShowRollOver(false);
+		expand.setActionType(SelectionType.CHECKBOX);
+		expand.setSize(16);
+		expand.setSrc("../images/png/time/expandCollapse.png");
+		   
+		expand.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if (treeClosed){
+					tasksTree.getTree().openAll();
+					treeClosed = false;
+				} else {
+					tasksTree.getTree().closeAll();
+					treeClosed = true;
+				}
+			}
+		});
+		
+		
 		//LAYOUTs
 		final HLayout hort0 = new HLayout();
 		hort0.setWidth100();
@@ -269,7 +303,10 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		vert2.setCanDragResize(true);  
 		vert2.setResizeFrom("R");
 		vert2.setMinWidth(200);  
+		vert2.addMember(expand);
 		vert2.addMember(tasksTree);
+		
+		
 		
 		//Agrego los Componentes al Panel
 		final HLayout horizontal = new HLayout();

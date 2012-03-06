@@ -98,6 +98,10 @@ public class ReportFilter6 extends VLayout {
 					parent.removeChild(old);
 				}
 	
+//
+//				CalendarUtil.addDaysToDate(ini, CalendarUtil.getStartingDayOfWeek()+1);
+//				GWT.log(""+ini);
+				
 				draw(userId, userName, ini);
 			}
 		}

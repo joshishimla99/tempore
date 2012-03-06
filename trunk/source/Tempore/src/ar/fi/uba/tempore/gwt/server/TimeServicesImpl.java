@@ -55,8 +55,6 @@ public class TimeServicesImpl extends RemoteServiceServlet implements TimeServic
 		
 		TaskUser userTask = mapper.map(taskUserDTO, TaskUser.class);
 		
-		
-		
 		log.info("ID USER: " + userTask.getUser().getId() +","+ taskUserDTO.getHourCount());
 		log.info("Id task: " + userTask.getTask().getId());
 		

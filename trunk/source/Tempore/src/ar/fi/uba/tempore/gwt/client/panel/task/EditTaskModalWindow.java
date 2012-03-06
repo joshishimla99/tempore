@@ -47,7 +47,7 @@ public class EditTaskModalWindow {
 		final TaskDTO taskDTO = task.getTaskDTO();
 		winModal = new Window();  
         winModal.setWidth(360);  
-        winModal.setHeight(305);  
+        winModal.setHeight(320);
         winModal.setTitle("Editar Tarea");  
         winModal.setShowMinimizeButton(false);  
         winModal.setIsModal(true);  
@@ -185,11 +185,14 @@ public class EditTaskModalWindow {
 
         HLayout buttonLayout = new HLayout();
         buttonLayout.setMembersMargin(10);
+        buttonLayout.setMargin(10);
         buttonLayout.setAlign(Alignment.CENTER);
         buttonLayout.addMember(updateButton);
         buttonLayout.addMember(cancelTaskButton);
         
         VLayout vLayout = new VLayout();
+        vLayout.setMembersMargin(10);
+        vLayout.setMargin(10);
         vLayout.addMember(form);
         vLayout.addMember(buttonLayout);
         
