@@ -15,6 +15,7 @@ import com.smartgwt.client.types.LayoutPolicy;
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.HeaderControl;
+import com.smartgwt.client.widgets.HeaderControl.HeaderIcon;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
@@ -51,6 +52,7 @@ public class TaskBox extends Window {
 		this.taskDTO = taskDTO;
 		this.realHs = realHs;
 		this.totalHs = totalRealHs;
+		
 
 		String color = COLOR_DEFAULT;
 		switch (taskDTO.getTaskTypeDTO().getId()){
@@ -71,6 +73,11 @@ public class TaskBox extends Window {
 			break;
 		}
 
+		String iconScr = "../images/tasks.png";
+		if (taskDTO.getCountChild() > 0){
+			iconScr = "../images/folder.png";
+		} 
+		
 		//Caracteristicas de la ventana que tiene la tarea
 		this.setShowShadow(false);
 		this.setAnimateMinimize(true);
@@ -78,7 +85,8 @@ public class TaskBox extends Window {
 		this.setCanDrop(true);
 		this.setHeaderControls(
 				HeaderControls.MINIMIZE_BUTTON,
-				HeaderControls.HEADER_LABEL, 
+				new HeaderControl(new HeaderIcon(iconScr)),
+				HeaderControls.HEADER_LABEL,
 				new HeaderControl(HeaderControl.SETTINGS, new EditTaskHandler(this)) , 
 				HeaderControls.CLOSE_BUTTON);
 		this.setDragOpacity(30);
@@ -91,13 +99,11 @@ public class TaskBox extends Window {
 				+ "<span style=\" font-weight: bold;\">Horas Consumidas totales: </span>" + MySimpleDateFormat.formatTime(totalHs) + "<br/>"
 				+ "<span style=\" font-weight: bold;\">Horas Estimadas: </span> "+ MySimpleDateFormat.formatTime(taskDTO.getBudget()) + "</br>"
 				+ "<span style=\" font-weight: bold;\">Descripci&oacute;n: </span> "+ taskDTO.getDescription());
+		
 
 		content.setBackgroundColor(color);
-		content.setHeight100();
 		content.setWidth100();
 		this.addItem(content);
-
-		this.redraw();
 
 
 		addDoubleClickHandler(new DoubleClickHandler() {
@@ -115,7 +121,6 @@ public class TaskBox extends Window {
 				});
 			}
 		});
-
 		addCloseClickHandler(new CloseClickHandler() {				
 			@Override
 			public void onCloseClick(CloseClickEvent event) {
@@ -149,7 +154,6 @@ public class TaskBox extends Window {
 				}					
 			}
 		});
-
 	}
 
 	public void close() {
@@ -185,15 +189,14 @@ public class TaskBox extends Window {
 	 */
 	public void refresh(TaskDTO taskDTO) {
 		this.taskDTO = taskDTO;
-
+		
 		this.setTitle(taskDTO.getName()); 
 		content.setContents("<span style=\" font-weight: bold;\">Tipo: </span>" + taskDTO.getTaskTypeDTO().getName() + "<br/>"  
 				+ "<span style=\" font-weight: bold;\">Horas Consumidas de la tarea: </span>" + MySimpleDateFormat.formatTime(realHs) + "<br/>" 
 				+ "<span style=\" font-weight: bold;\">Horas Consumidas totales: </span>" + MySimpleDateFormat.formatTime(totalHs) + "<br/>"
 				+ "<span style=\" font-weight: bold;\">Horas Estimadas: </span> "+ MySimpleDateFormat.formatTime(taskDTO.getBudget()) + "</br>"
 				+ "<span style=\" font-weight: bold;\">Descripci&oacute;n: </span> "+ taskDTO.getDescription());
-
-
+		
 		String color = COLOR_DEFAULT;
 		switch (taskDTO.getTaskTypeDTO().getId()){
 		case 1:

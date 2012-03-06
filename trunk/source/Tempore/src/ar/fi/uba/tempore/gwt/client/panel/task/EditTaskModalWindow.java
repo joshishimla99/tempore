@@ -28,12 +28,13 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 public class EditTaskModalWindow {
-	protected static final String ID = "ID_TASK";
-	protected static final String NAME = "NAME_TASK";
-	protected static final String DESCRIPTION = "DESCRPTION_TASK";
-	protected static final String BUDGET = "BUDGET_TASK";
-	protected static final String TYPE = "TYPE_TASK";
-	protected static final String FATHER = "ID_PADRE_TASK";
+	private static final String ID = "ID_TASK";
+	private static final String NAME = "NAME_TASK";
+	private static final String DESCRIPTION = "DESCRPTION_TASK";
+	private static final String BUDGET = "BUDGET_TASK";
+	private static final String TYPE = "TYPE_TASK";
+	private static final String FATHER = "ID_PADRE_TASK";
+	private static final String COUNT_CHILDS = "CANTIDAD_HIJOS";
 	private static final Long HORA = 60*60*1000L;
 	
 	
@@ -87,13 +88,16 @@ public class EditTaskModalWindow {
 		estimatedTimeLabel.setRequired(true);  
         
 		final SelectItem taskType = new SelectItem(TYPE, "Tipo");
+		
+		final HiddenItem countOfChilds = new HiddenItem(COUNT_CHILDS);
+		countOfChilds.setValue(taskDTO.getCountChild());
 
 		form = new DynamicForm();  
         form.setHeight100();  
         form.setWidth100();  
         form.setPadding(5);  
         form.setLayoutAlign(VerticalAlignment.BOTTOM);
-		form.setFields(idLabel, taskParentId, taskNameLabel,taskDescription, estimatedTimeLabel, taskType);
+		form.setFields(idLabel, taskParentId, taskNameLabel,taskDescription, estimatedTimeLabel, taskType, countOfChilds);
 
 		
 		
@@ -128,6 +132,7 @@ public class EditTaskModalWindow {
 					taskDTO.setName(form.getValue(NAME).toString());
 					taskDTO.setDescription(form.getValue(DESCRIPTION).toString());
 					taskDTO.setBudget(new Long(form.getValue(BUDGET).toString())*HORA);
+					taskDTO.setCountChild(new Long(form.getValue(COUNT_CHILDS).toString()));
 					
 					if (form.getValue(FATHER) == null){
 						taskDTO.setTaskId(null);

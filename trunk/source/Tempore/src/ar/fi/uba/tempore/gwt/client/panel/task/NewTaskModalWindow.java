@@ -122,6 +122,7 @@ public class NewTaskModalWindow extends Window{
 					final TaskTypeDTO taskTypeDTO = new TaskTypeDTO();
 					taskTypeDTO.setId(new Integer(form.getValue(TYPE).toString()));
 					taskDTO.setTaskTypeDTO(taskTypeDTO);
+					taskDTO.setCountChild(0L);
 					
 					updateTaskList(addTask,taskDTO);
 				}
