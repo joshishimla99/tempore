@@ -48,8 +48,8 @@ public class NewTaskModalWindow extends Window{
 		super();
 		this.taskTabPanel = taskTabPanel;
 		
-		this.setWidth(360);
-		this.setHeight(265);
+		this.setWidth(345);
+		this.setHeight(285);
 		this.setTitle("Editar Tarea");
 		this.setShowMinimizeButton(false);
 		this.setIsModal(true);
@@ -141,12 +141,14 @@ public class NewTaskModalWindow extends Window{
 		VLayout vLayout = new VLayout();
 		HLayout buttonLayout = new HLayout();
 		buttonLayout.setMembersMargin(10);
+		buttonLayout.setMargin(10);
 		buttonLayout.setAlign(Alignment.CENTER);
 		buttonLayout.addMember(saveTaskButton);
 		buttonLayout.addMember(cancelTaskButton);
 
 		vLayout.addMember(form);
 		vLayout.addMember(buttonLayout);
+		vLayout.setMargin(10);
 
 		this.addItem(vLayout);
 	}
