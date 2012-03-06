@@ -1,5 +1,6 @@
 package ar.fi.uba.tempore.gwt.client.panel;
 
+
 import ar.fi.uba.tempore.gwt.client.login.SessionUser;
 import ar.fi.uba.tempore.gwt.client.panel.configuration.ConfigurationTabPanel;
 import ar.fi.uba.tempore.gwt.client.panel.help.AboutTabPanel;
