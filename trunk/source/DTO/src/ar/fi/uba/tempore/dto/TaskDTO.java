@@ -12,6 +12,8 @@ public class TaskDTO implements IsSerializable {
 	private TaskTypeDTO taskTypeDTO;
 	private ProjectDTO project;
 	
+	private Long countChild;
+	
 	public TaskDTO(){
 		super();
 		project = new ProjectDTO();
@@ -79,6 +81,14 @@ public class TaskDTO implements IsSerializable {
 
 	public Integer getTaskId() {
 		return taskId;
+	}
+
+	public Long getCountChild() {
+		return countChild;
+	}
+
+	public void setCountChild(Long countChild) {
+		this.countChild = countChild;
 	}
 
 }
