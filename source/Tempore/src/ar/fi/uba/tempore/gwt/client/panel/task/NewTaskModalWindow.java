@@ -164,21 +164,21 @@ public class NewTaskModalWindow extends Window{
 					//Agregar o Actualiza una tarea 
 					TaskServicesClient.Util.getInstance().updateTask(taskDTO , new AsyncCallback<TaskDTO>() {
 						@Override
-						public void onSuccess(final TaskDTO taskDTO) {
+						public void onSuccess(final TaskDTO newTaskDTO) {
 							//Destruimos todas las tareas
 							destroy();
 							
 							//Obtengo las horas de las tareas
-							TaskServicesClient.Util.getInstance().getTimeChargedToTask(taskDTO.getId(), new AsyncCallback<Long>() {
-								@Override
-								public void onSuccess(final Long taskHs) {
-
-									//Calular las horas totales de la tarea
-									TaskServicesClient.Util.getInstance().getTotalTimeChargedToChildsTask(taskDTO.getId(), new AsyncCallback<Long>() {
-
-										@Override
-										public void onSuccess(Long totalHs) {
-											final TaskBox newTask = new TaskBox(taskTabPanel, taskDTO, taskHs, totalHs);
+//							TaskServicesClient.Util.getInstance().getTimeChargedToTask(taskDTO.getId(), new AsyncCallback<Long>() {
+//								@Override
+//								public void onSuccess(final Long taskHs) {
+//
+//									//Calular las horas totales de la tarea
+//									TaskServicesClient.Util.getInstance().getTotalTimeChargedToChildsTask(taskDTO.getId(), new AsyncCallback<Long>() {
+//
+//										@Override
+//										public void onSuccess(Long totalHs) {
+											final TaskBox newTask = new TaskBox(taskTabPanel, newTaskDTO, 0L, 0L);
 											newTask.setVisible(false);
 											TaskColumn column = taskTabPanel.getTaskBoxPanel().addTask(newTask);
 
@@ -205,19 +205,19 @@ public class NewTaskModalWindow extends Window{
 													newTask.show();
 												}
 											}, 750);
-										}
-										@Override
-										public void onFailure(Throwable caught) {
-											SC.warn("Ha ocurrido un error al intentar recuperar las horas totales cargadas a la tarea");
-										}
-
-									});
-								}
-								@Override
-								public void onFailure(Throwable caught) {
-									SC.warn("Ha ocurrido un error al intentar recuperar las horas cargadas a la tarea");
-								}
-							});
+//										}
+//										@Override
+//										public void onFailure(Throwable caught) {
+//											SC.warn("Ha ocurrido un error al intentar recuperar las horas totales cargadas a la tarea");
+//										}
+//
+//									});
+//								}
+//								@Override
+//								public void onFailure(Throwable caught) {
+//									SC.warn("Ha ocurrido un error al intentar recuperar las horas cargadas a la tarea");
+//								}
+//							});
 
 						}
 						@Override
