@@ -46,7 +46,9 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 	
 	
 	public String deleteTask(Integer id, Integer idProject) throws TaskWithHoursChargedException{
+		
 		log.info("TASK - DELETE");
+		
 		TaskDAO taskDAO = new TaskDAO();
 		Task taskToDelete = taskDAO.findById(id);
 		// REGLA DE NEGOCIO -> SI LA TAREA NO TIENE TIEMPO CARGADO, ENTONCES VERIFICO SI SUS HIJAS LO TIENEN
@@ -118,8 +120,9 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 		task.setProject(project);
 		
 		//Actualizo la tarea
-		taskDAO.makePersistent(task);
+		Task makePersistent = taskDAO.makePersistent(task);
 		
+		taskDTO.setId(makePersistent.getId());
 		taskDTO.setCountChild(taskDAO.getCountOfChild(taskDTO.getProject().getId(), task.getId()));
 		taskDTO.setTaskTypeDTO(taskTypeDTO);
 		return taskDTO;
