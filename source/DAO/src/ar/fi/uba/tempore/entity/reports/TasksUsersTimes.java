@@ -6,6 +6,7 @@ public class TasksUsersTimes implements Serializable {
 
 	private static final long serialVersionUID = 8476516607407005673L;
 
+	
 	private String taskName;
 	private String userName;
 	private String userLastName;

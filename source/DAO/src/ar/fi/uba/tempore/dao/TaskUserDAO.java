@@ -30,6 +30,7 @@ public class TaskUserDAO extends GenericHibernateDAO<TaskUser, Integer> {
 		}
 		return chargedHour;
 	}
+	
 	/**
 	 * Obtiene las horas cargadas por las tareas hijas y las subhijas.
 	 * @param taskId Id de la tarea padre

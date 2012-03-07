@@ -5,10 +5,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.classic.Session;
 
 import ar.fi.uba.tempore.dao.util.HibernateUtil;
+import ar.fi.uba.tempore.entity.TaskUser;
 import ar.fi.uba.tempore.entity.reports.ProjectsTimes;
 import ar.fi.uba.tempore.entity.reports.TaskTypesTimes;
 import ar.fi.uba.tempore.entity.reports.TasksTimes;
@@ -16,7 +18,7 @@ import ar.fi.uba.tempore.entity.reports.TasksUsersTimes;
 import ar.fi.uba.tempore.entity.reports.UsersTimes;
 
 public class ReportDAO {
-
+	private Logger log = Logger.getLogger(ReportDAO.class);
 	private Session session;
 	
 
@@ -100,7 +102,7 @@ public class ReportDAO {
 	public List<TasksTimes> getPrimaryTaskTimes (Integer projectId ,Date from, Date to){	
 		List<TasksTimes> list = null;
 		
-		String hql = "select new ar.fi.uba.tempore.entity.reports.TasksTimes(t.name as name, sum(tu.hourCount) as total)" +
+		String hql = "select new ar.fi.uba.tempore.entity.reports.TasksTimes(t.id as id, t.name as name, sum(tu.hourCount) as total)" +
 				"from Project as p " +
 				"inner join p.taskList as t " +
 				"left outer join t.taskUserList as tu " +
@@ -113,6 +115,10 @@ public class ReportDAO {
 		query = query.setInteger("projectId", projectId).setDate("iniDate", from).setDate("endDate", to);
 		list = query.list();
 		
+		for (TasksTimes tasksTimes : list) {
+			tasksTimes.setHourCounted(this.getTotalTimeByTask(tasksTimes.getTaskId(), from, to));
+		}
+		
 		return list;
 	}
 	
@@ -121,7 +127,7 @@ public class ReportDAO {
 	public List<TasksUsersTimes> getPrimaryTaskTimesXUser (Date ini, Date end){	
 		List<TasksUsersTimes> list = null;
 		
-		String hql = "select new ar.fi.uba.tempore.entity.reports.TasksUsersTimes(t.name as taskName, u.name as userName, u.lastName as userLastName, sum(tu.hourCount) as total)" +
+		String hql = "select new ar.fi.uba.tempore.entity.reports.TasksUsersTimes(t.id as taskId, t.name as taskName, u.name as userName, u.lastName as userLastName, sum(tu.hourCount) as total)" +
 				"from Task as t " +
 				"inner join t.taskUserList as tu " +
 				"with (tu.date >= :iniDate " +
@@ -220,21 +226,60 @@ public class ReportDAO {
 		return result;
 	}
 
-	
-	
-//	public static void main(String[] args) {
-//		Transaction transaction = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
-//		Calendar day = Calendar.getInstance();
-//		day.set(2012, 1, 20,0,0,0);
-//		
-//		ReportDAO reportDAO = new ReportDAO();
-//		Map<Integer,TaskTypesTimes> map = reportDAO.getUserTimeByWeek(1, day.getTime());
-//		Set<Integer> keySet = map.keySet();
-//		for (Integer date : keySet) {
-//			System.out.println(date +", " + map.get(date));
-//		}
-//		
-//		
-//		transaction.commit();
-//	}
+
+	private Long getTotalTimeByTask(Integer  taskId, Date ini, Date end){
+		Long result = 0L;
+		log.info("Obtengo el tiempo total para la tarea " + taskId + " - " + this.getSession());
+		
+		log.info("Obteniendo las horas de las tarea con id = " + taskId);
+		//Obtengo todas las horas cargadas a la tarea con id = taskId
+		String hqln1 = "select tu from TaskUser tu where tu.task.id = " + taskId + " and tu.date >=:ini and tu.date <=:end";		
+				
+		Query createQuery1 = this.getSession().createQuery(hqln1);
+		createQuery1.setDate("ini", ini).setDate("end", end);
+		@SuppressWarnings("unchecked")
+		List<TaskUser> listN1 = createQuery1.list();
+		for (TaskUser taskUser : listN1) {
+			if (taskUser == null){
+				log.error("taskUser es null");
+			}
+			if (taskUser.getHourCount() != null){
+				result += taskUser.getHourCount();
+			}
+			
+		}
+		
+		log.info("Acumulando las horas de las tarea con el id del Padre = " + taskId);
+		//Obtengo todas las horas donde el PADRE de las tareas cargadas sea taskId (Horas de las tareas hijas)
+		String hqln2 = "select tu from TaskUser tu inner join tu.task t where t.taskId = " + taskId + " and (tu.date >= :ini and tu.date <= :end) ";
+		Query createQuery2 = this.getSession().createQuery(hqln2);
+		createQuery2.setDate("ini", ini).setDate("end", end);
+		@SuppressWarnings("unchecked")
+		List<TaskUser> listN2 = createQuery2.list();
+		for (TaskUser taskUser : listN2) {
+			if (taskUser.getHourCount() != null){
+				result += taskUser.getHourCount();
+			}
+		}
+		
+		
+		//Obtendo el id de todas las tareas donde el pader es taskId (id de tareas hijas)
+		String subQuery = "select t.id from Task as t where t.taskId=" + taskId;
+		
+		log.info("Acumulando las horas de las tarea nietas al taskId = " + taskId);
+		//Obtengo las horas de todas las tareas donde el padre pertenesca a una de las hijas del taskId (Horas de las tareas nietas)
+		String hqln3 = "select tu from TaskUser tu inner join tu.task t where (tu.date >=:ini and tu.date <=:end) and t.taskId in ("+subQuery+") " ;
+		Query createQuery3 = this.getSession().createQuery(hqln3);
+		createQuery3.setDate("ini", ini).setDate("end", end);
+		@SuppressWarnings("unchecked")
+		List<TaskUser> listN3 = createQuery3.list();
+		for (TaskUser taskUser : listN3) {
+			if (taskUser.getHourCount() != null){
+				result += taskUser.getHourCount();
+			}
+		}
+		log.info("Total de horas acumuladas con sus subtareas para el id = " + taskId + ", es de " + result);
+		return result;
+	}
+
 }

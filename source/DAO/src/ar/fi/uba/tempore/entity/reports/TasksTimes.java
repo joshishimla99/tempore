@@ -6,11 +6,13 @@ public class TasksTimes implements Serializable {
 
 	private static final long serialVersionUID = 9201442143606465959L;
 	
+	private Integer taskId;
 	private String taskName;
 	private Long hourCounted;
 	
 
-	public TasksTimes(String taskName, Long hourCounted) {
+	public TasksTimes(Integer taskId, String taskName, Long hourCounted) {
+		this.setTaskId(taskId);
 		this.taskName = taskName;
 		this.hourCounted = hourCounted;
 	}
@@ -26,5 +28,13 @@ public class TasksTimes implements Serializable {
 	}
 	public void setTaskName(String taskName) {
 		this.taskName = taskName;
+	}
+
+	public Integer getTaskId() {
+		return taskId;
+	}
+
+	public void setTaskId(Integer taskId) {
+		this.taskId = taskId;
 	}
 }
