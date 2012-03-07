@@ -61,10 +61,10 @@ public class ReportServicesImpl extends RemoteServiceServlet implements ReportSe
 
 	@Override
 	public List<TasksTimesDTO> getPrimaryTaskTimes(Integer projectId, Date from, Date to) {
-		ReportDAO report = new ReportDAO();
+		ReportDAO dao = new ReportDAO();
 		log.info("REPORTE - getPrimaryTaskTimes "+projectId+" ["+from+" ,"+to+"]");
 
-		List<TasksTimes> primaryTaskTimes = report.getPrimaryTaskTimes(projectId, from, to);
+		List<TasksTimes> primaryTaskTimes = dao.getPrimaryTaskTimes(projectId, from, to);
 		List<TasksTimesDTO> result = new ArrayList<TasksTimesDTO>(primaryTaskTimes.size());
 		for (TasksTimes tasksTimes : primaryTaskTimes) {
 			result.add(mapper.map(tasksTimes, TasksTimesDTO.class));
@@ -94,6 +94,7 @@ public class ReportServicesImpl extends RemoteServiceServlet implements ReportSe
 		
 		List<TaskTypesTimes> projectTaskTypeByTime = report.getProjectTaskTypeByTime(projectId);
 		
+		//Mapa key = TipoTarea , Objeto = lista <day, horas>
 		Map<String, Map<Integer, Long>> mainMap = new HashMap<String, Map<Integer,Long>>();
 
 		if (!projectTaskTypeByTime.isEmpty()){
