@@ -12,11 +12,7 @@ public class TestSendMail {
 			SendMailSSL mail= new SendMailSSL("ngarcia", "garcian@gmail.com", password);
 			mail.sendMail();
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
-			
-		
-
 	}
-
 }
