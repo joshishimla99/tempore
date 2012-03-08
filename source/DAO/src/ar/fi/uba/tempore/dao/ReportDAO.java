@@ -122,7 +122,6 @@ public class ReportDAO {
 		return list;
 	}
 	
-	//TODO Reporte incompleto
 	@SuppressWarnings("unchecked")
 	public List<TasksUsersTimes> getPrimaryTaskTimesXUser (Date ini, Date end){	
 		List<TasksUsersTimes> list = null;
