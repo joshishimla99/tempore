@@ -20,7 +20,7 @@ public class ImgClient extends VLayout implements UpdateImgHandler {
 	
 	private static final String DOWNLOAD_URL = "http://localhost:8080/Tempore/imageServlet.img?";//GET
 	private static final String UPLOAD_URL = "imageServlet.img?";//POST
-	private static final String DEFAULT_IMAGE = "../images/unknownClient.jpg";
+	private static final String DEFAULT_IMAGE = "../images/unknownUser.png";
 	private static final String FRAME_RESPONSE = "frameResponse";
 	private List<UpdateImgHandler> listeners = new ArrayList<UpdateImgHandler>();
 	
