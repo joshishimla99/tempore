@@ -31,8 +31,6 @@ public class UserConfigurationDataSource extends GenericGwtRpcDataSource<UserDTO
 	public static final String ZIP_CODE = "zipCodeCol";
 	public static final String IMAGE_NAME = "imageName";
 	public static final String IS_ADMIN = "isAdmin";
-	//TODO falta saber si es cliente o no
-
 	
 
 	public static UserConfigurationDataSource getInstance(){

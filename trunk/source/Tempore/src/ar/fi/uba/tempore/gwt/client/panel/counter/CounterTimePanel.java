@@ -168,7 +168,6 @@ public class CounterTimePanel extends VLayout implements TimeCounterObserved{
 		public void onClick(ClickEvent event) {
 			Integer userId = SessionUser.getInstance().getUser().getId();
 			Integer taskId = (Integer) selectTaskTree.getValue();
-			//TODO no funciona la validacion
 			if (taskId != null && taskId > 0) {
 				TempCounterServicesClient.Util.getInstance().start(userId, taskId, new AsyncCallback<TempCounterDTO>() {
 					@Override

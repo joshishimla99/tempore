@@ -162,7 +162,6 @@ public class MyUserTabPanel extends TabsPanelContainer {
 	}
 
 	private void copy(UserDTO userDTO, DynamicForm form) {
-		// TODO Auto-generated method stub
 		form.setValue(ID, userDTO.getId());
 		form.setValue(NAME, userDTO.getName());
 		form.setValue(LAST_NAME, userDTO.getLastName());
