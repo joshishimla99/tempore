@@ -128,7 +128,6 @@ public class ProjectServicesImpl extends RemoteServiceServlet implements Project
 	public ProjectDTO update(ProjectDTO projectDTO) {
 		ProjectDAO pDAO = new ProjectDAO();
 		log.info("UPDATE - Proyectos , state=" + projectDTO.getProjectState().getId());
-		//TODO validar si el usuario es el dueño del proyecto
 		
 		//Actualizo el proyecto
 		Project p = mapper.map(projectDTO, Project.class);

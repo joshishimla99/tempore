@@ -114,14 +114,14 @@ public class ImageServlet extends HttpServlet {
 			} else {
 	        	//No se encuantra archivo
 				log.warn("No se encuentra imagen para el recurso ("+fileSrc+"). Se coloca imagen por defecto.");
-				file = new File(getServletContext().getRealPath("images/unknownUser.jpg"));
-				mimeType = "image/jpg";
+				file = new File(getServletContext().getRealPath("images/unknownUser.png"));
+				mimeType = "image/png";
 			}	
 		} else {
 			//No se tiene archivo
 			log.warn("No se posee imagen, se muestra archivo por defecto...");
-			file = new File(getServletContext().getRealPath("images/unknownUser.jpg"));
-			mimeType = "image/jpg";
+			file = new File(getServletContext().getRealPath("images/unknownUser.png"));
+			mimeType = "image/png";
 		}
        
 		resp.setContentType(mimeType);

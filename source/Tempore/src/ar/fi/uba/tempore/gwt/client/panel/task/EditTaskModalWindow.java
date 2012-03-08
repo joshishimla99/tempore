@@ -168,7 +168,7 @@ public class EditTaskModalWindow {
 						
 						@Override
 						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
+							SC.warn("Error al validar Tarea");
 							
 						}
 					});

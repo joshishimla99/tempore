@@ -146,7 +146,6 @@ public class LoginPanel extends Composite{
 								SessionUser.getInstance().setUser(result);
 								RootPanel.get("Content").add(new ConteinerMainPanel());
 								
-								//TODO ver de hacer el login correctamente
 								thisPanel.setVisible(false);
 							} else {
 								error.setVisible(true);
