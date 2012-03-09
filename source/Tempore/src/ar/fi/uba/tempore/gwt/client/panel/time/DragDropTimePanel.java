@@ -92,7 +92,7 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 
 		//TITULO
 		final Label title = new Label("Asignaci&oacute;n de horas trabajadas a tareas");
-		title.setWidth100();
+		title.setWidth("70%");
 		title.setHeight(30);
 		title.setIcon("[SKIN]/actions/help.png");
 		title.setStyleName("titleStyleInformal");
@@ -171,7 +171,7 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		hoursCountGrid.setCanRemoveRecords(true); 
 		hoursCountGrid.setCanAcceptDrop(true);
 		hoursCountGrid.setAutoSaveEdits(true);		
-		hoursCountGrid.setGroupByField(COL_PROJECT_NAME); 
+		hoursCountGrid.setGroupByField(COL_PROJECT_NAME);
 		hoursCountGrid.setShowGridSummary(true);
 		hoursCountGrid.setShowGroupSummary(true);
 		hoursCountGrid.setShowGroupSummaryInHeader(true); 
@@ -222,7 +222,7 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 					Record record = records[i];  
 					acum += record.getAttributeAsDate(COL_HOURS).getTime(); 
 				}
-				return DateTimeFormat.getFormat(PredefinedFormat.HOUR_MINUTE).format(new Date(acum - ((records.length-1) * 10800000)));
+				return DateTimeFormat.getFormat(PredefinedFormat.HOUR24_MINUTE).format(new Date(acum - ((records.length-1) * 10800000)));
 			}   
 		});
 
@@ -262,65 +262,81 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		draw.setHeight(170);
 		draw.setWidth(270);
 		
+//		final IButton expand = new IButton();
+//		expand.setTitle("Expandir Todo");
+//		expand.setActionType(SelectionType.CHECKBOX);
+//		expand.setAutoFit(true);
+//		expand.setHeight(30);
+//		expand.setBackgroundColor("white");
+//		expand.setBorder("Solid 0px");
+//		expand.setIcon("../images/png/time/expandCollapse.png");
+//		expand.setIconSize(24);
 		final ImgButton expand = new ImgButton();
 		expand.setShowRollOver(false);
+		expand.setSize("120", "30");
 		expand.setActionType(SelectionType.CHECKBOX);
-		expand.setSize(16);
-		expand.setSrc("../images/png/time/expandCollapse.png");
-		   
+		expand.setSrc("../images/png/time/expColap.png");
 		expand.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				if (treeClosed){
 					tasksTree.getTree().openAll();
 					treeClosed = false;
+					
+//					expand.setIcon("../images/png/time/expandCollapse_Selected.png");
+//					expand.setTitle("Contraer Todo");
 				} else {
 					tasksTree.getTree().closeAll();
 					treeClosed = true;
+					
+//					expand.setIcon("../images/png/time/expandCollapse.png");
+//					expand.setTitle("Expandir Todo");
 				}
 			}
 		});
-		
 		
 		//LAYOUTs
 		final HLayout hort0 = new HLayout();
 		hort0.setWidth100();
 		hort0.addMember(dateChooser);
 		hort0.addMember(draw);
+	
+		
+		final VLayout vert2 = new VLayout();
+		vert2.setHeight100();
+		vert2.addMember(hort0);
+		vert2.addMember(hoursCountGrid);
+		
+		
+		final HLayout titleLayout = new HLayout();
+		titleLayout.setWidth100();
+		titleLayout.setAutoHeight();
+		titleLayout.addMember(title);
+		titleLayout.addMember(expand);
 		
 		
 		final VLayout vert1 = new VLayout();
+		vert1.setWidth("50%");
 		vert1.setHeight100();
-		vert1.addMember(hort0);
-		vert1.addMember(hoursCountGrid);
-		
-		final VLayout vert2 = new VLayout();
-		vert2.setWidth("50%");
-		vert2.setHeight100();
-		vert2.setEdgeImage("../edges/blue/sharpframe_10.png");
-//		vert2.setDragAppearance(DragAppearance.TARGET);  
-		vert2.setShowResizeBar(true);
-		vert2.setCanDragResize(true);  
-		vert2.setResizeFrom("R");
-		vert2.setMinWidth(200);  
-		vert2.addMember(expand);
-		vert2.addMember(tasksTree);
-		
-		
+		vert1.setEdgeImage("../edges/blue/sharpframe_10.png");
+		vert1.setShowResizeBar(true);
+		vert1.setCanDragResize(true);  
+		vert1.setResizeFrom("R");
+		vert1.setMinWidth(200); 
+		vert1.addMember(titleLayout);
+		vert1.addMember(tasksTree);
 		
 		//Agrego los Componentes al Panel
 		final HLayout horizontal = new HLayout();
 		horizontal.setHeight100();
 		horizontal.setWidth100();
-		horizontal.addMember(vert2);
 		horizontal.addMember(vert1);
+		horizontal.addMember(vert2);
 		
 		final VLayout main = new VLayout();
 		main.setHeight100();
 		main.setWidth100();
-		main.addMember(title);
 		main.addMember(horizontal);
-
 		this.addChild(main);		
 
 		//refresco panel de Horas
