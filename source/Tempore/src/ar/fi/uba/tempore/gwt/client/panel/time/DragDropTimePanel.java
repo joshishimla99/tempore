@@ -333,15 +333,16 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 	 * Los filtros son la fecha y el usuaior logueado
 	 */
 	private void refreshTimeGrid() {
+		draw.drawReport(dateChooser.getData());
+
 		TimeFilterDTO filter = new TimeFilterDTO();
 		filter.setDateFilter(dateChooser.getData());
 		filter.setUserId(SessionUser.getInstance().getUser().getId());
 
 		HourCountDataSource.getInstance().setId(filter);
+		
 		hoursCountGrid.invalidateCache();
 		hoursCountGrid.fetchData();
-		
-		draw.drawReport(dateChooser.getData());
 	}
 
 
