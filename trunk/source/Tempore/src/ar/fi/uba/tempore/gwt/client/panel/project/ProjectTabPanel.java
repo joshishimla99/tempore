@@ -120,11 +120,11 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		ClientServicesClient.Util.getInstance().fetch(new AsyncCallback<List<ClientDTO>>() {
 			@Override
 			public void onSuccess(List<ClientDTO> result) {
-				LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();  
+				LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();
 				for (ClientDTO dto : result) {
 					valueMap.put(dto.getId().toString(), dto.getName());
 				}
-				selClient.setValueMap(valueMap);	
+				selClient.setValueMap(valueMap);
 			}
 			@Override
 			public void onFailure(Throwable caught) {
@@ -158,15 +158,20 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		txtDescription.setRequired(true);
 
 		final SelectItem selState = new SelectItem(STATE_FIELD, "Estado");
+		selState.setImageURLPrefix("../images/png/24x24/Briefcase");  
+		selState.setImageURLSuffix(".png");
 		selState.setRequired(true);
 		ProjectStateServicesClient.Util.getInstance().findAll(new AsyncCallback<List<ProjectStateDTO>>() {
 			@Override
 			public void onSuccess(List<ProjectStateDTO> result) {
-				LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();  
+				LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();
+				LinkedHashMap<String, String> valueIcons = new LinkedHashMap<String, String>();
 				for (ProjectStateDTO dto : result) {
 					valueMap.put(dto.getId().toString(), dto.getName());
+					valueIcons.put(dto.getId().toString(), dto.getId().toString());
 				}
-				selState.setValueMap(valueMap);	
+				selState.setValueMap(valueMap);
+				selState.setValueIcons(valueIcons);
 			}
 
 			@Override
