@@ -12,7 +12,6 @@ import ar.fi.uba.tempore.dto.ProjectDTO;
 import ar.fi.uba.tempore.gwt.client.ProjectServicesClient;
 import ar.fi.uba.tempore.gwt.client.ReportServicesClient;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
@@ -150,27 +149,27 @@ public class ReportFilter5 extends VLayout {
 							String key = taskMap.keySet().iterator().next();
 							Map<Integer, Long> map = taskMap.get(key);
 							int rowIndex = 0;
-							GWT.log("Dias");
+//							GWT.log("Dias");
 							List<Integer> orderDays = orderList(map.keySet());
 							for (Integer day : orderDays){
 								data.setValue(rowIndex, columnIndex, day);
-								GWT.log("["+rowIndex+","+columnIndex+","+day+"]");
+//								GWT.log("["+rowIndex+","+columnIndex+","+day+"]");
 								rowIndex++;
 							}
 							
 							//Graficos del Eje Y para cada una de los tipos de tarea
 							columnIndex = 1; 
-							GWT.log("Cantidad de tipos de Tareas " + taskMap.keySet().size());
+//							GWT.log("Cantidad de tipos de Tareas " + taskMap.keySet().size());
 							for (String taskType : taskMap.keySet()){
 								Map<Integer, Long> dayMap = taskMap.get(taskType);
-								GWT.log("Columna: " + taskType);
+//								GWT.log("Columna: " + taskType);
 								rowIndex = 0;
 								//Set<Integer> daySet = dayMap.keySet();
 								for (Integer day : orderDays) {
 									Long hourCharged = dayMap.get(day);
 									
 									data.setValue(rowIndex, columnIndex, hourCharged/HORA);
-									GWT.log("["+rowIndex+","+columnIndex+","+hourCharged/HORA+"]");
+//									GWT.log("["+rowIndex+","+columnIndex+","+hourCharged/HORA+"]");
 									rowIndex++;
 								}
 								columnIndex++;
@@ -180,9 +179,7 @@ public class ReportFilter5 extends VLayout {
 					}
 
 					private List<Integer> orderList(Set<Integer> listDay) {
-//						List<Integer> result = new ArrayList<Integer>();
 						List<Integer> asList = Arrays.asList(listDay.toArray(new Integer[0]));
-						
 						Collections.sort(asList);
 						return asList;
 					}
