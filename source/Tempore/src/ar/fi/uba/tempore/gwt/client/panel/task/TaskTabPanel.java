@@ -119,7 +119,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		
 		final VLayout mainLayout = new VLayout();
 		mainLayout.setWidth100();
-		mainLayout.setHeight100();
+		mainLayout.setHeight("99%");
 		mainLayout.addMember(title);
 		mainLayout.addMember(workLayout);
 

@@ -335,7 +335,7 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		horizontal.addMember(vert2);
 		
 		final VLayout main = new VLayout();
-		main.setHeight100();
+		main.setHeight("99%");
 		main.setWidth100();
 		main.addMember(horizontal);
 		this.addChild(main);		
