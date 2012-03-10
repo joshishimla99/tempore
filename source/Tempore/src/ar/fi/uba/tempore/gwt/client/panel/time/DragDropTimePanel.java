@@ -17,6 +17,7 @@ import ar.fi.uba.tempore.gwt.client.panel.report.ResumeReportHoursWeek;
 import ar.fi.uba.temporeutils.observer.ProjectObserver;
 import ar.fi.uba.temporeutils.observer.TimeCounterObserver;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -180,7 +181,9 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		hoursCountGrid.addDataArrivedHandler(new DataArrivedHandler() {
 			@Override
 			public void onDataArrived(DataArrivedEvent event) {
-				draw.drawReport(dateChooser.getData());				
+				draw.drawReport(dateChooser.getData());
+				GWT.log("DAta arrived!!!");
+				hoursCountGrid.recalculateGridSummary();
 			}
 		});
 
