@@ -94,11 +94,11 @@ public class TaskBox extends Window {
 		this.setHeight(130);
 
 		this.setTitle(taskDTO.getName());
-		content = new Label("<span style=\" font-weight: bold;\">Tipo: </span>" + taskDTO.getTaskTypeDTO().getName() + "<br/>"  
-				+ "<span style=\" font-weight: bold;\">Horas Consumidas de la tarea: </span>" + MySimpleDateFormat.formatTime(realHs) + "<br/>"
-				+ "<span style=\" font-weight: bold;\">Horas Consumidas totales: </span>" + MySimpleDateFormat.formatTime(totalHs) + "<br/>"
-				+ "<span style=\" font-weight: bold;\">Horas Estimadas: </span> "+ MySimpleDateFormat.formatTime(taskDTO.getBudget()) + "</br>"
-				+ "<span style=\" font-weight: bold;\">Descripci&oacute;n: </span> "+ taskDTO.getDescription());
+		content = new Label("<span style=\" font-weight: bold;\"> Tipo: </span>" + taskDTO.getTaskTypeDTO().getName() + "<br/>"  
+				+ "<span style=\" font-weight: bold;\"> Horas Consumidas de la tarea: </span>" + MySimpleDateFormat.formatTime(realHs) + "<br/>"
+				+ "<span style=\" font-weight: bold;\"> Horas Consumidas totales: </span>" + MySimpleDateFormat.formatTime(totalHs) + "<br/>"
+				+ "<span style=\" font-weight: bold;\"> Horas Estimadas: </span> "+ MySimpleDateFormat.formatTime(taskDTO.getBudget()) + "</br>"
+				+ "<span style=\" font-weight: bold;\"> Descripci&oacute;n: </span> "+ taskDTO.getDescription());
 		
 
 		content.setBackgroundColor(color);
@@ -126,7 +126,7 @@ public class TaskBox extends Window {
 			public void onCloseClick(CloseClickEvent event) {
 				// Si el proyecto esta cerrado, suspendido o cancelado no es posible eliminar la tarea -- Regla de negocio
 				if (ProjectPanel.getInstance().getSelected().getProjectState().getId() != 4 && ProjectPanel.getInstance().getSelected().getProjectState().getId() != 5 && ProjectPanel.getInstance().getSelected().getProjectState().getId() != 6){
-					SC.ask("Eliminar Tarea", "Desea eliminar la tarea seleccionada", new BooleanCallback() {
+					SC.ask("Eliminar Tarea", "¿Seguro desea eliminar la tarea seleccionada?", new BooleanCallback() {
 						@Override
 						public void execute(Boolean yes) {
 							if(yes) {
@@ -135,15 +135,15 @@ public class TaskBox extends Window {
 										@Override
 										public void onSuccess(String result) {
 											close();
-											SC.say("Eliminar Tarea", "La tarea " + result + " y sus hijas, si contenia, se han eliminado satisfactoriamente.");
+											SC.say("Eliminar Tarea", "La tarea <" + result + "> y sus hijas, han sido eliminadas satisfactoriamente.");
 										}
 										@Override
 										public void onFailure(Throwable caught) {
-											SC.warn("Ha ocurrido un error al intentar eliminar la tarea. Intentelo luego");
+											SC.warn("Ha ocurrido un error al intentar eliminar la tarea. Vuelva a intentarlo.");
 										}
 									});
 								} catch (TaskWithHoursChargedException e) {
-									SC.say("Eliminar Tarea", "La tarea seleccionada no puede eliminarse dado la tarea " + e.getTaskName() + " tiene horas cargadas");
+									SC.say("Eliminar Tarea", "No puede eliminarse la tarea <" + e.getTaskName() + ">. Elimine las horas registradas para esta tarea e intente nuevamente.");
 								}
 							}
 						}
