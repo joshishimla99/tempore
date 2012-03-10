@@ -172,7 +172,7 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 
 		VLayout vLayout = new VLayout();
 		vLayout.setWidth100();
-		vLayout.setHeight100();
+		vLayout.setHeight("99%");
 
 		vLayout.addMember(title);
 		vLayout.addMember(userTileGrid);

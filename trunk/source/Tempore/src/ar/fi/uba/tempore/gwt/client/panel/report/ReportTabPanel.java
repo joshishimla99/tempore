@@ -100,7 +100,7 @@ public class ReportTabPanel extends TabsPanelContainer{
 		hLayout.addMember(graficLayout);
 		
 		final VLayout vLayout = new VLayout();
-		vLayout.setHeight100();
+		vLayout.setHeight("99%");
 		vLayout.setWidth100();
 //		vLayout.setMembersMargin(20);
 		vLayout.addMember(title);

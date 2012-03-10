@@ -230,7 +230,8 @@ public class ProjectTabPanel extends TabsPanelContainer implements ProjectObserv
 		final HLayout hLayoutBody = new HLayout();
 		hLayoutBody.addMember(vLayoutForm);
 
-		final VLayout vLayout = new VLayout();		
+		final VLayout vLayout = new VLayout();
+		vLayout.setHeight("99%");
 		vLayout.setMembersMargin(20);
 		vLayout.addMember(title);
 		vLayout.addMember(mesageError);

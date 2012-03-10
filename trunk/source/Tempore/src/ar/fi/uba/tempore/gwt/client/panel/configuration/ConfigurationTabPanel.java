@@ -12,7 +12,7 @@ public class ConfigurationTabPanel extends TabsPanelContainer {
 				
 		TabSet subTabPanel = new TabSet();
 		subTabPanel.setWidth100();
-		subTabPanel.setHeight100();
+		subTabPanel.setHeight("99%");
 		
 		Tab clientTab = new Tab("Clientes");
 		clientTab.setPane(new ClientConfigurationPanel());

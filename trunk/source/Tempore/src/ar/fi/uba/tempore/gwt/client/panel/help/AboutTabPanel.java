@@ -37,7 +37,6 @@ public class AboutTabPanel extends TabsPanelContainer {
 		
 		final Img img = new Img("../images/tempore_reporting.jpg");
 		img.setPadding(10);
-//		img.setTop(20);
 		img.setSize("370", "120");
 		final VLayout aboutLayout = new VLayout();
 		aboutLayout.setWidth("50%");
@@ -46,9 +45,6 @@ public class AboutTabPanel extends TabsPanelContainer {
 		aboutLayout.addMember(textHtml);
 		
 		
-		
-//		final Img imgUba = new Img("../images/logo_fiuba3.png");
-//		imgUba.setWidth(300);
 		final Img imgUba2 = new Img("../images/logo_fiuba_circular.png");
 		imgUba2.setSize(300);
 		imgUba2.setAlign(Alignment.CENTER);
@@ -58,7 +54,6 @@ public class AboutTabPanel extends TabsPanelContainer {
 		imgUbaLayout.setHeight100();
 		imgUbaLayout.setAlign(Alignment.CENTER);
 		imgUbaLayout.setMembersMargin(30);
-//		imgUbaLayout.addMember(imgUba);
 		imgUbaLayout.addMember(imgUba2);
 		
 		
