@@ -52,7 +52,7 @@ public class ResourceTabPanel extends TabsPanelContainer implements ProjectObser
 	private static final String HELPTEXT = "<br><b>Administraci&oacute;n de Recursos</b><br>Esta p&aacute;gina le permitir&aacute; administrar los recursos para el proyecto seleccionado. En la parte superior se localizan todos los recursos disponibles y en la parte inferior los recursos asignados al proyecto." +
 			"<br><br><b>Asignar un Recurso al Proyecto</b><br>Para asignar un recurso al proyecto, se debe  se debe seleccionar el recurso y arrastrarlo a la parte inferior. " +  
 			"<br><br><b>Desasignar un Recurso al Proyecto</b><br>Para desasignar un recurso al proyecto, se debe seleccionar el recurso deseado en la parte inferior y arrastrarlo a la parte superior del pantalla." +  
-			"<br><br><b>Cambiar el L&iacute;der del Proyecto</b><br>......................";
+			"<br><br><b>Cambiar el L&iacute;der del Proyecto</b><br>Solo el Administrador podrá cambiar el creador de un proyecto, en el caso que sea necesario.";
 
 	@Override
 	public void refreshPanel() {
