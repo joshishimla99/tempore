@@ -95,7 +95,7 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 	 * Agrega una nueva tarea
 	 */
 	public TaskDTO addTask(TaskDTO taskDTO){
-		return this.updateTask(taskDTO);
+		return updateTask(taskDTO);
 	}
 
 	/**
@@ -103,9 +103,9 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 	 * Sino viene el ID se crea la tarea. Si viene y existe ese ID se actualiza con los datos que viene.
 	 */
 	public TaskDTO updateTask(TaskDTO taskDTO){
-		log.info("UPDATE - TASK");
+		log.info("UPDATE - TASK - Id = " + taskDTO.getId());
 		TaskDAO taskDAO = new TaskDAO();
-
+		
 		//Actualizo el tiempo acumulado sacando le el GMT
 		Task task = mapper.map(taskDTO, Task.class);
 
@@ -144,7 +144,7 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 
 	@Override
 	public boolean validateTask (TaskDTO taskDTO) {
-		log.info("VALIDATE TASK - " + taskDTO.getName());
+		log.info("VALIDATE TASK - " + taskDTO.getName()+"(Id = "+taskDTO.getId()+")");
 		boolean result = true;
 		TaskDAO taskDAO = new TaskDAO();
 		
@@ -152,8 +152,9 @@ public class TaskServicesImpl extends RemoteServiceServlet implements TaskServic
 		List<Task> childTaskList = taskDAO.getChildTask(taskDTO.getProject().getId(), taskDTO.getTaskId());
 		for (Task task : childTaskList) {
 			String nameTask = new String(task.getName());
-			if (task.getId() != taskDTO.getId() &&
+			if (!task.getId().equals(taskDTO.getId()) &&
 					nameTask.trim().toUpperCase().equals(taskDTO.getName().toUpperCase().trim())){
+				log.info("task = " + task.getId() + ", TaskDTO = " + taskDTO.getId());
 				result = false;
 			}
 		}	
