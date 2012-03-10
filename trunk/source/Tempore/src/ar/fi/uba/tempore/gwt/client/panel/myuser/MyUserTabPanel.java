@@ -38,7 +38,8 @@ public class MyUserTabPanel extends TabsPanelContainer {
 	public static final String IS_ADMIN = "isAdmin";
 
 
-	private static final String HELPTEXT = "";
+	private static final String HELPTEXT = "Esta secci&oacute;n le permitir&aacute; actualizar sus datos personales y su foto de perfil." +
+	"<br/> Tambi&eacuten podr&aacute; actualizar su contrase&ntilde;a.";
 	private DynamicForm form;
 	private final ImgClient image;
 
