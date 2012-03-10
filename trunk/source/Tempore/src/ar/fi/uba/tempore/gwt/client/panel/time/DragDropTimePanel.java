@@ -149,6 +149,7 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		
         
 		//TABLA DE CARGA DE HORAS
+		hoursCountGrid.setRemoveIcon("../images/png/time/remove.png");
 		hoursCountGrid.setAddDropValues(false);
 		hoursCountGrid.setLoadingDataMessage("${loadingImage}&nbsp;Cargando...");
 		hoursCountGrid.addRecordDropHandler(new RecordDropHandler() {

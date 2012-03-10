@@ -175,10 +175,11 @@ public class TaskBox extends Window {
 					EditTaskModalWindow editTaskModalWin = new EditTaskModalWindow(taskBox);
 					editTaskModalWin.show();
 				} else {
-					SC.warn("No eres el due&ntildeo del proyecto para poder editar la tarea primaria");
+
+					SC.warn("No eres el creador del proyecto para poder editar la tarea primaria.");
 				}
 			} else{
-				SC.warn("No es posible crear nuevas tareas dado que el proyecto est&aacute; cerrado");
+				SC.warn("No es posible crear nuevas tareas en un proyecto cerrado.");
 			}
 		}
 	}
