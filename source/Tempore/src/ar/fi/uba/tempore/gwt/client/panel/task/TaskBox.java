@@ -126,7 +126,7 @@ public class TaskBox extends Window {
 			public void onCloseClick(CloseClickEvent event) {
 				// Si el proyecto esta cerrado, suspendido o cancelado no es posible eliminar la tarea -- Regla de negocio
 				if (ProjectPanel.getInstance().getSelected().getProjectState().getId() != 4 && ProjectPanel.getInstance().getSelected().getProjectState().getId() != 5 && ProjectPanel.getInstance().getSelected().getProjectState().getId() != 6){
-					SC.ask("Eliminar Tarea", "¿Seguro desea eliminar la tarea seleccionada?", new BooleanCallback() {
+					SC.ask("Eliminar Tarea", "&iquest;Seguro desea eliminar la tarea seleccionada?", new BooleanCallback() {
 						@Override
 						public void execute(Boolean yes) {
 							if(yes) {
