@@ -152,7 +152,7 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 		if (projectSelected != null) {
 			taskTree.updateTaskTree();
 			
-			titleTask.setDefaultValue(projectSelected.getName());
+			titleTask.setDefaultValue("<b>Proyecto: </b>" + projectSelected.getName());
 			getFormTitles().showItem("titleTask");
 			TaskServicesClient.Util.getInstance().getChildTask(projectSelected.getId(), null, new AsyncCallback<List<TaskDTO>>() {
 				@Override
@@ -228,10 +228,10 @@ public class TaskTabPanel extends TabsPanelContainer implements ProjectObserver 
 						NewTaskModalWindow newTaskModalWin = new NewTaskModalWindow(thisPanel, addTask);
 						newTaskModalWin.show();
 					} else {
-						SC.warn("No eres el due&ntildeo del proyecto para crear tareas primarias");
+						SC.warn("No eres el creador del proyecto para crear tareas primarias.");
 					}
 				} else{
-					SC.warn("No es posible crear nuevas tareas dado que el proyecto est&aacute; cerrado");
+					SC.warn("No es posible crear nuevas tareas en un proyecto cerrado.");
 				}
 			}
 		});

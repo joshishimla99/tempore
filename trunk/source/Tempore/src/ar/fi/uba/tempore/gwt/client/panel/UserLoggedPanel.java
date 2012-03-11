@@ -21,7 +21,7 @@ public class UserLoggedPanel extends HLayout {
 			@Override
 			public void onClick(ClickEvent event) {
 				//TODO logout
-				redirect("http://localhost:8080/Tempore/"); 
+				redirect("http://localhost:8080/Tempore/Tempore.html?locale=es"); 
 			}
 		});
 		logout.setWidth(45);
