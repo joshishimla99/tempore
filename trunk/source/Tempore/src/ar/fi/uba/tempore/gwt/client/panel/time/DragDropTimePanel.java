@@ -17,7 +17,6 @@ import ar.fi.uba.tempore.gwt.client.panel.report.ResumeReportHoursWeek;
 import ar.fi.uba.temporeutils.observer.ProjectObserver;
 import ar.fi.uba.temporeutils.observer.TimeCounterObserver;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -105,7 +104,8 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 			}
 		});
 
-		//FECHA PARA CARGA DE HORAS		
+		//FECHA PARA CARGA DE HORAS	
+		dateChooser.setFirstDayOfWeek(0);
 		dateChooser.setHeight(50);
 		dateChooser.setWidth("50%");
 		dateChooser.setShowTodayButton(false);
@@ -182,7 +182,8 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 			@Override
 			public void onDataArrived(DataArrivedEvent event) {
 				draw.drawReport(dateChooser.getData());
-				GWT.log("DAta arrived!!!");
+				
+				//recalculos los resumenes de agrupados
 				hoursCountGrid.recalculateGridSummary();
 			}
 		});
@@ -266,15 +267,6 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 		draw.setHeight(170);
 		draw.setWidth(270);
 		
-//		final IButton expand = new IButton();
-//		expand.setTitle("Expandir Todo");
-//		expand.setActionType(SelectionType.CHECKBOX);
-//		expand.setAutoFit(true);
-//		expand.setHeight(30);
-//		expand.setBackgroundColor("white");
-//		expand.setBorder("Solid 0px");
-//		expand.setIcon("../images/png/time/expandCollapse.png");
-//		expand.setIconSize(24);
 		final ImgButton expand = new ImgButton();
 		expand.setShowRollOver(false);
 		expand.setSize("120", "30");
@@ -286,15 +278,9 @@ public class DragDropTimePanel extends TabsPanelContainer implements ProjectObse
 				if (treeClosed){
 					tasksTree.getTree().openAll();
 					treeClosed = false;
-					
-//					expand.setIcon("../images/png/time/expandCollapse_Selected.png");
-//					expand.setTitle("Contraer Todo");
 				} else {
 					tasksTree.getTree().closeAll();
 					treeClosed = true;
-					
-//					expand.setIcon("../images/png/time/expandCollapse.png");
-//					expand.setTitle("Expandir Todo");
 				}
 			}
 		});

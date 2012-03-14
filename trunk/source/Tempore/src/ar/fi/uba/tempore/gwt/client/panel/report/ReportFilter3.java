@@ -1,5 +1,6 @@
 package ar.fi.uba.tempore.gwt.client.panel.report;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -76,8 +77,6 @@ public class ReportFilter3 extends VLayout {
 
 		formFilter.setFields(project, ini,end);
 
-
-
 	    final HTMLFlow htmlFlow3 = new HTMLFlow("Reporte de tipo &aacute;rea que muestra las horas registradas a cada una de las Tareas de primer nivel del proyecto seleccionado.");  
 	    htmlFlow3.setPadding(10);
 	
@@ -136,6 +135,7 @@ public class ReportFilter3 extends VLayout {
 				
 						int i = 0;
 						data.addRows(result.size());
+						Collections.sort(result);
 						for (TasksTimesDTO reg : result) {
 							data.setValue(i, 0, reg.getTaskName());
 							data.setValue(i, 1, new Float(reg.getHourCounted())/GenericGrafic.HORA);
