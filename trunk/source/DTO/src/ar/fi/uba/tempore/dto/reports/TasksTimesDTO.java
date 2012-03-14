@@ -2,7 +2,7 @@ package ar.fi.uba.tempore.dto.reports;
 
 import java.io.Serializable;
 
-public class TasksTimesDTO implements Serializable {
+public class TasksTimesDTO implements Serializable, Comparable<Object> {
 
 	private static final long serialVersionUID = 6318760921111508786L;
 
@@ -20,5 +20,10 @@ public class TasksTimesDTO implements Serializable {
 	}
 	public void setTaskName(String taskName) {
 		this.taskName = taskName;
+	}
+	@Override
+	public int compareTo(Object dto) {
+		TasksTimesDTO t = (TasksTimesDTO) dto;
+		return t.getHourCounted().compareTo(this.getHourCounted());
 	}
 }
