@@ -2,18 +2,15 @@
 <module rename-to='tempore'>
 	<!-- Inherit the core Web Toolkit stuff. -->
 	<inherits name='com.google.gwt.user.User' />
-	
+
+	<!-- External library -->
 	<inherits name='ar.fi.uba.tempore.DTO' />
 	<inherits name='ar.fi.uba.temporeutils.TemporeListGrid' />
 	<inherits name='ar.fi.uba.temporeutils.Observer' />
 	<inherits name='ar.fi.uba.temporeutils.Image' />
 
-	<!-- External library -->	
-	
 	<!-- Reportes -->
-	<inherits name='com.google.gwt.visualization.Visualization'/>
-	
-	
+	<inherits name='com.google.gwt.visualization.Visualization' />
 
 	<!-- Inherit the default GWT style sheet. You can change -->
 	<!-- the theme of your GWT application by uncommenting -->
@@ -35,17 +32,10 @@
 	<source path='client' />
 	<source path='DTO' />
 	<source path='TemporeListGrid' />
-	
-	
 
-  <inherits name="com.google.gwt.user.User"/>
-  <inherits name="com.google.gwt.i18n.I18N"/>
-  
-  <!-- Spanish language, independent of country -->
-  <extend-property name="locale" values="es"/>
+	<inherits name="com.google.gwt.user.User" />
+	<inherits name="com.google.gwt.i18n.I18N" />
 
-
-
-	
-	
+	<!-- Spanish language, independent of country -->
+	<extend-property name="locale" values="es" />
 </module>
