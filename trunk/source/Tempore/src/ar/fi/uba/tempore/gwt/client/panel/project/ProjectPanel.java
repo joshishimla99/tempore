@@ -19,12 +19,9 @@ import com.smartgwt.client.widgets.grid.events.SelectionChangedHandler;
 import com.smartgwt.client.widgets.grid.events.SelectionEvent;
 
 /**
- * Panel con el arbol de proyectos, es singleton
- * @author Ludmila
- *
+ * Panel con el arbol de proyectos
  */
 public class ProjectPanel extends ListGrid implements ProjectObserved {
-
 	private static ProjectPanel instance = null;
 	private ProjectPanelDataSource dataSource = null;
 	private List<ProjectObserver> listObserver = new ArrayList<ProjectObserver>();
@@ -99,8 +96,38 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 		this.redraw();	
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addObserver (ProjectObserver observer){
+		if (!listObserver.contains(observer)){
+			listObserver.add(observer);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeObserver(ProjectObserver observer){
+		listObserver.remove(observer);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void notifyObservers(){
+		for (ProjectObserver po : listObserver){
+			if (po != null){
+				po.updateProjectSelected();
+			}
+		}
+	}
+	
 	@Override  
-    protected String getCellCSSText(ListGridRecord record, int rowNum, int colNum) {  
+	protected String getCellCSSText(ListGridRecord record, int rowNum, int colNum) {  
         return "font-weight:bold;";  
     }  
 
@@ -130,35 +157,7 @@ public class ProjectPanel extends ListGrid implements ProjectObserved {
 	}
 		
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void addObserver (ProjectObserver observer){
-		if (!listObserver.contains(observer)){
-			listObserver.add(observer);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void removeObserver(ProjectObserver observer){
-		listObserver.remove(observer);
-	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void notifyObservers(){
-		for (ProjectObserver po : listObserver){
-			if (po != null){
-				po.updateProjectSelected();
-			}
-		}
-	}	
 	
 	/**
 	 * Habilita el filtro de la grilla
