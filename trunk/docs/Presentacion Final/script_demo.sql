@@ -1,3 +1,9 @@
+DROP SCHEMA TEMPORE;
+
+CREATE SCHEMA TEMPORE;
+
+USE Tempore;
+
 -- MySQL dump 10.13  Distrib 5.5.17, for Win32 (x86)
 --
 -- Host: localhost    Database: tempore
@@ -154,7 +160,7 @@ CREATE TABLE `person` (
 
 LOCK TABLES `person` WRITE;
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` VALUES (1,'Nicolás','García','15-6330-5220','garcian@gmail.com','Argentina','Tte JD Peron 4420 5°C - Almagro','1199','1317575837812_Nico.jpg'),(2,'Juan Pablo','Gigante','4567-9938','juanpablo.gigante@gmail.com','Argentina','Direccion - Florencio Varela','ADFAAFSD','1318188597703_Juan.png'),(3,'Ludmila Lis','Rinaudo','6445-9980','rinaudo.ludmila@gmail.com','Mexico','Direccion - Mexico DF',NULL,'1318189046500_LudmilaRinaudo.png'),(11,'Juan','Perez','4000-0000','perez@gmail.com','Argentina','',NULL,NULL),(12,'Jose','Lopez','4111-1111','lopez@gmail.com','Argentina','',NULL,NULL),(13,'Luis','Gutierrez','4222-2222','gutierrez@gmail.com','Argentina','',NULL,NULL),(14,'Emilio','Martinez','4333-3333','martinez@gmai1.com','Argentina','','',NULL),(20,'Mateo','Andreu','4444-4444','tcs1@gmail.com','Argentina','',NULL,NULL),(21,'Andres','Gomez','4555-5555','tcs2@gmail.com','Argentina','','',NULL),(22,'Administrador','-',NULL,'ngarcia@gmail.com','Argentina',NULL,NULL,NULL);
+INSERT INTO `person` VALUES (1,'Nicolás','García','15-6330-5220','garcian@gmail.com','Argentina','Tte JD Peron 4420 5°C - Almagro','1199','1317575837812_Nico.jpg'),(2,'Juan Pablo','Gigante','4567-9938','juanpablo.gigante@gmail.com','Argentina','Direccion - Florencio Varela','ADFAAFSD','1318188597703_Juan.jpg'),(3,'Ludmila Lis','Rinaudo','6445-9980','rinaudo.ludmila@gmail.com','Mexico','Direccion - Mexico DF',NULL,'1318189046500_LudmilaRinaudo.png'),(11,'Juan','Perez','4000-0000','perez@gmail.com','Argentina','',NULL,NULL),(12,'Jose','Lopez','4111-1111','lopez@gmail.com','Argentina','',NULL,NULL),(13,'Luis','Gutierrez','4222-2222','gutierrez@gmail.com','Argentina','',NULL,NULL),(14,'Emilio','Martinez','4333-3333','martinez@gmai1.com','Argentina','','',NULL),(20,'Mateo','Andreu','4444-4444','tcs1@gmail.com','Argentina','',NULL,NULL),(21,'Andres','Gomez','4555-5555','tcs2@gmail.com','Argentina','','',NULL),(22,'Administrador','-',NULL,'ngarcia@gmail.com','Argentina',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -497,7 +503,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'A','ngarcia','cRDtpNCeBiql5KOQsKVyrA0sAiA=','N'),(2,'A','jpgigante','cRDtpNCeBiql5KOQsKVyrA0sAiA=','N'),(3,NULL,'lrinaudo','cRDtpNCeBiql5KOQsKVyrA0sAiA=','N'),(11,NULL,'jperez','cRDtpNCeBiql5KOQsKVyrA0sAiA=','N'),(12,NULL,'jlopez','cRDtpNCeBiql5KOQsKVyrA0sAiA=','N'),(13,NULL,'lgutierrez','cRDtpNCeBiql5KOQsKVyrA0sAiA=','N'),(20,NULL,'mandreu','cRDtpNCeBiql5KOQsKVyrA0sAiA=','N'),(21,'A','agomez','cRDtpNCeBiql5KOQsKVyrA0sAiA=','N'),(22,NULL,'admin','cRDtpNCeBiql5KOQsKVyrA0sAiA=','S');
+INSERT INTO `user` VALUES (1,'A','ngarcia','cRDtpNCeBiql5KOQsKVyrA0sAiA=','N'),(2,'A','jgigante','cRDtpNCeBiql5KOQsKVyrA0sAiA=','N'),(3,NULL,'lrinaudo','cRDtpNCeBiql5KOQsKVyrA0sAiA=','N'),(11,NULL,'jperez','cRDtpNCeBiql5KOQsKVyrA0sAiA=','N'),(12,NULL,'jlopez','cRDtpNCeBiql5KOQsKVyrA0sAiA=','N'),(13,NULL,'lgutierrez','cRDtpNCeBiql5KOQsKVyrA0sAiA=','N'),(20,NULL,'mandreu','cRDtpNCeBiql5KOQsKVyrA0sAiA=','N'),(21,'A','agomez','cRDtpNCeBiql5KOQsKVyrA0sAiA=','N'),(22,NULL,'admin','cRDtpNCeBiql5KOQsKVyrA0sAiA=','S');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
